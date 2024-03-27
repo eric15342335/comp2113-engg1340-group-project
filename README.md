@@ -3,7 +3,7 @@
 |-----------------|------------|-------------------------------------------|
 | Cheng Ho Ming   | 3036216734 | [Link](https://github.com/eric15342335)   |
 | Chung Shing Hei | 0000000000 | [Link](https://github.com/MaxChungsh)     |
-| Chow Yui Hei    | 0000000000 | [Link](https://github.com/Prismatiscence) |
+| Chow Yui Hei    | 3036222446 | [Link](https://github.com/Prismatiscence) |
 | Chu Chun Yin    | 0000000000 | [Link](https://github.com/84ds84d8s)      |
 | Wong Sonny      | 0000000000 | [Link](https://github.com/comet13579)     |
 # Game Description
