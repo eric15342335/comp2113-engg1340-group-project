@@ -1,0 +1,23 @@
+name: Make
+
+on: [pull_request]
+
+jobs:
+  Make:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    - name: Make
+      run: |
+        make clean
+        make
+    - name: Upload executable
+      uses: actions/upload-artifact@v4
+      with:
+        # suppose we compiled our game and named it 'stocksim'
+        name: stocksim
+        path: stocksim
+        compression-level: 9
+        retention-days: 90
+        if-no-files-found: error
