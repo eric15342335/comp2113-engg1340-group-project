@@ -1,5 +1,8 @@
+// the class Stock definition
 #include <string>
 #include "stock.h"
+#include "names.h"
+#include "random_price.h"
 using namespace std;
 
 double Stock::purchase(double &balance, unsigned int amount) {
@@ -32,23 +35,19 @@ double Stock::sell(double &balance, unsigned int amount) {
 
 string Stock::category_name(void) {
     // Return the name of the category
-    switch (category) {
-        case 0:
-            return "tech";
-        case 1:
-            return "finance";
-        case 2:
-            return "healthcare";
-        case 3:
-            return "consumer";
-        case 4:
-            return "energy";
-        default:
-            return "unknown";
-    }
+    return category_list[category];
 }
+
+unsigned int Stock::num_stocks_affordable(double balance) {
+    // Return the number of stocks that the player can afford
+    return (unsigned int) balance / price;
+}
+
 
 void Stock::init(void) {
     // Assign a random price, standard deviation, skewness, and category to the stock
+    category = random_integer(category_list_size);
+
     // Generate a name based on the category
+    name = generate_name(category);
 }
