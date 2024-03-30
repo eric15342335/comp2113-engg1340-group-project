@@ -3,6 +3,10 @@
 #include <iostream>
 using namespace std;
 
+const double trading_fees_percent = 0.01; // 1% trading fees
+// trading fees are applied to both buying and selling
+// see stock.cpp Stock::purchase and Stock::sell functions
+
 int main(void){
     srand(time(NULL)); // srand should be called once in the program
 

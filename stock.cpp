@@ -5,12 +5,12 @@
 #include "random_price.h"
 using namespace std;
 
-double Stock::purchase(double &balance, unsigned int amount) {
+double Stock::purchase(double &balance, unsigned int amount, double trading_fees_percent) {
     // Purchase a number of stocks
     // Return the total cost of the purchase
     // If the player does not have enough balance, return -1
     // Otherwise, update the balance and quantity of the stock
-    double total_cost = price * amount;
+    double total_cost = price * amount * (1 + trading_fees_percent);
     if (total_cost > balance) {
         return -1;
     }
@@ -19,7 +19,7 @@ double Stock::purchase(double &balance, unsigned int amount) {
     return total_cost;
 }
 
-double Stock::sell(double &balance, unsigned int amount) {
+double Stock::sell(double &balance, unsigned int amount, double trading_fees_percent) {
     // Sell a number of stocks
     // Return the total revenue of the sale
     // If the player does not have enough stocks, return -1
@@ -27,7 +27,7 @@ double Stock::sell(double &balance, unsigned int amount) {
     if (quantity < amount) {
         return -1;
     }
-    double total_revenue = price * amount;
+    double total_revenue = price * amount * (1 - trading_fees_percent);
     balance += total_revenue;
     quantity -= amount;
     return total_revenue;
@@ -38,9 +38,9 @@ string Stock::category_name(void) {
     return category_list[category];
 }
 
-unsigned int Stock::num_stocks_affordable(double balance) {
+unsigned int Stock::num_stocks_affordable(double balance, double trading_fees_percent) {
     // Return the number of stocks that the player can afford
-    return (unsigned int) balance / price;
+    return (unsigned int) balance / price * (1 + trading_fees_percent);
 }
 
 void Stock::initialize_history(void) {

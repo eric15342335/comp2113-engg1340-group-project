@@ -7,9 +7,9 @@ using namespace std;
 
 class Stock {
     public:
-        double purchase(double &balance, unsigned int amount);
-        double sell(double &balance, unsigned int amount);
-        unsigned int num_stocks_affordable(double balance);
+        double purchase(double &balance, unsigned int amount, double trading_fees_percent);
+        double sell(double &balance, unsigned int amount, double trading_fees_percent);
+        unsigned int num_stocks_affordable(double balance, double trading_fees_percent);
         void init(void);
         string category_name(void);
         void delete_memory(void);
