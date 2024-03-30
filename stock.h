@@ -17,6 +17,7 @@ class Stock {
         double delta_price_percentage(void);
         double get_true_sd(void);
         double get_true_skewness(void);
+        void testing_set_attributes(string name, double price, unsigned int quantity, double sd, double skew, unsigned int category);
         // todo: void next_round(void) function
         // todo: void event_modifier(double sd, double skew, unsigned int duration) function
 

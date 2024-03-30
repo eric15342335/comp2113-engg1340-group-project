@@ -209,3 +209,12 @@ void Stock::init(void) {
     name = generate_name(category);
 }
 
+void Stock::testing_set_attributes(string name, double price, unsigned int quantity, double sd, double skew, unsigned int category) {
+    // Set the attributes of the stock for testing purposes
+    this->name = name;
+    this->price = price;
+    this->quantity = quantity;
+    this->sd = sd;
+    this->skew = skew;
+    this->category = category;
+}
