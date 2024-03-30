@@ -2,10 +2,10 @@
 | Name            | UID        | Profile                                   |
 |-----------------|------------|-------------------------------------------|
 | Cheng Ho Ming   | 3036216734 | [Link](https://github.com/eric15342335)   |
-| Chung Shing Hei | 0000000000 | [Link](https://github.com/MaxChungsh)     |
+| Chung Shing Hei | 3036xxxxxx | [Link](https://github.com/MaxChungsh)     |
 | Chow Yui Hei    | 3036222446 | [Link](https://github.com/Prismatiscence) |
-| Chu Chun Yin    | 0000000000 | [Link](https://github.com/84ds84d8s)      |
-| Wong Sonny      | 0000000000 | [Link](https://github.com/comet13579)     |
+| Chu Chun Yin    | 3036xxxxxx | [Link](https://github.com/84ds84d8s)      |
+| Wong Sonny      | 3036222458 | [Link](https://github.com/comet13579)     |
 # Game Description
 "Stock Market Simulator" is a text-based game that attempts to introduce a realistic <br>
 stock buying experience to the players. The game utilizes the random number generation <br>
