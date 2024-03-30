@@ -34,6 +34,7 @@ class Stock {
         int history_index = 0; // index of the next element to be added
         void initialize_history(void);
         void update_history(void);
+        void remove_obselete_event(void);
         /* TODO: Summarize the above code to README.md:
         "Dynamic memory management (e.g., dynamic arrays, linked lists, STL containers)"
         */

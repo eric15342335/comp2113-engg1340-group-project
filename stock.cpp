@@ -132,6 +132,43 @@ void Stock::add_event(Stock_event event) {
     }
 }
 
+void Stock::remove_obselete_event(void) {
+    // Loop through the Event_Modifier linked list and remove the obselete event
+    // obselete events are events that have duration <= 0
+    // Internal use after the "next_round" function is called
+    if (event_modifier_head == nullptr) {
+        // no Event_Modifier in the linked list
+        return;
+    }
+    else {
+        // If the first event is obselete, remove it
+        if (event_modifier_head->duration <= 0) {
+            Event_Modifier * temp = event_modifier_head;
+            event_modifier_head = event_modifier_head->next;
+            delete temp;
+        }
+        // Loop through the linked list and remove the obselete event(s)
+        // save the current Event_Modifier pointer
+        // since its duration is > 0 as checked in the above 'if' statement
+        Event_Modifier * current = event_modifier_head;
+        // check the next Event_Modifier
+        while (current->next != nullptr) {
+            if (current->next->duration <= 0) {
+                // save the pointer of the next Event_Modifier struct
+                // that has duration <= 0
+                Event_Modifier * temp = current->next;
+                // remove the item from the linked list
+                current->next = current->next->next;
+                // delete the memory of the removed Event_Modifier
+                delete temp;
+            }
+            // proceed to next item
+            current = current->next;
+        }
+    
+    }
+}
+
 void Stock::init(void) {
     // Assign a random price, standard deviation, skewness, and category to the stock
     category = random_integer(category_list_size);
