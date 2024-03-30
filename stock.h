@@ -15,6 +15,8 @@ class Stock {
         void delete_memory(void);
         double delta_price(void);
         double delta_price_percentage(void);
+        double get_true_sd(void);
+        double get_true_skewness(void);
         // todo: void next_round(void) function
         // todo: void event_modifier(double sd, double skew, unsigned int duration) function
 

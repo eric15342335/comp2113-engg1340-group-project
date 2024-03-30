@@ -169,6 +169,30 @@ void Stock::remove_obselete_event(void) {
     }
 }
 
+double Stock::get_true_sd(void) {
+    // Return the standard deviation value of the stock
+    // after applying the event modifiers
+    double true_sd = sd;
+    Event_Modifier * current = event_modifier_head;
+    while (current != nullptr) {
+        true_sd += current->sd_change;
+        current = current->next;
+    }
+    return true_sd;
+}
+
+double Stock::get_true_skewness(void) {
+    // Return the skewness value of the stock
+    // after applying the event modifiers
+    double true_skew = skew;
+    Event_Modifier * current = event_modifier_head;
+    while (current != nullptr) {
+        true_skew += current->skew_change;
+        current = current->next;
+    }
+    return true_skew;
+}
+
 void Stock::init(void) {
     // Assign a random price, standard deviation, skewness, and category to the stock
     category = random_integer(category_list_size);
