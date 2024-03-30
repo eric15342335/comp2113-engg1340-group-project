@@ -53,7 +53,7 @@ void Stock::initialize_history(void) {
 
 void Stock::update_history(void) {
     if (history == nullptr) {
-        // If the history array is not initialized, throw an error
+        // If the history array is not initialized, reinitialize it
         initialize_history();
     }
     // Update the history array with the current price
@@ -79,7 +79,15 @@ void Stock::delete_memory(void) {
     // This is a good practice to avoid using a dangling pointer
     // In case someone forgot delete the stock object
     
-    // TODO: delete the event modifier linked list
+    // Delete the event modifiers linked list
+    // Loop through the linked list and delete each element sequentially
+    Event_Modifier * current = event_modifier_head;
+    while (current != nullptr) {
+        Event_Modifier * temp = current;
+        current = current->next;
+        delete temp;
+    }
+    event_modifier_head = nullptr; // Set the pointer to null
 }
 
 double Stock::delta_price(void) {
@@ -200,3 +208,4 @@ void Stock::init(void) {
     // Generate a name based on the category
     name = generate_name(category);
 }
+
