@@ -1,10 +1,9 @@
 # Menu
 1. [Team Members](#Team-Members)
 2. [Game Description](#Game-Description)
-3. [Code Requirements](#Code-Requirements)
-	i. [Generation of random game sets or events](#Generation-of-random-game-sets-or-events)
-4. [Non-standard Libraries Used](#Non-standard-Libraries-Used)
-5. [Compilation and Execution Instructions](#Compilation-and-Execution-Instructions)
+3. [How to Play](#How-to-Play)
+4. [Code Requirements](#Code-Requirements)
+5. [Non-standard Libraries Used](#Non-standard-Libraries-Used)
 # Team Members
 | Name            | UID        | Profile                                   |
 |-----------------|------------|-------------------------------------------|
@@ -18,6 +17,10 @@
 stock buying experience to the players. The game utilizes the random number generation <br>
 capability of the operating system to mimic real-life stock unpredictable trends, while <br>
 giving players breathing room to better think about their investing strategies.<br>
+# How to Play
+## Compilation and Execution Instructions
+## In-game Settings
+## Easter Eggs
 # Code Requirements
 ## Generation of random game sets or events
 ## Data structures for storing game status (e.g., arrays, STL containers)
@@ -27,4 +30,3 @@ giving players breathing room to better think about their investing strategies.<
 ## Proper indentation and naming styles
 ## In-code documentation
 # Non-standard Libraries Used
-# Compilation and Execution Instructions
