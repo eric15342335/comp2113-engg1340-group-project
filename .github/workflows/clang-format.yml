@@ -10,4 +10,4 @@ jobs:
       uses: actions/checkout@v3
     - name: Run clang-format
       run: |
-        clang-format --dry-run -style=google $(find . -name '*.cpp' -or -name '*.h')
+        clang-format --Werror --dry-run $(find . -name '*.cpp' -or -name '*.h')
