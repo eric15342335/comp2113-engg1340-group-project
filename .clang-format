@@ -1,0 +1,20 @@
+﻿---
+Standard: Cpp11
+Language: Cpp
+UseTab: ForContinuationAndIndentation
+IndentWidth: '4'
+TabWidth: '4'
+
+BreakBeforeBraces: Custom
+BraceWrapping:
+    BeforeElse: True
+
+DerivePointerAlignment: 'false'
+PointerAlignment: Middle
+
+IncludeBlocks: Preserve
+SortIncludes: Never
+
+ReflowComments: 'true'
+
+...
