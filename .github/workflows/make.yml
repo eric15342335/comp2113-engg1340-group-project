@@ -1,4 +1,4 @@
-name: Make
+"""name: Make
 
 on: [pull_request]
 
@@ -21,3 +21,4 @@ jobs:
         compression-level: 9
         retention-days: 90
         if-no-files-found: error
+"""
