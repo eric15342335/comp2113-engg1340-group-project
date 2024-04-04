@@ -1,5 +1,6 @@
 // the class Stock definition
 #include <string>
+#include <vector>
 #include "stock.h"
 #include "names.h"
 #include "random_price.h"
@@ -43,42 +44,28 @@ unsigned int Stock::num_stocks_affordable(double balance, double trading_fees_pe
     return (unsigned int) balance / price * (1 + trading_fees_percent);
 }
 
-void Stock::initialize_history(void) {
-    // Initialize the history array
-    history_array_size = 10;
-    history_index = 0;
-    double * history = new double[history_array_size];
-    history[0] = price;
+void Stock::update_history(void) {
+    // Update the history array with the current price
+    // changes: We use vector now!
+    history.push_back(price);
 }
 
-void Stock::update_history(void) {
-    if (history == nullptr) {
-        // If the history array is not initialized, reinitialize it
-        initialize_history();
+vector<double> Stock::return_most_recent_history(int rounds) {
+    // Return the most recent stock prices
+    // The number of rounds is specified by the parameter
+    // If the number of rounds is greater than the size of the history array, return the entire history
+    // Otherwise, return the most recent prices
+    vector<double> recent_history;
+    if (rounds >= history.size()) {
+        return history;
     }
-    // Update the history array with the current price
-    if (history_index == history_array_size) {
-        // If the history array is full, double the size
-        double * new_history = new double[history_array_size * 2];
-        for (int i = 0; i < history_array_size; i++) {
-            new_history[i] = history[i];
-        }
-        delete[] history;
-        history = new_history;
-        // A general practice is to double the array size
-        history_array_size *= 2;
+    for (int i = history.size() - rounds; i < history.size(); i++) {
+        recent_history.push_back(history[i]);
     }
-    history[history_index] = price;
-    history_index++;
+    return recent_history;
 }
 
 void Stock::delete_memory(void) {
-    // Delete the dynamically allocated memory
-    delete[] history;
-    history = nullptr; // Set the pointer to null
-    // This is a good practice to avoid using a dangling pointer
-    // In case someone forgot delete the stock object
-    
     // Delete the event modifiers linked list
     // Loop through the linked list and delete each element sequentially
     Event_Modifier * current = event_modifier_head;
@@ -93,22 +80,21 @@ void Stock::delete_memory(void) {
 double Stock::delta_price(void) {
     // Return the change of stock price
     // which stock prices are stored in the history array
-    if (history_index < 2) {
+    if (history.size() < 2) {
         // If there are less than two prices in the history array, return 0
         return 0;
     }
     // Return the change of the last two prices
-    return history[history_index - 1] - history[history_index - 2];
+    return history[history.size()- 1] - history[history.size() - 2];
 }
 
 double Stock::delta_price_percentage(void) {
     // Return the percentage of change of stock price using Stock::delta_price();
-    if (history_index < 2) {
+    if (history.size() < 2) {
         // If there are less than two prices in the history array, return 0
         return 0;
-        // since history[history_index - 2] will return strange value
     }
-    return delta_price() / history[history_index - 2];
+    return delta_price() / history[history.size() - 2];
 }
 
 void Stock::add_event(Stock_event event) {
@@ -166,14 +152,16 @@ void Stock::remove_obselete_event(void) {
                 // that has duration <= 0
                 Event_Modifier * temp = current->next;
                 // remove the item from the linked list
-                current->next = current->next->next;
+                current->next = temp->next;
                 // delete the memory of the removed Event_Modifier
                 delete temp;
             }
             // proceed to next item
             current = current->next;
+            // since we check the next Event_Modifier in the linked list,
+            // the current Event_Modifier is not obselete, so we don't need to delete it
+            // and we are safe to proceed to the next item
         }
-    
     }
 }
 
@@ -217,4 +205,5 @@ void Stock::testing_set_attributes(string name, double price, unsigned int quant
     this->sd = sd;
     this->skew = skew;
     this->category = category;
+    return;
 }

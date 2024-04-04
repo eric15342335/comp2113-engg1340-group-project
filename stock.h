@@ -2,6 +2,7 @@
 #define STOCK_H
 
 #include <string>
+#include <vector>
 #include "events.h"
 using namespace std;
 
@@ -29,14 +30,10 @@ class Stock {
         double skew; // skewness
         unsigned int category; // category names in names.h
 
-        // dynamic array storing history
-        // since we don't need to delete history
-        // a linked list is not necessary
-        int history_array_size = 10;
-        double * history = new double[history_array_size];
-        int history_index = 0; // index of the next element to be added
-        void initialize_history(void);
+        vector<double> history;
         void update_history(void);
+        vector<double> return_most_recent_history(int rounds);
+
         void remove_obselete_event(void);
         /* TODO: Summarize the above code to README.md:
         "Dynamic memory management (e.g., dynamic arrays, linked lists, STL containers)"
@@ -51,7 +48,6 @@ class Stock {
 
         Event_Modifier * event_modifier_head = nullptr;
         void add_event(Stock_event event);
-
 };
 
 #endif

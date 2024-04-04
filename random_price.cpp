@@ -1,5 +1,6 @@
 // code related to randomness
 #include <cstdlib>
+#include "random_price.h"
 using namespace std;
 
 unsigned int random_integer(unsigned int max_integer) {
