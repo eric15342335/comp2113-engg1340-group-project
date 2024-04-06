@@ -8,8 +8,8 @@ using namespace std;
 
 class Stock {
     public:
-        double purchase(double &balance, unsigned int amount, double trading_fees_percent);
-        double sell(double &balance, unsigned int amount, double trading_fees_percent);
+        double purchase(double & balance, unsigned int amount, double trading_fees_percent);
+        double sell(double & balance, unsigned int amount, double trading_fees_percent);
         unsigned int num_stocks_affordable(double balance, double trading_fees_percent);
         void init(void);
         string category_name(void);
@@ -26,8 +26,8 @@ class Stock {
         string name;
         double price;
         unsigned int quantity; // # of stocks player has
-        double sd; // standard deviation
-        double skew; // skewness
+        double sd;             // standard deviation
+        double skew;           // skewness
         unsigned int category; // category names in names.h
 
         vector<double> history;
@@ -40,10 +40,11 @@ class Stock {
         */
 
         struct Event_Modifier {
-            double sd_change;
-            double skew_change;
-            unsigned int duration;
-            Event_Modifier * next;
+            public:
+                double sd_change;
+                double skew_change;
+                unsigned int duration;
+                Event_Modifier * next;
         };
 
         Event_Modifier * event_modifier_head = nullptr;

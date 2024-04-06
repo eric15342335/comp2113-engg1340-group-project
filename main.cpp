@@ -1,5 +1,5 @@
 #include <cstdlib> // srand()
-#include <ctime> // time()
+#include <ctime>   // time()
 #include <iostream>
 using namespace std;
 
@@ -7,7 +7,7 @@ const double trading_fees_percent = 0.01; // 1% trading fees
 // trading fees are applied to both buying and selling
 // see stock.cpp Stock::purchase and Stock::sell functions
 
-int main(void){
+int main(void) {
     srand(time(NULL)); // srand should be called once in the program
 
     // todo: use a linked list to store all the stocks
@@ -20,7 +20,7 @@ int main(void){
     // we will discuss the details in the next meeting
 
     // todo: intro game splash screen using ascii code or something
-    
+
     cout << "Hello world!" << endl;
     return 0;
 }

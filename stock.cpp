@@ -1,12 +1,10 @@
 // the class Stock definition
-#include <string>
-#include <vector>
 #include "stock.h"
 #include "names.h"
 #include "random_price.h"
 using namespace std;
 
-double Stock::purchase(double &balance, unsigned int amount, double trading_fees_percent) {
+double Stock::purchase(double & balance, unsigned int amount, double trading_fees_percent) {
     // Purchase a number of stocks
     // Return the total cost of the purchase
     // If the player does not have enough balance, return -1
@@ -20,7 +18,7 @@ double Stock::purchase(double &balance, unsigned int amount, double trading_fees
     return total_cost;
 }
 
-double Stock::sell(double &balance, unsigned int amount, double trading_fees_percent) {
+double Stock::sell(double & balance, unsigned int amount, double trading_fees_percent) {
     // Sell a number of stocks
     // Return the total revenue of the sale
     // If the player does not have enough stocks, return -1
@@ -41,7 +39,7 @@ string Stock::category_name(void) {
 
 unsigned int Stock::num_stocks_affordable(double balance, double trading_fees_percent) {
     // Return the number of stocks that the player can afford
-    return (unsigned int) balance / price * (1 + trading_fees_percent);
+    return (unsigned int)balance / price * (1 + trading_fees_percent);
 }
 
 void Stock::update_history(void) {
@@ -85,7 +83,7 @@ double Stock::delta_price(void) {
         return 0;
     }
     // Return the change of the last two prices
-    return history[history.size()- 1] - history[history.size() - 2];
+    return history[history.size() - 1] - history[history.size() - 2];
 }
 
 double Stock::delta_price_percentage(void) {
