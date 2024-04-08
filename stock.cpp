@@ -1,58 +1,44 @@
-// the class Stock definition
 #include "stock.h"
 #include "names.h"
 #include "random_price.h"
 using namespace std;
 
 double Stock::purchase(double & balance, unsigned int amount, double trading_fees_percent) {
-    // Purchase a number of stocks
-    // Return the total cost of the purchase
-    // If the player does not have enough balance, return -1
-    // Otherwise, update the balance and quantity of the stock
     double total_cost = price * amount * (1 + trading_fees_percent);
     if (total_cost > balance) {
         return -1;
     }
     balance -= total_cost;
     quantity += amount;
+    money_spent += total_cost;
     return total_cost;
 }
 
 double Stock::sell(double & balance, unsigned int amount, double trading_fees_percent) {
-    // Sell a number of stocks
-    // Return the total revenue of the sale
-    // If the player does not have enough stocks, return -1
-    // Otherwise, update the balance and quantity of the stock
     if (quantity < amount) {
         return -1;
     }
     double total_revenue = price * amount * (1 - trading_fees_percent);
     balance += total_revenue;
     quantity -= amount;
+    money_spent -= total_revenue;
     return total_revenue;
 }
 
 string Stock::category_name(void) {
-    // Return the name of the category
     return category_list[category];
 }
 
 unsigned int Stock::num_stocks_affordable(double balance, double trading_fees_percent) {
-    // Return the number of stocks that the player can afford
     return (unsigned int)balance / price * (1 + trading_fees_percent);
 }
 
 void Stock::update_history(void) {
-    // Update the history array with the current price
-    // changes: We use vector now!
+    /** @note We use vector now! */
     history.push_back(price);
 }
 
 vector<double> Stock::return_most_recent_history(int rounds) {
-    // Return the most recent stock prices
-    // The number of rounds is specified by the parameter
-    // If the number of rounds is greater than the size of the history array, return the entire history
-    // Otherwise, return the most recent prices
     vector<double> recent_history;
     if (rounds >= history.size()) {
         return history;
@@ -64,7 +50,6 @@ vector<double> Stock::return_most_recent_history(int rounds) {
 }
 
 void Stock::delete_memory(void) {
-    // Delete the event modifiers linked list
     // Loop through the linked list and delete each element sequentially
     Event_Modifier * current = event_modifier_head;
     while (current != nullptr) {
@@ -76,8 +61,7 @@ void Stock::delete_memory(void) {
 }
 
 double Stock::delta_price(void) {
-    // Return the change of stock price
-    // which stock prices are stored in the history array
+    // Stock prices are stored in the history array
     if (history.size() < 2) {
         // If there are less than two prices in the history array, return 0
         return 0;
@@ -87,7 +71,6 @@ double Stock::delta_price(void) {
 }
 
 double Stock::delta_price_percentage(void) {
-    // Return the percentage of change of stock price using Stock::delta_price();
     if (history.size() < 2) {
         // If there are less than two prices in the history array, return 0
         return 0;
@@ -96,7 +79,6 @@ double Stock::delta_price_percentage(void) {
 }
 
 void Stock::add_event(Stock_event event) {
-    // Add an event to the stock
     // Create a new event modifier and add it to the linked list
     if (event_modifier_head == nullptr) {
         // If the linked list is empty, create a new event modifier
@@ -125,9 +107,6 @@ void Stock::add_event(Stock_event event) {
 }
 
 void Stock::remove_obselete_event(void) {
-    // Loop through the Event_Modifier linked list and remove the obselete event
-    // obselete events are events that have duration <= 0
-    // Internal use after the "next_round" function is called
     if (event_modifier_head == nullptr) {
         // no Event_Modifier in the linked list
         return;
@@ -156,18 +135,19 @@ void Stock::remove_obselete_event(void) {
             }
             // proceed to next item
             current = current->next;
-            // since we check the next Event_Modifier in the linked list,
-            // the current Event_Modifier is not obselete, so we don't need to delete it
-            // and we are safe to proceed to the next item
+            /*
+            Since we check the next Event_Modifier in the linked list,
+            the current Event_Modifier is not obselete, so we don't need to delete it
+            and we are safe to proceed to the next item
+            */
         }
     }
 }
 
 double Stock::get_true_sd(void) {
-    // Return the standard deviation value of the stock
-    // after applying the event modifiers
     double true_sd = sd;
     Event_Modifier * current = event_modifier_head;
+    // Add the standard deviation offset from each event modifier in the linked list
     while (current != nullptr) {
         true_sd += current->sd_change;
         current = current->next;
@@ -176,10 +156,9 @@ double Stock::get_true_sd(void) {
 }
 
 double Stock::get_true_skewness(void) {
-    // Return the skewness value of the stock
-    // after applying the event modifiers
     double true_skew = skew;
     Event_Modifier * current = event_modifier_head;
+    // Add the skewness offset from each event modifier in the linked list
     while (current != nullptr) {
         true_skew += current->skew_change;
         current = current->next;
@@ -188,15 +167,11 @@ double Stock::get_true_skewness(void) {
 }
 
 void Stock::init(void) {
-    // Assign a random price, standard deviation, skewness, and category to the stock
     category = random_integer(category_list_size);
-
-    // Generate a name based on the category
     name = generate_name(category);
 }
 
 void Stock::testing_set_attributes(string name, double price, unsigned int quantity, double sd, double skew, unsigned int category) {
-    // Set the attributes of the stock for testing purposes
     this->name = name;
     this->price = price;
     this->quantity = quantity;
