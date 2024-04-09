@@ -98,7 +98,7 @@ class Stock {
          *         If the number of rounds is greater than the size of the history array,
          *         return the entire history
          */
-        std::vector<float> return_most_recent_history(int rounds);
+        std::vector<float> return_most_recent_history(unsigned int rounds);
 
         /**
          * Return the name of the stock
@@ -125,15 +125,15 @@ class Stock {
         float get_money_spent(void);
 
     private:
-        std::string name;            /** name of the stock */
-        float price;                /** current price of the stock */
-        unsigned int quantity;       /** number of stocks player has */
-        unsigned int category;       /** stores category numbers, where the names are stored in names.h */
-        float money_spent;          /** total money spent on purchasing the stock */
-        
-        std::list<Stock_event> events; /** List of events that will modify the stock */
+        std::string name;      /** name of the stock */
+        float price;           /** current price of the stock */
+        unsigned int quantity; /** number of stocks player has */
+        unsigned int category; /** stores category numbers, where the names are stored in names.h */
+        float money_spent;     /** total money spent on purchasing the stock */
+
+        std::list<Stock_event> events;               /** List of events that will modify the stock */
         std::map<stock_modifiers, float> attributes; /** The attributes of the stock */
-        std::vector<float> history; /** The history of stock prices */
+        std::vector<float> history;                  /** The history of stock prices */
 
         void update_history(void); /** Update the history array with the current price */
 
@@ -142,7 +142,6 @@ class Stock {
          * Internal use after the "next_round" function is called
          */
         void remove_obselete_event(void);
-
 };
 
 #endif

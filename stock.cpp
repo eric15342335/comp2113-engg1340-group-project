@@ -1,7 +1,7 @@
 /**
  * @file stock.cpp
  * @brief Implementation of the Stock class
-*/
+ */
 #include "stock.h"
 #include "names.h"
 #include "random_price.h"
@@ -45,12 +45,12 @@ void Stock::update_history(void) {
     history.push_back(price);
 }
 
-std::vector<float> Stock::return_most_recent_history(int rounds) {
+std::vector<float> Stock::return_most_recent_history(unsigned int rounds) {
     std::vector<float> recent_history;
     if (rounds >= history.size()) {
         return history;
     }
-    for (int i = history.size() - rounds; i < history.size(); i++) {
+    for (unsigned int i = history.size() - rounds; i < history.size(); i++) {
         recent_history.push_back(history[i]);
     }
     return recent_history;
@@ -84,7 +84,8 @@ void Stock::remove_obselete_event(void) {
     while (event_itr != events.end()) {
         if (event_itr->duration <= 0) {
             event_itr = events.erase(event_itr);
-        } else {
+        }
+        else {
             event_itr++;
         }
     }
@@ -106,13 +107,13 @@ void Stock::init(void) {
     /** Generate a random price
      * Currently, the parameter is hardcoded to 1
      * @todo: Make this parameter not hardcoded, like depending on the category
-    */
-    price = init_stock_price(1); 
+     */
+    price = init_stock_price(1);
     quantity = 0;
     money_spent = 0;
     /** @todo Move these attribute initialization to random_price.h
      * Now we have to hardcode them here
-    */
+     */
     attributes[standard_deviation] = 0;
     attributes[skewness] = 0;
     update_history();
