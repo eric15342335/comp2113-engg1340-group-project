@@ -1,13 +1,17 @@
 name: clang-format
 
-on: [pull_request]
+on:
+    push:
+        branches:
+            - main
+    pull_request:
 
 jobs:
-  cpp-formatting-check:
+  clang-format:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: Run clang-format
       run: |
-        clang-format --Werror --dry-run $(find . -name '*.cpp' -or -name '*.h')
+        clang-format --Werror --dry-run *.cpp *.h

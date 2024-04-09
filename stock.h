@@ -130,7 +130,7 @@ class Stock {
          * @return Most recent price being the *last* element in the vector.
          *         If the number of rounds is greater than the size of the history array,
          *         return the entire history
-        */
+         */
         vector<double> return_most_recent_history(int rounds);
 
         /**
