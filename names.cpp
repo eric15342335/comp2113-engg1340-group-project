@@ -1,12 +1,10 @@
 // stock name generation algorithm
-#include <iostream>
+#include "names.h"
 #include <random>
-#include <vector>
 #include <algorithm>
 using namespace std;
 
 // the index map to the names, e.g. category = 0 is Adv&Market
-const int category_list_size = 19;
 string category_list[category_list_size] = {
     "Adv&Market", "Aero&Def", "Airlines", "RenewEnergy", "Auto", "Banks", "Biotech",
     "Broadcast", "Casinos&Gaming", "E-Commerce", "EnergyStorage", "FinServices",
