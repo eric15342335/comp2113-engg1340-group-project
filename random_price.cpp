@@ -6,23 +6,15 @@
 
 double init_stock_price(int a) {
     std::random_device rd;
-    // Merssane Twister
     std::mt19937 gen(rd());
+    std::normal_distribution<double> distribution(5.0, 2.0);
     if (a == 2) {
-        std::normal_distribution<double> distribution(50.0, 20.0);
-        return distribution(gen);
+        distribution.param(std::normal_distribution<double>::param_type(50.0, 20.0));
     }
-    else {
-        if (a == 3) {
-            std::normal_distribution<double> distribution(150.0, 50.0);
-            return distribution(gen);
-        }
-        else {
-            std::normal_distribution<double> distribution(5.0, 2.0);
-            return distribution(gen);
-        }
+    if (a == 3) {
+        distribution.param(std::normal_distribution<double>::param_type(150.0, 50.0));
     }
-    return 0.00;
+    return distribution(gen);
 }
 double random_sd(float price) {
     std::random_device rd;
