@@ -1,0 +1,24 @@
+name: clang-format pull request
+
+on:
+  [workflow_dispatch]
+
+jobs:
+  clang-format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Create pull request
+        run: |
+          rand_char=$(openssl rand -hex 3)
+          git checkout -b clang-format-$rand_char
+          clang-format -i *.cpp *.h
+          git add --all
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          git commit -m "Format: Run clang-format on main branch"
+          git push -u origin clang-format-$rand_char
+          gh pr create -B main -H clang-format-$rand_char --title 'Format: Run clang-format on main branch' --body "This pull request fixes formatting issues in the codebase using .clang-format configuration file. Created by Github Actions"
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
