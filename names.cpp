@@ -5,15 +5,15 @@
 using namespace std;
 
 // the index map to the names, e.g. category = 0 is Adv&Market
-string category_list[category_list_size] = {
+string const category_list[category_list_size] = {
     "Adv&Market", "Aero&Def", "Airlines", "RenewEnergy", "Auto", "Banks", "Biotech",
-    "Broadcast", "Casinos&Gaming", "E-Commerce", "EnergyStorage", "FinServices",
-    "Food&Beverage", "Healthcare", "Tech", "Pharma", "RealEstate", "Retail", "Telecom"
+    "Broadcast", "Casinos&Gaming", "E-Commerce", "FinServices",
+    "Food&Beverage", "Healthcare", "Tech", "RealEstate", "Retail", "Telecom"
 };
 
 
 vector<string> generate_name(unsigned int category, int num) { // possibility of infinite loop if i call generate_names(0,99999999999999)
-    vector<string> suffixes = {"Holdings", "Ltd", "Group", "Corp", "Inc", "Enterprises", "Solutions", "Services"};
+    vector<string> const suffixes = {"Holdings", "Ltd", "Group", "Corp", "Inc", "Enterprises", "Solutions", "Services"};
     vector<string> companyNames;
     random_device rd;
     mt19937 gen(rd());
