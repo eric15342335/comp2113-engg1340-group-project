@@ -4,40 +4,55 @@
 #include <iostream>
 #include <random>
 
-double init_stock_price(int price_profile) {
+float init_stock_price(int price_profile) {
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::normal_distribution<double> distribution(5.0, 2.0);
+    std::normal_distribution<float> distribution(5.0, 2.0);
     if (price_profile == 2) {
-        distribution.param(std::normal_distribution<double>::param_type(50.0, 20.0));
+        distribution.param(std::normal_distribution<float>::param_type(50.0, 20.0));
     }
     if (price_profile == 3) {
-        distribution.param(std::normal_distribution<double>::param_type(150.0, 50.0));
+        distribution.param(std::normal_distribution<float>::param_type(150.0, 50.0));
     }
-    return distribution(gen);
+    return abs(distribution(gen));
 }
-double random_sd(float price) {
+
+float stock_change(int mode) {
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::normal_distribution<double> d(0.03 * price, 0.02 * price);
-    return abs(d(gen));
-}
-double random_stock(float & mean, float & sd, float & upper_limit,
-                    float & lower_limit) {
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::normal_distribution<double> distribution(mean, sd);
-    float price = distribution(gen);
-    // for mean > temp i.e. falling prices
-    if ((mean - price) > (lower_limit * mean)) {
-        mean = price;
+    std::normal_distribution<float> distribution(0, 0.5);
+    if (mode == 1) {
+        distribution.param(std::normal_distribution<float>::param_type(0.5, 0.5));
     }
-    // rising prices
-    if ((price - mean) > (upper_limit * mean)) {
-        mean = price;
+    if (mode == 2) {
+        distribution.param(std::normal_distribution<float>::param_type(-0.5, 0.5));
     }
-    sd = random_sd(price);
-    return price;
+    if (mode == 3) {
+        distribution.param(std::normal_distribution<float>::param_type(2, 1));
+    }
+    if (mode == 4) {
+        distribution.param(std::normal_distribution<float>::param_type(-2, 1));
+    }
+    if (mode == 5) {
+        distribution.param(std::normal_distribution<float>::param_type(10, 3));
+    }
+    if (mode == 6) {
+        distribution.param(std::normal_distribution<float>::param_type(-10, 3));
+    }
+    if (mode == 7) {
+        distribution.param(std::normal_distribution<float>::param_type(0.5, 3));
+    }
+    if (mode == 8) {
+        distribution.param(std::normal_distribution<float>::param_type(-0.5, 3));
+    }
+    if (mode == 9) {
+        distribution.param(std::normal_distribution<float>::param_type(0, 3));
+    }
+    float x = distribution(gen);
+    if (x < -100) {
+        x = -100;
+    }
+    return x;
 }
 unsigned int random_integer(unsigned int max_integer) {
     return rand() % max_integer;
