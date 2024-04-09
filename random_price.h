@@ -9,7 +9,7 @@
  * Initial Stock Price Generator
  * if a=1 mean 5 sd 2; if a=2 mean 50 sd 20; if a=3 mean 150 sd 50;
  */
-float init_stock_price(int a);
+float init_stock_price(int price_profile);
 
 /**records % change of stock. Should use stock_price(k+1th) = (1+stock_change(mode)/100)*stock_price_kth to calculate raw stock price.
  *default: Non-increasing (mean 0% s.d. 0.5%)
