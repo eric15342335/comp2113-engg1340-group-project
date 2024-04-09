@@ -1,5 +1,5 @@
 // stock name generation algorithm
-#include "names.h"
+#include <iostream>
 #include <random>
 #include <vector>
 #include <algorithm>
@@ -12,12 +12,16 @@ string category_list[category_list_size] = {
     "Broadcast", "Casinos&Gaming", "E-Commerce", "EnergyStorage", "FinServices",
     "Food&Beverage", "Healthcare", "Tech", "Pharma", "RealEstate", "Retail", "Telecom"
 };
-string generate_name(unsigned int category, int num) {
+
+
+vector<string> generate_name(unsigned int category, int num) {
+    vector<string> suffixes = {"Holdings", "Ltd", "Group", "Corp", "Inc", "Enterprises", "Solutions", "Services"};
+    vector<string> companyNames;
+    random_device rd;
+    mt19937 gen(rd());
+
     switch (category) {
-        vector<string> suffixes = {"Holdings", "Ltd", "Group", "Corp", "Inc", "Enterprises", "Solutions", "Services"};
-        vector<string> companyNames;
-        case 0:
-            // Generate a name for Adv&Market category
+        case 0: { // Generate a name for Adv&Market category
             vector<string> words = {
                 "Alpha", "Beta", "Gamma", "Delta", "Epsilon",
                 "Innovate", "Solutions", "Strategies", "Impact",
@@ -32,33 +36,19 @@ string generate_name(unsigned int category, int num) {
                 "Advertising", "Media", "Promotion", "Campaign",
                 "Creative", "Strategy", "Market", "Audience",
                 "Brand", "Digital", "Social", "Influencer"
-                };
-            random_device rd;
-            mt19937 gen(rd());
+            };
+
             for (int i = 0; i < num; i++) {
-                shuffle(words.begin(), words.end(), gen);
-                string name = "";
-                int numWords = uniform_int_distribution<int>(1, 2)(gen);
-                for (int i = 0; i < num; i++) {
-                    shuffle(words.begin(), words.end(), gen);
-                    string name = "";
-                    for (int j = 0; j < numWords; ++j) {
-                        if (j != 0) {
-                            name += " ";  // Add space between words
-                        }
-                        name += words[j];
-                    }
-
-                    // Add a random suffix
-                    int suffixIndex = suffixDistribution(gen);
-                    name += " " + suffixes[suffixIndex];
-
+                string name = words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] + " " +
+                              suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(gen)];
+                if (find(companyNames.begin(), companyNames.end(), name) == companyNames.end())
                     companyNames.push_back(name);
-                }
-            return companyNames;
+                else
+                    i--;
+            }
             break;
-        case 1:
-            // Generate a name for Aero&Def category
+        }
+        case 1: { // Generate a name for Aero&Def category
             vector<string> words = {
                 "Zeus", "Thor", "Hulk", "Loki", "Ironman",
                 "Captain", "America", "Valkyrie", "Odin", "Hawkeye",
@@ -74,33 +64,19 @@ string generate_name(unsigned int category, int num) {
                 "Supersonic", "Bomber", "Interceptor", "Pilot", "Sukuna",
                 "Stealth", "Warrior", "Aircraft", "Airman", "Seiya", "Sanji",
                 "Airbase", "Stratosphere", "Airshow", "Combat", "Zoro"
-                };
-            random_device rd;
-            mt19937 gen(rd());
+            };
+
             for (int i = 0; i < num; i++) {
-                shuffle(words.begin(), words.end(), gen);
-                string name = "";
-                int numWords = uniform_int_distribution<int>(1, 2)(gen);
-                for (int i = 0; i < num; i++) {
-                    shuffle(words.begin(), words.end(), gen);
-                    string name = "";
-                    for (int j = 0; j < numWords; ++j) {
-                        if (j != 0) {
-                            name += " ";  // Add space between words
-                        }
-                        name += words[j];
-                    }
-
-                    // Add a random suffix
-                    int suffixIndex = suffixDistribution(gen);
-                    name += " " + suffixes[suffixIndex];
-
+                string name = words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] + " " +
+                              suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(gen)];
+                if (find(companyNames.begin(), companyNames.end(), name) == companyNames.end())
                     companyNames.push_back(name);
-                }
-            return companyNames;
+                else
+                    i--;
+            }
             break;
-        case 2:
-            // Generate a name for Airlines category
+        }
+        case 2: { // Generate a name for Airlines category
             vector<string> words = {
                 "Sky", "Wings", "Fly", "Jet", "Air",
                 "Cloud", "Aviation", "Aero", "Flight", "High",
@@ -112,33 +88,19 @@ string generate_name(unsigned int category, int num) {
                 "Takeoff", "Landing", "Pilot", "Cabin", "Cockpit",
                 "Airlift", "Airflow", "Airliner", "Jetsetter", "Airship",
                 "Airterminal", "Airsteward", "Airstrike", "Airtaxi", "Airway"
-                };
-            random_device rd;
-            mt19937 gen(rd());
+            };
+
             for (int i = 0; i < num; i++) {
-                shuffle(words.begin(), words.end(), gen);
-                string name = "";
-                int numWords = uniform_int_distribution<int>(1, 2)(gen);
-                for (int i = 0; i < num; i++) {
-                    shuffle(words.begin(), words.end(), gen);
-                    string name = "";
-                    for (int j = 0; j < numWords; ++j) {
-                        if (j != 0) {
-                            name += " ";  // Add space between words
-                        }
-                        name += words[j];
-                    }
-
-                    // Add a random suffix
-                    int suffixIndex = suffixDistribution(gen);
-                    name += " " + suffixes[suffixIndex];
-
+                string name = words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] + " " +
+                              suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(gen)];
+                if (find(companyNames.begin(), companyNames.end(), name) == companyNames.end())
                     companyNames.push_back(name);
-                }
-            return companyNames;
+                else
+                    i--;
+            }
             break;
-        case 3:
-            // Generate a name for RenewEnergy category
+        }
+        case 3: { // Generate a name for RenewEnergy&storage category
             vector<string> words = {
                 "Solar", "Wind", "Eco", "Green", "Renew",
                 "Sunny", "Breezy", "Clean", "Efficient", "Power",
@@ -148,34 +110,26 @@ string generate_name(unsigned int category, int num) {
                 "Sizzle", "Zap", "Wave", "Harvest", "Air",
                 "Biomass", "Carbon", "Efficiency", "Giga", "Innovate",
                 "Mega", "Neutron", "Photon", "Renewable", "Revolve",
-                "Spark", "Thermal", "Vortex", "Watt", "Zero"
-                };
-            random_device rd;
-            mt19937 gen(rd());
+                "Spark", "Thermal", "Vortex", "Watt", "Zero",
+                "PowerPunch", "JoltJester", "BatteryBanter", "EnergeticLaughs", "StorageSpark",
+                "ChargeChuckler", "HumorHavoc", "FunnyFuel", "ZappyZingers", "WittyWatt",
+                "EnergyVault", "PowerCell", "StorageSolutions", "ChargeMaster", "BatteryTech",
+                "PowerHub", "EcoStorage", "RenewableEnergy", "EfficientEnergies", "EnergyVault",
+                "PowerCell", "StorageSolutions", "ChargeMaster", "BatteryTech", "PowerHub",
+                "EcoStorage", "RenewableEnergy", "EfficientEnergies"
+            };
+
             for (int i = 0; i < num; i++) {
-                shuffle(words.begin(), words.end(), gen);
-                string name = "";
-                int numWords = uniform_int_distribution<int>(1, 2)(gen);
-                for (int i = 0; i < num; i++) {
-                    shuffle(words.begin(), words.end(), gen);
-                    string name = "";
-                    for (int j = 0; j < numWords; ++j) {
-                        if (j != 0) {
-                            name += " ";  // Add space between words
-                        }
-                        name += words[j];
-                    }
-
-                    // Add a random suffix
-                    int suffixIndex = suffixDistribution(gen);
-                    name += " " + suffixes[suffixIndex];
-
+                string name = words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] + " " +
+                              suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(gen)];
+                if (find(companyNames.begin(), companyNames.end(), name) == companyNames.end())
                     companyNames.push_back(name);
-                }
-            return companyNames;
+                else
+                    i--;
+            }
             break;
-        case 4:
-            // Generate a name for Auto category
+        }
+        case 4: { // Generate a name for Auto category
             vector<string> words = {
                 "Speed", "Drive", "Auto", "Wheel", "Car",
                 "Turbo", "Vroom", "Cruise", "Road", "Engine",
@@ -193,33 +147,19 @@ string generate_name(unsigned int category, int num) {
                 "Mazdah", "Volvo", "Infinitii", "Alfa Romeo", "Lexus",
                 "Sloth", "Land Hover", "Lincollin", "GMC",
                 "Aubii", "Buddatti", "Maserahhi", "McLaren", "Rage Rover"
-                };
-            random_device rd;
-            mt19937 gen(rd());
+            };
+
             for (int i = 0; i < num; i++) {
-                shuffle(words.begin(), words.end(), gen);
-                string name = "";
-                int numWords = 1;
-                for (int i = 0; i < num; i++) {
-                    shuffle(words.begin(), words.end(), gen);
-                    string name = "";
-                    for (int j = 0; j < numWords; ++j) {
-                        if (j != 0) {
-                            name += " ";  // Add space between words
-                        }
-                        name += words[j];
-                    }
-
-                    // Add a random suffix
-                    int suffixIndex = suffixDistribution(gen);
-                    name += " " + suffixes[suffixIndex];
-
+                string name = words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] + " " +
+                              suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(gen)];
+                if (find(companyNames.begin(), companyNames.end(), name) == companyNames.end())
                     companyNames.push_back(name);
-                }
-            return companyNames;
+                else
+                    i--;
+            }
             break;
-        case 5:
-            // Generate a name for Banks category
+        }
+        case 5: { // Generate a name for Banks category
             vector<string> words = {
                 "Capital", "Trust", "Secure", "Savings", "Finest",
                 "Elite", "Prosper", "Advance", "Global", "Infinite",
@@ -229,33 +169,19 @@ string generate_name(unsigned int category, int num) {
                 "Centric", "Vantage", "Opus", "Paragon", "Zenith",
                 "Crest", "Apex", "Aegis", "Legacy", "Crown", "Krupt",
                 "Meridian", "Encompass", "Equity", "Stellar", "Eclipse"
-                };
-            random_device rd;
-            mt19937 gen(rd());
+            };
+
             for (int i = 0; i < num; i++) {
-                shuffle(words.begin(), words.end(), gen);
-                string name = "";
-                int numWords = 1;
-                for (int i = 0; i < num; i++) {
-                    shuffle(words.begin(), words.end(), gen);
-                    string name = "";
-                    for (int j = 0; j < numWords; ++j) {
-                        if (j != 0) {
-                            name += " ";  // Add space between words
-                        }
-                        name += words[j];
-                    }
-
-                    // Add a random suffix
-                    int suffixIndex = suffixDistribution(gen);
-                    name += " " + suffixes[suffixIndex];
-
+                string name = words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] + " " +
+                              suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(gen)];
+                if (find(companyNames.begin(), companyNames.end(), name) == companyNames.end())
                     companyNames.push_back(name);
-                }
-            return companyNames;
+                else
+                    i--;
+            }
             break;
-        case 6:
-            // Generate a name for Biotech category
+        }
+        case 6: { // Generate a name for Biotech category
             vector<string> words = {
                 "GeneWorks", "BioSolutions", "CellTech", "InnoGene", "BioGenius",
                 "VitaLab", "BioFusion", "GeneSynth", "EcoGene", "LifeTech",
@@ -265,33 +191,19 @@ string generate_name(unsigned int category, int num) {
                 "BioTechne", "SynthoGene", "GeneWave", "BioGenome", "InnoBio",
                 "GenePrime", "BioSpectra", "InnoCell", "BioPlasma", "GeneTech",
                 "BioQuest", "GeneGenius", "InnoGene", "BioCure", "GeneCraft"
-                };
-            random_device rd;
-            mt19937 gen(rd());
+            };
+
             for (int i = 0; i < num; i++) {
-                shuffle(words.begin(), words.end(), gen);
-                string name = "";
-                int numWords = 1;
-                for (int i = 0; i < num; i++) {
-                    shuffle(words.begin(), words.end(), gen);
-                    string name = "";
-                    for (int j = 0; j < numWords; ++j) {
-                        if (j != 0) {
-                            name += " ";  // Add space between words
-                        }
-                        name += words[j];
-                    }
-
-                    // Add a random suffix
-                    int suffixIndex = suffixDistribution(gen);
-                    name += " " + suffixes[suffixIndex];
-
+                string name = words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] + " " +
+                              suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(gen)];
+                if (find(companyNames.begin(), companyNames.end(), name) == companyNames.end())
                     companyNames.push_back(name);
-                }
-            return companyNames;
+                else
+                    i--;
+            }
             break;
-        case 7:
-            // Generate a name for Broadcast category
+        }
+        case 7: { // Generate a name for Broadcast category
             vector<string> words = {
                 "SoundBlast", "MediaMania", "EchoFiesta", "ChannelChaos", "AudioCircus",
                 "GlobalGiggles", "TalkTunes", "Listen2Laughs", "WaveWhimsy", "LiveLaughs", "Listen2Me",
@@ -309,33 +221,19 @@ string generate_name(unsigned int category, int num) {
                 "EchoChannel", "AudioStream", "MediaVox", "TalkTrek", "WaveWire",
                 "BroadcastBox", "SonicStream", "SoundSphere", "AudioMingle", "ListenIn",
                 "StreamCenter", "VoicePulse", "RadioRadar", "ChannelWave", "SoundSync"
-                };
-            random_device rd;
-            mt19937 gen(rd());
+            };
+
             for (int i = 0; i < num; i++) {
-                shuffle(words.begin(), words.end(), gen);
-                string name = "";
-                int numWords = 1;
-                for (int i = 0; i < num; i++) {
-                    shuffle(words.begin(), words.end(), gen);
-                    string name = "";
-                    for (int j = 0; j < numWords; ++j) {
-                        if (j != 0) {
-                            name += " ";  // Add space between words
-                        }
-                        name += words[j];
-                    }
-
-                    // Add a random suffix
-                    int suffixIndex = suffixDistribution(gen);
-                    name += " " + suffixes[suffixIndex];
-
+                string name = words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] + " " +
+                              suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(gen)];
+                if (find(companyNames.begin(), companyNames.end(), name) == companyNames.end())
                     companyNames.push_back(name);
-                }
-            return companyNames;
+                else
+                    i--;
+            }
             break;
-        case 8:
-            // Generate a name for Casinos&Gaming category
+        }
+        case 8: { // Generate a name for Casinos&Gaming category
             vector<string> words = {
                 "LuckyBets", "GameGalore", "SpinToWin", "CasinoCraziness", "JackpotJamboree",
                 "DiceyDelight", "GamblingGiggles", "CardComedy", "WagerWhimsy", "WinningLaughs",
@@ -353,135 +251,59 @@ string generate_name(unsigned int category, int num) {
                 "DiceGaming", "WagerZone", "CardMaster", "WinningStreak", "ChipsPalace", "Hokemon",
                 "PlayfulGaming", "SlotParadise", "BingoEmpire", "RouletteRealm", "CasinoWorld",
                 "GamingZone", "BetMasters", "GamblingKingdom", "LuckyLottery", "SpinPalace", "Nario"
-                };
-            random_device rd;
-            mt19937 gen(rd());
+            };
+
             for (int i = 0; i < num; i++) {
-                shuffle(words.begin(), words.end(), gen);
-                string name = "";
-                int numWords = 1;
-                for (int i = 0; i < num; i++) {
-                    shuffle(words.begin(), words.end(), gen);
-                    string name = "";
-                    for (int j = 0; j < numWords; ++j) {
-                        if (j != 0) {
-                            name += " ";  // Add space between words
-                        }
-                        name += words[j];
-                    }
-
-                    // Add a random suffix
-                    int suffixIndex = suffixDistribution(gen);
-                    name += " " + suffixes[suffixIndex];
-
+                string name = words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] + " " +
+                              suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(gen)];
+                if (find(companyNames.begin(), companyNames.end(), name) == companyNames.end())
                     companyNames.push_back(name);
-                }
-            return companyNames;
+                else
+                    i--;
+            }
             break;
-        case 9:
-            // Generate a name for E-Commerce category
+        }
+        case 9: { // Generate a name for E-Commerce category
             vector<string> words = {
-                "Shopaholic", "Buy-o-matic", "DealDiva", "CartoonCraze", "SaleSensation", "Hundredcents", "Thousandcents", "SkyCat",
+                "Shopaholic", "Buy-o-matic", "DealDiva", "CartoonCraze", "SaleSensation", "Hundredcents", "Thousandcents",
                 "DiscountDelight", "BargainBonanza", "OnlineOlympics", "ShipShop", "PricelessPurchases", "SkyDog", "Bmazon",
                 "ClickComedy", "eBayLaughs", "AmazonAmusement", "ShoppingShenanigans", "VirtualVortex",
-                "SaleSlapstick", "Buyer'sBliss", "DealDazzle", "CartoonCapers", "ShopSmart",
+                "SaleSlapstick", "Buyer'sBliss", "DealDazzle", "CartoonCapers", "ShopSmart", "SkyCat",
                 "BuyDirect", "DealFinder", "CartConnect", "SaleSpot", "DiscountMart",
                 "BargainHunt", "OnlinePlaza", "ShipRight", "PricePoint", "ClickCentral",
                 "eBayDeals", "AmazonEmporium", "ShoppingSolutions", "VirtualMarket", "SaleSolutions",
                 "Buyer'sParadise", "DealHaven", "CartConnect"
-                };
-            random_device rd;
-            mt19937 gen(rd());
+            };
+
             for (int i = 0; i < num; i++) {
-                shuffle(words.begin(), words.end(), gen);
-                string name = "";
-                int numWords = 1;
-                for (int i = 0; i < num; i++) {
-                    shuffle(words.begin(), words.end(), gen);
-                    string name = "";
-                    for (int j = 0; j < numWords; ++j) {
-                        if (j != 0) {
-                            name += " ";  // Add space between words
-                        }
-                        name += words[j];
-                    }
-
-                    // Add a random suffix
-                    int suffixIndex = suffixDistribution(gen);
-                    name += " " + suffixes[suffixIndex];
-
+                string name = words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] + " " +
+                              suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(gen)];
+                if (find(companyNames.begin(), companyNames.end(), name) == companyNames.end())
                     companyNames.push_back(name);
-                }
-            return companyNames;
+                else
+                    i--;
+            }
             break;
-        case 10:
-            // Generate a name for EnergyStorage category
-            vector<string> words = {
-                "PowerPunch", "JoltJester", "BatteryBanter", "EnergeticLaughs", "StorageSpark",
-                "ChargeChuckler", "HumorHavoc", "FunnyFuel", "ZappyZingers", "WittyWatt",
-                "EnergyVault", "PowerCell", "StorageSolutions", "ChargeMaster", "BatteryTech",
-                "PowerHub", "EcoStorage", "RenewableEnergy", "EfficientEnergies", "EnergyVault",
-                "PowerCell", "StorageSolutions", "ChargeMaster", "BatteryTech", "PowerHub",
-                "EcoStorage", "RenewableEnergy", "EfficientEnergies"
-                };
-            random_device rd;
-            mt19937 gen(rd());
-            for (int i = 0; i < num; i++) {
-                shuffle(words.begin(), words.end(), gen);
-                string name = "";
-                int numWords = 1;
-                for (int i = 0; i < num; i++) {
-                    shuffle(words.begin(), words.end(), gen);
-                    string name = "";
-                    for (int j = 0; j < numWords; ++j) {
-                        if (j != 0) {
-                            name += " ";  // Add space between words
-                        }
-                        name += words[j];
-                    }
-
-                    // Add a random suffix
-                    int suffixIndex = suffixDistribution(gen);
-                    name += " " + suffixes[suffixIndex];
-
-                    companyNames.push_back(name);
-                }
-            return companyNames;
-            break;
-        case 11:
-            // Generate a name for FinServices category
+        }
+        case 10: { // Generate a name for FinServices category
             vector<string> words = {
                 "CashComedy", "Dollar Dazzle", "FinanceFunnies", "WealthWhimsy", "MoneyMaster",
                 "InvestmentLaughs", "Savings Smiles", "FunnyFunds", "PennyPunchlines", "BillsBanter",
                 "CapitalConsulting", "WealthManagement", "FinancialSolutions", "MoneyMatters", "InvestmentAdvisors",
                 "SecureBanking", "SmartFunds", "EconomicConsultancy", "FinancialExperts"
-                };
-            random_device rd;
-            mt19937 gen(rd());
+            };
+
             for (int i = 0; i < num; i++) {
-                shuffle(words.begin(), words.end(), gen);
-                string name = "";
-                int numWords = 1;
-                for (int i = 0; i < num; i++) {
-                    shuffle(words.begin(), words.end(), gen);
-                    string name = "";
-                    for (int j = 0; j < numWords; ++j) {
-                        if (j != 0) {
-                            name += " ";  // Add space between words
-                        }
-                        name += words[j];
-                    }
-
-                    // Add a random suffix
-                    int suffixIndex = suffixDistribution(gen);
-                    name += " " + suffixes[suffixIndex];
-
+                string name = words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] + " " +
+                              suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(gen)];
+                if (find(companyNames.begin(), companyNames.end(), name) == companyNames.end())
                     companyNames.push_back(name);
-                }
-            return companyNames;
+                else
+                    i--;
+            }
             break;
-        case 12:
-            // Generate a name for Food&Beverage category
+        }
+        case 11: { // Generate a name for Food&Beverage category
             vector<string> words = {
                 "Tasty", "Delicious", "Yummy", "Flavorful", "Gourmet",
                 "Savor", "Flavors", "Satisfy", "Cuisine", "Culinary",
@@ -493,33 +315,19 @@ string generate_name(unsigned int category, int num) {
                 "Appetite", "Sip", "Gobble", "Gulp", "Plate",
                 "Yum", "Morsel", "Nibble", "Digest", "Mouthful",
                 "Bistro", "Savor", "Crunch", "Sizzle", "Devour"
-                };
-            random_device rd;
-            mt19937 gen(rd());
+            };
+
             for (int i = 0; i < num; i++) {
-                shuffle(words.begin(), words.end(), gen);
-                string name = "";
-                int numWords = 1;
-                for (int i = 0; i < num; i++) {
-                    shuffle(words.begin(), words.end(), gen);
-                    string name = "";
-                    for (int j = 0; j < numWords; ++j) {
-                        if (j != 0) {
-                            name += " ";  // Add space between words
-                        }
-                        name += words[j];
-                    }
-
-                    // Add a random suffix
-                    int suffixIndex = suffixDistribution(gen);
-                    name += " " + suffixes[suffixIndex];
-
+                string name = words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] + " " +
+                              suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(gen)];
+                if (find(companyNames.begin(), companyNames.end(), name) == companyNames.end())
                     companyNames.push_back(name);
-                }
-            return companyNames;
+                else
+                    i--;
+            }
             break;
-        case 13:
-            // Generate a name for Healthcare category
+        }
+        case 12: { // Generate a name for Healthcare&Pharm category
             vector<string> words = {
                 "Health", "Wellness", "Care", "Medical", "Life", "Apple/Day",
                 "Vital", "Active", "Healthy", "Cure", "Recover", "Pay4Med", 
@@ -529,34 +337,26 @@ string generate_name(unsigned int category, int num) {
                 "Wellbeing", "Medic", "Clinic", "Well", "Doctor",
                 "Nurse", "Heal", "Surgery", "Wellness", "Rx",
                 "Pharm", "Lab", "Medical", "Caring", "Healing",
-                "Rehab", "Recovery", "Dose", "MediCare", "Medix"
-                };
-            random_device rd;
-            mt19937 gen(rd());
+                "Rehab", "Recovery", "Dose", "MediCare", "Medix",
+                "Pharma", "Pharmaceutical", "Medi", "Health", "Care",
+                "Wellness", "Rx", "Med", "Vita", "Sana",
+                "Sano", "Salute", "Pulse", "Pharmacy", "Medicine",
+                "Drugs", "Wellbeing", "Cure", "Heal", "Remedy",
+                "Prescribe", "Relief", "Recovery", "Dose", "MediCare",
+                "Medix", "Healthy", "Fit", "Strong", "Balance"
+            };
+
             for (int i = 0; i < num; i++) {
-                shuffle(words.begin(), words.end(), gen);
-                string name = "";
-                int numWords = 1;
-                for (int i = 0; i < num; i++) {
-                    shuffle(words.begin(), words.end(), gen);
-                    string name = "";
-                    for (int j = 0; j < numWords; ++j) {
-                        if (j != 0) {
-                            name += " ";  // Add space between words
-                        }
-                        name += words[j];
-                    }
-
-                    // Add a random suffix
-                    int suffixIndex = suffixDistribution(gen);
-                    name += " " + suffixes[suffixIndex];
-
+                string name = words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] + " " +
+                              suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(gen)];
+                if (find(companyNames.begin(), companyNames.end(), name) == companyNames.end())
                     companyNames.push_back(name);
-                }
-            return companyNames;
+                else
+                    i--;
+            }
             break;
-        case 14:
-            // Generate a name for Tech category
+        }
+        case 13: { // Generate a name for Tech category
             vector<string> words = {
                 "Tech", "Digital", "Innovate", "Byte", "Code",
                 "Data", "Logic", "Connect", "Smart",
@@ -564,67 +364,19 @@ string generate_name(unsigned int category, int num) {
                 "Nerd", "Geek", "Infinite", "System",
                 "Guru", "Genius", "Solve", "Pixel",
                 "Bit", "Invent", "KKGarden"
-                };
-            random_device rd;
-            mt19937 gen(rd());
+            };
+
             for (int i = 0; i < num; i++) {
-                shuffle(words.begin(), words.end(), gen);
-                string name = "";
-                int numWords = 1;
-                for (int i = 0; i < num; i++) {
-                    shuffle(words.begin(), words.end(), gen);
-                    string name = "";
-                    for (int j = 0; j < numWords; ++j) {
-                        if (j != 0) {
-                            name += " ";  // Add space between words
-                        }
-                        name += words[j];
-                    }
-
-                    // Add a random suffix
-                    int suffixIndex = suffixDistribution(gen);
-                    name += " " + suffixes[suffixIndex];
-
+                string name = words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] + " " +
+                              suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(gen)];
+                if (find(companyNames.begin(), companyNames.end(), name) == companyNames.end())
                     companyNames.push_back(name);
-                }
-            return companyNames;
+                else
+                    i--;
+            }
             break;
-        case 15:
-            // Generate a name for Pharma category
-            vector<string> words = {
-                "Pharma", "Pharmaceutical", "Medi", "Health", "Care",
-                "Wellness", "Rx", "Med", "Vita", "Sana",
-                "Sano", "Salute", "Pulse", "Pharmacy", "Medicine",
-                "Drugs", "Wellbeing", "Cure", "Heal", "Remedy",
-                "Prescribe", "Relief", "Recovery", "Dose", "MediCare",
-                "Medix", "Healthy", "Fit", "Strong", "Balance"
-                };
-            random_device rd;
-            mt19937 gen(rd());
-            for (int i = 0; i < num; i++) {
-                shuffle(words.begin(), words.end(), gen);
-                string name = "";
-                int numWords = 1;
-                for (int i = 0; i < num; i++) {
-                    shuffle(words.begin(), words.end(), gen);
-                    string name = "";
-                    for (int j = 0; j < numWords; ++j) {
-                        if (j != 0) {
-                            name += " ";  // Add space between words
-                        }
-                        name += words[j];
-                    }
-
-                    // Add a random suffix
-                    int suffixIndex = suffixDistribution(gen);
-                    name += " " + suffixes[suffixIndex];
-
-                    companyNames.push_back(name);
-                }
-            return companyNames;
-            break;
-        case 16:
-            // Generate a name for RealEstate category
+        }
+        case 14: { // Generate a name for RealEstate category
             vector<string> words = {
                 "Real", "Estate", "Property", "Homes", "Realty",
                 "Invest", "Buy", "Sell", "House", "Land",
@@ -633,33 +385,19 @@ string generate_name(unsigned int category, int num) {
                 "Rent", "Lease", "Property", "Assets", "Housing",
                 "Tower", "Plaza", "Villa", "Condo", "Develop",
                 "Society", "Park", "Living", "Urban", "Suburban"
-                };
-            random_device rd;
-            mt19937 gen(rd());
+            };
+
             for (int i = 0; i < num; i++) {
-                shuffle(words.begin(), words.end(), gen);
-                string name = "";
-                int numWords = 1;
-                for (int i = 0; i < num; i++) {
-                    shuffle(words.begin(), words.end(), gen);
-                    string name = "";
-                    for (int j = 0; j < numWords; ++j) {
-                        if (j != 0) {
-                            name += " ";  // Add space between words
-                        }
-                        name += words[j];
-                    }
-
-                    // Add a random suffix
-                    int suffixIndex = suffixDistribution(gen);
-                    name += " " + suffixes[suffixIndex];
-
+                string name = words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] + " " +
+                              suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(gen)];
+                if (find(companyNames.begin(), companyNames.end(), name) == companyNames.end())
                     companyNames.push_back(name);
-                }
-            return companyNames;
+                else
+                    i--;
+            }
             break;
-        case 17:
-            // Generate a name for Retail category
+        }
+        case 15: { // Generate a name for Retail category
             vector<string> words = {
                 "Obsidian", "Velvetine", "Stellar", "Luminary", "Nebula",
                 "Zephyr", "Elixir", "Intrigue", "Sapphire", "Crimson",
@@ -668,33 +406,19 @@ string generate_name(unsigned int category, int num) {
                 "Curio", "Boutique", "Ethereal", "Nook", "Vivid",
                 "Enchant", "Whimsy", "Delight", "Serendipity", "Wander",
                 "Charm", "Spruce", "Eclectic", "Rustic", "Vintage"
-                };
-            random_device rd;
-            mt19937 gen(rd());
+            };
+
             for (int i = 0; i < num; i++) {
-                shuffle(words.begin(), words.end(), gen);
-                string name = "";
-                int numWords = 1;
-                for (int i = 0; i < num; i++) {
-                    shuffle(words.begin(), words.end(), gen);
-                    string name = "";
-                    for (int j = 0; j < numWords; ++j) {
-                        if (j != 0) {
-                            name += " ";  // Add space between words
-                        }
-                        name += words[j];
-                    }
-
-                    // Add a random suffix
-                    int suffixIndex = suffixDistribution(gen);
-                    name += " " + suffixes[suffixIndex];
-
+                string name = words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] + " " +
+                              suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(gen)];
+                if (find(companyNames.begin(), companyNames.end(), name) == companyNames.end())
                     companyNames.push_back(name);
-                }
-            return companyNames;
+                else
+                    i--;
+            }
             break;
-        case 18:
-            // Generate a name for Telecom category
+        }
+        case 16: { // Generate a name for Telecom category
             vector<string> words = {
                 "Connect", "Link", "Wireless", "Tele", "Net",
                 "Signal", "Comm", "Telecom", "Tech", "Mobile",
@@ -703,32 +427,21 @@ string generate_name(unsigned int category, int num) {
                 "Echo", "Pulse", "Synapse", "Velocity", "Empower",
                 "Amplify", "Momentum", "Infinite", "Nexus", "Stream",
                 "Sync", "Telepath", "Radiant", "Blaze", "Quantum"
-                };
-            random_device rd;
-            mt19937 gen(rd());
+            };
+
             for (int i = 0; i < num; i++) {
-                shuffle(words.begin(), words.end(), gen);
-                string name = "";
-                int numWords = 1;
-                for (int i = 0; i < num; i++) {
-                    shuffle(words.begin(), words.end(), gen);
-                    string name = "";
-                    for (int j = 0; j < numWords; ++j) {
-                        if (j != 0) {
-                            name += " ";  // Add space between words
-                        }
-                        name += words[j];
-                    }
-
-                    // Add a random suffix
-                    int suffixIndex = suffixDistribution(gen);
-                    name += " " + suffixes[suffixIndex];
-
+                string name = words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] + " " +
+                              suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(gen)];
+                if (find(companyNames.begin(), companyNames.end(), name) == companyNames.end())
                     companyNames.push_back(name);
-                }
-            return companyNames;
+                else
+                    i--;
+            }
             break;
+        }
         default:
-            return {};
+            break;
     }
+
+    return companyNames;
 }
