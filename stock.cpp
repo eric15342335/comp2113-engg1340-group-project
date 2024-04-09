@@ -1,13 +1,18 @@
+/**
+ * @file stock.cpp
+ * @brief Implementation of the Stock class
+*/
 #include "stock.h"
 #include "names.h"
 #include "random_price.h"
-using namespace std;
 
 double Stock::purchase(double & balance, unsigned int amount, double trading_fees_percent) {
     double total_cost = price * amount * (1 + trading_fees_percent);
+    // Check if the player has enough balance to buy the stock
     if (total_cost > balance) {
         return -1;
     }
+    // Update the balance, quantity, and money_spent
     balance -= total_cost;
     quantity += amount;
     money_spent += total_cost;
@@ -15,9 +20,11 @@ double Stock::purchase(double & balance, unsigned int amount, double trading_fee
 }
 
 double Stock::sell(double & balance, unsigned int amount, double trading_fees_percent) {
+    // Check if the player has enough stocks to sell
     if (quantity < amount) {
         return -1;
     }
+    // Calculate the total revenue
     double total_revenue = price * amount * (1 - trading_fees_percent);
     balance += total_revenue;
     quantity -= amount;
@@ -25,7 +32,7 @@ double Stock::sell(double & balance, unsigned int amount, double trading_fees_pe
     return total_revenue;
 }
 
-string Stock::category_name(void) {
+std::string Stock::category_name(void) {
     return category_list[category];
 }
 
@@ -34,12 +41,12 @@ unsigned int Stock::num_stocks_affordable(double balance, double trading_fees_pe
 }
 
 void Stock::update_history(void) {
-    /** @note We use vector now! */
+    /** We use vector now! */
     history.push_back(price);
 }
 
-vector<double> Stock::return_most_recent_history(int rounds) {
-    vector<double> recent_history;
+std::vector<double> Stock::return_most_recent_history(int rounds) {
+    std::vector<double> recent_history;
     if (rounds >= history.size()) {
         return history;
     }
@@ -47,17 +54,6 @@ vector<double> Stock::return_most_recent_history(int rounds) {
         recent_history.push_back(history[i]);
     }
     return recent_history;
-}
-
-void Stock::delete_memory(void) {
-    // Loop through the linked list and delete each element sequentially
-    Event_Modifier * current = event_modifier_head;
-    while (current != nullptr) {
-        Event_Modifier * temp = current;
-        current = current->next;
-        delete temp;
-    }
-    event_modifier_head = nullptr; // Set the pointer to null
 }
 
 double Stock::delta_price(void) {
@@ -79,104 +75,30 @@ double Stock::delta_price_percentage(void) {
 }
 
 void Stock::add_event(Stock_event event) {
-    // Create a new event modifier and add it to the linked list
-    if (event_modifier_head == nullptr) {
-        // If the linked list is empty, create a new event modifier
-        Event_Modifier * new_event = new Event_Modifier;
-        new_event->sd_change = event.sd;
-        new_event->skew_change = event.skew;
-        new_event->duration = event.duration;
-        new_event->next = nullptr;
-        event_modifier_head = new_event;
-        return;
-    }
-    else {
-        // If the linked list is not empty, find the last element
-        Event_Modifier * current = event_modifier_head;
-        while (current->next != nullptr) {
-            current = current->next;
-        }
-        // Create a new event modifier and add it to the end of the linked list
-        Event_Modifier * new_event = new Event_Modifier;
-        new_event->sd_change = event.sd;
-        new_event->skew_change = event.skew;
-        new_event->duration = event.duration;
-        new_event->next = nullptr;
-        current->next = new_event;
-    }
+    /** Just an alias */
+    events.push_back(event);
 }
 
 void Stock::remove_obselete_event(void) {
-    if (event_modifier_head == nullptr) {
-        // no Event_Modifier in the linked list
-        return;
-    }
-    else {
-        // If the first event is obselete, remove it
-        if (event_modifier_head->duration <= 0) {
-            Event_Modifier * temp = event_modifier_head;
-            event_modifier_head = event_modifier_head->next;
-            delete temp;
-        }
-        // Loop through the linked list and remove the obselete event(s)
-        // save the current Event_Modifier pointer
-        // since its duration is > 0 as checked in the above 'if' statement
-        Event_Modifier * current = event_modifier_head;
-        // check the next Event_Modifier
-        while (current->next != nullptr) {
-            if (current->next->duration <= 0) {
-                // save the pointer of the next Event_Modifier struct
-                // that has duration <= 0
-                Event_Modifier * temp = current->next;
-                // remove the item from the linked list
-                current->next = temp->next;
-                // delete the memory of the removed Event_Modifier
-                delete temp;
-            }
-            // proceed to next item
-            current = current->next;
-            /*
-            Since we check the next Event_Modifier in the linked list,
-            the current Event_Modifier is not obselete, so we don't need to delete it
-            and we are safe to proceed to the next item
-            */
+    list<Stock_event>::iterator event_itr = events.begin();
+    while (event_itr != events.end()) {
+        if (event_itr->duration <= 0) {
+            event_itr = events.erase(event_itr);
+        } else {
+            event_itr++;
         }
     }
 }
 
-double Stock::get_true_sd(void) {
-    double true_sd = sd;
-    Event_Modifier * current = event_modifier_head;
-    // Add the standard deviation offset from each event modifier in the linked list
-    while (current != nullptr) {
-        true_sd += current->sd_change;
-        current = current->next;
+double Stock::sum_attribute(stock_modifiers attribute) {
+    double sum = 0;
+    list<Stock_event>::iterator event_itr = events.begin();
+    while (event_itr != events.end()) {
+        sum += event_itr->get_modifier(attribute);
     }
-    return true_sd;
-}
-
-double Stock::get_true_skewness(void) {
-    double true_skew = skew;
-    Event_Modifier * current = event_modifier_head;
-    // Add the skewness offset from each event modifier in the linked list
-    while (current != nullptr) {
-        true_skew += current->skew_change;
-        current = current->next;
-    }
-    return true_skew;
+    return sum;
 }
 
 void Stock::init(void) {
-    category = random_integer(category_list_size);
-    name = generate_name(category);
-}
-
-void Stock::testing_set_attributes(string name, double price, unsigned int quantity, double sd, double skew, unsigned int category) {
-    this->name = name;
-    this->price = price;
-    this->quantity = quantity;
-    this->sd = sd;
-    this->skew = skew;
-    this->category = category;
-    return;
+    /** @todo */
 }
