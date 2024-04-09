@@ -6,8 +6,8 @@
 #include "names.h"
 #include "random_price.h"
 
-double Stock::purchase(double & balance, unsigned int amount, double trading_fees_percent) {
-    double total_cost = price * amount * (1 + trading_fees_percent);
+float Stock::purchase(float & balance, unsigned int amount, float trading_fees_percent) {
+    float total_cost = price * amount * (1 + trading_fees_percent);
     // Check if the player has enough balance to buy the stock
     if (total_cost > balance) {
         return -1;
@@ -19,13 +19,13 @@ double Stock::purchase(double & balance, unsigned int amount, double trading_fee
     return total_cost;
 }
 
-double Stock::sell(double & balance, unsigned int amount, double trading_fees_percent) {
+float Stock::sell(float & balance, unsigned int amount, float trading_fees_percent) {
     // Check if the player has enough stocks to sell
     if (quantity < amount) {
         return -1;
     }
     // Calculate the total revenue
-    double total_revenue = price * amount * (1 - trading_fees_percent);
+    float total_revenue = price * amount * (1 - trading_fees_percent);
     balance += total_revenue;
     quantity -= amount;
     money_spent -= total_revenue;
@@ -36,7 +36,7 @@ std::string Stock::category_name(void) {
     return category_list[category];
 }
 
-unsigned int Stock::num_stocks_affordable(double balance, double trading_fees_percent) {
+unsigned int Stock::num_stocks_affordable(float balance, float trading_fees_percent) {
     return (unsigned int)balance / price * (1 + trading_fees_percent);
 }
 
@@ -45,8 +45,8 @@ void Stock::update_history(void) {
     history.push_back(price);
 }
 
-std::vector<double> Stock::return_most_recent_history(int rounds) {
-    std::vector<double> recent_history;
+std::vector<float> Stock::return_most_recent_history(int rounds) {
+    std::vector<float> recent_history;
     if (rounds >= history.size()) {
         return history;
     }
@@ -56,7 +56,7 @@ std::vector<double> Stock::return_most_recent_history(int rounds) {
     return recent_history;
 }
 
-double Stock::delta_price(void) {
+float Stock::delta_price(void) {
     // Stock prices are stored in the history array
     if (history.size() < 2) {
         // If there are less than two prices in the history array, return 0
@@ -66,7 +66,7 @@ double Stock::delta_price(void) {
     return history[history.size() - 1] - history[history.size() - 2];
 }
 
-double Stock::delta_price_percentage(void) {
+float Stock::delta_price_percentage(void) {
     if (history.size() < 2) {
         // If there are less than two prices in the history array, return 0
         return 0;
@@ -90,8 +90,8 @@ void Stock::remove_obselete_event(void) {
     }
 }
 
-double Stock::sum_attribute(stock_modifiers attribute) {
-    double sum = 0;
+float Stock::sum_attribute(stock_modifiers attribute) {
+    float sum = 0;
     list<Stock_event>::iterator event_itr = events.begin();
     while (event_itr != events.end()) {
         sum += event_itr->get_modifier(attribute);
@@ -100,5 +100,20 @@ double Stock::sum_attribute(stock_modifiers attribute) {
 }
 
 void Stock::init(void) {
-    /** @todo */
+    /** @todo Follow-up */
+    category = random_integer(category_list_size);
+    name = generate_name(category);
+    /** Generate a random price
+     * Currently, the parameter is hardcoded to 1
+     * @todo: Make this parameter not hardcoded, like depending on the category
+    */
+    price = init_stock_price(1); 
+    quantity = 0;
+    money_spent = 0;
+    /** @todo Move these attribute initialization to random_price.h
+     * Now we have to hardcode them here
+    */
+    attributes[standard_deviation] = 0;
+    attributes[skewness] = 0;
+    update_history();
 }

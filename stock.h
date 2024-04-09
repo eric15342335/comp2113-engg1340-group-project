@@ -22,7 +22,7 @@ class Stock {
          * @return Successful: Total cost of the purchase.
          *         Failed: -1 if the player does not have enough balance to buy the stock
          */
-        double purchase(double & balance, unsigned int amount, double trading_fees_percent);
+        float purchase(float & balance, unsigned int amount, float trading_fees_percent);
 
         /**
          * Sell a number of stocks
@@ -32,14 +32,14 @@ class Stock {
          * @return Successful: Amount of money the player receive.
          *         Failed: -1 if the player does not have enough stocks to sell
          */
-        double sell(double & balance, unsigned int amount, double trading_fees_percent);
+        float sell(float & balance, unsigned int amount, float trading_fees_percent);
 
         /**
          * @param balance The balance of the player
          * @param trading_fees_percent The trading fees percentage we charge the player
          * @return Number of stocks that the player can afford with the balance
          */
-        unsigned int num_stocks_affordable(double balance, double trading_fees_percent);
+        unsigned int num_stocks_affordable(float balance, float trading_fees_percent);
 
         /**
          * Call this function to create a new stock.
@@ -59,12 +59,12 @@ class Stock {
          * Return the change of stock price using the most recent price and the current price
          * @return change in stock price
          */
-        double delta_price(void);
+        float delta_price(void);
 
         /** Return the percentage of change of stock price using Stock::delta_price();
          * @return percentage of change in stock price
          */
-        double delta_price_percentage(void);
+        float delta_price_percentage(void);
 
         /**
          * Return the sum of a specific attribute of the stock.
@@ -73,7 +73,7 @@ class Stock {
          * @param attribute The attribute to sum up
          * @return The sum of the attribute
          */
-        double sum_attribute(stock_modifiers attribute);
+        float sum_attribute(stock_modifiers attribute);
 
         /**
          * Proceed to next round
@@ -93,15 +93,17 @@ class Stock {
 
     private:
         std::string name;            /** name of the stock */
-        double price;                /** current price of the stock */
+        float price;                /** current price of the stock */
         unsigned int quantity;       /** number of stocks player has */
         unsigned int category;       /** stores category numbers, where the names are stored in names.h */
-        double money_spent;          /** total money spent on purchasing the stock */
+        float money_spent;          /** total money spent on purchasing the stock */
         
         std::list<Stock_event> events; /** List of events that will modify the stock */
-        std::map<stock_modifiers, double> attributes; /** The attributes of the stock */
+        std::map<stock_modifiers, float> attributes; /** The attributes of the stock */
+        std::vector<float> history; /** The history of stock prices */
 
         void update_history(void); /** Update the history array with the current price */
+
         /**
          * Remove obselete events that has duration <= 0
          * Internal use after the "next_round" function is called
@@ -115,7 +117,7 @@ class Stock {
          *         If the number of rounds is greater than the size of the history array,
          *         return the entire history
          */
-        std::vector<double> return_most_recent_history(int rounds);
+        std::vector<float> return_most_recent_history(int rounds);
 };
 
 #endif
