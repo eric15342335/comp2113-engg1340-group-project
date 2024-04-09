@@ -15,7 +15,7 @@ extern string category_list[category_list_size];
 
 vector<string> generate_name(unsigned int category, int num);
 
-return (std::vector<std::string>){"wgefasdfa"};
+
 
 
 #endif
