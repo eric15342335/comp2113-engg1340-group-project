@@ -12,7 +12,7 @@ string category_list[category_list_size] = {
 };
 
 
-vector<string> generate_name(unsigned int category, int num) {
+vector<string> generate_name(unsigned int category, int num) { // possibility of infinite loop if i call generate_names(0,99999999999999)
     vector<string> suffixes = {"Holdings", "Ltd", "Group", "Corp", "Inc", "Enterprises", "Solutions", "Services"};
     vector<string> companyNames;
     random_device rd;
@@ -247,7 +247,7 @@ vector<string> generate_name(unsigned int category, int num) {
                 "CasinoWorld", "GamingZone", "BetMasters", "GamblingKingdom", "LuckyLottery", "Cooking Papa",
                 "SpinPalace", "JokerCasino", "BlackjackElite", "GameMaster", "LuckyWin", "ForNight", "WeCraft",
                 "DiceGaming", "WagerZone", "CardMaster", "WinningStreak", "ChipsPalace", "Hokemon",
-                "PlayfulGaming", "SlotParadise", "BingoEmpire", "RouletteRealm", "CasinoWorld",
+                "PlayfulGaming", "SlotParadise", "BingoEmpire", "RouletteRealm", "CasinoWorld","MustLose", "GuaranteedWin",
                 "GamingZone", "BetMasters", "GamblingKingdom", "LuckyLottery", "SpinPalace", "Nario"
             };
 
@@ -438,8 +438,8 @@ vector<string> generate_name(unsigned int category, int num) {
             break;
         }
         default:
+            return (std::vector<std::string>){"wgefasdfa"};
             break;
     }
-
     return companyNames;
 }
