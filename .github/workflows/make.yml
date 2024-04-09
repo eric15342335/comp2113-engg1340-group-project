@@ -1,5 +1,4 @@
-"Commented out since our Makefile is empty"
-"""name: Make
+name: Make
 
 on:
     push:
@@ -25,4 +24,3 @@ jobs:
         compression-level: 9
         retention-days: 90
         if-no-files-found: error
-"""
