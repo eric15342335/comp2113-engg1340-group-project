@@ -10,7 +10,8 @@ double init_stock_price(int a){
 	//Stock prices cluster in 3 tiers in our world: about 5 hkd (a=1) variating about 2 hkd; , 50 hkd(a=2) variating about 20 hkd, 
 	//and 150 hkd(a=3)variating about 50 hkd (based on a very little sample observation of real world). 
 	//If an invalid input we default a=1.
-    std::random_device rd;
+    	std::random_device rd;
+	//std mt19937 Merssane Twister
 	std::mt19937 gen(rd());
 	//normal_distribution<double> distribution(5.0, 2.0);
 	if(a==2){
