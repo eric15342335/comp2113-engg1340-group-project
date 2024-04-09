@@ -91,6 +91,39 @@ class Stock {
          */
         void add_event(Stock_event event);
 
+        /**
+         * Return the most recent stock prices
+         * @param rounds The number of rounds to look back
+         * @return Most recent price being the *last* element in the vector.
+         *         If the number of rounds is greater than the size of the history array,
+         *         return the entire history
+         */
+        std::vector<float> return_most_recent_history(int rounds);
+
+        /**
+         * Return the name of the stock
+         * @return Name of the stock
+         */
+        std::string get_name(void);
+
+        /**
+         * Return the price of the stock
+         * @return Price of the stock
+         */
+        float get_price(void);
+
+        /**
+         * Return the quantity of the stock
+         * @return Quantity of the stock
+         */
+        unsigned int get_quantity(void);
+
+        /**
+         * Return the money spent on the stock
+         * @return Money spent on the stock
+         */
+        float get_money_spent(void);
+
     private:
         std::string name;            /** name of the stock */
         float price;                /** current price of the stock */
@@ -110,14 +143,6 @@ class Stock {
          */
         void remove_obselete_event(void);
 
-        /**
-         * Return the most recent stock prices
-         * @param rounds The number of rounds to look back
-         * @return Most recent price being the *last* element in the vector.
-         *         If the number of rounds is greater than the size of the history array,
-         *         return the entire history
-         */
-        std::vector<float> return_most_recent_history(int rounds);
 };
 
 #endif

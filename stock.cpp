@@ -102,7 +102,7 @@ float Stock::sum_attribute(stock_modifiers attribute) {
 void Stock::init(void) {
     /** @todo Follow-up */
     category = random_integer(category_list_size);
-    name = generate_name(category);
+    name = generate_name(category, 1)[0];
     /** Generate a random price
      * Currently, the parameter is hardcoded to 1
      * @todo: Make this parameter not hardcoded, like depending on the category
@@ -116,4 +116,20 @@ void Stock::init(void) {
     attributes[standard_deviation] = 0;
     attributes[skewness] = 0;
     update_history();
+}
+
+std::string Stock::get_name() {
+    return name;
+}
+
+float Stock::get_price() {
+    return price;
+}
+
+unsigned int Stock::get_quantity() {
+    return quantity;
+}
+
+float Stock::get_money_spent() {
+    return money_spent;
 }
