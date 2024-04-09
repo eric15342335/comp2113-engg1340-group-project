@@ -1,0 +1,28 @@
+"Commented out since our Makefile is empty"
+"""name: Make
+
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+
+jobs:
+  Make:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    - name: Make
+      run: |
+        make
+    - name: Upload executable
+      uses: actions/upload-artifact@v4
+      with:
+        # suppose we compiled our game and named it 'stocksim'
+        name: stocksim
+        path: stocksim
+        compression-level: 9
+        retention-days: 90
+        if-no-files-found: error
+"""
