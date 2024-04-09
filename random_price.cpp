@@ -4,14 +4,14 @@
 #include <iostream>
 #include <random>
 
-double init_stock_price(int a) {
+double init_stock_price(int price_profile) {
     std::random_device rd;
     std::mt19937 gen(rd());
     std::normal_distribution<double> distribution(5.0, 2.0);
-    if (a == 2) {
+    if (price_profile == 2) {
         distribution.param(std::normal_distribution<double>::param_type(50.0, 20.0));
     }
-    if (a == 3) {
+    if (price_profile == 3) {
         distribution.param(std::normal_distribution<double>::param_type(150.0, 50.0));
     }
     return distribution(gen);
