@@ -22,7 +22,7 @@ double init_stock_price(int a){
 		return distribution(gen);
 		}
 		}
-    return 0.0;
+    return 0.00;
 }
 double random_sd(float price){
 	std::random_device rd;
