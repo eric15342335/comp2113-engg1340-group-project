@@ -5,9 +5,10 @@
 #ifndef
 #define are to prevent double include the header
 */
+
 /**
  * Initial Stock Price Generator
- * if a=2 mean 50 sd 20; if a=3 mean 150 sd 50; else mean 5 sd 2;
+ * if price_profile=2 mean 50 sd 20; if price_profile=3 mean 150 sd 50; else mean 5 sd 2;
  *Stock prices cluster in 3 tiers in our world: about 5 hkd (a=ELSE) variating about 2 hkd; , 50 hkd(a=2) variating about 20 hkd,
  *and 150 hkd(a=3)variating about 50 hkd (based on a very little sample observation of real world).
  */
