@@ -1,6 +1,5 @@
 #ifndef RANDOM_PRICE_H
 #define RANDOM_PRICE_H
-
 /**
 #ifndef
 #define are to prevent double include the header
@@ -8,26 +7,26 @@
 
 /**
  * Initial Stock Price Generator
- * if price_profile=2 mean 50 sd 20; if price_profile=3 mean 150 sd 50; else mean 5 sd 2;
- *Stock prices cluster in 3 tiers in our world: about 5 hkd (a=ELSE) variating about 2 hkd; , 50 hkd(a=2) variating about 20 hkd,
- *and 150 hkd(a=3)variating about 50 hkd (based on a very little sample observation of real world).
+ * if a=1 mean 5 sd 2; if a=2 mean 50 sd 20; if a=3 mean 150 sd 50;
  */
-double init_stock_price(int a);
-/**
- * Stock Standard Deviation Generator (for both initial and after initial)
- * s.d. usually 1%-5% of initial stock price;
- * modelling with absolute value of norm dist mean 0.03*init_price; s.d. 0.02*init_price (yes, s.d. of s.d.)
+float init_stock_price(int a);
+
+/**records % change of stock. Should use stock_price(k+1th) = (1+stock_change(mode)/100)*stock_price_kth to calculate raw stock price.
+ *default: Non-increasing (mean 0% s.d. 0.5%)
+ *mode=1: Increasing moderately (mean 0.5% s.d. 0.5%)
+ *mode=2: Decreasing moderately (mean -0.5% s.d. 0.5%)
+ *mode=3: Increasing rapidly (mean 2% s.d. 1%)
+ *mode=4: Decreasing rapidly (mean -2% s.d. 1%)
+ *mode=5: Skyrocketing (mean 10% s.d. 3%)
+ *mode=6: Plumetting (mean -10% s.d. 3%)
+ *mode=7: Generally increasing but unstable (mean 0.5% s.d. 3%)
+ *mode=8: Generally decreasing but unstable (mean -0.5% s.d. 3%)
+ *mode=9: Unstable w/o trend (mean 0% s.d. 3%)
  */
-double random_sd(float init_price);
+float stock_change(int mode);
+
 /**
- * Random Stock Price Generator (non-initialising)
- * requires mean, s.d., upper limit increase threshold (FRACTION of mean) and lower limit decrease threshold (FRACTION of mean)
- * e.g. both 0.03; then the mean changes to exactly the new price if the value differ from mean by 3%
- */
-double random_stock(float & mean, float & sd, float & upper_limit, float & lower_limit);
-/**
- * Random integer function in choosing stock type
- * Return a random integer from 0 to max - 1
+ * Random integer function potentially useful in choosing stock type
  */
 unsigned int random_integer(unsigned int max_integer);
 #endif
