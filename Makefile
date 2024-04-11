@@ -13,8 +13,8 @@ events.o: events.h events.cpp
 names.o: names.h names.cpp
 	g++ -Wall -Wextra -std=c++11 -c names.cpp -o names.o
 
-graph.o: graph_plotting.h graph_plotting.cpp
-	g++ -Wall -Wextra -std=c++11 -c graph_plotting.cpp -o graph.o
+graph.o: graph.h graph.cpp
+	g++ -Wall -Wextra -std=c++11 -c graph.cpp -o graph.o
 
 stocksim: main.cpp stock.o random_price.o events.o names.o
 	g++ -Wall -Wextra -std=c++11 main.cpp stock.o random_price.o events.o names.o -o stocksim

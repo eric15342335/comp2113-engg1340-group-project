@@ -1,4 +1,12 @@
-#include "graph_plotting.h"
+#include "graph.h"
+#include <iostream>
+#include <vector>
+#include <string>
+#include <fstream>
+#include <algorithm>
+#include <sstream>
+#include <iomanip>
+using namespace std;
 
 string graphpriceformat(float price) {
     stringstream ss;
