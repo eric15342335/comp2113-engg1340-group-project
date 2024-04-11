@@ -20,7 +20,7 @@ string graphpriceformat(float price) {
 
 void printstocknameandoverall(string stockname, vector<float> stockpricehistory) {
     string stocknameprint = "Stock: " + stockname;
-    float overall = (stockpricehistory[70] - stockpricehistory[0]) / stockpricehistory[0] * 100;
+    float overall = (stockpricehistory[stockpricehistory.size() - 1] - stockpricehistory[0]) / stockpricehistory[0] * 100;
     cout << stocknameprint << "     \% change: ";
     cout << graphpriceformat(overall) << "%" << endl;
     cout << endl;
@@ -81,18 +81,19 @@ void graph_plotting(string stockname) {
     string graph[80][21];
     // 21 column 80 rows, this is not in the usual 2d array format
     //  horizontal array and vertical array is inverted
-    string maxstring = graphpriceformat(max);
-    string minstring = graphpriceformat(min);
+    string maxstring, minstring;
+    if (interval == 0) {
+        maxstring = graphpriceformat(max + 1);
+        minstring = graphpriceformat(min - 1);
+    }
+    else {
+        maxstring = graphpriceformat(max);
+        minstring = graphpriceformat(min);
+    }
     for (int i = 0; i < 80; i++) {
         for (int j = 0; j < 21; j++) {
             graph[i][j] = " ";
         }
-    }
-    for (int i = 0; i < 21; i++) {
-        graph[8][i] = "┃";
-    }
-    for (int i = 9; i < 80; i++) {
-        graph[i][20] = "━";
     }
     for (int i = 0; i < 6; i++) {
         graph[i][0] = maxstring[i];
@@ -100,11 +101,23 @@ void graph_plotting(string stockname) {
     }
     graph[8][20] = "┗";
 
-    for (int i = 0; i < 70; i++) {
-        int start = 20 - (stockpricehistory[i] - min) / interval;
-        int end = 20 - (stockpricehistory[i + 1] - min) / interval;
+    for (int i = 0; i < stockpricehistory.size() - 1; i++) {
+        int start = 10, end = 10;
+        if (interval != 0) {
+            start = 20 - (stockpricehistory[i] - min) / interval;
+            end = 20 - (stockpricehistory[i + 1] - min) / interval;
+        }
         if (start == end) {
             graph[i + 9][start] = "■";
+            if (stockpricehistory[i] > stockpricehistory[i + 1]) {
+                color[i] = "green";
+            }
+            else if (stockpricehistory[i] < stockpricehistory[i + 1]) {
+                color[i] = "red";
+            }
+            else {
+                color[i] = "white";
+            }
             continue;
         }
         if (start > end) {
@@ -113,19 +126,27 @@ void graph_plotting(string stockname) {
             }
             color[i] = "red";
         }
-        else {
+        else if (start < end) {
             for (int j = start; j <= end; j++) {
                 graph[i + 9][j] = "■";
             }
             color[i] = "green";
         }
+        // idk why the colour is inverted using the normal setup method but i dont care
+        // anyway it is running in normal HK stock colour indentations
+    }
+    for (int i = 0; i < 21; i++) {
+        graph[8][i] = "┃";
+    }
+    for (int i = 9; i < 80; i++) {
+        graph[i][20] = "━";
     }
     printstocknameandoverall(stockname, stockpricehistory);
     printarray(graph, color);
 }
 
-// int main(){
-//     graph_plotting("StockA");
-//     return 0;
-// }
+//int main() {
+//    graph_plotting("StockA");
+//    return 0;
+//}
 // this main is for testing purpose of this cpp only
