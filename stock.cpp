@@ -9,7 +9,7 @@
 float Stock::purchase(float & balance, unsigned int amount, float trading_fees_percent) {
     float total_cost = price * amount * (1 + trading_fees_percent);
     // Check if the player has enough balance to buy the stock
-    if (total_cost > balance) {
+    if (total_cost > balance && price <= 0) {
         return -1;
     }
     // Update the balance, quantity, and money_spent
@@ -21,7 +21,7 @@ float Stock::purchase(float & balance, unsigned int amount, float trading_fees_p
 
 float Stock::sell(float & balance, unsigned int amount, float trading_fees_percent) {
     // Check if the player has enough stocks to sell
-    if (quantity < amount) {
+    if (quantity < amount && price <= 0) {
         return -1;
     }
     // Calculate the total revenue
@@ -114,23 +114,16 @@ void Stock::init(void) {
     /** @todo Move these attribute initialization to random_price.h
      * Now we have to hardcode them here
      */
-    attributes[standard_deviation] = 0;
-    attributes[skewness] = 0;
+    attributes[standard_deviation] = 0.1;
+    attributes[offset] = 0.1;
     update_history();
 }
 
-std::string Stock::get_name() {
-    return name;
-}
-
-float Stock::get_price() {
-    return price;
-}
-
-unsigned int Stock::get_quantity() {
-    return quantity;
-}
-
-float Stock::get_money_spent() {
-    return money_spent;
+void Stock::next_round(void) {
+    /** @todo Follow-up */
+    /** Update the stock price */
+    /** Remove the obselete events */
+    remove_obselete_event();
+    /** Update the history array with the current price */
+    update_history();
 }

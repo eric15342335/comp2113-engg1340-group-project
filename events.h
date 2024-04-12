@@ -14,7 +14,7 @@
  */
 enum stock_modifiers {
     standard_deviation,
-    skewness
+    offset
 };
 
 /**
