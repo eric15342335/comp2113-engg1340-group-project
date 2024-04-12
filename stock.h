@@ -1,6 +1,7 @@
 /**
  * @headerfile stock.h
  * @author eric15342335
+ * @brief Header file for the Stock class.
  */
 #ifndef STOCK_H
 #define STOCK_H
@@ -11,58 +12,62 @@
 #include <map>
 #include "events.h"
 
-/** A class that represents a stock object in the game. */
+/**
+ * A class that represents a stock object in the game.
+ * The stock has a name, price, quantity, category, money spent, events, attributes, and history.
+ * The stock can be purchased, sold, and updated.
+ */
 class Stock {
     public:
         /**
          * Purchase a given number of stocks
          * @param balance The balance ($) of the player. Pass-by-reference
-         * @param amount The number of stocks to purchase
+         * @param amount The number of stocks to purchase.
          * @param trading_fees_percent The trading fees percentage we charge the player
          * @return Successful: Total cost of the purchase.
-         *         Failed: -1 if the player does not have enough balance to buy the stock
+         *         Failed: -1 if the player does not have enough balance to buy the stock.
          */
         float purchase(float & balance, unsigned int amount, float trading_fees_percent);
 
         /**
-         * Sell a number of stocks
+         * Sell a given number of stocks.
          * @param balance The balance ($) of the player. Pass-by-reference
-         * @param amount The number of stocks to sell
-         * @param trading_fees_percent The trading fees percentage we charge the player
+         * @param amount The number of stocks to sell.
+         * @param trading_fees_percent The trading fees percentage we charge the player.
          * @return Successful: Amount of money the player receive.
-         *         Failed: -1 if the player does not have enough stocks to sell
+         *         Failed: -1 if the player does not have enough stocks to sell.
          */
         float sell(float & balance, unsigned int amount, float trading_fees_percent);
 
         /**
-         * @param balance The balance of the player
-         * @param trading_fees_percent The trading fees percentage we charge the player
-         * @return Number of stocks that the player can afford with the balance
+         * @param balance The balance of the player.
+         * @param trading_fees_percent The trading fees percentage we charge the player.
+         * @return Number of stocks that the player can afford with the balance.
          */
         unsigned int num_stocks_affordable(float balance, float trading_fees_percent);
 
         /**
          * Call this function to create a new stock.
-         * It assign a random price, standard deviation,
-         * skewness, and category to it. Also, generate a name based on the category.
+         * It assigns a random price, stock_attributes and category to it.
+         * Calls generate_name() from names.h to generate a name for the stock.
          * Should be called only once.
          */
         void init(void);
 
         /**
-         * Return the name of the caategory the stock belongs to
-         * @return Name of the category as a string
+         * Return the name of the caategory the stock belongs to.
+         * @return Name of the category as a string.
          */
         std::string category_name(void);
 
         /**
          * Return the change of stock price using the most recent price and the current price
-         * @return change in stock price
+         * @return change in stock price.
          */
         float delta_price(void);
 
-        /** Return the percentage of change of stock price using Stock::delta_price();
-         * @return percentage of change in stock price
+        /** Return the percentage of change of stock price.
+         * @return Percentage of change in stock price. E.g. 0.05 means 5% increase in price.
          */
         float delta_price_percentage(void);
 
@@ -70,13 +75,13 @@ class Stock {
          * Return the sum of a specific attribute of the stock.
          * For example, to get the sum of standard deviation of all stocks:
          * stock.sum_attribute(stock_modifiers::standard_deviation);
-         * @param attribute The attribute to sum up
-         * @return The sum of the attribute
+         * @param attribute The attribute to sum up.
+         * @return The sum of the attribute.
          */
         float sum_attribute(stock_modifiers attribute);
 
         /**
-         * Proceed to next round
+         * Call this when the game proceed to next round.
          * @todo Finish the implementation of this function.
          *       This function should update the stock price based on the standard deviation and skewness
          *       by calling functions in random_price.h file that Jeremy will provide.
@@ -86,43 +91,71 @@ class Stock {
         void next_round(void);
 
         /**
-         * Add an event to the stock
-         * @param event The event to be added. See events.h for more information.
+         * Add an event to the stock.
+         * @param event The event to be added. See events.h for more information about the
+         * class Stock_Event.
          */
         void add_event(Stock_event event);
 
         /**
-         * Return the most recent stock prices
-         * @param rounds The number of rounds to look back
-         * @return Most recent price being the *last* element in the vector.
-         *         If the number of rounds is greater than the size of the history array,
-         *         return the entire history
+         * Get the stock price of recent rounds.
+         * @param rounds The number of rounds to look back. 5 means the last 5 rounds.
+         * @return A vector of stock prices.
+         *         If the number of rounds is greater than the history size, return the whole history.
+         *         Otherwise, return the most recent rounds.
+         *         If the history is empty, return an empty vector.
          */
         std::vector<float> return_most_recent_history(unsigned int rounds);
 
         /**
-         * Return the name of the stock
-         * @return Name of the stock
+         * Get the name of the stock. Getter function.
+         * @return Name of the stock as float.
          */
-        std::string get_name(void);
+        std::string get_name(void) {
+            return name;
+        }
 
         /**
-         * Return the price of the stock
-         * @return Price of the stock
+         * Get the price of the stock. Getter function.
+         * @return Price of the stock as float.
          */
-        float get_price(void);
+        float get_price(void) {
+            return price;
+        }
 
         /**
-         * Return the quantity of the stock
-         * @return Quantity of the stock
+         * Get the quantity of the stock. Getter function.
+         * @return Quantity of the stock as float.
          */
-        unsigned int get_quantity(void);
+        unsigned int get_quantity(void) {
+            return quantity;
+        }
 
         /**
-         * Return the money spent on the stock
-         * @return Money spent on the stock
+         * Get the money spent on the stock. Getter function.
+         * @return Money spent on the stock as float.
          */
-        float get_money_spent(void);
+        float get_money_spent(void) {
+            return money_spent;
+        }
+
+        /**
+         * Get the initial price of the stock. Getter function.
+         * @return Initial price of the stock as float.
+         */
+        float get_initial_price(void) {
+            return history[0];
+        }
+
+        /**
+         * Get the attribute of the stock. Getter function.
+         * Example usage: stock.get_attribute(stock_modifiers::standard_deviation);
+         * @param attribute The attribute to get.
+         * @return Attribute of the stock as float.
+         */
+        float get_attribute(stock_modifiers attribute) {
+            return attributes[attribute];
+        }
 
     private:
         std::string name;      /** name of the stock */
