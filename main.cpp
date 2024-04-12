@@ -70,9 +70,8 @@ int main(void) {
     for (unsigned int i = 0; i < stocks_list.size(); i++) {
         stocks_list[i].next_round();
     }
-    player.next_round();
-
     print_table(stocks_list, player);
+    std::cout << "You currently have $" << *player.get_balance_ptr() << "." << std::endl;
 
     /**
      * todo: implement UI code
