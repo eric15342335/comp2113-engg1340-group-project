@@ -37,7 +37,8 @@ std::string Stock::category_name(void) {
 }
 
 unsigned int Stock::num_stocks_affordable(float balance, float trading_fees_percent) {
-    return (unsigned int)balance / price * (1 + trading_fees_percent);
+    float value = balance / price * (1 + trading_fees_percent);
+    return value < 0 ? 0 : (unsigned int)value;
 }
 
 void Stock::update_history(void) {
@@ -67,8 +68,11 @@ float Stock::delta_price(void) {
 }
 
 float Stock::delta_price_percentage(void) {
-    if (history.size() < 2) {
-        // If there are less than two prices in the history array, return 0
+    if (history.size() < 2 || history[history.size() - 1] < 0 || history[history.size() - 2] < 0) {
+        /** If there are less than two prices in the history array, return 0
+         * If the last two prices are negative, return 0, as it is not possible to
+         * calculate the percentage change
+         */
         return 0;
     }
     return delta_price() / history[history.size() - 2];
@@ -122,6 +126,7 @@ void Stock::init(void) {
 void Stock::next_round(void) {
     /** @todo Follow-up */
     /** Update the stock price */
+    price += 0.1;
     /** Remove the obselete events */
     remove_obselete_event();
     /** Update the history array with the current price */
