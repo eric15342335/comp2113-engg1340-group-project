@@ -28,7 +28,7 @@ float Stock::sell(float & balance, unsigned int amount, float trading_fees_perce
     float total_revenue = price * amount * (1 - trading_fees_percent);
     balance += total_revenue;
     quantity -= amount;
-    money_spent -= total_revenue;
+    // money_spent -= total_revenue;
     return total_revenue;
 }
 

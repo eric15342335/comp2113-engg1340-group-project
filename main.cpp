@@ -16,10 +16,18 @@ const float trading_fees_percent = 0.01;
 /** Initial stock count */
 const int initial_stock_count = 20;
 
+/** Print the table of stocks.
+ * Put it in a function so we can call it multiple times.
+ * @param stocks_list The list of stocks to print.
+ * @param player The player object, for retrieving the player balance.
+ */
 void print_table(std::vector<Stock> stocks_list, Player player) {
+    /** Create a table */
     VariadicTable<unsigned int, std::string, float, float, float, unsigned int, float, unsigned int>
         table({"No.", "Name", "Last Price", "Change", "\% Change", "Quantity", "$ Spent", "Max"});
-
+    /** Set the precision and format of the columns.
+     * Note: Precision and Format is ignored for std::string columns.
+     */
     table.setColumnPrecision({1, 0, 2, 1, 1, 1, 2, 1});
     table.setColumnFormat({
         VariadicTableColumnFormat::AUTO,
@@ -57,7 +65,7 @@ int main(void) {
     /** Test for VariadicTable.h */
 
     print_table(stocks_list, player);
-    /** Simulate player buying and selling stocks automatically */
+    /** Simulate player buying stocks */
     for (unsigned int i = 0; i < stocks_list.size(); i++) {
         int num_buyable = stocks_list[i].num_stocks_affordable(player.bal(), trading_fees_percent);
         if (num_buyable > 0) {
@@ -69,6 +77,23 @@ int main(void) {
     std::cout << "Played: " << player.get_rounds_played() << " Rounds." << std::endl;
     for (unsigned int i = 0; i < stocks_list.size(); i++) {
         stocks_list[i].next_round();
+    }
+    print_table(stocks_list, player);
+    std::cout << "You currently have $" << *player.get_balance_ptr() << "." << std::endl;
+
+    /** Simulate player buying stocks */
+    for (unsigned int i = 0; i < stocks_list.size(); i++) {
+        int num_sellable = stocks_list[i].get_quantity();
+        if (num_sellable > 0) {
+            if (stocks_list[i].get_money_spent() > 100) {
+                /** Sell all the stocks */
+                stocks_list[i].sell(*player.get_balance_ptr(), num_sellable, trading_fees_percent);
+            }
+            else {
+                /** Sell random amount of the stocks */
+                stocks_list[i].sell(*player.get_balance_ptr(), random_integer(num_sellable), trading_fees_percent);
+            }
+        }
     }
     print_table(stocks_list, player);
     std::cout << "You currently have $" << *player.get_balance_ptr() << "." << std::endl;
