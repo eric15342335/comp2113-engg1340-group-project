@@ -2,7 +2,6 @@
  * @file main.cpp
  */
 #include "stock.h"
-#include "player.h"
 #include "random_price.h"
 #include "nonstdlibs/VariadicTable.h"
 
@@ -21,7 +20,7 @@ const int initial_stock_count = 20;
  * @param stocks_list The list of stocks to print.
  * @param player The player object, for retrieving the player balance.
  */
-void print_table(std::vector<Stock> stocks_list, Player player) {
+void print_table(std::vector<Stock> stocks_list, float balance) {
     /** Create a table */
     VariadicTable<unsigned int, std::string, float, float, float, unsigned int, float, unsigned int>
         table({"No.", "Name", "Last Price", "Change", "\% Change", "Quantity", "$ Spent", "Max"});
@@ -43,16 +42,17 @@ void print_table(std::vector<Stock> stocks_list, Player player) {
         table.addRow(i + 1, stocks_list[i].get_name(), stocks_list[i].get_price(),
                      stocks_list[i].delta_price(), stocks_list[i].delta_price_percentage() * 100,
                      stocks_list[i].get_quantity(), stocks_list[i].get_money_spent(),
-                     stocks_list[i].num_stocks_affordable(player.bal(), trading_fees_percent));
+                     stocks_list[i].num_stocks_affordable(balance, trading_fees_percent));
     }
     table.print(std::cout);
 }
 
+float balance = 1000.0;
+unsigned int rounds_played = 1;
+
 /** Main function */
 int main(void) {
     std::vector<Stock> stocks_list;
-    Player player;
-    player.start_game();
     for (int i = 0; i < initial_stock_count; i++) {
         Stock stock;
         stock.init();
@@ -61,25 +61,25 @@ int main(void) {
 
     std::cout << "Welcome to the Stock Market Simulator!" << std::endl;
     std::cout << "Current trading fees are charged at " << trading_fees_percent * 100 << " %" << std::endl;
-    std::cout << "You currently have $" << *player.get_balance_ptr() << "." << std::endl;
-    /** Test for VariadicTable.h */
+    std::cout << "You currently have $" << balance << "." << std::endl;
+    print_table(stocks_list, balance);
 
-    print_table(stocks_list, player);
     /** Simulate player buying stocks */
     for (unsigned int i = 0; i < stocks_list.size(); i++) {
-        int num_buyable = stocks_list[i].num_stocks_affordable(player.bal(), trading_fees_percent);
+        int num_buyable = stocks_list[i].num_stocks_affordable(balance, trading_fees_percent);
         if (num_buyable > 0) {
-            stocks_list[i].purchase(*player.get_balance_ptr(), random_integer(num_buyable), trading_fees_percent);
+            stocks_list[i].purchase(balance, random_integer(num_buyable), trading_fees_percent);
         }
     }
+
     /** Go to next round */
-    player.next_round();
-    std::cout << "Played: " << player.get_rounds_played() << " Rounds." << std::endl;
+    rounds_played++;
+    std::cout << "Round " << rounds_played << "." << std::endl;
     for (unsigned int i = 0; i < stocks_list.size(); i++) {
         stocks_list[i].next_round();
     }
-    print_table(stocks_list, player);
-    std::cout << "You currently have $" << *player.get_balance_ptr() << "." << std::endl;
+    print_table(stocks_list, balance);
+    std::cout << "You currently have $" << balance << "." << std::endl;
 
     /** Simulate player buying stocks */
     for (unsigned int i = 0; i < stocks_list.size(); i++) {
@@ -87,16 +87,16 @@ int main(void) {
         if (num_sellable > 0) {
             if (stocks_list[i].get_money_spent() > 100) {
                 /** Sell all the stocks */
-                stocks_list[i].sell(*player.get_balance_ptr(), num_sellable, trading_fees_percent);
+                stocks_list[i].sell(balance, num_sellable, trading_fees_percent);
             }
             else {
                 /** Sell random amount of the stocks */
-                stocks_list[i].sell(*player.get_balance_ptr(), random_integer(num_sellable), trading_fees_percent);
+                stocks_list[i].sell(balance, random_integer(num_sellable), trading_fees_percent);
             }
         }
     }
-    print_table(stocks_list, player);
-    std::cout << "You currently have $" << *player.get_balance_ptr() << "." << std::endl;
+    print_table(stocks_list, balance);
+    std::cout << "You currently have $" << balance << "." << std::endl;
 
     /**
      * todo: implement UI code

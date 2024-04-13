@@ -13,7 +13,7 @@ events.o: events.h events.cpp
 names.o: names.h names.cpp
 	g++ -Wall -Wextra -std=c++11 -c names.cpp -o names.o
 
-stocksim: main.cpp stock.o random_price.o events.o names.o player.h
+stocksim: main.cpp stock.o random_price.o events.o names.o
 	g++ -Wall -Wextra -std=c++11 main.cpp stock.o random_price.o events.o names.o -o stocksim
 
 test: stocksim
