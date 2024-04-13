@@ -10,8 +10,7 @@ Stock_event example = {
     /** percentage_permille */ 100,
     /** type_of_event */ all_stocks,
     /** category */ 0,
-    /** modifiers*/ {{standard_deviation, 0.1},{mean, 1.02}, {lower_limit, 0}, {upper_limit, 20}}
-};
+    /** modifiers*/ {{standard_deviation, 0.1}, {mean, 1.02}, {lower_limit, 0}, {upper_limit, 20}}};
 
 float Stock_event::get_modifier(stock_modifiers modifier) {
     return modifiers[modifier];
