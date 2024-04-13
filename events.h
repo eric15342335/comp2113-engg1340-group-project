@@ -7,6 +7,7 @@
 
 #include <string>
 #include <map>
+#include <vector>
 
 /**
  * The attributes of a stock that Events will modify are hardcoded here.
@@ -14,7 +15,9 @@
  */
 enum stock_modifiers {
     standard_deviation,
-    offset
+    mean,
+    lower_limit,
+    upper_limit
 };
 
 /**
@@ -49,5 +52,12 @@ struct Stock_event {
          */
         float get_modifier(stock_modifiers modifier);
 };
+
+/**
+ * Pick a random event from the list of events
+ * @param num_events The number of events to pick
+ * @return A vector of Stock_event
+ */
+std::vector<Stock_event> pick_events(unsigned int num_events);
 
 #endif

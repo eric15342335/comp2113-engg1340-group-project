@@ -108,18 +108,18 @@ void Stock::init(void) {
     /** @todo Follow-up */
     category = random_integer(category_list_size);
     name = generate_name(category, 1)[0];
-    /** Generate a random price
-     * Currently, the parameter is hardcoded to 1
-     * @todo: Make this parameter not hardcoded, like depending on the category
-     */
-    price = init_stock_price(1);
+    // The distribution of initial stock price will be consistent across same categories
+    price = init_stock_price(category % 3 + 1);
     quantity = 0;
     money_spent = 0;
     /** @todo Move these attribute initialization to random_price.h
      * Now we have to hardcode them here
      */
     attributes[standard_deviation] = 0.1;
-    attributes[offset] = 0.1;
+    attributes[mean] = 0.1;
+    
+    attributes[lower_limit] = 0;
+    attributes[upper_limit] = 0;
     update_history();
 }
 
