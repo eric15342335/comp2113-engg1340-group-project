@@ -109,7 +109,7 @@ class Stock {
          * Get the name of the stock. Getter function.
          * @return Name of the stock as float.
          */
-        std::string get_name(void){
+        std::string get_name(void) {
             return name;
         }
 
@@ -124,7 +124,7 @@ class Stock {
         /**
          * Get the category of the stock. Getter function.
          * @return Category of the stock as unsigned int.
-        */
+         */
         unsigned int get_category(void) {
             return category;
         }
@@ -164,14 +164,14 @@ class Stock {
 
         /**
          * Get size of the history.
-        */
+         */
         unsigned int get_history_size(void) {
             return history.size();
         }
 
         /**
          * Change the mean(offset) of the stock price. Setter function.
-        */
+         */
         void change_mean(float new_mean) {
             attributes[mean] += new_mean;
         }

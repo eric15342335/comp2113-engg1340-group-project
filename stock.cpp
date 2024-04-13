@@ -117,7 +117,7 @@ void Stock::init(void) {
      */
     attributes[standard_deviation] = 0.1;
     attributes[mean] = 0.1;
-    
+
     attributes[lower_limit] = 0;
     attributes[upper_limit] = 0;
     update_history();

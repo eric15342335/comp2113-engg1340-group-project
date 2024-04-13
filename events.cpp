@@ -4,7 +4,7 @@
 #include "events.h"
 // #include <iostream>
 
-Stock_event example {
+Stock_event example{
     /** text */ "生意很好，股价上涨！",
     /** duration */ 5,
     /** percentage_permille */ 100,

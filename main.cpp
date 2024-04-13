@@ -60,7 +60,7 @@ int main(void) {
     std::vector<Stock> stocks_list; // Create a vector of stocks
     for (int i = 0; i < initial_stock_count; i++) {
         Stock stock;
-        stock.init(); // Initialize the stock
+        stock.init();                 // Initialize the stock
         stocks_list.push_back(stock); // Add the stock to the vector
     }
 
@@ -81,7 +81,7 @@ int main(void) {
     }
 
     /** Go to next round */
-    rounds_played++; // Increment the round
+    rounds_played++;                                            // Increment the round
     std::cout << "Round " << rounds_played << "." << std::endl; // Print the round number
     for (unsigned int i = 0; i < stocks_list.size(); i++) {
         stocks_list[i].next_round(); // Update the stock price
