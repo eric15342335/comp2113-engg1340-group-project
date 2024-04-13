@@ -141,12 +141,7 @@ void graph_plotting(string stockname) {
     for (int i = 9; i < 80; i++) {
         graph[i][20] = "━";
     }
+    graph[8][20] = "┗";
     printstocknameandoverall(stockname, stockpricehistory);
     printarray(graph, color);
 }
-
-//int main() {
-//    graph_plotting("StockA");
-//    return 0;
-//}
-// this main is for testing purpose of this cpp only
