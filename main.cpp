@@ -7,9 +7,9 @@
 
 /**
  * 0.01 means 1% trading fees.
- * 
+ *
  * Trading fees are applied to both buying and selling.
- * 
+ *
  * see stock.cpp `Stock::purchase` and `Stock::sell` functions
  */
 const float trading_fees_percent = 0.01;
@@ -75,7 +75,7 @@ int main(void) {
         int num_buyable = stocks_list[i].num_stocks_affordable(balance, trading_fees_percent);
         // If the player can afford at least one stock, buy a random amount of stocks
         if (num_buyable > 0) {
-            // Buy random amount of the stocks 
+            // Buy random amount of the stocks
             stocks_list[i].purchase(balance, random_integer(num_buyable), trading_fees_percent);
         }
     }
