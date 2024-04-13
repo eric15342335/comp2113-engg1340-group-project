@@ -1,20 +1,53 @@
+/**
+ * @headerfile events.h
+ * @brief This file contains the definition of the events that will be applied to the stocks.
+ */
 #ifndef EVENTS_H
 #define EVENTS_H
 
 #include <string>
-using namespace std;
+#include <map>
 
+/**
+ * The attributes of a stock that Events will modify are hardcoded here.
+ * Please store them as map<stock_modifiers, float> !
+ */
+enum stock_modifiers {
+    standard_deviation,
+    offset
+};
+
+/**
+ * The type of event that will be applied to the stocks
+ */
+enum event_type {
+    all_stocks,
+    category,
+    pick_random_stock
+};
+
+/**
+ * The class that stores the event that will be applied to the stocks
+ */
 struct Stock_event {
     public:
-        string text;
-        double sd;
-        double skew;
+        /** The text that will be displayed to the player */
+        std::string text;
+        /** How many rounds does this modifier (of the event) will apply */
         unsigned int duration;
-        unsigned int probability_permille; // 0 to 1000, so 114 means 11.4%
-        unsigned int type_of_event;
-        // 0 means apply to all stocks, 1 means apply to stocks in a category
-        // 2 means apply to a randomly selected stock
-        unsigned int category; // if type is 1, the event will happen to stocks in this category
+        /** 0 to 1000, so 114 means 11.4% */
+        unsigned int probability_permille;
+        /** The type of event */
+        event_type type_of_event;
+        /** Stock categories names are hardcoded in names.h */
+        unsigned int category;
+        /** The type of modifier */
+        std::map<stock_modifiers, float> modifiers;
+
+        /**
+         * Get the value of a specific type of modifiers
+         */
+        float get_modifier(stock_modifiers modifier);
 };
 
 #endif
