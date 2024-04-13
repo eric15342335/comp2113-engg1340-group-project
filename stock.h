@@ -164,16 +164,18 @@ class Stock {
 
         /**
          * Get size of the history.
+         * @return Size of the history as unsigned int.
          */
         unsigned int get_history_size(void) {
             return history.size();
         }
 
         /**
-         * Change the mean(offset) of the stock price. Setter function.
+         * Change the mean of the stock by delta_mean. Setter function.
+         * @param delta_mean The change in mean.
          */
-        void change_mean(float new_mean) {
-            attributes[mean] += new_mean;
+        void change_mean(float delta_mean) {
+            attributes[mean] += delta_mean;
         }
 
     private:

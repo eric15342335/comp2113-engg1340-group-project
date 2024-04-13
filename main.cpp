@@ -52,7 +52,7 @@ void print_table(std::vector<Stock> stocks_list, float balance) {
     std::cout << std::fixed << std::setprecision(2);
 }
 
-float balance = 1000.0;
+float balance = 1000;
 unsigned int rounds_played = 1;
 
 /** Main function */
