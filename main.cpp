@@ -27,7 +27,7 @@ void print_table(std::vector<Stock> stocks_list, float balance) {
         table({"No.", "Name", "Last Price", "Change", "\% Change", "Quantity", "$ Spent", "Max"});
     /* Set the precision and format of the columns.
      * Note: Precision and Format is ignored for std::string columns. */
-    table.setColumnPrecision({1, 0, 2, 1, 1, 1, 2, 1});
+    table.setColumnPrecision({1, 0, 2, 2, 2, 1, 2, 1});
     table.setColumnFormat({
         VariadicTableColumnFormat::AUTO,
         VariadicTableColumnFormat::AUTO,
