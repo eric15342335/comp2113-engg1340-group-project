@@ -45,6 +45,11 @@ void print_table(std::vector<Stock> stocks_list, float balance) {
                      stocks_list[i].num_stocks_affordable(balance, trading_fees_percent));
     }
     table.print(std::cout);
+    /** Display 2 decimal places for balance.
+     * This line reverts the precision back to default after the table is printed.
+     * Since the table uses std::auto (VariadicTableColumnFormat::AUTO), we need to revert it back to default.
+     */
+    std::cout << std::fixed << std::setprecision(2);
 }
 
 float balance = 1000.0;
@@ -52,31 +57,34 @@ unsigned int rounds_played = 1;
 
 /** Main function */
 int main(void) {
-    std::vector<Stock> stocks_list;
+    std::vector<Stock> stocks_list; // Create a vector of stocks
     for (int i = 0; i < initial_stock_count; i++) {
         Stock stock;
-        stock.init();
-        stocks_list.push_back(stock);
+        stock.init(); // Initialize the stock
+        stocks_list.push_back(stock); // Add the stock to the vector
     }
 
+    // Print the welcome message
     std::cout << "Welcome to the Stock Market Simulator!" << std::endl;
     std::cout << "Current trading fees are charged at " << trading_fees_percent * 100 << " %" << std::endl;
     std::cout << "You currently have $" << balance << "." << std::endl;
-    print_table(stocks_list, balance);
+    print_table(stocks_list, balance); // Print the table of stocks
 
     /** Simulate player buying stocks */
     for (unsigned int i = 0; i < stocks_list.size(); i++) {
         int num_buyable = stocks_list[i].num_stocks_affordable(balance, trading_fees_percent);
+        /** If the player can afford at least one stock, buy a random amount of stocks */
         if (num_buyable > 0) {
+            /** Buy random amount of the stocks */
             stocks_list[i].purchase(balance, random_integer(num_buyable), trading_fees_percent);
         }
     }
 
     /** Go to next round */
-    rounds_played++;
-    std::cout << "Round " << rounds_played << "." << std::endl;
+    rounds_played++; // Increment the round
+    std::cout << "Round " << rounds_played << "." << std::endl; // Print the round number
     for (unsigned int i = 0; i < stocks_list.size(); i++) {
-        stocks_list[i].next_round();
+        stocks_list[i].next_round(); // Update the stock price
     }
     print_table(stocks_list, balance);
     std::cout << "You currently have $" << balance << "." << std::endl;
@@ -85,6 +93,7 @@ int main(void) {
     for (unsigned int i = 0; i < stocks_list.size(); i++) {
         int num_sellable = stocks_list[i].get_quantity();
         if (num_sellable > 0) {
+            /** If the player has spent more than $100 on the stock, sell all the stocks */
             if (stocks_list[i].get_money_spent() > 100) {
                 /** Sell all the stocks */
                 stocks_list[i].sell(balance, num_sellable, trading_fees_percent);
