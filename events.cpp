@@ -2,7 +2,6 @@
  * stores the event texts and modifiers
  */
 #include "events.h"
-#include <vector>
 // #include <iostream>
 
 Stock_event example = {

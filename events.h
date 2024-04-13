@@ -7,6 +7,7 @@
 
 #include <string>
 #include <map>
+#include <vector>
 
 /**
  * The attributes of a stock that Events will modify are hardcoded here.
