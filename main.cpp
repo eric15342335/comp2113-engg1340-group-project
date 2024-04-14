@@ -23,12 +23,13 @@ const int initial_stock_count = 20;
  */
 void print_table(std::vector<Stock> stocks_list, float balance) {
     // Create a table
-    VariadicTable<unsigned int, std::string, float, float, float, unsigned int, float, unsigned int>
-        table({"No.", "Name", "Last Price", "Change", "\% Change", "Quantity", "$ Spent", "Max"});
+    VariadicTable<unsigned int, std::string, std::string, float, float, float, unsigned int, float, unsigned int>
+        table({"No.", "Category", "Name", "Last Price", "Change", "\% Change", "Quantity", "$ Spent", "Max"});
     /* Set the precision and format of the columns.
      * Note: Precision and Format is ignored for std::string columns. */
-    table.setColumnPrecision({1, 0, 2, 2, 2, 1, 2, 1});
+    table.setColumnPrecision({1, 0, 0, 2, 2, 2, 1, 2, 1});
     table.setColumnFormat({
+        VariadicTableColumnFormat::AUTO,
         VariadicTableColumnFormat::AUTO,
         VariadicTableColumnFormat::AUTO,
         VariadicTableColumnFormat::FIXED,
@@ -39,7 +40,7 @@ void print_table(std::vector<Stock> stocks_list, float balance) {
         VariadicTableColumnFormat::AUTO,
     });
     for (unsigned int i = 0; i < stocks_list.size(); i++) {
-        table.addRow(i + 1, stocks_list[i].get_name(), stocks_list[i].get_price(),
+        table.addRow(i + 1, stocks_list[i].category_name(), stocks_list[i].get_name(), stocks_list[i].get_price(),
                      stocks_list[i].delta_price(), stocks_list[i].delta_price_percentage() * 100,
                      stocks_list[i].get_quantity(), stocks_list[i].get_money_spent(),
                      stocks_list[i].num_stocks_affordable(balance, trading_fees_percent));
