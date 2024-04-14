@@ -25,7 +25,6 @@ int main(void) {
     std::list<Stock> stocks_list;
     for (int i = 0; i < initial_stock_count; i++) {
         Stock stock;
-        stock.init();
         stocks_list.push_back(stock);
     }
 

@@ -19,6 +19,9 @@
  */
 class Stock {
     public:
+        /** Constructor */
+        Stock(void);
+
         /**
          * Purchase a given number of stocks
          * @param balance The balance ($) of the player. Pass-by-reference
@@ -45,14 +48,6 @@ class Stock {
          * @return Number of stocks that the player can afford with the balance.
          */
         unsigned int num_stocks_affordable(float balance, float trading_fees_percent);
-
-        /**
-         * Call this function to create a new stock.
-         * It assigns a random price, stock_attributes and category to it.
-         * Calls generate_name() from names.h to generate a name for the stock.
-         * Should be called only once.
-         */
-        void init(void);
 
         /**
          * Return the name of the caategory the stock belongs to.

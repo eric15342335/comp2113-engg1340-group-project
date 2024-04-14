@@ -100,7 +100,7 @@ float Stock::sum_attribute(stock_modifiers attribute) {
     return sum;
 }
 
-void Stock::init(void) {
+Stock::Stock(void) {
     /** @todo Follow-up */
     category = random_integer(category_list_size);
     name = generate_name(category, 1)[0];
