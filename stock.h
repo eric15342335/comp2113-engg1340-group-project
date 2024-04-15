@@ -72,11 +72,10 @@ class Stock {
         float delta_price_percentage(void);
 
         /**
-         * Return the sum of a specific attribute of the stock.
-         * For example, to get the sum of standard deviation of all stocks:
-         * stock.sum_attribute(stock_modifiers::standard_deviation);
-         * @param attribute The attribute to sum up.
-         * @return The sum of the attribute.
+         * Get the total change of attribute of the stock due to events only. Getter function.
+         * Example usage: stock.get_attribute(stock_modifiers::offset);
+         * @param attribute The attribute to get.
+         * @return Total change of attribute due to Stock_event. Does not include the base value.
          */
         float sum_attribute(stock_modifiers attribute);
 
@@ -90,8 +89,7 @@ class Stock {
          */
         void next_round(void);
 
-        /**
-         * Add an event to the stock.
+        /** Add an event to the stock.
          * @param event The event to be added. See events.h for more information about the
          * class Stock_Event.
          */
@@ -124,6 +122,14 @@ class Stock {
         }
 
         /**
+         * Get the category of the stock. Getter function.
+         * @return Category of the stock as unsigned int.
+         */
+        unsigned int get_category(void) {
+            return category;
+        }
+
+        /**
          * Get the quantity of the stock. Getter function.
          * @return Quantity of the stock as float.
          */
@@ -148,13 +154,28 @@ class Stock {
         }
 
         /**
-         * Get the attribute of the stock. Getter function.
-         * Example usage: stock.get_attribute(stock_modifiers::standard_deviation);
-         * @param attribute The attribute to get.
-         * @return Attribute of the stock as float.
+         * Get the base value of stock_attributes of the stock. Getter function.
+         * @param attribute The attribute to get. E.g. standard_deviation, mean, lower_limit, upper_limit
+         * @return Base value of stock_attributes as float.
          */
         float get_attribute(stock_modifiers attribute) {
             return attributes[attribute];
+        }
+
+        /**
+         * Get size of the history.
+         * @return Size of the history as unsigned int.
+         */
+        unsigned int get_history_size(void) {
+            return history.size();
+        }
+
+        /**
+         * Change the mean of the stock by delta_mean. Setter function.
+         * @param delta_mean The change in mean.
+         */
+        void change_mean(float delta_mean) {
+            attributes[mean] += delta_mean;
         }
 
     private:
