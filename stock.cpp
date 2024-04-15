@@ -28,7 +28,7 @@ float Stock::sell(float & balance, unsigned int amount, float trading_fees_perce
     float total_revenue = price * amount * (1 - trading_fees_percent);
     balance += total_revenue;
     quantity -= amount;
-    money_spent -= total_revenue;
+    // money_spent -= total_revenue;
     return total_revenue;
 }
 
@@ -37,7 +37,8 @@ std::string Stock::category_name(void) {
 }
 
 unsigned int Stock::num_stocks_affordable(float balance, float trading_fees_percent) {
-    return (unsigned int)balance / price * (1 + trading_fees_percent);
+    float value = balance / price * (1 + trading_fees_percent);
+    return value < 0 ? 0 : (unsigned int)value;
 }
 
 void Stock::update_history(void) {
@@ -67,8 +68,11 @@ float Stock::delta_price(void) {
 }
 
 float Stock::delta_price_percentage(void) {
-    if (history.size() < 2) {
-        // If there are less than two prices in the history array, return 0
+    if (history.size() < 2 || history[history.size() - 1] < 0 || history[history.size() - 2] < 0) {
+        /** If there are less than two prices in the history array, return 0
+         * If the last two prices are negative, return 0, as it is not possible to
+         * calculate the percentage change
+         */
         return 0;
     }
     return delta_price() / history[history.size() - 2];
@@ -104,24 +108,25 @@ void Stock::init(void) {
     /** @todo Follow-up */
     category = random_integer(category_list_size);
     name = generate_name(category, 1)[0];
-    /** Generate a random price
-     * Currently, the parameter is hardcoded to 1
-     * @todo: Make this parameter not hardcoded, like depending on the category
-     */
-    price = init_stock_price(1);
+    // The distribution of initial stock price will be consistent across same categories
+    price = init_stock_price(category % 3 + 1);
     quantity = 0;
     money_spent = 0;
     /** @todo Move these attribute initialization to random_price.h
      * Now we have to hardcode them here
      */
     attributes[standard_deviation] = 0.1;
-    attributes[offset] = 0.1;
+    attributes[mean] = 0.1;
+
+    attributes[lower_limit] = 0;
+    attributes[upper_limit] = 0;
     update_history();
 }
 
 void Stock::next_round(void) {
     /** @todo Follow-up */
     /** Update the stock price */
+    price += 0.1;
     /** Remove the obselete events */
     remove_obselete_event();
     /** Update the history array with the current price */

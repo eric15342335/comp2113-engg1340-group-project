@@ -57,6 +57,9 @@ struct Stock_event {
 
         /** If this event is Stock categories names are hardcoded in names.h */
         unsigned int category;
+  
+        /** Stores the stock_modifiers that the event applies. */
+        std::map<stock_modifiers, float> modifiers;
 
         /** Stores the stock_modifiers that the event applies. */
         std::map<stock_modifiers, float> modifiers;
