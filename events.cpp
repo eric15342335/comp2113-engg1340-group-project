@@ -30,9 +30,7 @@ std::vector<Stock_event> all_stock_events = {
      /** percentage_permille */ 10,
      /** type_of_event */ all_stocks,
      /** category */ 0,
-     /** modifiers*/ {{standard_deviation, 0}, {mean, 0}, {lower_limit, 0}, {upper_limit, 0}}}
-};
-
+     /** modifiers*/ {{standard_deviation, 0}, {mean, 0}, {lower_limit, 0}, {upper_limit, 0}}}};
 
 // print a map
 void print_map(std::map<unsigned int, std::vector<unsigned int>> map) {
