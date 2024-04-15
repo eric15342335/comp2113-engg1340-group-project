@@ -60,9 +60,6 @@ struct Stock_event {
 
         /** Stores the stock_modifiers that the event applies. */
         std::map<stock_modifiers, float> modifiers;
-
-        /** Stores the stock_modifiers that the event applies. */
-        std::map<stock_modifiers, float> modifiers;
 };
 
 /**
