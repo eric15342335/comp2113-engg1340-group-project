@@ -12,6 +12,7 @@
 */
 
 /** The list of all events that can be applied to the stocks */
+//event_id 0 to 7 affect all stocks
 std::vector<Stock_event> all_stock_events = {
     {/** event_id */ 0,
      /** mutually_exclusive_events */ {1},
