@@ -4,13 +4,21 @@
 #include <algorithm>
 using namespace std;
 
-// the index map to the names, e.g. category = 0 is Adv&Market
+// List of stock categories
 string const category_list[category_list_size] = {
     "Adv&Market", "Aero&Def", "Airlines", "RenewEnergy", "Auto", "Banks", "Biotech",
     "Broadcast", "Casinos&Gaming", "E-Commerce", "FinServices",
     "Food&Beverage", "Healthcare", "Tech", "RealEstate", "Retail", "Telecom"};
 
+/**
+ * Generates a set of unique stock names based on the specified category and quantity.
+ *
+ * @param category The category index (0 to category_list_size-1) indicating the stock category.
+ * @param num The number of stock names to generate.
+ * @return A vector of unique stock names.
+ */
 vector<string> generate_name(unsigned int category, int num) { // possibility of infinite loop if i call generate_names(0,99999999999999)
+    // List of suffixes for stock names
     vector<string> const suffixes = {"Holdings", "Ltd", "Group", "Corp", "Inc", "Enterprises", "Solutions", "Services"};
     vector<string> companyNames;
     random_device rd;
