@@ -5,19 +5,25 @@
 #include <iostream>
 #include <algorithm>
 
+/*  stock cats:
+    "Adv&Market", "Aero&Def", "Airlines", "RenewEnergy", "Auto", "Banks", "Biotech",
+    "Broadcast", "Casinos&Gaming", "E-Commerce", "FinServices",
+    "Food&Beverage", "Healthcare", "Tech", "RealEstate", "Retail", "Telecom"
+*/
+
 /** The list of all events that can be applied to the stocks */
 std::vector<Stock_event> all_stock_events = {
     {/** event_id */ 0,
-     /** mutually_exclusive_events */ {1, 2},
-     /** text */ "The FED has decreased the interest rate!",
+     /** mutually_exclusive_events */ {1},
+     /** text */ "The FED has decreased the interest rate!", //good
      /** duration */ 5,
      /** percentage_permille */ 10,
      /** type_of_event */ all_stocks,
      /** category */ 0,
      /** modifiers*/ {{standard_deviation, 0.1}, {mean, 2}, {lower_limit, 0}, {upper_limit, 20}}},
     {/** event_id */ 1,
-     /** mutually_exclusive_events */ {0, 2},
-     /** text */ "The FED has increased the interest rate!",
+     /** mutually_exclusive_events */ {0, 3},
+     /** text */ "The FED has increased the interest rate!", //bad
      /** duration */ 5,
      /** percentage_permille */ 10,
      /** type_of_event */ all_stocks,
@@ -25,12 +31,53 @@ std::vector<Stock_event> all_stock_events = {
      /** modifiers*/ {{standard_deviation, 0.1}, {mean, -2}, {lower_limit, -20}, {upper_limit, 0}}},
     {/** event_id */ 2,
      /** mutually_exclusive_events */ {},
-     /** text */ "This event is used for testing the mutual exclusivity function!",
+     /** text */ "Economic Recession: Market Downturn Signals Investor Concerns", //bad
+     /** duration */ 7,
+     /** percentage_permille */ 20,
+     /** type_of_event */ all_stocks,
+     /** category */ 0,
+     /** modifiers*/ {{standard_deviation, 0.2}, {mean, -5}, {lower_limit, -50}, {upper_limit, 0}}},
+    {/** event_id */ 3,
+     /** mutually_exclusive_events */ {1},
+     /** text */ "Central Bank Cuts Interest Rates: Market Stimulus Boosts Investor Sentiment", //good
+     /** duration */ 3,
+     /** percentage_permille */ 5,
+     /** type_of_event */ all_stocks,
+     /** category */ 0,
+     /** modifiers*/ {{standard_deviation, 0.05}, {mean, 1}, {lower_limit, 0}, {upper_limit, 10}}},
+    {/** event_id */ 4,
+     /** mutually_exclusive_events */ {},
+     /** text */ "Trade War Escalates: Global Market Volatility Amidst Rising Tensions", //bad
      /** duration */ 5,
+     /** percentage_permille */ 15,
+     /** type_of_event */ all_stocks,
+     /** category */ 0,
+     /** modifiers*/ {{standard_deviation, 0.15}, {mean, -3}, {lower_limit, -30}, {upper_limit, 0}}},
+    {/** event_id */ 5,
+     /** mutually_exclusive_events */ {},
+     /** text */ "Natural Disaster Strikes: Stock Market Reacts to Catastrophic Event", //bad
+     /** duration */ 7,
      /** percentage_permille */ 10,
      /** type_of_event */ all_stocks,
      /** category */ 0,
-     /** modifiers*/ {{standard_deviation, 0}, {mean, 0}, {lower_limit, 0}, {upper_limit, 0}}}};
+     /** modifiers*/ {{standard_deviation, 0.1}, {mean, -2}, {lower_limit, -20}, {upper_limit, 0}}},
+    {/** event_id */ 6,
+     /** mutually_exclusive_events */ {},
+     /** text */ "Government Policy Change: Market Impacted by New Regulations", //bad
+     /** duration */ 4,
+     /** percentage_permille */ 8,
+     /** type_of_event */ all_stocks,
+     /** category */ 0,
+     /** modifiers*/ {{standard_deviation, 0.08}, {mean, -1}, {lower_limit, -15}, {upper_limit, 5}}},
+    {/** event_id */ 7,
+     /** mutually_exclusive_events */ {},
+     /** text */ "Inflation Surges: Market Concerns Rise as Prices Soar", //bad
+     /** duration */ 6,
+     /** percentage_permille */ 12,
+     /** type_of_event */ all_stocks,
+     /** category */ 0,
+     /** modifiers*/ {{standard_deviation, 0.12}, {mean, -3}, {lower_limit, -25}, {upper_limit, 0}}}
+    };
 
 // print a map
 void print_map(std::map<unsigned int, std::vector<unsigned int>> map) {
