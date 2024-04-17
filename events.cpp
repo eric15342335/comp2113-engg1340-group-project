@@ -785,7 +785,7 @@ std::vector<Stock_event> all_stock_events = {
      /** percentage_permille */ 10,
      /** type_of_event */ category,
      /** category */ 16,
-     /** modifiers */ {{standard_deviation, 0.1}, {mean, -5}, {lower_limit, -15}, {upper_limit, 0}}}}
+     /** modifiers */ {{standard_deviation, 0.1}, {mean, -5}, {lower_limit, -15}, {upper_limit, 0}}}};
 
 // print a map
 void
