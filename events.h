@@ -55,7 +55,7 @@ struct Stock_event {
         /** The type of event: Apply to all stocks, in one category or randomly? */
         event_type type_of_event;
 
-        /** If this event is Stock categories names are hardcoded in names.h */
+        /** If this event is Stock categories names are hardcoded in events.h */
         unsigned int category;
 
         /** Stores the stock_modifiers that the event applies. */
