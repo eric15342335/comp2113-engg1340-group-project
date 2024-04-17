@@ -788,8 +788,7 @@ std::vector<Stock_event> all_stock_events = {
      /** modifiers */ {{standard_deviation, 0.1}, {mean, -5}, {lower_limit, -15}, {upper_limit, 0}}}}
 
 // print a map
-void
-print_map(std::map<unsigned int, std::vector<unsigned int>> map) {
+void print_map(std::map<unsigned int, std::vector<unsigned int>> map) {
     for (auto i : map) {
         std::cout << i.first << ": ";
         for (unsigned int j : i.second) {
