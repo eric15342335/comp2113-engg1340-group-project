@@ -1,30 +1,36 @@
 #ifndef RANDOM_PRICE_H
 #define RANDOM_PRICE_H
-
-/**
+/*
 #ifndef
 #define are to prevent double include the header
 */
 
 /**
  * Initial Stock Price Generator
- * if price_profile=2 mean 50 sd 20; if price_profile=3 mean 150 sd 50; else mean 5 sd 2;
- *Stock prices cluster in 3 tiers in our world: about 5 hkd (a=ELSE) variating about 2 hkd; , 50 hkd(a=2) variating about 20 hkd,
- *and 150 hkd(a=3)variating about 50 hkd (based on a very little sample observation of real world).
+ * - if a=1 mean 5 s.d. 2;
+ * - if a=2 mean 50 s.d. 20;
+ * - if a=3 mean 150 s.d. 50;
  */
-double init_stock_price(int a);
+float init_stock_price(int a);
+
 /**
- * Stock Standard Deviation Generator (for both initial and after initial)
- * s.d. usually 1%-5% of initial stock price;
- * modelling with absolute value of norm dist mean 0.03*init_price; s.d. 0.02*init_price (yes, s.d. of s.d.)
+ * Initiaises a reasonable standard deviation; first around 0.5, second around 3, third around 10
  */
-double random_sd(float init_price);
+float init_sd(int price_profile);
+
 /**
- * Random Stock Price Generator (non-initialising)
- * requires mean, s.d., upper limit increase threshold (FRACTION of mean) and lower limit decrease threshold (FRACTION of mean)
- * e.g. both 0.03; then the mean changes to exactly the new price if the value differ from mean by 3%
+ * There is a upper limit and lower limit that the realisation of the % change must fall between.
+ * - All data is raken from a stock class.
+ * As each round pass we allow for more and more chaotic behaviour by making the bounds less tight.
+ * - where n is number of rounds
+ * - The rate this happens is n^2/15 for upper bound
+ * - and n for lower bound before lower bound reach -100
+ * - just for fun (chaotic evil smirk). Upon devastating events which leads to
+ * a stock price only 10 % left of it's initial, we increase mean to prevent a game over.
+ * Upon we are 90.32% sure the bounds would be wrong we bump the mean/
  */
-double random_stock(float & mean, float & sd, float & upper_limit, float & lower_limit);
+float percentage_change_price(Stock & stock);
+
 /**
  * Random integer function in choosing stock type
  * Return a random integer from 0 to max - 1
