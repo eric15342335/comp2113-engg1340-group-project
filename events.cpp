@@ -29,7 +29,7 @@
 //event_id 67 to 74 affect category "Tech"
 //event_id 75 to 79 affect category "RealEstate"
 //event_id 80 to 85 affect category "Retail"
-//event_id 86 to __ affect category "Telecom"
+//event_id 86 to 91 affect category "Telecom"
 
 std::vector<Stock_event> all_stock_events = {
 //event_id 0 to 7 affect all stocks
