@@ -21,14 +21,14 @@ float init_sd(int price_profile);
 
 /**
  * There is a upper limit and lower limit that the realisation of the % change must fall between.
- * - All data is raken from a stock class.
+ * - All data is taken from a stock class.
  * As each round pass we allow for more and more chaotic behaviour by making the bounds less tight.
  * - where n is number of rounds
  * - The rate this happens is n^2/15 for upper bound
  * - and n for lower bound before lower bound reach -100
  * - just for fun (chaotic evil smirk). Upon devastating events which leads to
  * a stock price only 10 % left of it's initial, we increase mean to prevent a game over.
- * Upon we are 90.32% sure the bounds would be wrong we bump the mean/
+ * Upon we are 90.32% sure the bounds would be wrong we bump the mean.
  */
 float percentage_change_price(Stock & stock);
 
