@@ -26,22 +26,22 @@ void printstocknameandoverall(string stockname, vector<float> stockpricehistory)
     cout << endl;
 }
 
-void printarray(string arrayname[80][21], string color[71]) {
+void printvector(vector<vector <string> > vectorname, vector<string> color,int width , int height) {
     int colorint;
-    for (int i = 0; i < 21; i++) {
-        for (int j = 0; j < 80; j++) {
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
             colorint = j - 9;
             if (colorint < 0) {
-                colorint = 70;
+                colorint = width - 10;
             }
             if (color[colorint] == "green") {
-                cout << "\033[1;31m" << arrayname[j][i] << "\033[0m";
+                cout << "\033[1;31m" << vectorname[j][i] << "\033[0m";
             }
             else if (color[colorint] == "red") {
-                cout << "\033[1;32m" << arrayname[j][i] << "\033[0m";
+                cout << "\033[1;32m" << vectorname[j][i] << "\033[0m";
             }
             else {
-                cout << arrayname[j][i];
+                cout << vectorname[j][i];
             }
         }
         cout << endl;
@@ -50,7 +50,7 @@ void printarray(string arrayname[80][21], string color[71]) {
 
 // will delete print in the final version
 
-vector<float> graphinput(string stockname) {
+vector<float> graphinput(string stockname,int width) {
     string filename = stockname + ".log";
     ifstream fin;
     float x;
@@ -59,26 +59,26 @@ vector<float> graphinput(string stockname) {
     while (fin >> x) {
         stockpricehistory.push_back(x);
     }
-    if (stockpricehistory.size() > 71) { // limit graph size to 71
+    if (stockpricehistory.size() > (width - 9)) { // limit graph size to 71
         stockpricehistory.erase(stockpricehistory.begin(), stockpricehistory.end() - 71);
     }
     stockpricehistory.shrink_to_fit();
     return stockpricehistory;
 }
 
-void graph_plotting(string stockname) {
+void graph_plotting(string stockname, int width, int height) {
     float max, min;
-    vector<float> stockpricehistory = graphinput(stockname);
+    vector<float> stockpricehistory = graphinput(stockname, width);
     // convert the raw log input into the nearest 71 data points
-    string color[71];
-    color[70] = "white";
+    vector<string> color (width - 9, "white");
+    color[width - 10] = "white";
     if (stockpricehistory.size() <= 1) {
         return;
     }
     max = *max_element(stockpricehistory.begin(), stockpricehistory.end());
     min = *min_element(stockpricehistory.begin(), stockpricehistory.end());
-    float interval = (max - min) / 21;
-    string graph[80][21];
+    float interval = (max - min) / height;
+    vector<vector <string> > graph(width, vector<string>(height, " "));
     // 21 column 80 rows, this is not in the usual 2d array format
     //  horizontal array and vertical array is inverted
     string maxstring, minstring;
@@ -90,22 +90,18 @@ void graph_plotting(string stockname) {
         maxstring = graphpriceformat(max);
         minstring = graphpriceformat(min);
     }
-    for (int i = 0; i < 80; i++) {
-        for (int j = 0; j < 21; j++) {
-            graph[i][j] = " ";
-        }
-    }
+
     for (int i = 0; i < 6; i++) {
         graph[i][0] = maxstring[i];
-        graph[i][20] = minstring[i];
+        graph[i][height - 1] = minstring[i];
     }
     graph[8][20] = "┗";
 
     for (int i = 0; i < stockpricehistory.size() - 1; i++) {
         int start = 10, end = 10;
         if (interval != 0) {
-            start = 20 - (stockpricehistory[i] - min) / interval;
-            end = 20 - (stockpricehistory[i + 1] - min) / interval;
+            start = (height - 1) - (stockpricehistory[i] - min) / interval;
+            end = (height - 1) - (stockpricehistory[i + 1] - min) / interval;
         }
         if (start == end) {
             graph[i + 9][start] = "■";
@@ -135,13 +131,18 @@ void graph_plotting(string stockname) {
         // idk why the colour is inverted using the normal setup method but i dont care
         // anyway it is running in normal HK stock colour indentations
     }
-    for (int i = 0; i < 21; i++) {
+    for (int i = 0; i < height; i++) {
         graph[8][i] = "┃";
     }
-    for (int i = 9; i < 80; i++) {
+    for (int i = 9; i < width; i++) {
         graph[i][20] = "━";
     }
     graph[8][20] = "┗";
     printstocknameandoverall(stockname, stockpricehistory);
-    printarray(graph, color);
+    printvector(graph, color,width, height);
+}
+
+int main(){
+    graph_plotting("stockA", 50, 21);
+    return 0;
 }
