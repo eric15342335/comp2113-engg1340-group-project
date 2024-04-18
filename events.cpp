@@ -30,6 +30,7 @@
 // event_id 75 to 79 affect category "RealEstate"
 // event_id 80 to 85 affect category "Retail"
 // event_id 86 to 91 affect category "Telecom"
+// event_id 92 to 100 affect pick_random_stock
 
 std::vector<Stock_event> all_stock_events = {
     // event_id 0 to 7 affect all stocks
@@ -785,7 +786,64 @@ std::vector<Stock_event> all_stock_events = {
      /** percentage_permille */ 10,
      /** type_of_event */ category,
      /** category */ 16,
-     /** modifiers */ {{standard_deviation, 0.1}, {mean, -5}, {lower_limit, -15}, {upper_limit, 0}}}};
+     /** modifiers */ {{standard_deviation, 0.1}, {mean, -5}, {lower_limit, -15}, {upper_limit, 0}}},
+    // event_id 92 to 100 affect pick_random_stock
+    {/** event_id */ 92,
+     /** mutually_exclusive_events */ {},
+     /** text */ "Leadership Change: CEO Resigns, New CEO Appointed",
+     /** duration */ 3,
+     /** percentage_permille */ 10,
+     /** type_of_event */ pick_random_stock,
+     /** category */ 0,
+     /** modifiers */ {{standard_deviation, 0.2}, {mean, 0}, {lower_limit, -15}, {upper_limit, 15}}},
+    {/** event_id */ 93,
+     /** mutually_exclusive_events */ {},
+     /** text */ "Labor Strike: Employees Go on Strike Demanding Better Working Conditions",
+     /** duration */ 3,
+     /** percentage_permille */ 12,
+     /** type_of_event */ pick_random_stock,
+     /** category */ 0,
+     /** modifiers */ {{standard_deviation, 0.1}, {mean, -6}, {lower_limit, -20}, {upper_limit, 0}}},
+    {/** event_id */ 94,
+     /** mutually_exclusive_events */ {97},
+     /** text */ "Acquires a Competitor, Expands Market Presence",
+     /** duration */ 4,
+     /** percentage_permille */ 10,
+     /** type_of_event */ pick_random_stock,
+     /** category */ 0,
+     /** modifiers */ {{standard_deviation, 0.2}, {mean, 5}, {lower_limit, 0}, {upper_limit, 15}}},
+    {/** event_id */ 95,
+     /** mutually_exclusive_events */ {},
+     /** text */ "Market Slump Leads to Business Contraction",
+     /** duration */ 4,
+     /** percentage_permille */ 10,
+     /** type_of_event */ pick_random_stock,
+     /** category */ 0,
+     /** modifiers */ {{standard_deviation, 0.3}, {mean, -7}, {lower_limit, -20}, {upper_limit, 0}}},
+    {/** event_id */ 96,
+     /** mutually_exclusive_events */ {},
+     /** text */ "Regulatory Non-Compliance: Fails to Meet Environmental Standards",
+     /** duration */ 5,
+     /** percentage_permille */ 10,
+     /** type_of_event */ pick_random_stock,
+     /** category */ 0,
+     /** modifiers */ {{standard_deviation, 0.1}, {mean, -2}, {lower_limit, -10}, {upper_limit, 0}}},
+    {/** event_id */ 97,
+     /** mutually_exclusive_events */ {94},
+     /** text */ "Faces Bankruptcy, Forced to Cease Operations",
+     /** duration */ 6,
+     /** percentage_permille */ 10,
+     /** type_of_event */ pick_random_stock,
+     /** category */ 0,
+     /** modifiers */ {{standard_deviation, 0.5}, {mean, -9}, {lower_limit, -30}, {upper_limit, 0}}},
+    {/** event_id */ 98,
+     /** mutually_exclusive_events */ {95, 97},
+     /** text */ "Opens New Branches in Multiple Locations",
+     /** duration */ 6,
+     /** percentage_permille */ 10,
+     /** type_of_event */ pick_random_stock,
+     /** category */ 0,
+     /** modifiers */ {{standard_deviation, 0.5}, {mean, 7}, {lower_limit, 0}, {upper_limit, 20}}}};
 
 // print a map
 void print_map(std::map<unsigned int, std::vector<unsigned int>> map) {
