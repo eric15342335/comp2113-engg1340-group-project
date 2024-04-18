@@ -41,24 +41,24 @@ string setCursorPosition(int offsetY, int offsetX) {
     return base;
 }
 
-void fetchConsoleDimensions(int &row, int &col) {
+void fetchConsoleDimensions(int & row, int & col) {
     // suggest terminal sizes
     // dynamic size needs testing on windows
     int mode = 2;
     switch (mode) {
-        case 1:
-            row = 24;
-            col = 80;
-            break;
-        case 2:
-            row = 36;
-            col = 120;
-            break;
-        case 3:
-            row = 48;
-            col = 160;
-        default:
-            row = 36;
-            col = 120;
+    case 1:
+        row = 24;
+        col = 80;
+        break;
+    case 2:
+        row = 36;
+        col = 120;
+        break;
+    case 3:
+        row = 48;
+        col = 160;
+    default:
+        row = 36;
+        col = 120;
     }
 }
