@@ -13,6 +13,6 @@ const int category_list_size = 17;
 // and will cause multiple definition error
 extern const string category_list[category_list_size];
 
-vector<string> generate_name(unsigned int category, int num);
+vector<string> generate_name(unsigned int category, unsigned int num);
 
 #endif
