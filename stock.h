@@ -1,7 +1,6 @@
 /**
  * @headerfile stock.h
  * @author eric15342335
- * @brief Header file for the Stock class.
  */
 #ifndef STOCK_H
 #define STOCK_H
@@ -13,17 +12,31 @@
 #include "events.h"
 
 /**
- * A class that represents a stock object in the game.
+ * @class Stock stock.h "stock.h"
+ * @brief A class that represents a stock object in the game.
  * The stock has a name, price, quantity, category, money spent, events, attributes, and history.
  * The stock can be purchased, sold, and updated.
+ * @note Example usage:
+ * @code {.cpp}
+ * Stock stock;   // Create a stock object. The constructor will initialize the stock automatically.
+ * float balance = 1000;
+ * stock.purchase(balance, 1, 0.01);    // Purchase a stock.
+ * stock.sell(balance, 1, 0.01);        // Sell a stock.
+ * std::string name = stock.get_name(); // What is the name of the stock?
+ * // Get the upper limit of the percentage change of the stock price:
+ * float upper_limit = stock.get_attribute(upper_limit) + stock.sum_attribute(upper_limit);
+ * @endcode
  */
 class Stock {
     public:
+        /** Constructor of the Stock object. */
+        Stock(void);
+
         /**
-         * Purchase a given number of stocks
-         * @param balance The balance ($) of the player. Pass-by-reference
+         * Purchase a given number of stocks.
+         * @param balance The balance ($) of the player. Pass-by-reference.
          * @param amount The number of stocks to purchase.
-         * @param trading_fees_percent The trading fees percentage we charge the player
+         * @param trading_fees_percent The trading fees percentage we charge the player.
          * @return Successful: Total cost of the purchase.
          *         Failed: -1 if the player does not have enough balance to buy the stock.
          */
@@ -31,7 +44,7 @@ class Stock {
 
         /**
          * Sell a given number of stocks.
-         * @param balance The balance ($) of the player. Pass-by-reference
+         * @param balance The balance ($) of the player. Pass-by-reference.
          * @param amount The number of stocks to sell.
          * @param trading_fees_percent The trading fees percentage we charge the player.
          * @return Successful: Amount of money the player receive.
@@ -47,15 +60,7 @@ class Stock {
         unsigned int num_stocks_affordable(float balance, float trading_fees_percent);
 
         /**
-         * Call this function to create a new stock.
-         * It assigns a random price, stock_attributes and category to it.
-         * Calls generate_name() from names.h to generate a name for the stock.
-         * Should be called only once.
-         */
-        void init(void);
-
-        /**
-         * Return the name of the caategory the stock belongs to.
+         * Return the name of the category the stock belongs to.
          * @return Name of the category as a string.
          */
         std::string category_name(void);
@@ -72,8 +77,11 @@ class Stock {
         float delta_price_percentage(void);
 
         /**
-         * Get the total change of attribute of the stock due to events only. Getter function.
-         * Example usage: stock.get_attribute(stock_modifiers::offset);
+         * Get the total change of attribute of the stock due to events only. Getter function. \n
+         * Example usage:
+         * ```
+         * stock.get_attribute(stock_modifiers::offset);
+         * ```
          * @param attribute The attribute to get.
          * @return Total change of attribute due to Stock_event. Does not include the base value.
          */
@@ -179,21 +187,32 @@ class Stock {
         }
 
     private:
-        std::string name;      /** name of the stock */
-        float price;           /** current price of the stock */
-        unsigned int quantity; /** number of stocks player has */
-        unsigned int category; /** stores category numbers, where the names are stored in names.h */
-        float money_spent;     /** total money spent on purchasing the stock */
+        /** Name of the stock that we assigned to it. */
+        std::string name;
+        /** Current price of the stock. */
+        float price;
+        /** Number of stocks the player has purchased. */
+        unsigned int quantity;
+        /** Use numbers to represent the category of the stock. The range of the numbers
+         * should be `[0, category_list_size - 1]`. See names.cpp for more information.
+         */
+        unsigned int category;
+        /** Amount of money the player has spent on buying this stock. */
+        float money_spent;
 
-        std::list<Stock_event> events;               /** List of events that will modify the stock */
-        std::map<stock_modifiers, float> attributes; /** The attributes of the stock */
-        std::vector<float> history;                  /** The history of stock prices */
+        /** Stores all the events that will apply to this stock specifically. */
+        std::list<Stock_event> events;
+        /** Stores the initial value of the stock_modifiers (e.g. standard deviation, mean and limits). */
+        std::map<stock_modifiers, float> attributes;
+        /** Contains the stock price history. First element (index 0) is the oldest. */
+        std::vector<float> history;
 
-        void update_history(void); /** Update the history array with the current price */
+        /** Update the history array with the current price */
+        void update_history(void);
 
-        /**
-         * Remove obselete events that has duration <= 0
-         * Internal use after the "next_round" function is called
+        /** Remove obselete events from the list `events` that durations are
+         * less than/equal to 0 (In other words, expired).
+         * For internal use after the `Stock::next_round` function is called.
          */
         void remove_obselete_event(void);
 };

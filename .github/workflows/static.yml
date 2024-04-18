@@ -27,17 +27,16 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
-      - name: Setup Doxygen
+      - name: Install and run doxygen via Chocolatey
         run: |
-          sudo apt-get update -y
-          sudo apt-get install doxygen graphviz -y
-          doxygen main.cpp
+          choco install doxygen.portable graphviz --yes -r --no-progress
+          doxygen Doxyfile
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
