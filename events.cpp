@@ -80,3 +80,42 @@ std::map<unsigned int, std::vector<unsigned int>> check_mutual_exclusivity(std::
     }
     return mut_excl_map; // Add the missing return statement
 }
+
+std::vector<Stock_event> pick_events(std::vector<Stock_event> all_events, unsigned int num_events) {
+    std::vector<Stock_event> picked_events;
+    // Pick num_events random events
+    for (unsigned int i = 0; i < num_events; i++) {
+        // When picking the event, consider event.probability_permille.
+        unsigned int total_permille = 0;
+        for (Stock_event event : all_events) {
+            total_permille += event.probability_permille;
+        }
+        unsigned int random_permille = rand() % total_permille;
+        for (Stock_event event : all_events) {
+            total_permille -= event.probability_permille;
+            if (total_permille <= random_permille) {
+                picked_events.push_back(event);
+                break;
+            }
+        }
+    }
+    // Check event duplication and mutual exclusivity
+    std::map<unsigned int, std::vector<unsigned int>> mut_excl_map = check_mutual_exclusivity(all_events);
+    for (unsigned int i = 0; i < picked_events.size(); i++) {
+        for (unsigned int j = i + 1; j < picked_events.size(); j++) {
+            // If two events are the same, remove one of them
+            // Note that we don't remove the duplicate events with type_of_event == pick_random_stock
+            if (picked_events[i].event_id == picked_events[j].event_id &&
+                picked_events[i].type_of_event != pick_random_stock) {
+                picked_events.erase(picked_events.begin() + j);
+                j--;
+            }
+            // If two events are mutually exclusive, remove one of them
+            else if (std::find(mut_excl_map[picked_events[i].event_id].begin(), mut_excl_map[picked_events[i].event_id].end(), picked_events[j].event_id) != mut_excl_map[picked_events[i].event_id].end()) {
+                picked_events.erase(picked_events.begin() + j);
+                j--;
+            }
+        }
+    }
+    return picked_events;
+}
