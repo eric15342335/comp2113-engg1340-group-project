@@ -5,10 +5,15 @@ on:
         branches:
             - main
     pull_request:
+    workflow_dispatch:
 
 jobs:
   Make:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -20,8 +25,9 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         # suppose we compiled our game and named it 'stocksim'
-        name: stocksim
-        path: stocksim
+        # use wildcard to match the executable for all platforms
+        name: stocksim-${{ matrix.os }}
+        path: stocksim*
         compression-level: 9
         retention-days: 90
         if-no-files-found: error

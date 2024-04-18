@@ -3,6 +3,8 @@
  */
 #include "draw.h"
 #include "format.h"
+#include "draw.h"
+#include "format.h"
 #include "stock.h"
 #include "random_price.h"
 #include "nonstdlibs/VariadicTable.h"
@@ -24,9 +26,9 @@ const int initial_stock_count = 20;
  * @param balance How much money the player has.
  */
 void print_table(std::vector<Stock> stocks_list, float balance) {
-    // Create a table
+    // Create a table, note that R"(% Change)" is a raw string literal (C++11 feature).
     VariadicTable<unsigned int, std::string, std::string, float, float, float, unsigned int, float, unsigned int>
-        table({"No.", "Category", "Name", "Last Price", "Change", "\% Change", "Quantity", "$ Spent", "Max"});
+        table({"No.", "Category", "Name", "Last Price", "Change", R"(% Change)", "Quantity", "$ Spent", "Max"});
     /* Set the precision and format of the columns.
      * Note: Precision and Format is ignored for std::string columns. */
     table.setColumnPrecision({1, 0, 0, 2, 2, 2, 1, 2, 1});
@@ -62,6 +64,10 @@ unsigned int rounds_played = 1;
 
 /** Main function, the entry point of the program */
 int main(void) {
+    int row; // Number of characters to fit in a column
+    int col; // Number of characters to fit in a row
+    fetchConsoleDimensions(row, col);
+
     int row; // Number of characters to fit in a column
     int col; // Number of characters to fit in a row
     fetchConsoleDimensions(row, col);

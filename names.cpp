@@ -4,13 +4,20 @@
 #include <algorithm>
 using namespace std;
 
-// the index map to the names, e.g. category = 0 is Adv&Market
+// List of stock categories
 string const category_list[category_list_size] = {
     "Adv&Market", "Aero&Def", "Airlines", "RenewEnergy", "Auto", "Banks", "Biotech",
     "Broadcast", "Casinos&Gaming", "E-Commerce", "FinServices",
     "Food&Beverage", "Healthcare", "Tech", "RealEstate", "Retail", "Telecom"};
 
-vector<string> generate_name(unsigned int category, int num) { // possibility of infinite loop if i call generate_names(0,99999999999999)
+/**
+ * Generates a set of unique stock names based on the specified category and quantity.
+ * @param category The category index (0 to category_list_size-1) indicating the stock category.
+ * @param num The number of stock names to generate.
+ * @return A vector of unique stock names.
+ */
+vector<string> generate_name(unsigned int category, unsigned int num) { // possibility of infinite loop if i call generate_names(0,99999999999999)
+    // List of suffixes for stock names
     vector<string> const suffixes = {"Holdings", "Ltd", "Group", "Corp", "Inc", "Enterprises", "Solutions", "Services"};
     vector<string> companyNames;
     random_device rd;
@@ -33,7 +40,7 @@ vector<string> generate_name(unsigned int category, int num) { // possibility of
             "Creative", "Strategy", "Market", "Audience",
             "Brand", "Digital", "Social", "Influencer"};
 
-        for (int i = 0; i < num; i++) {
+        for (unsigned int i = 0; i < num; i++) {
             string name = words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] + " " +
                           suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(gen)];
             if (find(companyNames.begin(), companyNames.end(), name) == companyNames.end())
@@ -60,7 +67,7 @@ vector<string> generate_name(unsigned int category, int num) { // possibility of
             "Stealth", "Warrior", "Aircraft", "Airman", "Seiya", "Sanji",
             "Airbase", "Stratosphere", "Airshow", "Combat", "Zoro"};
 
-        for (int i = 0; i < num; i++) {
+        for (unsigned int i = 0; i < num; i++) {
             string name = words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] + " " +
                           suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(gen)];
             if (find(companyNames.begin(), companyNames.end(), name) == companyNames.end())
@@ -83,7 +90,7 @@ vector<string> generate_name(unsigned int category, int num) { // possibility of
             "Airlift", "Airflow", "Airliner", "Jetsetter", "Airship",
             "Airterminal", "Airsteward", "Airstrike", "Airtaxi", "Airway"};
 
-        for (int i = 0; i < num; i++) {
+        for (unsigned int i = 0; i < num; i++) {
             string name = words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] + " " +
                           suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(gen)];
             if (find(companyNames.begin(), companyNames.end(), name) == companyNames.end())
@@ -111,7 +118,7 @@ vector<string> generate_name(unsigned int category, int num) { // possibility of
             "PowerCell", "StorageSolutions", "ChargeMaster", "BatteryTech", "PowerHub",
             "EcoStorage", "RenewableEnergy", "EfficientEnergies"};
 
-        for (int i = 0; i < num; i++) {
+        for (unsigned int i = 0; i < num; i++) {
             string name = words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] + " " +
                           suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(gen)];
             if (find(companyNames.begin(), companyNames.end(), name) == companyNames.end())
@@ -140,7 +147,7 @@ vector<string> generate_name(unsigned int category, int num) { // possibility of
             "Sloth", "Land Hover", "Lincollin", "GMC",
             "Aubii", "Buddatti", "Maserahhi", "McLaren", "Rage Rover"};
 
-        for (int i = 0; i < num; i++) {
+        for (unsigned int i = 0; i < num; i++) {
             string name = words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] + " " +
                           suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(gen)];
             if (find(companyNames.begin(), companyNames.end(), name) == companyNames.end())
@@ -161,7 +168,7 @@ vector<string> generate_name(unsigned int category, int num) { // possibility of
             "Crest", "Apex", "Aegis", "Legacy", "Crown", "Krupt",
             "Meridian", "Encompass", "Equity", "Stellar", "Eclipse"};
 
-        for (int i = 0; i < num; i++) {
+        for (unsigned int i = 0; i < num; i++) {
             string name = words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] + " " +
                           suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(gen)];
             if (find(companyNames.begin(), companyNames.end(), name) == companyNames.end())
@@ -182,7 +189,7 @@ vector<string> generate_name(unsigned int category, int num) { // possibility of
             "GenePrime", "BioSpectra", "InnoCell", "BioPlasma", "GeneTech",
             "BioQuest", "GeneGenius", "InnoGene", "BioCure", "GeneCraft"};
 
-        for (int i = 0; i < num; i++) {
+        for (unsigned int i = 0; i < num; i++) {
             string name = words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] + " " +
                           suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(gen)];
             if (find(companyNames.begin(), companyNames.end(), name) == companyNames.end())
@@ -211,7 +218,7 @@ vector<string> generate_name(unsigned int category, int num) { // possibility of
             "BroadcastBox", "SonicStream", "SoundSphere", "AudioMingle", "ListenIn",
             "StreamCenter", "VoicePulse", "RadioRadar", "ChannelWave", "SoundSync"};
 
-        for (int i = 0; i < num; i++) {
+        for (unsigned int i = 0; i < num; i++) {
             string name = words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] + " " +
                           suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(gen)];
             if (find(companyNames.begin(), companyNames.end(), name) == companyNames.end())
@@ -240,7 +247,7 @@ vector<string> generate_name(unsigned int category, int num) { // possibility of
             "PlayfulGaming", "SlotParadise", "BingoEmpire", "RouletteRealm", "CasinoWorld", "MustLose", "GuaranteedWin",
             "GamingZone", "BetMasters", "GamblingKingdom", "LuckyLottery", "SpinPalace", "Nario"};
 
-        for (int i = 0; i < num; i++) {
+        for (unsigned int i = 0; i < num; i++) {
             string name = words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] + " " +
                           suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(gen)];
             if (find(companyNames.begin(), companyNames.end(), name) == companyNames.end())
@@ -261,7 +268,7 @@ vector<string> generate_name(unsigned int category, int num) { // possibility of
             "eBayDeals", "AmazonEmporium", "ShoppingSolutions", "VirtualMarket", "SaleSolutions",
             "Buyer'sParadise", "DealHaven", "CartConnect"};
 
-        for (int i = 0; i < num; i++) {
+        for (unsigned int i = 0; i < num; i++) {
             string name = words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] + " " +
                           suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(gen)];
             if (find(companyNames.begin(), companyNames.end(), name) == companyNames.end())
@@ -278,7 +285,7 @@ vector<string> generate_name(unsigned int category, int num) { // possibility of
             "CapitalConsulting", "WealthManagement", "FinancialSolutions", "MoneyMatters", "InvestmentAdvisors",
             "SecureBanking", "SmartFunds", "EconomicConsultancy", "FinancialExperts"};
 
-        for (int i = 0; i < num; i++) {
+        for (unsigned int i = 0; i < num; i++) {
             string name = words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] + " " +
                           suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(gen)];
             if (find(companyNames.begin(), companyNames.end(), name) == companyNames.end())
@@ -301,7 +308,7 @@ vector<string> generate_name(unsigned int category, int num) { // possibility of
             "Yum", "Morsel", "Nibble", "Digest", "Mouthful",
             "Bistro", "Savor", "Crunch", "Sizzle", "Devour"};
 
-        for (int i = 0; i < num; i++) {
+        for (unsigned int i = 0; i < num; i++) {
             string name = words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] + " " +
                           suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(gen)];
             if (find(companyNames.begin(), companyNames.end(), name) == companyNames.end())
@@ -329,7 +336,7 @@ vector<string> generate_name(unsigned int category, int num) { // possibility of
             "Prescribe", "Relief", "Recovery", "Dose", "MediCare",
             "Medix", "Healthy", "Fit", "Strong", "Balance"};
 
-        for (int i = 0; i < num; i++) {
+        for (unsigned int i = 0; i < num; i++) {
             string name = words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] + " " +
                           suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(gen)];
             if (find(companyNames.begin(), companyNames.end(), name) == companyNames.end())
@@ -348,7 +355,7 @@ vector<string> generate_name(unsigned int category, int num) { // possibility of
             "Guru", "Genius", "Solve", "Pixel",
             "Bit", "Invent", "KKGarden"};
 
-        for (int i = 0; i < num; i++) {
+        for (unsigned int i = 0; i < num; i++) {
             string name = words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] + " " +
                           suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(gen)];
             if (find(companyNames.begin(), companyNames.end(), name) == companyNames.end())
@@ -368,7 +375,7 @@ vector<string> generate_name(unsigned int category, int num) { // possibility of
             "Tower", "Plaza", "Villa", "Condo", "Develop",
             "Society", "Park", "Living", "Urban", "Suburban"};
 
-        for (int i = 0; i < num; i++) {
+        for (unsigned int i = 0; i < num; i++) {
             string name = words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] + " " +
                           suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(gen)];
             if (find(companyNames.begin(), companyNames.end(), name) == companyNames.end())
@@ -388,7 +395,7 @@ vector<string> generate_name(unsigned int category, int num) { // possibility of
             "Enchant", "Whimsy", "Delight", "Serendipity", "Wander",
             "Charm", "Spruce", "Eclectic", "Rustic", "Vintage"};
 
-        for (int i = 0; i < num; i++) {
+        for (unsigned int i = 0; i < num; i++) {
             string name = words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] + " " +
                           suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(gen)];
             if (find(companyNames.begin(), companyNames.end(), name) == companyNames.end())
@@ -408,7 +415,7 @@ vector<string> generate_name(unsigned int category, int num) { // possibility of
             "Amplify", "Momentum", "Infinite", "Nexus", "Stream",
             "Sync", "Telepath", "Radiant", "Blaze", "Quantum"};
 
-        for (int i = 0; i < num; i++) {
+        for (unsigned int i = 0; i < num; i++) {
             string name = words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] + " " +
                           suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(gen)];
             if (find(companyNames.begin(), companyNames.end(), name) == companyNames.end())
@@ -419,7 +426,8 @@ vector<string> generate_name(unsigned int category, int num) { // possibility of
         break;
     }
     default:
-        return (std::vector<std::string>){"wgefasdfa"};
+        /** "Group 88" is the fallback value for input category out of [0, category_list_size - 1] */
+        return std::vector<std::string>(1, "Group 88");
         break;
     }
     return companyNames;
