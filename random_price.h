@@ -12,7 +12,7 @@
  * - if a=3 mean 150 s.d. 50;
  */
 float init_stock_price(int a);
-
+// there is ABSOLUTELY nothing at line 15
 /**
  * Initiaises a reasonable standard deviation; first around 0.5, second around 3, third around 10
  */
