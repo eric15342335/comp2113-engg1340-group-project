@@ -137,7 +137,7 @@ void graph_plotting(string stockname, int width, int height) {
     for (int i = 9; i < width; i++) {
         graph[i][20] = "━";
     }
-    graph[8][20] = "┗";
+    graph[8][height - 1] = "┗";
     printstocknameandoverall(stockname, stockpricehistory);
     printvector(graph, color, width, height);
 }
