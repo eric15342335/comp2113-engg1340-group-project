@@ -101,7 +101,7 @@ void graph_plotting(string stockname) {
     }
     graph[8][20] = "┗";
 
-    for (int i = 0; i < stockpricehistory.size() - 1; i++) {
+    for (unsigned int i = 0; i < stockpricehistory.size() - 1; i++) {
         int start = 10, end = 10;
         if (interval != 0) {
             start = 20 - (stockpricehistory[i] - min) / interval;

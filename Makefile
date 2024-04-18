@@ -16,8 +16,8 @@ names.o: names.h names.cpp
 graph.o: graph.h graph.cpp
 	g++ -Wall -Wextra -std=c++11 -c graph.cpp -o graph.o
 
-stocksim: main.cpp stock.o random_price.o events.o names.o
-	g++ -Wall -Wextra -std=c++11 main.cpp stock.o random_price.o events.o names.o -o stocksim
+stocksim: main.cpp stock.o random_price.o events.o names.o graph.o
+	g++ -Wall -Wextra -std=c++11 main.cpp stock.o random_price.o events.o names.o graph.o -o stocksim
 
 test: stocksim
 	./stocksim
