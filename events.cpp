@@ -30,7 +30,7 @@
 // event_id 75 to 79 affect category "RealEstate"
 // event_id 80 to 85 affect category "Retail"
 // event_id 86 to 91 affect category "Telecom"
-// event_id 92 to 100 affect pick_random_stock
+// event_id 92 to 98 affect pick_random_stock
 
 std::vector<Stock_event> all_stock_events = {
     // event_id 0 to 7 affect all stocks
@@ -787,7 +787,7 @@ std::vector<Stock_event> all_stock_events = {
      /** type_of_event */ category,
      /** category */ 16,
      /** modifiers */ {{standard_deviation, 0.1}, {mean, -5}, {lower_limit, -15}, {upper_limit, 0}}},
-    // event_id 92 to 100 affect pick_random_stock
+    // event_id 92 to 98 affect pick_random_stock
     {/** event_id */ 92,
      /** mutually_exclusive_events */ {},
      /** text */ "Leadership Change: CEO Resigns, New CEO Appointed",
