@@ -1,9 +1,15 @@
 #include "random_price.h"
-// #include "events.h"
+#include "events.h"
 #include "stock.h"
 #include <cstdlib>
 #include <iostream>
 #include <random>
+#include <string>
+#include <vector>
+#include <list>
+#include <map>
+#include "events.h"
+#include "stock.h"
 
 float init_stock_price(int price_profile) {
     std::random_device rd;
@@ -18,7 +24,7 @@ float init_stock_price(int price_profile) {
     return abs(distribution(gen));
 }
 
-float init_sd(int price_profile, Stock & stock) {
+float init_sd(int price_profile) {
     std::random_device rd;
     std::mt19937 gen(rd());
     std::normal_distribution<float> distribution(0.5, 0.5);
@@ -43,8 +49,8 @@ float percentage_change_price(Stock & stock) {
     float temp = 100 * abs(init_price - current_price) / init_price;
     float upper_limit = 50 + (rounds_passed * rounds_passed) / 15 + temp;
     float lower_limit = -1 * (50 + rounds_passed + temp);
-    float z_score_upper_limit = (upper_limit - stock.attributes[offset]) / stock.attributes[standard_deviation];
-    float z_score_lower_limit = (lower_limit - stock.attributes[offset]) / stock.attributes[standard_deviation];
+    float z_score_upper_limit = (upper_limit - stock.get_attribute(mean) / stock.get_attribute(standard_deviation);
+    float z_score_lower_limit = (lower_limit - stock.get_attribute(mean) ) / stock.get_attribute(standard_deviation);
     for (int i = 0; i < 5; i++) {
         if (z_score_lower_limit > 1.3) {
             stock.change_mean(current_price * 0.3);
@@ -53,7 +59,7 @@ float percentage_change_price(Stock & stock) {
             stock.change_mean(current_price * -0.3);
         }
     }
-    std::normal_distribution<float> distribution(stock.attributes[offset], stock.attributes[standard_deviation]);
+    std::normal_distribution<float> distribution(stock.get_attribute(mean) , stock.get_attribute(standard_deviation));
 
     if (lower_limit < -100) {
         lower_limit = -100;
