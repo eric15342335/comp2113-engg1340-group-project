@@ -79,8 +79,38 @@ float Stock::delta_price_percentage(void) {
 }
 
 void Stock::add_event(Stock_event event) {
-    /** Just an alias */
+    if (!can_add_event(event)) {
+        // If the event is mutually exclusive with ongoing events,
+        // ignore it and do nothing.
+        return;
+    }
+    // If the event does not exist, add it to the list of events
+    // Otherwise, update the duration of the event by deleting the old one and add the new one.
+    list<Stock_event>::iterator event_itr = events.begin();
+    while (event_itr != events.end()) {
+        if (*event_itr == event) {
+            event_itr = events.erase(event_itr);
+        }
+        else {
+            event_itr++;
+        }
+    }
     events.push_back(event);
+}
+
+bool Stock::can_add_event(Stock_event event) {
+    list<Stock_event>::iterator event_itr = events.begin();
+    while (event_itr != events.end()) {
+        if (event_itr->mutually_exclusive_events.size() > 0) {
+            for (unsigned int i = 0; i < event_itr->mutually_exclusive_events.size(); i++) {
+                if (event_itr->mutually_exclusive_events[i] == event.event_id) {
+                    return false;
+                }
+            }
+        }
+        event_itr++;
+    }
+    return true;
 }
 
 void Stock::remove_obselete_event(void) {
@@ -125,6 +155,12 @@ Stock::Stock(void) {
 void Stock::next_round(void) {
     /** @todo Use the functions provided by Jeremy in random_price.cpp to update the stock price. */
     price += 0.1;
+    /** Reduce all events duration by one */
+    list<Stock_event>::iterator event_itr = events.begin();
+    while (event_itr != events.end()) {
+        event_itr->duration--;
+        event_itr++;
+    }
     /** Remove the obselete events */
     remove_obselete_event();
     /** Update the history array with the current price */
