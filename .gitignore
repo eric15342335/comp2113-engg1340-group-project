@@ -3,3 +3,8 @@
 *.o
 *.out
 stocksim
+
+# CMake related
+CMakeFiles/
+CMakeCache.txt
+*.cmake
