@@ -1,6 +1,8 @@
 /**
  * @file main.cpp
  */
+#include "draw.h"
+#include "format.h"
 #include "stock.h"
 #include "random_price.h"
 #include "nonstdlibs/VariadicTable.h"
@@ -60,6 +62,10 @@ unsigned int rounds_played = 1;
 
 /** Main function, the entry point of the program */
 int main(void) {
+    int row; // Number of characters to fit in a column
+    int col; // Number of characters to fit in a row
+    fetchConsoleDimensions(row, col);
+
     std::vector<Stock> stocks_list; // Create a vector of stocks
     for (int i = 0; i < initial_stock_count; i++) {
         Stock stock;
@@ -67,10 +73,14 @@ int main(void) {
     }
 
     // Print the welcome message
+    std::cout << textClear << setCursorPosition(0, 0);
     std::cout << "Welcome to the Stock Market Simulator!" << std::endl;
+    sleep(2000);
     std::cout << "Current trading fees are charged at " << trading_fees_percent * 100 << " %" << std::endl;
     std::cout << "You currently have $" << balance << "." << std::endl;
+    sleep(5000);
     print_table(stocks_list, balance); // Print the table of stocks
+    sleep(5000);
 
     // Simulate player buying stocks
     for (unsigned int i = 0; i < stocks_list.size(); i++) {
@@ -83,13 +93,17 @@ int main(void) {
     }
 
     // Go to next round
-    rounds_played++;                                            // Increment the round
-    std::cout << "Round " << rounds_played << "." << std::endl; // Print the round number
+    std::cout << textClear << setCursorPosition(0, 0);
+    rounds_played++;                                 // Increment the round
+    drawRoundInfo(row, col, rounds_played, balance); // Prints the round number and balance
+    std::cout << setCursorPosition(5, 0);
+
     for (unsigned int i = 0; i < stocks_list.size(); i++) {
         stocks_list[i].next_round(); // Update the stock price
     }
     print_table(stocks_list, balance);
-    std::cout << "You currently have $" << balance << "." << std::endl;
+    drawEventBar(row, col);
+    drawButton(row, col);
 
     // Simulate player buying stocks
     for (unsigned int i = 0; i < stocks_list.size(); i++) {
@@ -106,8 +120,22 @@ int main(void) {
             }
         }
     }
+
+    sleep(5000);
+    std::cout << textClear << setCursorPosition(0, 0);
+    drawRoundInfo(row, col, rounds_played, balance);
+    std::cout << setCursorPosition(5, 0);
     print_table(stocks_list, balance);
-    std::cout << "You currently have $" << balance << "." << std::endl;
+    drawEventBar(row, col);
+    drawButton(row, col);
+
+    while (0) {
+        fetchConsoleDimensions(row, col);
+        drawEventBar(row, col);
+        drawButton(row, col);
+        sleep(200);
+        std::cout << textClear;
+    }
 
     return 0;
 }

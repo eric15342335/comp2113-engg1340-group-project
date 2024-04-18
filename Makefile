@@ -1,4 +1,3 @@
-# Not finished yet
 FLAGS = -Wall -Wextra -std=c++11 -Werror -pedantic-errors
 default: stocksim
 
@@ -14,11 +13,17 @@ events.o: events.h events.cpp
 names.o: names.h names.cpp
 	g++ $(FLAGS) -c names.cpp -o names.o
 
+format.o: format.cpp format.h
+	g++ $(FLAGS) -c format.cpp -o format.o
+
+draw.o: draw.cpp draw.h format.h
+	g++ $(FLAGS) -c draw.cpp -o draw.o
+
 graph.o: graph.h graph.cpp
 	g++ $(FLAGS) -c graph.cpp -o graph.o
 
-stocksim: main.cpp stock.o random_price.o events.o names.o
-	g++ $(FLAGS) main.cpp stock.o random_price.o events.o names.o -o stocksim
+stocksim: main.cpp stock.o random_price.o events.o names.o format.o draw.o
+	g++ $(FLAGS) main.cpp stock.o random_price.o events.o names.o format.o draw.o -o stocksim
 
 test: stocksim
 	./stocksim
