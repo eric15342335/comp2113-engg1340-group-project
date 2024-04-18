@@ -5,11 +5,11 @@
 #include <iostream>
 #include <algorithm>
 
-/*  stock cats:
-    "Adv&Market", "Aero&Def", "Airlines", "RenewEnergy", "Auto", "Banks", "Biotech",
-    "Broadcast", "Casinos&Gaming", "E-Commerce", "FinServices",
-    "Food&Beverage", "Healthcare", "Tech", "RealEstate", "Retail", "Telecom"
-*/
+/** Stock categories include:
+ * "Adv&Market", "Aero&Def", "Airlines", "RenewEnergy", "Auto", "Banks", "Biotech",
+ * "Broadcast", "Casinos&Gaming", "E-Commerce", "FinServices",
+ * "Food&Beverage", "Healthcare", "Tech", "RealEstate", "Retail", "Telecom"
+ */
 
 /** The list of all events that can be applied to the stocks */
 // event_id 0 to 7 affect all stocks
@@ -856,7 +856,7 @@ void print_map(std::map<unsigned int, std::vector<unsigned int>> map) {
     }
 }
 
-/**
+/*
 int main() {
     // This outputs 0.1
     std::cout << all_stock_events[0].modifiers[standard_deviation] << std::endl;
@@ -866,7 +866,6 @@ int main() {
     // 0: 2
     // 1: 2
     // 2:
-    //@todo Consider remove this example in the future.
     return 0;
 }
 */

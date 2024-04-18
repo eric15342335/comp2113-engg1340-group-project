@@ -50,7 +50,7 @@ void printvector(vector<vector<string>> vectorname, vector<string> color, int wi
 
 // will delete print in the final version
 
-vector<float> graphinput(string stockname, int width) {
+vector<float> graphinput(string stockname, unsigned int width) {
     string filename = stockname + ".log";
     ifstream fin;
     float x;

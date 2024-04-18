@@ -145,16 +145,16 @@ Stock::Stock(void) {
     quantity = 0;
     money_spent = 0;
     /** @todo Update the attributes via the functions provided by Jeremy in random_price.cpp */
-    attributes[standard_deviation] = 0.1;
-    attributes[mean] = 0.1;
-    attributes[lower_limit] = 0;
-    attributes[upper_limit] = 0;
+    attributes[standard_deviation] = init_sd();
+    attributes[mean] = 0;
+    attributes[lower_limit] = -40;
+    attributes[upper_limit] = 40;
     update_history();
 }
 
 void Stock::next_round(void) {
     /** @todo Use the functions provided by Jeremy in random_price.cpp to update the stock price. */
-    price += 0.1;
+    price += price * percentage_change_price(*this) / 100;
     /** Reduce all events duration by one */
     list<Stock_event>::iterator event_itr = events.begin();
     while (event_itr != events.end()) {

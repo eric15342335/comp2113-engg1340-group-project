@@ -19,7 +19,7 @@
 const float trading_fees_percent = 0.01;
 
 /** Initial stock count */
-const int initial_stock_count = 5;
+const int initial_stock_count = 20;
 
 /** Player's balance */
 float balance = 1000;
@@ -233,6 +233,6 @@ int main(void) {
         std::cout << textClear;
     }
 
-    graph_plotting("stockA");
+    graph_plotting("stockA", 50, 50);
     return 0;
 }
