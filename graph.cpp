@@ -26,7 +26,7 @@ void printstocknameandoverall(string stockname, vector<float> stockpricehistory)
     cout << endl;
 }
 
-void printvector(vector<vector <string> > vectorname, vector<string> color,int width , int height) {
+void printvector(vector<vector<string>> vectorname, vector<string> color, int width, int height) {
     int colorint;
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
@@ -50,7 +50,7 @@ void printvector(vector<vector <string> > vectorname, vector<string> color,int w
 
 // will delete print in the final version
 
-vector<float> graphinput(string stockname,int width) {
+vector<float> graphinput(string stockname, int width) {
     string filename = stockname + ".log";
     ifstream fin;
     float x;
@@ -59,7 +59,7 @@ vector<float> graphinput(string stockname,int width) {
     while (fin >> x) {
         stockpricehistory.push_back(x);
     }
-    if (stockpricehistory.size() > (width - 9)) { // limit graph size to 71
+    if (stockpricehistory.size() > (width - 9)) { // limit graph size to width
         stockpricehistory.erase(stockpricehistory.begin(), stockpricehistory.end() - 71);
     }
     stockpricehistory.shrink_to_fit();
@@ -69,8 +69,8 @@ vector<float> graphinput(string stockname,int width) {
 void graph_plotting(string stockname, int width, int height) {
     float max, min;
     vector<float> stockpricehistory = graphinput(stockname, width);
-    // convert the raw log input into the nearest 71 data points
-    vector<string> color (width - 9, "white");
+    // convert the raw log input into the nearest "width" data points
+    vector<string> color(width - 9, "white");
     color[width - 10] = "white";
     if (stockpricehistory.size() <= 1) {
         return;
@@ -78,8 +78,8 @@ void graph_plotting(string stockname, int width, int height) {
     max = *max_element(stockpricehistory.begin(), stockpricehistory.end());
     min = *min_element(stockpricehistory.begin(), stockpricehistory.end());
     float interval = (max - min) / height;
-    vector<vector <string> > graph(width, vector<string>(height, " "));
-    // 21 column 80 rows, this is not in the usual 2d array format
+    vector<vector<string>> graph(width, vector<string>(height, " "));
+    // height column width rows, this is not in the usual 2d array format
     //  horizontal array and vertical array is inverted
     string maxstring, minstring;
     if (interval == 0) {
@@ -95,7 +95,7 @@ void graph_plotting(string stockname, int width, int height) {
         graph[i][0] = maxstring[i];
         graph[i][height - 1] = minstring[i];
     }
-    graph[8][20] = "┗";
+    graph[8][height - 1] = "┗";
 
     for (int i = 0; i < stockpricehistory.size() - 1; i++) {
         int start = 10, end = 10;
@@ -139,10 +139,5 @@ void graph_plotting(string stockname, int width, int height) {
     }
     graph[8][20] = "┗";
     printstocknameandoverall(stockname, stockpricehistory);
-    printvector(graph, color,width, height);
-}
-
-int main(){
-    graph_plotting("stockA", 50, 21);
-    return 0;
+    printvector(graph, color, width, height);
 }
