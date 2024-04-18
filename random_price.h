@@ -4,6 +4,7 @@
 #ifndef
 #define are to prevent double include the header
 */
+#include "stock.h"
 
 /**
  * Initial Stock Price Generator
