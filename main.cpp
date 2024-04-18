@@ -1,6 +1,8 @@
 /**
  * @file main.cpp
  */
+#include "draw.h"
+#include "format.h"
 #include "stock.h"
 #include "events.h"
 #include "random_price.h"
@@ -142,6 +144,10 @@ void next_round_routine(unsigned int & rounds_played, std::vector<Stock> & stock
 
 /** Main function, the entry point of the program */
 int main(void) {
+    int row; // Number of characters to fit in a column
+    int col; // Number of characters to fit in a row
+    fetchConsoleDimensions(row, col);
+
     std::vector<Stock> stocks_list; // Create a vector of stocks
     for (int i = 0; i < initial_stock_count; i++) {
         Stock stock;
@@ -149,10 +155,14 @@ int main(void) {
     }
 
     // Print the welcome message
+    std::cout << textClear << setCursorPosition(0, 0);
     std::cout << "Welcome to the Stock Market Simulator!" << std::endl;
+    sleep(2000);
     std::cout << "Current trading fees are charged at " << trading_fees_percent * 100 << " %" << std::endl;
     std::cout << "You currently have $" << balance << "." << std::endl;
+    sleep(5000);
     print_table(stocks_list, balance); // Print the table of stocks
+    sleep(5000);
 
     // Simulate 5*2 rounds of the game with buying/selling alternating
     for (int i = 0; i < 5; i++) {
@@ -167,13 +177,13 @@ int main(void) {
         }
 
         next_round_routine(rounds_played, stocks_list); // Call the next round routine
-        {
-            std::cout << "Round " << rounds_played << "." << std::endl; // Print the round number
-            std::vector<Stock_event> ongoing_events = get_ongoing_events(stocks_list);
-            for (Stock_event event : ongoing_events) {
-                std::cout << event.text << " " << event.duration << std::endl;
-            }
-        }
+        std::cout << textClear << setCursorPosition(0, 0);
+        drawRoundInfo(row, col, rounds_played, balance); // Prints the round number and balance
+        std::cout << setCursorPosition(5, 0);
+
+        print_table(stocks_list, balance);
+        drawEventBar(row, col);
+        drawButton(row, col);
 
         print_table(stocks_list, balance);
         std::cout << "You currently have $" << balance << "." << std::endl;
@@ -205,6 +215,22 @@ int main(void) {
             print_table(stocks_list, balance);
             std::cout << "You currently have $" << balance << "." << std::endl;
         }
+    }
+
+    sleep(5000);
+    std::cout << textClear << setCursorPosition(0, 0);
+    drawRoundInfo(row, col, rounds_played, balance);
+    std::cout << setCursorPosition(5, 0);
+    print_table(stocks_list, balance);
+    drawEventBar(row, col);
+    drawButton(row, col);
+
+    while (0) {
+        fetchConsoleDimensions(row, col);
+        drawEventBar(row, col);
+        drawButton(row, col);
+        sleep(200);
+        std::cout << textClear;
     }
 
     graph_plotting("stockA");
