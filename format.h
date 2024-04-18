@@ -31,8 +31,8 @@ extern const string bgMagenta;
 extern const string bgCyan;
 extern const string bgWhite;
 
-extern void sleep(int dur); // unit is ms
+extern void sleep(int dur);                                // unit is ms
 extern string setCursorPosition(int offsetY, int offsetX); // same as below
-extern void fetchConsoleDimensions(int &row, int &col); // number of characters each row and column can fit, not the number of pixels
+extern void fetchConsoleDimensions(int & row, int & col);  // number of characters each row and column can fit, not the number of pixels
 
 #endif
