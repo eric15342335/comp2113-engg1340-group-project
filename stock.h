@@ -12,10 +12,20 @@
 #include "events.h"
 
 /**
- * @class Stock
+ * @class Stock stock.h "stock.h"
  * @brief A class that represents a stock object in the game.
  * The stock has a name, price, quantity, category, money spent, events, attributes, and history.
  * The stock can be purchased, sold, and updated.
+ * @note Example usage:
+ * @code {.cpp}
+ * Stock stock;   // Create a stock object. The constructor will initialize the stock automatically.
+ * float balance = 1000;
+ * stock.purchase(balance, 1, 0.01);    // Purchase a stock.
+ * stock.sell(balance, 1, 0.01);        // Sell a stock.
+ * std::string name = stock.get_name(); // What is the name of the stock?
+ * // Get the upper limit of the percentage change of the stock price:
+ * float upper_limit = stock.get_attribute(upper_limit) + stock.sum_attribute(upper_limit);
+ * @endcode
  */
 class Stock {
     public:
@@ -50,7 +60,7 @@ class Stock {
         unsigned int num_stocks_affordable(float balance, float trading_fees_percent);
 
         /**
-         * Return the name of the caategory the stock belongs to.
+         * Return the name of the category the stock belongs to.
          * @return Name of the category as a string.
          */
         std::string category_name(void);
