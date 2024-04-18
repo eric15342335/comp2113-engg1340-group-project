@@ -37,7 +37,7 @@ jobs:
         run: |
           sudo apt-get update -y
           sudo apt-get install doxygen graphviz -y
-          doxygen main.cpp
+          doxygen Doxyfile
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

@@ -37,7 +37,7 @@ std::string Stock::category_name(void) {
 }
 
 unsigned int Stock::num_stocks_affordable(float balance, float trading_fees_percent) {
-    float value = balance / price * (1 + trading_fees_percent);
+    float value = balance / (price * (1 + trading_fees_percent));
     return value < 0 ? 0 : (unsigned int)value;
 }
 
@@ -104,28 +104,26 @@ float Stock::sum_attribute(stock_modifiers attribute) {
     return sum;
 }
 
-void Stock::init(void) {
+Stock::Stock(void) {
     /** @todo Follow-up */
     category = random_integer(category_list_size);
     name = generate_name(category, 1)[0];
-    // The distribution of initial stock price will be consistent across same categories
+    /** The distribution of initial stock price will be consistent across same categories
+     * Note that the value '3' is because currently init_stock_price has 3 possible input values.
+     */
     price = init_stock_price(category % 3 + 1);
     quantity = 0;
     money_spent = 0;
-    /** @todo Move these attribute initialization to random_price.h
-     * Now we have to hardcode them here
-     */
+    /** @todo Update the attributes via the functions provided by Jeremy in random_price.cpp */
     attributes[standard_deviation] = 0.1;
     attributes[mean] = 0.1;
-
     attributes[lower_limit] = 0;
     attributes[upper_limit] = 0;
     update_history();
 }
 
 void Stock::next_round(void) {
-    /** @todo Follow-up */
-    /** Update the stock price */
+    /** @todo Use the functions provided by Jeremy in random_price.cpp to update the stock price. */
     price += 0.1;
     /** Remove the obselete events */
     remove_obselete_event();

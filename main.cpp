@@ -18,8 +18,8 @@ const float trading_fees_percent = 0.01;
 const int initial_stock_count = 20;
 
 /** Print the table of stocks. We put it in a function so we can call it multiple times.
- * @param stocks_list The list of stocks to print.
- * @param player The player object, for retrieving the player balance.
+ * @param stocks_list A vector of stocks. The stocks to be printed.
+ * @param balance How much money the player has.
  */
 void print_table(std::vector<Stock> stocks_list, float balance) {
     // Create a table
@@ -53,15 +53,16 @@ void print_table(std::vector<Stock> stocks_list, float balance) {
     std::cout << std::fixed << std::setprecision(2);
 }
 
+/** Player's balance */
 float balance = 1000;
+/** Number of rounds played */
 unsigned int rounds_played = 1;
 
-// Main function
+/** Main function, the entry point of the program */
 int main(void) {
     std::vector<Stock> stocks_list; // Create a vector of stocks
     for (int i = 0; i < initial_stock_count; i++) {
         Stock stock;
-        stock.init();                 // Initialize the stock
         stocks_list.push_back(stock); // Add the stock to the vector
     }
 
