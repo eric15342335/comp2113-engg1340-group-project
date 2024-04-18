@@ -17,3 +17,7 @@ CALL_GRAPH             = YES
 CALLER_GRAPH           = YES
 INTERACTIVE_SVG        = YES
 HTML_COLORSTYLE        = TOGGLE
+HAVE_DOT = YES
+
+# Graphviz settings for windows-latest actions only
+# DOT_PATH = C:\ProgramData\chocolatey\bin
