@@ -21,7 +21,7 @@ string graphpriceformat(float price) {
 void printstocknameandoverall(string stockname, vector<float> stockpricehistory) {
     string stocknameprint = "Stock: " + stockname;
     float overall = (stockpricehistory[stockpricehistory.size() - 1] - stockpricehistory[0]) / stockpricehistory[0] * 100;
-    cout << stocknameprint << "     \% change: ";
+    cout << stocknameprint << R"(     % change: )";
     cout << graphpriceformat(overall) << "%" << endl;
     cout << endl;
 }
