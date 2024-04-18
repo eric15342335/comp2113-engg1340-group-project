@@ -69,11 +69,10 @@ float percentage_change_price(Stock & stock) {
     while (true) {
         float x = distribution(gen);
         if (x < upper_limit and x > lower_limit) {
-            return x;
+            break;
         }
     }
-    // prevent compiler freak out
-    return distribution(gen);
+    return x;
 }
 
 unsigned int random_integer(unsigned int max_integer) {
