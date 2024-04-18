@@ -94,8 +94,8 @@ int main(void) {
 
     // Go to next round
     std::cout << textClear << setCursorPosition(0, 0);
-    rounds_played++;                                            // Increment the round
-    drawRoundInfo(row, col, rounds_played, balance);            // Prints the round number and balance
+    rounds_played++;                                 // Increment the round
+    drawRoundInfo(row, col, rounds_played, balance); // Prints the round number and balance
     std::cout << setCursorPosition(5, 0);
 
     for (unsigned int i = 0; i < stocks_list.size(); i++) {
@@ -130,7 +130,6 @@ int main(void) {
     drawButton(row, col);
 
     while (0) {
-    
         fetchConsoleDimensions(row, col);
         drawEventBar(row, col);
         drawButton(row, col);

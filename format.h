@@ -30,8 +30,8 @@ extern const std::string bgMagenta;
 extern const std::string bgCyan;
 extern const std::string bgWhite;
 
-extern void sleep(int dur); // unit is in ms
+extern void sleep(int dur);                                     // unit is in ms
 extern std::string setCursorPosition(int offsetY, int offsetX); // same as below
-extern void fetchConsoleDimensions(int &row, int &col); // number of characters each row and column can fit, not the number of pixels
+extern void fetchConsoleDimensions(int & row, int & col);       // number of characters each row and column can fit, not the number of pixels
 
 #endif
