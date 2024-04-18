@@ -186,12 +186,13 @@ class Stock {
 
         /**
          * @brief Check if we can add the event to the stock.
-         * 
+         *
          * A event can be added if the event is not mutually exclusive with any of the existing events.
          * @param event The event to be added.
          * @return True if the event can be added. False otherwise.
          */
         bool can_add_event(Stock_event event);
+
     private:
         /** Name of the stock that we assigned to it. */
         std::string name;
