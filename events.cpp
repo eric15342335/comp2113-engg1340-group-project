@@ -96,7 +96,7 @@ std::vector<Stock_event> all_stock_events = {
      /** percentage_permille */ 12,
      /** type_of_event */ all_stocks,
      /** category */ 0,
-     /** modifiers*/ {{standard_deviation, 0.12}, {mean, -3}, {lower_limit, -25}, {upper_limit, 0}}},
+     /** modifiers*/ {{standard_deviation, 0.12}, {mean, 0}, {lower_limit, -25}, {upper_limit, 0}}},
     // event_id 8 to 11 affect category "Adv&Market"
     {/** event_id */ 8,
      /** mutually_exclusive_events */ {},
@@ -318,7 +318,7 @@ std::vector<Stock_event> all_stock_events = {
      /** percentage_permille */ 16,
      /** type_of_event */ category,
      /** category */ 5,
-     /** modifiers */ {{standard_deviation, 0.12}, {mean, -8}, {lower_limit, -40}, {upper_limit, 0}}},
+     /** modifiers */ {{standard_deviation, 0.12}, {mean, 0}, {lower_limit, -40}, {upper_limit, 0}}},
     // event_id 35 to 37 affect category "Biotech"
     {/** event_id */ 35,
      /** mutually_exclusive_events */ {},
@@ -469,7 +469,7 @@ std::vector<Stock_event> all_stock_events = {
      /** category */ 10,
      /** modifiers */ {{standard_deviation, 0.1}, {mean, 7}, {lower_limit, 0}, {upper_limit, 25}}},
     {/** event_id */ 53,
-     /** mutually_exclusive_events */ {52, 54},
+     /** mutually_exclusive_events */ {52, 54, 55},
      /** text */ "Stock Market Crash Leads to Financial Turmoil and Investor Losses",
      /** duration */ 7,
      /** percentage_permille */ 12,
