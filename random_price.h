@@ -1,7 +1,7 @@
 #ifndef RANDOM_PRICE_H
 #define RANDOM_PRICE_H
 
-/**
+/*
 #ifndef
 #define are to prevent double include the header
 */

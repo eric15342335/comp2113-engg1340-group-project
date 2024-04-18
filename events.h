@@ -9,7 +9,9 @@
 #include <map>
 #include <vector>
 
-/** @enum stock_modifiers
+/**
+ * @file events.h
+ * @enum stock_modifiers
  * @brief The attributes of a stock that Events will modify are hardcoded here.
  * @note Please store them as `std::map<stock_modifiers, float>`.
  */
@@ -56,8 +58,10 @@ enum event_type {
 };
 
 /**
- * @struct Stock_event
- * @brief The data structre of an event that will be applied to the stocks.
+ * @struct Stock_event events.h "events.h"
+ * @brief The data structure of an event that will be applied to the stocks.
+ * @note <b> For more information about how to write your own events,
+ * visit the documentation of the @ref events.h "events.h" file. </b>
  */
 struct Stock_event {
     public:
