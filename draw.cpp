@@ -4,6 +4,34 @@
 #include "draw.h"
 #include "format.h"
 
+void drawLogo(int row, int col) {
+    const int wordWidth = 73; // Width of the longest word
+    const int wordHeight = 8; // Height for each word
+
+    std::cout << textClear << setCursorPosition(0, 0);
+
+    // Will not print logo if terminal cannot fit
+    if (row > wordHeight && col > wordWidth) {
+        // Will use fileIO for this
+        std::cout << "Stock"
+                  << "\n";
+        sleep(1000);
+        std::cout << textClear;
+        sleep(250);
+        std::cout << "Market"
+                  << "\n";
+        sleep(1000);
+        std::cout << textClear;
+        sleep(250);
+        std::cout << "Simulator"
+                  << "\n";
+    }
+    else {
+        std::cout << "Welcome to Stock Market Simulator!"
+                  << "\n";
+    }
+}
+
 void drawRoundInfo(int row, int col, int round, float balance) {
     row++; // Shutup compiler
     std::cout << setCursorPosition(3, 5);

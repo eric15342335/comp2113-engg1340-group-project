@@ -19,5 +19,8 @@ giving players breathing room to better think about their investing strategies.<
 ## Program codes in multiple files (recall separate compilation)
 ## Proper indentation and naming styles
 ## In-code documentation
-# Non-standard libraries used
+# Credits
+## Logo
+The logo used here and in-game is generated with [Text to ASCII](https://www.asciiart.eu/text-to-ascii-art)
+## Non-standard libraries used
 # Compilation and Execution Instructions
