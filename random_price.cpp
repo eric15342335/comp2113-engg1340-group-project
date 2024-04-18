@@ -23,16 +23,10 @@ float init_stock_price(int price_profile) {
     return abs(distribution(gen));
 }
 
-float init_sd(int price_profile) {
+float init_sd() {
     std::random_device rd;
     std::mt19937 gen(rd());
     std::normal_distribution<float> distribution(0.5, 0.5);
-    if (price_profile == 2) {
-        distribution.param(std::normal_distribution<float>::param_type(3.0, 1.5));
-    }
-    if (price_profile == 3) {
-        distribution.param(std::normal_distribution<float>::param_type(10.0, 3.0));
-    }
     return abs(distribution(gen));
 }
 
