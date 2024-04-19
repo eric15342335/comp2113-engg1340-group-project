@@ -68,10 +68,6 @@ int main(void) {
     int col; // Number of characters to fit in a row
     fetchConsoleDimensions(row, col);
 
-    int row; // Number of characters to fit in a column
-    int col; // Number of characters to fit in a row
-    fetchConsoleDimensions(row, col);
-
     std::vector<Stock> stocks_list; // Create a vector of stocks
     for (int i = 0; i < initial_stock_count; i++) {
         Stock stock;
