@@ -233,6 +233,6 @@ int main(void) {
         std::cout << textClear;
     }
 
-    graph_plotting("stockA", 50, 50);
+    //graph_plotting("stockA", 50, 50);
     return 0;
 }
