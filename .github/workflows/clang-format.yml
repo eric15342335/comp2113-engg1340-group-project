@@ -5,10 +5,12 @@ on:
         branches:
             - main
     pull_request:
+    workflow_dispatch:
 
 jobs:
   clang-format:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
+    # runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
