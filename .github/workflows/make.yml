@@ -9,11 +9,12 @@ on:
 
 jobs:
   Make:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
+    runs-on: self-hosted
+    #runs-on: ${{ matrix.os }}
+    #strategy:
+    #  fail-fast: true
+    #  matrix:
+    #    os: [ubuntu-latest, windows-latest]
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -26,7 +27,8 @@ jobs:
       with:
         # suppose we compiled our game and named it 'stocksim'
         # use wildcard to match the executable for all platforms
-        name: stocksim-${{ matrix.os }}
+        name: stocksim
+        # name: stocksim-${{ matrix.os }}
         path: stocksim*
         compression-level: 9
         retention-days: 90
