@@ -1,5 +1,7 @@
 /**
  * @file main.cpp
+ * @brief Hello! Welcome to the Stock Market Simulator!
+ * @authors Everyone in the group project.
  */
 #include "draw.h"
 #include "format.h"
