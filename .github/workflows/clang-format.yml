@@ -1,0 +1,19 @@
+name: clang-format
+
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+    workflow_dispatch:
+
+jobs:
+  clang-format:
+    runs-on: self-hosted
+    # runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    - name: Run clang-format
+      run: |
+        clang-format --Werror --dry-run *.cpp *.h

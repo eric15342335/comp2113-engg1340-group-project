@@ -1,0 +1,23 @@
+# Doxygen configuration file for Stock Market Simulator
+PROJECT_NAME           = "Stock Market Simulator"
+BUILTIN_STL_SUPPORT    = YES
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES
+QUIET                  = YES
+USE_MDFILE_AS_MAINPAGE = README.md
+# SOURCE_BROWSER       = YES
+VERBATIM_HEADERS = NO
+# INLINE_SOURCES       = YES
+REFERENCED_BY_RELATION = YES
+REFERENCES_RELATION    = YES
+GENERATE_TREEVIEW      = YES
+TREEVIEW_WIDTH         = 200
+COMPACT_LATEX          = YES
+CALL_GRAPH             = YES
+CALLER_GRAPH           = YES
+INTERACTIVE_SVG        = YES
+HTML_COLORSTYLE        = TOGGLE
+HAVE_DOT = YES
+
+# Graphviz settings for windows-latest actions only
+# DOT_PATH = C:\ProgramData\chocolatey\bin
