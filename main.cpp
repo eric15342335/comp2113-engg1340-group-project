@@ -157,12 +157,12 @@ int main(void) {
     // Print the welcome message
     std::cout << textClear << setCursorPosition(0, 0);
     std::cout << "Welcome to the Stock Market Simulator!" << std::endl;
-    sleep(2000);
+    sleep(200);
     std::cout << "Current trading fees are charged at " << trading_fees_percent * 100 << " %" << std::endl;
     std::cout << "You currently have $" << balance << "." << std::endl;
-    sleep(5000);
+    sleep(500);
     print_table(stocks_list, balance); // Print the table of stocks
-    sleep(5000);
+    sleep(500);
 
     // Simulate 5*2 rounds of the game with buying/selling alternating
     for (int i = 0; i < 5; i++) {
@@ -217,7 +217,7 @@ int main(void) {
         }
     }
 
-    sleep(5000);
+    sleep(500);
     std::cout << textClear << setCursorPosition(0, 0);
     drawRoundInfo(row, col, rounds_played, balance);
     std::cout << setCursorPosition(5, 0);
