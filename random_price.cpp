@@ -1,13 +1,7 @@
 #include "events.h"
 #include "random_price.h"
-#include "stock.h"
 #include <cstdlib>
-#include <iostream>
-#include <list>
-#include <map>
 #include <random>
-#include <string>
-#include <vector>
 
 float init_stock_price(int price_profile) {
     std::random_device rd;
@@ -23,7 +17,7 @@ float init_stock_price(int price_profile) {
     return abs(distribution(gen));
 }
 
-float init_sd() {
+float init_sd(void) {
     std::random_device rd;
     std::mt19937 gen(rd());
     std::normal_distribution<float> distribution(0.5, 0.5);

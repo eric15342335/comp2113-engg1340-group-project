@@ -97,15 +97,32 @@ struct Stock_event {
          * @return A std:ostream object contains all the data of the event.
          * @code
          * Stock_event event;                     // Create a event object by calling the constructor
-        */
+         * std::cout << event << std::endl; // Print the data of the event.
+         * @endcode
+         */
+        friend std::ostream & operator<<(std::ostream & outputstream, Stock_event & event) {
+            // @todo Implement this function
+        }
+
+        /** Overload the == operator to compare two Stock_event */
+        bool operator==(const Stock_event & other) const {
+            /** Events are the same if they have same event_id and same text.
+             * The latter is because for type_of_event == pick_random_stock, the text is different.
+             * But the event_id is the same.
+             */
+            return event_id == other.event_id && text == other.text;
+        }
 };
 
+extern std::vector<Stock_event> all_stock_events;
+
 /**
- * Pick a random event from the list of events.
+ * Pick a random event from the list of events
+ * @param all_events The list of all events
  * @param num_events The number of events to pick
  * @return A vector of Stock_event
  */
-std::vector<Stock_event> pick_events(unsigned int num_events);
+std::vector<Stock_event> pick_events(std::vector<Stock_event> all_events, unsigned int num_events);
 
 /**
  * If A is mutually exclusive with B, then B is mutually exclusive with A.

@@ -80,7 +80,7 @@ class Stock {
          * Get the total change of attribute of the stock due to events only. Getter function. \n
          * Example usage:
          * ```
-         * stock.get_attribute(stock_modifiers::offset);
+         * stock.get_attribute(stock_modifiers::standard_deviation);
          * ```
          * @param attribute The attribute to get.
          * @return Total change of attribute due to Stock_event. Does not include the base value.
@@ -195,8 +195,25 @@ class Stock {
          * Stock stock;                     // Create a stock object by calling the constructor.
          * std::cout << stock << std::endl; // Print the data of the stock.
          * @endcode
-        */
-        friend std::ostream& operator<<(std::ostream& outputstream, Stock& stock);
+         */
+        friend std::ostream & operator<<(std::ostream & outputstream, Stock & stock);
+
+        /**
+         * Return all the events that will apply to this stock specifically. Getter function.
+         * @return A list of Stock_event.
+         */
+        std::list<Stock_event> get_events(void) {
+            return events;
+        }
+
+        /**
+         * @brief Check if we can add the event to the stock.
+         *
+         * A event can be added if the event is not mutually exclusive with any of the existing events.
+         * @param event The event to be added.
+         * @return True if the event can be added. False otherwise.
+         */
+        bool can_add_event(Stock_event event);
 
     private:
         /** Name of the stock that we assigned to it. */
