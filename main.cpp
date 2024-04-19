@@ -5,6 +5,7 @@
 #include "format.h"
 #include "draw.h"
 #include "format.h"
+#include "graph.h"
 #include "stock.h"
 #include "random_price.h"
 #include "nonstdlibs/VariadicTable.h"
@@ -104,6 +105,7 @@ int main(void) {
     for (unsigned int i = 0; i < stocks_list.size(); i++) {
         stocks_list[i].next_round(); // Update the stock price
     }
+
     print_table(stocks_list, balance);
     drawRoundInfo(row, col, rounds_played, balance); // Prints the round number and balance
     drawEventBar(row, col);
@@ -128,9 +130,11 @@ int main(void) {
     sleep(5000);
     std::cout << textClear << setCursorPosition(7, 0);
     print_table(stocks_list, balance);
+    //graph_plotting("test", col * 2 / 3, row - 10);
     drawRoundInfo(row, col, rounds_played, balance);
     drawEventBar(row, col);
     drawButton(row, col);
+    std::cout << "\n";
 
     return 0;
 }
