@@ -50,7 +50,7 @@ void printvector(vector<vector<string>> vectorname, vector<string> color, int wi
 
 // will delete print in the final version
 
-vector<float> graphinput(string stockname, int width) {
+vector<float> graphinput(string stockname, unsigned int width) {
     string filename = stockname + ".log";
     ifstream fin;
     float x;
@@ -97,7 +97,7 @@ void graph_plotting(string stockname, int width, int height) {
     }
     graph[8][height - 1] = "┗";
 
-    for (int i = 0; i < stockpricehistory.size() - 1; i++) {
+    for (unsigned int i = 0; i < stockpricehistory.size() - 1; i++) {
         int start = 10, end = 10;
         if (interval != 0) {
             start = (height - 1) - (stockpricehistory[i] - min) / interval;
