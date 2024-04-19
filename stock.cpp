@@ -130,6 +130,7 @@ float Stock::sum_attribute(stock_modifiers attribute) {
     list<Stock_event>::iterator event_itr = events.begin();
     while (event_itr != events.end()) {
         sum += event_itr->modifiers[attribute];
+        event_itr++; // Bug fix: infinite loop
     }
     return sum;
 }
