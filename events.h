@@ -89,6 +89,15 @@ struct Stock_event {
 
         /** Stores the stock_modifiers that the event applies. */
         std::map<stock_modifiers, float> modifiers;
+
+        /**
+         * Serialize the event to a std::ostream object.
+         * @param outputstream The std::ostream object to write the data.
+         * @param event The event object to get the data from.
+         * @return A std:ostream object contains all the data of the event.
+         * @code
+         * Stock_event event;                     // Create a event object by calling the constructor
+        */
 };
 
 /**

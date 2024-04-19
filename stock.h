@@ -186,6 +186,18 @@ class Stock {
             attributes[mean] += delta_mean;
         }
 
+        /**
+         * A friend function that returns all the data of the stock.
+         * @param outputstream The output stream to write the data.
+         * @param stock The stock object to get the data from.
+         * @return The output stream with the data of the stock.
+         * @code
+         * Stock stock;                     // Create a stock object by calling the constructor.
+         * std::cout << stock << std::endl; // Print the data of the stock.
+         * @endcode
+        */
+        friend std::ostream& operator<<(std::ostream& outputstream, Stock& stock);
+
     private:
         /** Name of the stock that we assigned to it. */
         std::string name;

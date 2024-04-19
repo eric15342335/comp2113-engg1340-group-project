@@ -5,6 +5,7 @@
 #include "stock.h"
 #include "names.h"
 #include "random_price.h"
+#include <iostream>
 
 float Stock::purchase(float & balance, unsigned int amount, float trading_fees_percent) {
     float total_cost = price * amount * (1 + trading_fees_percent);
@@ -129,4 +130,31 @@ void Stock::next_round(void) {
     remove_obselete_event();
     /** Update the history array with the current price */
     update_history();
+}
+
+std::ostream & operator<<(std::ostream & outputstream, Stock & stock) {
+    outputstream << "Stock name: " << stock.name << std::endl;
+    outputstream << "Stock price: " << stock.price << std::endl;
+    outputstream << "Stock quantity: " << stock.quantity << std::endl;
+    outputstream << "Stock category: " << stock.category_name() << std::endl;
+    outputstream << "Stock money spent: " << stock.money_spent << std::endl;
+    outputstream << "Stock history: ";
+    for (unsigned int i = 0; i < stock.history.size(); i++) {
+        outputstream << stock.history[i] << " ";
+    }
+    outputstream << std::endl;
+    outputstream << "Stock events: ";
+    list<Stock_event>::iterator event_itr = stock.events.begin();
+    while (event_itr != stock.events.end()) {
+        outputstream << event_itr->text << " ";
+        event_itr++;
+    }
+    outputstream << std::endl;
+    outputstream << "Stock attributes: ";
+    // loop through an enum
+    for (int i = 0; i < 4; i++) {
+        outputstream << stock.attributes[(stock_modifiers)i] << " ";
+    }
+    outputstream << std::endl;
+    return outputstream;
 }
