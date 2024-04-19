@@ -233,6 +233,7 @@ int main(void) {
         std::cout << textClear;
     }
 
+    /** @todo Enable graph_plotting test case by fixing the segfault error */
     // graph_plotting("stockA", 50, 50);
     return 0;
 }
