@@ -157,10 +157,10 @@ int main(void) {
     fetchConsoleDimensions(row, col);
     
     std::string playername,loadsave;
-    std::cout << "Enter 0 for new save or enter 1 for loading old save";
+    std::cout << "Enter 0 for new save or enter 1 for loading old save: ";
     std::cin >> loadsave;
-    while (loadsave != "0" || loadsave != "1"){
-        std::cout << "Wrong input, enter 0 for new save or enter 1 for loading old save";
+    while (loadsave != "0" && loadsave != "1"){
+        std::cout << "Invalid input. Please enter 0 for new save or enter 1 for loading old save: ";
         std::cin >> loadsave;
     }
     if (loadsave == "0"){

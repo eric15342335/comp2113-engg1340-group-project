@@ -9,6 +9,7 @@ void createplayer(string &playername){
     string savefolder = "saves";
     string foldername;
     mkdir(savefolder.c_str(), 0777);
+    cout << "Enter player name:" << endl;
     cin >> playername;
     foldername = "saves/" + playername;
     while (mkdir(foldername.c_str(), 0777) == -1)
@@ -24,14 +25,13 @@ void createplayer(string &playername){
 }
 
 void savestatus(int rounds_played,vector<Stock> stocks_list, float balance, string playername){
-    ofstream fout;
     string stocksave;
-    for (int i = 0; i < stocks_list.size();i++){
+    ofstream fout;
+    stocksave = "saves/" + playername + "/playerstatus.save";
+    fout.open(stocksave);
+    fout << playername << " " << rounds_played << " " << balance << endl;
+    fout.close();
+    for (unsigned long i = 0; i < stocks_list.size();i++){
+        stocks_list[i].save(playername);
     }
-}
-
-int main(){
-    string playername;
-    createplayer(playername);
-    return 0;
 }

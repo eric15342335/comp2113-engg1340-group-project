@@ -13,6 +13,9 @@ default: stocksim
 
 random_price.o: random_price.h random_price.cpp
 	g++ $(FLAGS) -c random_price.cpp -o random_price.o
+	
+file_io.o: file_io.cpp file_io.h stock.cpp stock.h names.h random_price.h events.h
+	g++ $(FLAGS) -c file_io.cpp -o file_io.o
 
 stock.o: stock.cpp stock.h names.h random_price.h events.h
 	g++ $(FLAGS) -c stock.cpp -o stock.o
@@ -32,8 +35,8 @@ draw.o: draw.cpp draw.h format.h
 graph.o: graph.h graph.cpp
 	g++ $(FLAGS) -c graph.cpp -o graph.o
 
-stocksim: main.cpp stock.o random_price.o events.o names.o graph.o format.o draw.o
-	g++ $(FLAGS) main.cpp stock.o random_price.o events.o names.o graph.o format.o draw.o -o stocksim
+stocksim: main.cpp stock.o random_price.o events.o names.o graph.o format.o draw.o file_io.o
+	g++ $(FLAGS) main.cpp stock.o random_price.o events.o names.o graph.o format.o draw.o file_io.o -o stocksim
 
 test: stocksim
 	./stocksim

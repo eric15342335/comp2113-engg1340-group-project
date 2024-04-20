@@ -33,6 +33,8 @@ class Stock {
         /** Constructor of the Stock object. */
         Stock(void);
 
+        void save(std::string playername);
+
         /**
          * Purchase a given number of stocks.
          * @param balance The balance ($) of the player. Pass-by-reference.

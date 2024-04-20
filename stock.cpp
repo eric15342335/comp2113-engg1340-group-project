@@ -3,9 +3,34 @@
  * @author eric15342335
  * @brief Implementation of the Stock class.
  */
+
+#include <fstream>
 #include "stock.h"
 #include "names.h"
 #include "random_price.h"
+
+void Stock::save(std::string playername){
+    std::string filesave;
+    std::ofstream fout;
+    filesave = "saves/" + playername + "/" + name + ".save";
+    fout.open(filesave);
+    fout << category << std::endl;
+    fout << name << std::endl;
+    for (unsigned int i = 0; i < history.size(); i++) {
+        fout << history[i] << " ";
+    }
+    fout << std::endl;
+    fout << quantity << std::endl;
+    fout << money_spent << std::endl;
+    fout << attributes[standard_deviation] << ";";
+    fout << attributes[mean] << ";";
+    fout << attributes[lower_limit] << ";";
+    fout << attributes[upper_limit] << std::endl;
+    fout << events.size() << std::endl;
+    fout.close();
+
+}
+
 
 float Stock::purchase(float & balance, unsigned int amount, float trading_fees_percent) {
     float total_cost = price * amount * (1 + trading_fees_percent);
