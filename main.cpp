@@ -191,7 +191,7 @@ int main(void) {
 		drawButton(row, col);
 
         // Simulate player selling stocks
-		for (unsigned int i = 0; i < stocks_list.size(); i++) {
+	for (unsigned int i = 0; i < stocks_list.size(); i++) {
             int num_sellable = stocks_list[i].get_quantity();
             if (num_sellable > 0) {
                 // If the player has spent more than $100 on the stock, sell all the stocks
@@ -204,7 +204,8 @@ int main(void) {
                     stocks_list[i].sell(balance, random_integer(num_sellable), trading_fees_percent);
                 }
             }
-		}
+	}
+    }
 
     sleep(500);
     std::cout << textClear << setCursorPosition(5, 0);
