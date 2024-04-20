@@ -16,4 +16,4 @@ jobs:
       uses: actions/checkout@v4
     - name: Run clang-format
       run: |
-        clang-format --Werror --dry-run *.cpp *.h
+        clang-format --Werror --verbose --dry-run *.cpp *.h

@@ -1,6 +1,7 @@
 /**
  * @headerfile stock.h
  * @author eric15342335
+ * @brief Declaration of the Stock class.
  */
 #ifndef STOCK_H
 #define STOCK_H

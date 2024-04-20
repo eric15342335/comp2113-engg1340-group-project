@@ -1,4 +1,14 @@
-FLAGS = -Wall -Wextra -std=c++11 -Werror -pedantic-errors
+# MAKEFILE USAGE:
+# make - compiles the program
+# make test - runs the program
+# make clean - removes the compiled program and object files
+# make docs - generates the documentation using Doxygen
+# make fix - formats the code using clang-format and commits the changes to git
+
+# Compiler flags, consider removing `-Werror` before submitting.
+FLAGS = -Wall -Wextra -std=c++11 -Werror -pedantic-errors -g -Og
+
+# The default target is to compile the program.
 default: stocksim
 
 random_price.o: random_price.h random_price.cpp
@@ -28,7 +38,26 @@ stocksim: main.cpp stock.o random_price.o events.o names.o graph.o format.o draw
 test: stocksim
 	./stocksim
 
-clean: 
+clean:
 	rm *.o stocksim
 
-.PHONY: test clean
+# Generate documentation using `Doxygen`.
+# Windows only: open the generated documentation in the default browser.
+docs: Doxyfile
+	doxygen Doxyfile
+	@if [ "$(OS)" = "Windows_NT" ]; then \
+		start "html/index.html"; \
+	fi
+
+fix:
+	clang-format --verbose -i *.cpp *.h
+	git commit -a -m "Run clang-format" -m "make fix"
+	git push
+
+all:
+	make clean
+	make
+	make test
+	make docs
+
+.PHONY: test clean docs fix all
