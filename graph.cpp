@@ -103,6 +103,19 @@ void graph_plotting(string stockname, int width, int height) {
         if (interval != 0) {
             start = (height - 1) - (stockpricehistory[i] - min) / interval;
             end = (height - 1) - (stockpricehistory[i + 1] - min) / interval;
+            // Checks to prevent out of bounds (SEGFAULT)
+            if (start < 0) {
+                start = 0;
+            }
+            if (end < 0) {
+                end = 0;
+            }
+            if (start >= height) {
+                start = height - 1;
+            }
+            if (end >= height) {
+                end = height - 1;
+            }
         }
         if (start == end) {
             graph[i + 9][start] = "■";
@@ -136,7 +149,7 @@ void graph_plotting(string stockname, int width, int height) {
         graph[8][i] = "┃";
     }
     for (int i = 9; i < width; i++) {
-        graph[i][20] = "━";
+        graph[i][height-1] = "━";
     }
     graph[8][height - 1] = "┗";
     printstocknameandoverall(stockname, stockpricehistory);
