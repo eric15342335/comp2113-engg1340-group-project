@@ -79,8 +79,38 @@ float Stock::delta_price_percentage(void) {
 }
 
 void Stock::add_event(Stock_event event) {
-    /** Just an alias */
+    if (!can_add_event(event)) {
+        // If the event is mutually exclusive with ongoing events,
+        // ignore it and do nothing.
+        return;
+    }
+    // If the event does not exist, add it to the list of events
+    // Otherwise, update the duration of the event by deleting the old one and add the new one.
+    list<Stock_event>::iterator event_itr = events.begin();
+    while (event_itr != events.end()) {
+        if (*event_itr == event) {
+            event_itr = events.erase(event_itr);
+        }
+        else {
+            event_itr++;
+        }
+    }
     events.push_back(event);
+}
+
+bool Stock::can_add_event(Stock_event event) {
+    list<Stock_event>::iterator event_itr = events.begin();
+    while (event_itr != events.end()) {
+        if (event_itr->mutually_exclusive_events.size() > 0) {
+            for (unsigned int i = 0; i < event_itr->mutually_exclusive_events.size(); i++) {
+                if (event_itr->mutually_exclusive_events[i] == event.event_id) {
+                    return false;
+                }
+            }
+        }
+        event_itr++;
+    }
+    return true;
 }
 
 void Stock::remove_obselete_event(void) {
@@ -100,6 +130,7 @@ float Stock::sum_attribute(stock_modifiers attribute) {
     list<Stock_event>::iterator event_itr = events.begin();
     while (event_itr != events.end()) {
         sum += event_itr->modifiers[attribute];
+        event_itr++; // Bug fix: infinite loop
     }
     return sum;
 }
@@ -115,16 +146,22 @@ Stock::Stock(void) {
     quantity = 0;
     money_spent = 0;
     /** @todo Update the attributes via the functions provided by Jeremy in random_price.cpp */
-    attributes[standard_deviation] = 0.1;
-    attributes[mean] = 0.1;
-    attributes[lower_limit] = 0;
-    attributes[upper_limit] = 0;
+    attributes[standard_deviation] = init_sd();
+    attributes[mean] = 0;
+    attributes[lower_limit] = -40;
+    attributes[upper_limit] = 40;
     update_history();
 }
 
 void Stock::next_round(void) {
     /** @todo Use the functions provided by Jeremy in random_price.cpp to update the stock price. */
-    price += 0.1;
+    price += price * percentage_change_price(*this) / 100;
+    /** Reduce all events duration by one */
+    list<Stock_event>::iterator event_itr = events.begin();
+    while (event_itr != events.end()) {
+        event_itr->duration--;
+        event_itr++;
+    }
     /** Remove the obselete events */
     remove_obselete_event();
     /** Update the history array with the current price */

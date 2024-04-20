@@ -18,7 +18,7 @@ float init_stock_price(int a);
 /**
  * Initiaises a reasonable standard deviation; first around 0.5, second around 3, third around 10
  */
-float init_sd(int price_profile);
+float init_sd(void);
 
 /**
  * There is a upper limit and lower limit that the realisation of the % change must fall between.
