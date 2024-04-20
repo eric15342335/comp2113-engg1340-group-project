@@ -15,14 +15,14 @@ void drawLogo(int row, int col) {
         // Will use fileIO for this
         std::cout << "Insert"
                   << "\n";
-        sleep(1000);
+        time::sleep(1000);
         std::cout << textClear;
-        sleep(250);
+        time::sleep(250);
         std::cout << "Logo"
                   << "\n";
-        sleep(1000);
+        time::sleep(1000);
         std::cout << textClear;
-        sleep(250);
+        time::sleep(250);
         std::cout << "Here"
                   << "\n";
     }

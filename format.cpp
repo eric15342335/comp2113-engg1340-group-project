@@ -31,7 +31,7 @@ const string bgMagenta = "\x1b[45m";
 const string bgCyan = "\x1b[46m";
 const string bgWhite = "\x1b[47m";
 
-void sleep(int dur) {
+void time::sleep(int dur) {
     std::this_thread::sleep_for(std::chrono::milliseconds(dur));
 }
 
