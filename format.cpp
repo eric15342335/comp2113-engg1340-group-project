@@ -1,3 +1,5 @@
+/** @brief Terminal text formatting code. */
+
 #include <chrono>
 #include <thread>
 #include "format.h"

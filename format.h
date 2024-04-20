@@ -1,3 +1,8 @@
+/**
+ * @file format.h
+ * @author Prismatiscence
+ * @brief Terminal text formatting header.
+ */
 #ifndef FORMAT_H
 #define FORMAT_H
 #include <string>
@@ -30,15 +35,16 @@ extern const std::string bgMagenta;
 extern const std::string bgCyan;
 extern const std::string bgWhite;
 
+/** @brief Mimic Python time.sleep() */
 class time {
     public:
-        static void sleep(int dur); // unit is in ms
+        /** @param dur unit is ms. */
+        static void sleep(int dur);
 };
+/** Parameters are the same as `fetchConsoleDimensions();` */
+extern std::string setCursorPosition(int offsetY, int offsetX);
 
-extern std::string setCursorPosition(int offsetY, int offsetX); // same as below
-
-extern void
-fetchConsoleDimensions(int & row,
-                       int & col); // number of characters each row and column can fit, not the number of pixels
+/** number of characters each row and column can fit, not the number of pixels. */
+extern void fetchConsoleDimensions(int & row, int & col);
 
 #endif

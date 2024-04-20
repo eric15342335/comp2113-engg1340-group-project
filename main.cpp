@@ -117,7 +117,7 @@ void newNextRoundEvents(std::vector<Stock> & stocks_list) {
             std::vector<unsigned int> stocks_indices_not_suitable = {};
             while (stocks_list.size() > 0 && stocks_list.size() < stocks_indices_not_suitable.size()) {
                 // Pick a random stock
-                unsigned int choice = random_integer(stocks_list.size());
+                unsigned int choice = py_random::randint(0, stocks_list.size() - 1);
                 Stock lucky_stock = stocks_list[choice];
                 if (!lucky_stock.canAddEvent(event)) {
                     stocks_indices_not_suitable.push_back(choice);
@@ -179,7 +179,7 @@ int main(void) {
             // If the player can afford at least one stock, buy a random amount of stocks
             if (num_buyable > 0) {
                 // Buy random amount of the stocks
-                stocks_list[i].purchase(balance, random_integer(num_buyable), trading_fees_percent);
+                stocks_list[i].purchase(balance, py_random::randint(0, num_buyable - 1), trading_fees_percent);
             }
         }
 
@@ -201,7 +201,7 @@ int main(void) {
                 }
                 else {
                     // Sell random amount of the stocks
-                    stocks_list[i].sell(balance, random_integer(num_sellable), trading_fees_percent);
+                    stocks_list[i].sell(balance, py_random::randint(0, num_sellable - 1), trading_fees_percent);
                 }
             }
         }

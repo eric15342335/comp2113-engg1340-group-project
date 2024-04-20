@@ -135,7 +135,7 @@ float Stock::sumEventModifiersAttribute(stock_modifiers attribute) {
 }
 
 Stock::Stock(void) {
-    category = py_random::randint(sizeofCategoryList);
+    category = py_random::randint(0, sizeofCategoryList - 1);
     name = generateName(category, 1)[0];
     /** The distribution of initial stock price will be consistent across same categories
      * Note that the value '3' is because currently initStockPrice has 3 possible input values.
