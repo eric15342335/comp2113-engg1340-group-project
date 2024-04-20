@@ -1,6 +1,7 @@
 /**
  * @file stock.cpp
- * @brief Implementation of the Stock class
+ * @author eric15342335
+ * @brief Implementation of the Stock class.
  */
 #include "stock.h"
 #include "names.h"
@@ -84,9 +85,9 @@ void Stock::add_event(Stock_event event) {
         // ignore it and do nothing.
         return;
     }
-    // If the event does not exist, add it to the list of events
+    // If the event does not exist, add it to the std::list of events
     // Otherwise, update the duration of the event by deleting the old one and add the new one.
-    list<Stock_event>::iterator event_itr = events.begin();
+    std::list<Stock_event>::iterator event_itr = events.begin();
     while (event_itr != events.end()) {
         if (*event_itr == event) {
             event_itr = events.erase(event_itr);
@@ -99,7 +100,7 @@ void Stock::add_event(Stock_event event) {
 }
 
 bool Stock::can_add_event(Stock_event event) {
-    list<Stock_event>::iterator event_itr = events.begin();
+    std::list<Stock_event>::iterator event_itr = events.begin();
     while (event_itr != events.end()) {
         if (event_itr->mutually_exclusive_events.size() > 0) {
             for (unsigned int i = 0; i < event_itr->mutually_exclusive_events.size(); i++) {
@@ -114,7 +115,7 @@ bool Stock::can_add_event(Stock_event event) {
 }
 
 void Stock::remove_obselete_event(void) {
-    list<Stock_event>::iterator event_itr = events.begin();
+    std::list<Stock_event>::iterator event_itr = events.begin();
     while (event_itr != events.end()) {
         if (event_itr->duration <= 0) {
             event_itr = events.erase(event_itr);
@@ -127,7 +128,7 @@ void Stock::remove_obselete_event(void) {
 
 float Stock::sum_attribute(stock_modifiers attribute) {
     float sum = 0;
-    list<Stock_event>::iterator event_itr = events.begin();
+    std::list<Stock_event>::iterator event_itr = events.begin();
     while (event_itr != events.end()) {
         sum += event_itr->modifiers[attribute];
         event_itr++; // Bug fix: infinite loop
@@ -136,7 +137,6 @@ float Stock::sum_attribute(stock_modifiers attribute) {
 }
 
 Stock::Stock(void) {
-    /** @todo Follow-up */
     category = random_integer(category_list_size);
     name = generate_name(category, 1)[0];
     /** The distribution of initial stock price will be consistent across same categories
@@ -145,7 +145,6 @@ Stock::Stock(void) {
     price = init_stock_price(category % 3 + 1);
     quantity = 0;
     money_spent = 0;
-    /** @todo Update the attributes via the functions provided by Jeremy in random_price.cpp */
     attributes[standard_deviation] = init_sd();
     attributes[mean] = 0;
     attributes[lower_limit] = -40;
@@ -154,16 +153,14 @@ Stock::Stock(void) {
 }
 
 void Stock::next_round(void) {
-    /** @todo Use the functions provided by Jeremy in random_price.cpp to update the stock price. */
+    // Update the price of the stock.
     price += price * percentage_change_price(*this) / 100;
-    /** Reduce all events duration by one */
-    list<Stock_event>::iterator event_itr = events.begin();
+    // Reduce all events duration by one.
+    std::list<Stock_event>::iterator event_itr = events.begin();
     while (event_itr != events.end()) {
         event_itr->duration--;
         event_itr++;
     }
-    /** Remove the obselete events */
     remove_obselete_event();
-    /** Update the history array with the current price */
     update_history();
 }

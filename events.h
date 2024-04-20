@@ -1,5 +1,6 @@
 /**
- * @headerfile events.h
+ * @file events.h
+ * @author eric15342335
  * @brief This file contains the definition of the events that will be applied to the stocks.
  */
 #ifndef EVENTS_H
@@ -10,7 +11,6 @@
 #include <vector>
 
 /**
- * @file events.h
  * @enum stock_modifiers
  * @brief The attributes of a stock that Events will modify are hardcoded here.
  * @note Please store them as `std::map<stock_modifiers, float>`.
@@ -25,13 +25,13 @@ enum stock_modifiers {
     /** The lower limit of the stock price percentage change.
      * For example, if lower_limit is -10, then the percentage change will not go below -10%.
      * Note that stock initially has a lower limit of -40%. This value adds to that.
-     * The value should be [-100, 0].
+     * The value should be `[-100, 0]`.
      */
     lower_limit,
     /** The upper limit of the stock price percentage change.
      * For example, if upper_limit is 10, then the percentage change will not go over +10%.
      * Note that stock initially has a upper limit of +40%. This value adds to that.
-     * The value should be [0, 100].
+     * The value should be `[0, 100]`.
      */
     upper_limit
 };
@@ -100,6 +100,7 @@ struct Stock_event {
         }
 };
 
+/** The list of all events that will be applied to the stocks. */
 extern std::vector<Stock_event> all_stock_events;
 
 /**

@@ -60,7 +60,7 @@ vector<float> graphinput(string stockname, unsigned int width) {
         stockpricehistory.push_back(x);
     }
     if (stockpricehistory.size() > (width - 9)) { // limit graph size to width
-        stockpricehistory.erase(stockpricehistory.begin(), stockpricehistory.end() - 71);
+        stockpricehistory.erase(stockpricehistory.begin(), stockpricehistory.end() - (width - 9));
     }
     stockpricehistory.shrink_to_fit();
     return stockpricehistory;
@@ -95,6 +95,7 @@ void graph_plotting(string stockname, int width, int height) {
         graph[i][0] = maxstring[i];
         graph[i][height - 1] = minstring[i];
     }
+    // \DeclareUnicodeCharacter{2517}{\L}
     graph[8][height - 1] = "┗";
 
     for (unsigned int i = 0; i < stockpricehistory.size() - 1; i++) {

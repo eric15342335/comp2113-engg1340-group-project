@@ -4,6 +4,34 @@
 #include "draw.h"
 #include "format.h"
 
+void drawLogo(int row, int col) {
+    const int wordWidth = 73; // Width of the longest word
+    const int wordHeight = 8; // Height for each word
+
+    std::cout << textClear << setCursorPosition(0, 0);
+
+    // Will not print logo if terminal cannot fit
+    if (row > wordHeight && col > wordWidth) {
+        // Will use fileIO for this
+        std::cout << "Insert"
+                  << "\n";
+        sleep(1000);
+        std::cout << textClear;
+        sleep(250);
+        std::cout << "Logo"
+                  << "\n";
+        sleep(1000);
+        std::cout << textClear;
+        sleep(250);
+        std::cout << "Here"
+                  << "\n";
+    }
+    else {
+        std::cout << "Welcome to Stock Market Simulator!"
+                  << "\n";
+    }
+}
+
 void drawRoundInfo(int row, int col, int round, float balance) {
     row++; // Shutup compiler
     std::cout << setCursorPosition(3, 5);
@@ -30,19 +58,34 @@ void drawEventBar(int row, int col) {
 }
 
 void listEvents(int row, int col) {
-    // later do
     row++;
-    col++;
+    // broken rn
+    int height = 10; // placeholder
+    int width = col - 30;
+
+    std::cout << setCursorPosition(2, 15) << "\u250C";
+    for (int i = 0; i < width - 1; i++) {
+        std::cout << "\u2500";
+    }
+    std::cout << "\u2510";
+    for (int i = 0; i < height; i++) {
+        std::cout << setCursorPosition(i + 3, 15);
+        std::cout << "\u2502";
+        std::cout << setCursorPosition(i + 3, width + 15);
+        std::cout << "\u2502";
+    }
 }
 
 void drawButton(int row, int col) {
     int width;
     int buttons;
 
-    std::vector<std::string> options = {"[B] Buy", "[S] Sell", "[E] Events", "[O] Options", "[X] Exit"}; // Add stuff here
+    std::vector<std::string> options = {"[B] Buy", "[S] Sell", "[T] Toggle View", "[E] Events", "[O] Options", "[X] Exit"}; // Add stuff here
 
     buttons = options.size();
     width = (int)(col / buttons);
+
+    /*
     std::cout << setCursorPosition(row - 2, 3);
     for (int i = 0; i < buttons; i++) {
         i % 2 == 0 ? std::cout << textBlack << bgWhite : std::cout << textWhite << bgBlack;
@@ -50,6 +93,8 @@ void drawButton(int row, int col) {
             std::cout << " ";
         }
     }
+    */
+
     std::cout << textReset << setCursorPosition(row - 1, 3);
     for (int i = 0; i < buttons; i++) {
         i % 2 == 0 ? std::cout << bgWhite << textBlack : std::cout << bgBlack << textWhite;
@@ -61,6 +106,7 @@ void drawButton(int row, int col) {
             std::cout << " ";
         }
     }
+    /*
     std::cout << textReset << setCursorPosition(row, 3);
     for (int i = 0; i < buttons; i++) {
         i % 2 == 0 ? std::cout << textBlack << bgWhite : std::cout << textWhite << bgBlack;
@@ -68,20 +114,6 @@ void drawButton(int row, int col) {
             std::cout << " ";
         }
     }
+    */
     std::cout << textReset << "\n";
 }
-
-/*
-int main() {
-    int row;
-    int col;
-    while (1) {
-        fetchConsoleDimensions(row, col);
-        drawEventBar(row, col);
-        drawButton(row, col);
-        sleep(200);
-        std::cout << textClear;
-    }
-    return 0;
-}
-*/

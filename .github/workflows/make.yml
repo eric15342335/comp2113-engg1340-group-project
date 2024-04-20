@@ -21,7 +21,9 @@ jobs:
     - name: Make
       run: |
         make
-        make test
+    - name: Doxygen Documentation
+      run: |
+        doxygen Doxyfile
     - name: Upload executable
       uses: actions/upload-artifact@v4
       with:

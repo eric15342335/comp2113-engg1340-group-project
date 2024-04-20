@@ -95,3 +95,9 @@ Placeholder.
 ## Non-standard libraries used
 
 [VariadicTable](./nonstdlibs/README.md)
+
+## Credits
+
+### Logo
+
+The logo used here and in-game is generated with [Text to ASCII](https://www.asciiart.eu/text-to-ascii-art)
