@@ -164,7 +164,7 @@ int main(void) {
     sleep(200);
     std::cout << "Current trading fees are charged at " << trading_fees_percent * 100 << " %" << std::endl;
     sleep(200);
-	std::cout << textClear << setCursorPosition(5, 0);
+    std::cout << textClear << setCursorPosition(5, 0);
     print_table(stocks_list, balance); // Print the table of stocks
     drawRoundInfo(row, col, rounds_played, balance);
     drawEventBar(row, col);
@@ -183,15 +183,15 @@ int main(void) {
             }
         }
 
-		next_round_routine(rounds_played, stocks_list); // Call the next round routine
-		std::cout << textClear << setCursorPosition(5, 0);
-		print_table(stocks_list, balance);
-		drawRoundInfo(row, col, rounds_played, balance); // Prints the round number and balance
-		drawEventBar(row, col);
-		drawButton(row, col);
+        next_round_routine(rounds_played, stocks_list); // Call the next round routine
+        std::cout << textClear << setCursorPosition(5, 0);
+        print_table(stocks_list, balance);
+        drawRoundInfo(row, col, rounds_played, balance); // Prints the round number and balance
+        drawEventBar(row, col);
+        drawButton(row, col);
 
         // Simulate player selling stocks
-	for (unsigned int i = 0; i < stocks_list.size(); i++) {
+        for (unsigned int i = 0; i < stocks_list.size(); i++) {
             int num_sellable = stocks_list[i].get_quantity();
             if (num_sellable > 0) {
                 // If the player has spent more than $100 on the stock, sell all the stocks
@@ -204,7 +204,7 @@ int main(void) {
                     stocks_list[i].sell(balance, random_integer(num_sellable), trading_fees_percent);
                 }
             }
-	}
+        }
     }
 
     sleep(500);
