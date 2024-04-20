@@ -5,14 +5,12 @@
  */
 #include "draw.h"
 #include "format.h"
-#include "draw.h"
-#include "format.h"
 #include "graph.h"
 #include "stock.h"
 #include "events.h"
 #include "random_price.h"
-#include "graph.h"
 #include "nonstdlibs/VariadicTable.h"
+#include <numeric>
 
 /**
  * 0.01 means 1% trading fees.
@@ -31,33 +29,40 @@ float balance = 1000;
 /** Number of rounds played */
 unsigned int rounds_played = 1;
 
+std::string vectorToString(const std::vector<unsigned int> & vec) {
+    return std::accumulate(vec.begin(), vec.end(), std::string(), [](std::string s, int v) { return s.empty() ? std::to_string(v) : s + " " + std::to_string(v); });
+}
+
 /** Print the table of stocks. We put it in a function so we can call it multiple times.
  * @param stocks_list A vector of stocks. The stocks to be printed.
  * @param balance How much money the player has.
  */
 void print_table(std::vector<Stock> stocks_list, float balance) {
     // Create a table, note that R"(% Change)" is a raw string literal (C++11 feature).
-    VariadicTable<unsigned int, std::string, std::string, float, float, float, unsigned int, float, unsigned int>
-        table({"No.", "Category", "Name", "Last Price", "Change", R"(% Change)", "Quantity", "$ Spent", "Max"});
+    VariadicTable<unsigned int, std::string, std::string, float, float, float, unsigned int, unsigned int, int, float, std::string>
+        table({"No.", "Category", "Name", "Last Price", "Change", R"(% Change)", "Quantity", "Max", "Mean", " SD ", "event_id"});
     /* Set the precision and format of the columns.
      * Note: Precision and Format is ignored for std::string columns. */
-    table.setColumnPrecision({1, 0, 0, 2, 2, 2, 1, 2, 1});
-    table.setColumnFormat({
-        VariadicTableColumnFormat::AUTO,
-        VariadicTableColumnFormat::AUTO,
-        VariadicTableColumnFormat::AUTO,
-        VariadicTableColumnFormat::FIXED,
-        VariadicTableColumnFormat::FIXED,
-        VariadicTableColumnFormat::FIXED,
-        VariadicTableColumnFormat::AUTO,
-        VariadicTableColumnFormat::FIXED,
-        VariadicTableColumnFormat::AUTO,
-    });
+    table.setColumnPrecision({1, 0, 0, 2, 2, 2, 1, 1, 0, 1, 0});
+    table.setColumnFormat({VariadicTableColumnFormat::AUTO,
+                           VariadicTableColumnFormat::AUTO,
+                           VariadicTableColumnFormat::AUTO,
+                           VariadicTableColumnFormat::FIXED,
+                           VariadicTableColumnFormat::FIXED,
+                           VariadicTableColumnFormat::FIXED,
+                           VariadicTableColumnFormat::FIXED,
+                           VariadicTableColumnFormat::FIXED,
+                           VariadicTableColumnFormat::AUTO,
+                           VariadicTableColumnFormat::FIXED,
+                           VariadicTableColumnFormat::AUTO});
     for (unsigned int i = 0; i < stocks_list.size(); i++) {
         table.addRow(i + 1, stocks_list[i].category_name(), stocks_list[i].get_name(), stocks_list[i].get_price(),
                      stocks_list[i].delta_price(), stocks_list[i].delta_price_percentage() * 100,
-                     stocks_list[i].get_quantity(), stocks_list[i].get_money_spent(),
-                     stocks_list[i].num_stocks_affordable(balance, trading_fees_percent));
+                     stocks_list[i].get_quantity(),
+                     stocks_list[i].num_stocks_affordable(balance, trading_fees_percent),
+                     stocks_list[i].get_attribute(mean) + stocks_list[i].sum_attribute(mean),
+                     stocks_list[i].get_attribute(standard_deviation) + stocks_list[i].sum_attribute(standard_deviation),
+                     vectorToString(stocks_list[i].get_event_ids()));
     }
     table.print(std::cout);
     /* Display 2 decimal places for balance.
@@ -194,15 +199,7 @@ int main(void) {
         for (unsigned int i = 0; i < stocks_list.size(); i++) {
             int num_sellable = stocks_list[i].get_quantity();
             if (num_sellable > 0) {
-                // If the player has spent more than $100 on the stock, sell all the stocks
-                if (stocks_list[i].get_money_spent() > 100) {
-                    // Sell all the stocks
-                    stocks_list[i].sell(balance, num_sellable, trading_fees_percent);
-                }
-                else {
-                    // Sell random amount of the stocks
-                    stocks_list[i].sell(balance, random_integer(num_sellable), trading_fees_percent);
-                }
+                stocks_list[i].sell(balance, random_integer(num_sellable), trading_fees_percent);
             }
         }
     }

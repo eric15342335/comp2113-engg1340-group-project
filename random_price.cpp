@@ -62,5 +62,9 @@ float percentage_change_price(Stock & stock) {
 }
 
 unsigned int random_integer(unsigned int max_integer) {
-    return rand() % max_integer;
+    // uniform distribution
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<unsigned int> distribution(0, max_integer - 1);
+    return distribution(gen);
 }
