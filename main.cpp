@@ -3,6 +3,8 @@
  * @brief Hello! Welcome to the Stock Market Simulator!
  * @authors Everyone in the group project.
  */
+#include <string>
+#include <fstream>
 #include "draw.h"
 #include "format.h"
 #include "draw.h"
@@ -13,6 +15,7 @@
 #include "random_price.h"
 #include "graph.h"
 #include "nonstdlibs/VariadicTable.h"
+#include "file_io.h"
 
 /**
  * 0.01 means 1% trading fees.
@@ -152,6 +155,20 @@ int main(void) {
     int row; // Number of characters to fit in a column
     int col; // Number of characters to fit in a row
     fetchConsoleDimensions(row, col);
+    
+    std::string playername,loadsave;
+    std::cout << "Enter 0 for new save or enter 1 for loading old save";
+    std::cin >> loadsave;
+    while (loadsave != "0" || loadsave != "1"){
+        std::cout << "Wrong input, enter 0 for new save or enter 1 for loading old save";
+        std::cin >> loadsave;
+    }
+    if (loadsave == "0"){
+        createplayer(playername);
+    }
+    else{
+
+    }
 
     std::vector<Stock> stocks_list; // Create a vector of stocks
     for (int i = 0; i < initial_stock_count; i++) {
@@ -184,6 +201,7 @@ int main(void) {
         }
 
         next_round_routine(rounds_played, stocks_list); // Call the next round routine
+        savestatus(rounds_played, stocks_list, balance, playername);
         std::cout << textClear << setCursorPosition(5, 0);
         print_table(stocks_list, balance);
         drawRoundInfo(row, col, rounds_played, balance); // Prints the round number and balance
