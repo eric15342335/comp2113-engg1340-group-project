@@ -157,7 +157,6 @@ int main(void) {
         stocks_list.push_back(stock); // Add the stock to the vector
     }
 
-
     drawLogo(row, col);
     std::cout << textClear << setCursorPosition(7, 0);
     std::cout << "Welcome to the Stock Market Simulator!" << std::endl;
