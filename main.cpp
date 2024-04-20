@@ -5,6 +5,9 @@
  */
 #include "draw.h"
 #include "format.h"
+#include "draw.h"
+#include "format.h"
+#include "graph.h"
 #include "stock.h"
 #include "events.h"
 #include "random_price.h"
@@ -156,15 +159,17 @@ int main(void) {
         stocks_list.push_back(stock); // Add the stock to the vector
     }
 
-    // Print the welcome message
-    std::cout << textClear << setCursorPosition(0, 0);
+    drawLogo(row, col);
+    std::cout << textClear << setCursorPosition(7, 0);
     std::cout << "Welcome to the Stock Market Simulator!" << std::endl;
     sleep(200);
     std::cout << "Current trading fees are charged at " << trading_fees_percent * 100 << " %" << std::endl;
-    std::cout << "You currently have $" << balance << "." << std::endl;
-    sleep(500);
+    sleep(200);
     print_table(stocks_list, balance); // Print the table of stocks
-    sleep(500);
+    drawRoundInfo(row, col, rounds_played, balance);
+    drawEventBar(row, col);
+    drawButton(row, col);
+    sleep(200);
 
     // Simulate 5*2 rounds of the game with buying/selling alternating
     for (int i = 0; i < 5; i++) {
@@ -179,7 +184,7 @@ int main(void) {
         }
 
         next_round_routine(rounds_played, stocks_list); // Call the next round routine
-        std::cout << textClear << setCursorPosition(0, 0);
+        std::cout << textClear << setCursorPosition(7, 0);
         drawRoundInfo(row, col, rounds_played, balance); // Prints the round number and balance
         std::cout << setCursorPosition(5, 0);
 
@@ -220,20 +225,15 @@ int main(void) {
     }
 
     sleep(500);
-    std::cout << textClear << setCursorPosition(0, 0);
+    std::cout << textClear << setCursorPosition(7, 0);
     drawRoundInfo(row, col, rounds_played, balance);
     std::cout << setCursorPosition(5, 0);
     print_table(stocks_list, balance);
+    // graph_plotting("test", col * 2 / 3, row - 10);
+    drawRoundInfo(row, col, rounds_played, balance);
     drawEventBar(row, col);
     drawButton(row, col);
-
-    while (0) {
-        fetchConsoleDimensions(row, col);
-        drawEventBar(row, col);
-        drawButton(row, col);
-        sleep(200);
-        std::cout << textClear;
-    }
+    std::cout << "\n";
 
     /** @todo Enable graph_plotting test case by fixing the segfault error */
     // graph_plotting("stockA", 50, 50);

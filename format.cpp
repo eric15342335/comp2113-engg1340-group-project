@@ -57,5 +57,10 @@ void fetchConsoleDimensions(int & row, int & col) {
     case 3:
         row = 48;
         col = 160;
+        break;
+    default:
+        row = 36;
+        col = 120;
+        break;
     }
 }

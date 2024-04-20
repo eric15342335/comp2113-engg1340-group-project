@@ -66,3 +66,7 @@ giving players breathing room to better think about their investing strategies.
 ## Non-standard libraries used
 
 ## Compilation and Execution Instructions
+
+## Credits
+### Logo
+The logo used here and in-game is generated with [Text to ASCII](https://www.asciiart.eu/text-to-ascii-art)
