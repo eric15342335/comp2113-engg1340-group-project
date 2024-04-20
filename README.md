@@ -1,5 +1,7 @@
 # Stock Market Simulator
 
+<insert ascii art here>
+
 ## Menu
 
 1. [Team Members](#team-members)
@@ -62,42 +64,60 @@ make
 ./stocksim
 ```
 
-## Code Requirements
+# Code Requirements
 
-### Generation of random game sets or events
+## Generation of random game sets or events
 
-Placeholder.
+We used normal distribution to generate the percentage change of the stock price for each new round.
 
-### Data structures for storing game status (e.g., arrays, STL containers)
+See [our documentation on events.h](https://eric15342335.github.io/comp2113-engg1340-group-project/events_8h.html) regarding how such distribution
+can be manipulated to suit our needs.
 
-Placeholder.
+You may want to consult our events.cpp source code, specifically the
+`std::vector<Stock_event> pick_events (std::vector<Stock_event>all_events, unsigned int num_events)` for how we implement this feature.
 
-### Dynamic memory management (e.g., dynamic arrays, linked lists, STL containers)
+In our game, we also included <num> events that will each has a possibility to happen in your individual gameplay.
 
-Placeholder.
+## Data structures for storing game status (e.g., arrays, STL containers)
 
-### File input/output (e.g., for loading/saving game status)
+In [`stock.h`], there is a class called `Stock` which utilizes STL `vector`, `list` and `map` to store various game data.
+See [the Stock class documentation](https://eric15342335.github.io/comp2113-engg1340-group-project/classStock.html) for more information.
 
-Placeholder.
-
-### Program codes in multiple files (recall separate compilation)
-
-Placeholder.
-
-### Proper indentation and naming styles
+## Dynamic memory management (e.g., dynamic arrays, linked lists, STL containers)
 
 Placeholder.
 
-### In-code documentation
+## File input/output (e.g., for loading/saving game status)
+
+Placeholder.
+
+## Program codes in multiple files (recall separate compilation)
+
+We split our program codes into multiple files according to their functionality and purposes:
+- `main.cpp`:
+- `stock.cpp`:
+- `events.cpp`:
+- `graph.cpp`:
+- `random_price.cpp`:
+- `names.cpp`:
+- `file_io.cpp`:
+- `draw.cpp`:
+- `format.cpp`:
+
+## Proper indentation and naming styles
+
+We enforce our code formatting style via the use of `clang-format` tool. You can see our configuration file [here.](./.clang-format)
+
+## In-code documentation
 
 [Our `doxygen` documentation is available! (Click Me!)](https://eric15342335.github.io/comp2113-engg1340-group-project/)
 
-## Non-standard libraries used
+# Non-standard libraries used
 
 [VariadicTable](./nonstdlibs/README.md)
 
-## Credits
+# Credits
 
-### Logo
+## Logo
 
 The logo used here and in-game is generated with [Text to ASCII](https://www.asciiart.eu/text-to-ascii-art)
