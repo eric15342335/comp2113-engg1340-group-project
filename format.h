@@ -37,6 +37,8 @@ class time {
 
 extern std::string setCursorPosition(int offsetY, int offsetX); // same as below
 
-extern void fetchConsoleDimensions(int & row, int & col); // number of characters each row and column can fit, not the number of pixels
+extern void
+fetchConsoleDimensions(int & row,
+                       int & col); // number of characters each row and column can fit, not the number of pixels
 
 #endif

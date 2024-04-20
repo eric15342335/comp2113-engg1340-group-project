@@ -6,7 +6,7 @@
 #include <algorithm>
 
 /** @brief The list of all events that can be applied to the stocks.
- * @ref category_list
+ * @ref CategoryList
  * @details
  * | Event ID Range | Affected Category |
  * | -------------- | ----------------- |
@@ -30,7 +30,7 @@
  * | 86 to 91       | Telecom           |
  * | 92 to 98       | pick_random_stock |
  */
-std::vector<Stock_event> all_stock_events = {
+std::vector<Stock_event> allStockEvents = {
     // event_id 0 to 7 affect all stocks
     {/** event_id */ 0,
      /** mutually_exclusive_events */ {1},
@@ -584,7 +584,8 @@ std::vector<Stock_event> all_stock_events = {
     // event_id 67 to 74 affect category "Tech"
     {/** event_id */ 67,
      /** mutually_exclusive_events */ {},
-     /** text */ "Breakthrough in Artificial Intelligence Leads to Significant Advancements in Automation and Machine Learning",
+     /** text */
+     "Breakthrough in Artificial Intelligence Leads to Significant Advancements in Automation and Machine Learning",
      /** duration */ 6,
      /** percentage_permille */ 12,
      /** type_of_event */ category,
@@ -844,7 +845,7 @@ std::vector<Stock_event> all_stock_events = {
      /** modifiers */ {{standard_deviation, 0.5}, {mean, 7}, {lower_limit, 0}, {upper_limit, 20}}}};
 
 // print a map
-void print_map(std::map<unsigned int, std::vector<unsigned int>> map) {
+void printMap(std::map<unsigned int, std::vector<unsigned int>> map) {
     for (auto i : map) {
         std::cout << i.first << ": ";
         for (unsigned int j : i.second) {
@@ -857,9 +858,9 @@ void print_map(std::map<unsigned int, std::vector<unsigned int>> map) {
 /*
 int main() {
     // This outputs 0.1
-    std::cout << all_stock_events[0].modifiers[standard_deviation] << std::endl;
+    std::cout << allStockEvents[0].modifiers[standard_deviation] << std::endl;
     // Checks the events for mutual exclusivity
-    print_map(check_mutual_exclusivity(all_stock_events));
+    printMap(checkMutualExclusivity(allStockEvents));
     // Outputs:
     // 0: 2
     // 1: 2
@@ -868,7 +869,7 @@ int main() {
 }
 */
 
-std::map<unsigned int, std::vector<unsigned int>> check_mutual_exclusivity(std::vector<Stock_event> all_events) {
+std::map<unsigned int, std::vector<unsigned int>> checkMutualExclusivity(std::vector<Stock_event> all_events) {
     std::map<unsigned int, std::vector<unsigned int>> mut_excl_map;
     // Build the map
     for (unsigned int i = 0; i < all_events.size(); i++) {
@@ -883,15 +884,17 @@ std::map<unsigned int, std::vector<unsigned int>> check_mutual_exclusivity(std::
     for (auto i : mut_excl_map) {
         for (unsigned int j : i.second) {
             if (std::find(mut_excl_map[j].begin(), mut_excl_map[j].end(), i.first) != mut_excl_map[j].end()) {
-                mut_excl_map[i.first].erase(std::remove(mut_excl_map[i.first].begin(), mut_excl_map[i.first].end(), j), mut_excl_map[i.first].end());
-                mut_excl_map[j].erase(std::remove(mut_excl_map[j].begin(), mut_excl_map[j].end(), i.first), mut_excl_map[j].end());
+                mut_excl_map[i.first].erase(std::remove(mut_excl_map[i.first].begin(), mut_excl_map[i.first].end(), j),
+                                            mut_excl_map[i.first].end());
+                mut_excl_map[j].erase(std::remove(mut_excl_map[j].begin(), mut_excl_map[j].end(), i.first),
+                                      mut_excl_map[j].end());
             }
         }
     }
     return mut_excl_map;
 }
 
-std::vector<Stock_event> pick_events(std::vector<Stock_event> all_events, unsigned int num_events) {
+std::vector<Stock_event> pickNumEvents(std::vector<Stock_event> all_events, unsigned int num_events) {
     std::vector<Stock_event> picked_events;
     // Pick num_events random events
     for (unsigned int i = 0; i < num_events; i++) {
@@ -917,7 +920,7 @@ std::vector<Stock_event> pick_events(std::vector<Stock_event> all_events, unsign
         }
     }
     // Check event duplication and mutual exclusivity
-    std::map<unsigned int, std::vector<unsigned int>> mut_excl_map = check_mutual_exclusivity(all_events);
+    std::map<unsigned int, std::vector<unsigned int>> mut_excl_map = checkMutualExclusivity(all_events);
     for (unsigned int i = 0; i < picked_events.size(); i++) {
         for (unsigned int j = i + 1; j < picked_events.size(); j++) {
             // If two events are the same, remove one of them
@@ -928,7 +931,9 @@ std::vector<Stock_event> pick_events(std::vector<Stock_event> all_events, unsign
                 j--;
             }
             // If two events are mutually exclusive, remove one of them
-            else if (std::find(mut_excl_map[picked_events[i].event_id].begin(), mut_excl_map[picked_events[i].event_id].end(), picked_events[j].event_id) != mut_excl_map[picked_events[i].event_id].end()) {
+            else if (std::find(mut_excl_map[picked_events[i].event_id].begin(),
+                               mut_excl_map[picked_events[i].event_id].end(),
+                               picked_events[j].event_id) != mut_excl_map[picked_events[i].event_id].end()) {
                 picked_events.erase(picked_events.begin() + j);
                 j--;
             }

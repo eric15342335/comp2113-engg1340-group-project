@@ -35,10 +35,10 @@ unsigned int rounds_played = 1;
  * @param stocks_list A vector of stocks. The stocks to be printed.
  * @param balance How much money the player has.
  */
-void print_table(std::vector<Stock> stocks_list, float balance) {
+void printTable(std::vector<Stock> stocks_list, float balance) {
     // Create a table, note that R"(% Change)" is a raw string literal (C++11 feature).
-    VariadicTable<unsigned int, std::string, std::string, float, float, float, unsigned int, float, unsigned int>
-        table({"No.", "Category", "Name", "Last Price", "Change", R"(% Change)", "Quantity", "$ Spent", "Max"});
+    VariadicTable<unsigned int, std::string, std::string, float, float, float, unsigned int, float, unsigned int> table(
+        {"No.", "Category", "Name", "Last Price", "Change", R"(% Change)", "Quantity", "$ Spent", "Max"});
     /* Set the precision and format of the columns.
      * Note: Precision and Format is ignored for std::string columns. */
     table.setColumnPrecision({1, 0, 0, 2, 2, 2, 1, 2, 1});
@@ -54,10 +54,10 @@ void print_table(std::vector<Stock> stocks_list, float balance) {
         VariadicTableColumnFormat::AUTO,
     });
     for (unsigned int i = 0; i < stocks_list.size(); i++) {
-        table.addRow(i + 1, stocks_list[i].category_name(), stocks_list[i].get_name(), stocks_list[i].get_price(),
-                     stocks_list[i].delta_price(), stocks_list[i].delta_price_percentage() * 100,
-                     stocks_list[i].get_quantity(), stocks_list[i].get_money_spent(),
-                     stocks_list[i].num_stocks_affordable(balance, trading_fees_percent));
+        table.addRow(i + 1, stocks_list[i].getCategoryName(), stocks_list[i].getName(), stocks_list[i].getPrice(),
+                     stocks_list[i].deltaPrice(), stocks_list[i].deltaPercentagePrice() * 100,
+                     stocks_list[i].getQuantity(), stocks_list[i].getMoneySpent(),
+                     stocks_list[i].getAffordableQuantity(balance, trading_fees_percent));
     }
     table.print(std::cout);
     /* Display 2 decimal places for balance.
@@ -72,14 +72,14 @@ void print_table(std::vector<Stock> stocks_list, float balance) {
  * @param stocks_list A vector of stocks.
  * @return A vector of Stock_event
  */
-std::vector<Stock_event> get_ongoing_events(std::vector<Stock> stocks_list) {
+std::vector<Stock_event> getOngoingEvents(std::vector<Stock> stocks_list) {
     // Return a vector of ongoing events without duplicates
     std::vector<Stock_event> ongoing_events = {};
     for (unsigned int i = 0; i < stocks_list.size(); i++) {
-        std::list<Stock_event> events = stocks_list[i].get_events();
+        std::list<Stock_event> events = stocks_list[i].getAllEvents();
         for (Stock_event event : events) {
             // Side note: Events with duration <= 0 are automatically removed from the stock's event list.
-            // By stock.cpp Stock::next_round() which uses Stock::remove_obselete_event()
+            // By stock.cpp Stock::gotoNextRound() which uses Stock::removeObseleteEvent()
             if (event.duration > 0) {
                 // If the event is not in the ongoing_events, add it.
                 if (std::find(ongoing_events.begin(), ongoing_events.end(), event) == ongoing_events.end()) {
@@ -96,20 +96,20 @@ std::vector<Stock_event> get_ongoing_events(std::vector<Stock> stocks_list) {
  * We put it in a function so we can call it multiple times easily.
  * @param stocks_list A vector of stocks. Pass by reference to modify the stocks.
  */
-void new_events_next_round(std::vector<Stock> & stocks_list) {
+void newNextRoundEvents(std::vector<Stock> & stocks_list) {
     // Apply events into stocks
-    std::vector<Stock_event> picked_events = pick_events(all_stock_events, 5);
+    std::vector<Stock_event> picked_events = pickNumEvents(allStockEvents, 5);
     for (Stock_event event : picked_events) {
         switch (event.type_of_event) {
         case all_stocks:
             for (unsigned int i = 0; i < stocks_list.size(); i++) {
-                stocks_list[i].add_event(event);
+                stocks_list[i].addEvent(event);
             }
             break;
         case category:
             for (unsigned int i = 0; i < stocks_list.size(); i++) {
-                if (stocks_list[i].get_category() == event.category) {
-                    stocks_list[i].add_event(event);
+                if (stocks_list[i].getCategory() == event.category) {
+                    stocks_list[i].addEvent(event);
                 }
             }
             break;
@@ -119,13 +119,13 @@ void new_events_next_round(std::vector<Stock> & stocks_list) {
                 // Pick a random stock
                 unsigned int choice = random_integer(stocks_list.size());
                 Stock lucky_stock = stocks_list[choice];
-                if (!lucky_stock.can_add_event(event)) {
+                if (!lucky_stock.canAddEvent(event)) {
                     stocks_indices_not_suitable.push_back(choice);
                 }
                 else {
                     Stock_event modified_event = event;
-                    modified_event.text = lucky_stock.get_name() + " " + event.text;
-                    lucky_stock.add_event(modified_event);
+                    modified_event.text = lucky_stock.getName() + " " + event.text;
+                    lucky_stock.addEvent(modified_event);
                     break;
                 }
             }
@@ -139,11 +139,11 @@ void new_events_next_round(std::vector<Stock> & stocks_list) {
     }
 }
 
-void next_round_routine(unsigned int & rounds_played, std::vector<Stock> & stocks_list) {
-    rounds_played++;                    // Increment the round number
-    new_events_next_round(stocks_list); // Generate new events and apply them to the stocks
+void gotoNextRound(unsigned int & rounds_played, std::vector<Stock> & stocks_list) {
+    rounds_played++;                 // Increment the round number
+    newNextRoundEvents(stocks_list); // Generate new events and apply them to the stocks
     for (unsigned int i = 0; i < stocks_list.size(); i++) {
-        stocks_list[i].next_round(); // Update the stock price
+        stocks_list[i].gotoNextRound(); // Update the stock price
     }
 }
 
@@ -165,7 +165,7 @@ int main(void) {
     std::cout << "Current trading fees are charged at " << trading_fees_percent * 100 << " %" << std::endl;
     time::sleep(200);
     std::cout << textClear << setCursorPosition(5, 0);
-    print_table(stocks_list, balance); // Print the table of stocks
+    printTable(stocks_list, balance); // Print the table of stocks
     drawRoundInfo(row, col, rounds_played, balance);
     drawEventBar(row, col);
     drawButton(row, col);
@@ -175,7 +175,7 @@ int main(void) {
     for (int i = 0; i < 5; i++) {
         // Simulate player buying stocks
         for (unsigned int i = 0; i < stocks_list.size(); i++) {
-            int num_buyable = stocks_list[i].num_stocks_affordable(balance, trading_fees_percent);
+            int num_buyable = stocks_list[i].getAffordableQuantity(balance, trading_fees_percent);
             // If the player can afford at least one stock, buy a random amount of stocks
             if (num_buyable > 0) {
                 // Buy random amount of the stocks
@@ -183,19 +183,19 @@ int main(void) {
             }
         }
 
-        next_round_routine(rounds_played, stocks_list); // Call the next round routine
+        gotoNextRound(rounds_played, stocks_list); // Call the next round routine
         std::cout << textClear << setCursorPosition(5, 0);
-        print_table(stocks_list, balance);
+        printTable(stocks_list, balance);
         drawRoundInfo(row, col, rounds_played, balance); // Prints the round number and balance
         drawEventBar(row, col);
         drawButton(row, col);
 
         // Simulate player selling stocks
         for (unsigned int i = 0; i < stocks_list.size(); i++) {
-            int num_sellable = stocks_list[i].get_quantity();
+            int num_sellable = stocks_list[i].getQuantity();
             if (num_sellable > 0) {
                 // If the player has spent more than $100 on the stock, sell all the stocks
-                if (stocks_list[i].get_money_spent() > 100) {
+                if (stocks_list[i].getMoneySpent() > 100) {
                     // Sell all the stocks
                     stocks_list[i].sell(balance, num_sellable, trading_fees_percent);
                 }
@@ -209,14 +209,13 @@ int main(void) {
 
     time::sleep(500);
     std::cout << textClear << setCursorPosition(5, 0);
-    print_table(stocks_list, balance);
+    printTable(stocks_list, balance);
     // graph_plotting("test", col * 2 / 3, row - 10);
     drawRoundInfo(row, col, rounds_played, balance);
     drawEventBar(row, col);
     drawButton(row, col);
     std::cout << "\n";
 
-    /** @todo Enable graph_plotting test case by fixing the segfault error */
-    // graph_plotting("stockA", 50, 50);
+    plotGraph("stockA", 50, 50);
     return 0;
 }

@@ -43,7 +43,7 @@ enum stock_modifiers {
  * if (event.type_of_event == all_stocks) {
  *    // Apply the event to all stocks
  *     for (auto &stock : stocks) {
- *        stock.add_event(event);
+ *        stock.addEvent(event);
  *     }
  * } else if (event.type_of_event == category) { ...
  * @endcode
@@ -101,7 +101,7 @@ struct Stock_event {
 };
 
 /** The list of all events that will be applied to the stocks. */
-extern std::vector<Stock_event> all_stock_events;
+extern std::vector<Stock_event> allStockEvents;
 
 /**
  * Pick a random event from the list of events
@@ -109,7 +109,7 @@ extern std::vector<Stock_event> all_stock_events;
  * @param num_events The number of events to pick
  * @return A vector of Stock_event
  */
-std::vector<Stock_event> pick_events(std::vector<Stock_event> all_events, unsigned int num_events);
+std::vector<Stock_event> pickNumEvents(std::vector<Stock_event> all_events, unsigned int num_events);
 
 /**
  * If A is mutually exclusive with B, then B is mutually exclusive with A.
@@ -117,11 +117,11 @@ std::vector<Stock_event> pick_events(std::vector<Stock_event> all_events, unsign
  * @param all_events The list of all events
  * @return A map of event_id to a vector of mutually exclusive event_ids that does not exist but should.
  */
-std::map<unsigned int, std::vector<unsigned int>> check_mutual_exclusivity(std::vector<Stock_event> all_events);
+std::map<unsigned int, std::vector<unsigned int>> checkMutualExclusivity(std::vector<Stock_event> all_events);
 
 /** Print a map to std::cout.
  * @param map The std::map object you want to print.
  */
-void print_map(std::map<unsigned int, std::vector<unsigned int>> map);
+void printMap(std::map<unsigned int, std::vector<unsigned int>> map);
 
 #endif

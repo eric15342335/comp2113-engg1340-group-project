@@ -31,9 +31,7 @@ const string bgMagenta = "\x1b[45m";
 const string bgCyan = "\x1b[46m";
 const string bgWhite = "\x1b[47m";
 
-void time::sleep(int dur) {
-    std::this_thread::sleep_for(std::chrono::milliseconds(dur));
-}
+void time::sleep(int dur) { std::this_thread::sleep_for(std::chrono::milliseconds(dur)); }
 
 string setCursorPosition(int offsetY, int offsetX) {
     string base = "\x1b[";

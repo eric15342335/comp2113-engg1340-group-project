@@ -16,14 +16,14 @@
  * This constant represents the size of the category list used in the program.
  * It is used to determine the number of categories in the list.
  */
-const int category_list_size = 17;
+const int sizeofCategoryList = 17;
 /**
- * The array category_list is declared as extern since it will be defined in names.cpp.
+ * The array CategoryList is declared as extern since it will be defined in names.cpp.
  * It is not defined in names.h to avoid multiple definition errors,
  * and to follow good programming practices.
  */
-extern const std::string category_list[category_list_size];
+extern const std::string CategoryList[sizeofCategoryList];
 
-std::vector<std::string> generate_name(unsigned int category, unsigned int num);
+std::vector<std::string> generateName(unsigned int category, unsigned int num);
 
 #endif

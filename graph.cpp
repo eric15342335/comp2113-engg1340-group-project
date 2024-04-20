@@ -1,14 +1,19 @@
+/**
+ * @file graph.cpp
+ * @author comet13579
+ * @brief Implementation of the graph plotting function.
+ * The graph plotting function is used to plot the stock price history of a stock.
+ */
+
 #include "graph.h"
 #include <iostream>
-#include <vector>
-#include <string>
 #include <fstream>
 #include <algorithm>
 #include <sstream>
 #include <iomanip>
 using namespace std;
 
-string graphpriceformat(float price) {
+string formatGraphPrice(float price) {
     stringstream ss;
     ss << fixed << setprecision(2) << price;
     string pricestring = ss.str();
@@ -18,15 +23,15 @@ string graphpriceformat(float price) {
     return pricestring;
 }
 
-void printstocknameandoverall(string stockname, vector<float> stockpricehistory) {
+void printStockNameOverall(string stockname, vector<float> price_history) {
     string stocknameprint = "Stock: " + stockname;
-    float overall = (stockpricehistory[stockpricehistory.size() - 1] - stockpricehistory[0]) / stockpricehistory[0] * 100;
+    float overall = (price_history[price_history.size() - 1] - price_history[0]) / price_history[0] * 100;
     cout << stocknameprint << R"(     % change: )";
-    cout << graphpriceformat(overall) << "%" << endl;
+    cout << formatGraphPrice(overall) << "%" << endl;
     cout << endl;
 }
 
-void printvector(vector<vector<string>> vectorname, vector<string> color, int width, int height) {
+void printVector(vector<vector<string>> vectorname, vector<string> color, int width, int height) {
     int colorint;
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
@@ -48,68 +53,65 @@ void printvector(vector<vector<string>> vectorname, vector<string> color, int wi
     }
 }
 
-// will delete print in the final version
-
-vector<float> graphinput(string stockname, unsigned int width) {
+vector<float> inputGraph(string stockname, unsigned int width) {
     string filename = stockname + ".log";
     ifstream fin;
     float x;
-    vector<float> stockpricehistory;
+    vector<float> price_history;
     fin.open(filename.c_str());
     while (fin >> x) {
-        stockpricehistory.push_back(x);
+        price_history.push_back(x);
     }
-    if (stockpricehistory.size() > (width - 9)) { // limit graph size to width
-        stockpricehistory.erase(stockpricehistory.begin(), stockpricehistory.end() - (width - 9));
+    if (price_history.size() > (width - 9)) { // limit graph size to width
+        price_history.erase(price_history.begin(), price_history.end() - 71);
     }
-    stockpricehistory.shrink_to_fit();
-    return stockpricehistory;
+    price_history.shrink_to_fit();
+    return price_history;
 }
 
-void graph_plotting(string stockname, int width, int height) {
+void plotGraph(string stockname, int width, int height) {
     float max, min;
-    vector<float> stockpricehistory = graphinput(stockname, width);
+    vector<float> price_history = inputGraph(stockname, width);
     // convert the raw log input into the nearest "width" data points
     vector<string> color(width - 9, "white");
     color[width - 10] = "white";
-    if (stockpricehistory.size() <= 1) {
+    if (price_history.size() <= 1) {
         return;
     }
-    max = *max_element(stockpricehistory.begin(), stockpricehistory.end());
-    min = *min_element(stockpricehistory.begin(), stockpricehistory.end());
+    max = *max_element(price_history.begin(), price_history.end());
+    min = *min_element(price_history.begin(), price_history.end());
     float interval = (max - min) / height;
     vector<vector<string>> graph(width, vector<string>(height, " "));
     // height column width rows, this is not in the usual 2d array format
     //  horizontal array and vertical array is inverted
     string maxstring, minstring;
     if (interval == 0) {
-        maxstring = graphpriceformat(max + 1);
-        minstring = graphpriceformat(min - 1);
+        maxstring = formatGraphPrice(max + 1);
+        minstring = formatGraphPrice(min - 1);
     }
     else {
-        maxstring = graphpriceformat(max);
-        minstring = graphpriceformat(min);
+        maxstring = formatGraphPrice(max);
+        minstring = formatGraphPrice(min);
     }
 
     for (int i = 0; i < 6; i++) {
         graph[i][0] = maxstring[i];
         graph[i][height - 1] = minstring[i];
     }
-    // \DeclareUnicodeCharacter{2517}{\L}
     graph[8][height - 1] = "┗";
 
-    for (unsigned int i = 0; i < stockpricehistory.size() - 1; i++) {
+    for (unsigned int i = 0; i < price_history.size() - 1; i++) {
         int start = 10, end = 10;
         if (interval != 0) {
-            start = (height - 1) - (stockpricehistory[i] - min) / interval;
-            end = (height - 1) - (stockpricehistory[i + 1] - min) / interval;
+            start = (height - 1) - (price_history[i] - min) / interval;
+            end = (height - 1) - (price_history[i + 1] - min) / interval;
         }
         if (start == end) {
             graph[i + 9][start] = "■";
-            if (stockpricehistory[i] > stockpricehistory[i + 1]) {
+            if (price_history[i] > price_history[i + 1]) {
                 color[i] = "green";
             }
-            else if (stockpricehistory[i] < stockpricehistory[i + 1]) {
+            else if (price_history[i] < price_history[i + 1]) {
                 color[i] = "red";
             }
             else {
@@ -139,6 +141,6 @@ void graph_plotting(string stockname, int width, int height) {
         graph[i][20] = "━";
     }
     graph[8][height - 1] = "┗";
-    printstocknameandoverall(stockname, stockpricehistory);
-    printvector(graph, color, width, height);
+    printStockNameOverall(stockname, price_history);
+    printVector(graph, color, width, height);
 }

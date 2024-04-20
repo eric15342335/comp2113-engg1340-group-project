@@ -1,8 +1,21 @@
+/**
+ * @file graph.h
+ * @author comet13579
+ * @brief Declaration of the graph plotting function.
+ */
+
 #ifndef GRAPH_H
 #define GRAPH_H
+
 #include <string>
-void graph_plotting(std::string stockname, int width, int height);
-// input: stockname + width + height + stockname.log file
-// return none
-// output: print the graph of the stock price history
+#include <vector>
+
+/**
+ * @brief Plots a graph for a given stock.
+ * @param stockname The name of the stock to plot the graph for.
+ * @param width The width of the graph.
+ * @param height The height of the graph.
+ */
+void plotGraph(std::string stockname, int width, int height);
+
 #endif

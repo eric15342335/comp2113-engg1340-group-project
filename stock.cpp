@@ -13,10 +13,10 @@ float Stock::purchase(float & balance, unsigned int amount, float trading_fees_p
     if (total_cost > balance && price <= 0) {
         return -1;
     }
-    // Update the balance, quantity, and money_spent
+    // Update the balance, quantity, and spentMoney
     balance -= total_cost;
     quantity += amount;
-    money_spent += total_cost;
+    spentMoney += total_cost;
     return total_cost;
 }
 
@@ -29,25 +29,23 @@ float Stock::sell(float & balance, unsigned int amount, float trading_fees_perce
     float total_revenue = price * amount * (1 - trading_fees_percent);
     balance += total_revenue;
     quantity -= amount;
-    // money_spent -= total_revenue;
+    // spentMoney -= total_revenue;
     return total_revenue;
 }
 
-std::string Stock::category_name(void) {
-    return category_list[category];
-}
+std::string Stock::getCategoryName(void) { return CategoryList[category]; }
 
-unsigned int Stock::num_stocks_affordable(float balance, float trading_fees_percent) {
+unsigned int Stock::getAffordableQuantity(float balance, float trading_fees_percent) {
     float value = balance / (price * (1 + trading_fees_percent));
     return value < 0 ? 0 : (unsigned int)value;
 }
 
-void Stock::update_history(void) {
+void Stock::updatePriceHistory(void) {
     /** We use vector now! */
     history.push_back(price);
 }
 
-std::vector<float> Stock::return_most_recent_history(unsigned int rounds) {
+std::vector<float> Stock::returnMostRecentHistory(unsigned int rounds) {
     std::vector<float> recent_history;
     if (rounds >= history.size()) {
         return history;
@@ -58,7 +56,7 @@ std::vector<float> Stock::return_most_recent_history(unsigned int rounds) {
     return recent_history;
 }
 
-float Stock::delta_price(void) {
+float Stock::deltaPrice(void) {
     // Stock prices are stored in the history array
     if (history.size() < 2) {
         // If there are less than two prices in the history array, return 0
@@ -68,7 +66,7 @@ float Stock::delta_price(void) {
     return history[history.size() - 1] - history[history.size() - 2];
 }
 
-float Stock::delta_price_percentage(void) {
+float Stock::deltaPercentagePrice(void) {
     if (history.size() < 2 || history[history.size() - 1] < 0 || history[history.size() - 2] < 0) {
         /** If there are less than two prices in the history array, return 0
          * If the last two prices are negative, return 0, as it is not possible to
@@ -76,11 +74,11 @@ float Stock::delta_price_percentage(void) {
          */
         return 0;
     }
-    return delta_price() / history[history.size() - 2];
+    return deltaPrice() / history[history.size() - 2];
 }
 
-void Stock::add_event(Stock_event event) {
-    if (!can_add_event(event)) {
+void Stock::addEvent(Stock_event event) {
+    if (!canAddEvent(event)) {
         // If the event is mutually exclusive with ongoing events,
         // ignore it and do nothing.
         return;
@@ -99,7 +97,7 @@ void Stock::add_event(Stock_event event) {
     events.push_back(event);
 }
 
-bool Stock::can_add_event(Stock_event event) {
+bool Stock::canAddEvent(Stock_event event) {
     std::list<Stock_event>::iterator event_itr = events.begin();
     while (event_itr != events.end()) {
         if (event_itr->mutually_exclusive_events.size() > 0) {
@@ -114,7 +112,7 @@ bool Stock::can_add_event(Stock_event event) {
     return true;
 }
 
-void Stock::remove_obselete_event(void) {
+void Stock::removeObseleteEvent(void) {
     std::list<Stock_event>::iterator event_itr = events.begin();
     while (event_itr != events.end()) {
         if (event_itr->duration <= 0) {
@@ -126,7 +124,7 @@ void Stock::remove_obselete_event(void) {
     }
 }
 
-float Stock::sum_attribute(stock_modifiers attribute) {
+float Stock::sumEventModifiersAttribute(stock_modifiers attribute) {
     float sum = 0;
     std::list<Stock_event>::iterator event_itr = events.begin();
     while (event_itr != events.end()) {
@@ -137,30 +135,30 @@ float Stock::sum_attribute(stock_modifiers attribute) {
 }
 
 Stock::Stock(void) {
-    category = random_integer(category_list_size);
-    name = generate_name(category, 1)[0];
+    category = py_random::randint(sizeofCategoryList);
+    name = generateName(category, 1)[0];
     /** The distribution of initial stock price will be consistent across same categories
-     * Note that the value '3' is because currently init_stock_price has 3 possible input values.
+     * Note that the value '3' is because currently initStockPrice has 3 possible input values.
      */
-    price = init_stock_price(category % 3 + 1);
+    price = initStockPrice(category % 3 + 1);
     quantity = 0;
-    money_spent = 0;
-    attributes[standard_deviation] = init_sd();
+    spentMoney = 0;
+    attributes[standard_deviation] = initStandardDeviation();
     attributes[mean] = 0;
     attributes[lower_limit] = -40;
     attributes[upper_limit] = 40;
-    update_history();
+    updatePriceHistory();
 }
 
-void Stock::next_round(void) {
+void Stock::gotoNextRound(void) {
     // Update the price of the stock.
-    price += price * percentage_change_price(*this) / 100;
+    price += price * percentageChangePrice(*this) / 100;
     // Reduce all events duration by one.
     std::list<Stock_event>::iterator event_itr = events.begin();
     while (event_itr != events.end()) {
         event_itr->duration--;
         event_itr++;
     }
-    remove_obselete_event();
-    update_history();
+    removeObseleteEvent();
+    updatePriceHistory();
 }

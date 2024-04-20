@@ -23,18 +23,18 @@
  * float balance = 1000;
  * stock.purchase(balance, 1, 0.01);    // Purchase a stock.
  * stock.sell(balance, 1, 0.01);        // Sell a stock.
- * std::string name = stock.get_name(); // What is the name of the stock?
+ * std::string name = stock.getName(); // What is the name of the stock?
  * // Get the upper limit of the percentage change of the stock price:
- * float upper_limit = stock.get_attribute(upper_limit) + stock.sum_attribute(upper_limit);
+ * float upper_limit = stock.getStockAttribute(upper_limit) + stock.sumEventModifiersAttribute(upper_limit);
  * @endcode
  */
 class Stock {
     public:
-        /** Constructor of the Stock object. */
+        /** @brief Constructor of the Stock object. */
         Stock(void);
 
         /**
-         * Purchase a given number of stocks.
+         * @brief Purchase a given number of stocks.
          * @param balance The balance ($) of the player. Pass-by-reference.
          * @param amount The number of stocks to purchase.
          * @param trading_fees_percent The trading fees percentage we charge the player.
@@ -44,7 +44,7 @@ class Stock {
         float purchase(float & balance, unsigned int amount, float trading_fees_percent);
 
         /**
-         * Sell a given number of stocks.
+         * @brief Sell a given number of stocks.
          * @param balance The balance ($) of the player. Pass-by-reference.
          * @param amount The number of stocks to sell.
          * @param trading_fees_percent The trading fees percentage we charge the player.
@@ -58,142 +58,116 @@ class Stock {
          * @param trading_fees_percent The trading fees percentage we charge the player.
          * @return Number of stocks that the player can afford with the balance.
          */
-        unsigned int num_stocks_affordable(float balance, float trading_fees_percent);
+        unsigned int getAffordableQuantity(float balance, float trading_fees_percent);
 
         /**
-         * Return the name of the category the stock belongs to.
+         * @brief Return the name of the category the stock belongs to.
          * @return Name of the category as a string.
          */
-        std::string category_name(void);
+        std::string getCategoryName(void);
 
         /**
-         * Return the change of stock price using the most recent price and the current price
+         * @brief Return the change of stock price using the most recent price and the current price
          * @return change in stock price.
          */
-        float delta_price(void);
+        float deltaPrice(void);
 
-        /** Return the percentage of change of stock price.
+        /** @brief Return the percentage of change of stock price.
          * @return Percentage of change in stock price. E.g. 0.05 means 5% increase in price.
          */
-        float delta_price_percentage(void);
+        float deltaPercentagePrice(void);
 
         /**
-         * Get the total change of attribute of the stock due to events only. Getter function. \n
-         * Example usage:
-         * ```
-         * stock.get_attribute(stock_modifiers::standard_deviation);
-         * ```
-         * @param attribute The attribute to get.
+         * @brief Get the total change of attribute of the stock due to events only. Getter function. \n
+         * Example usage: @code {.cpp}
+         * std::cout << stock.getStockAttribute(stock_modifiers::standard_deviation);
+         * @endcode {.cpp}
+         * @param attribute The attribute to get. @ref stock_modifiers
          * @return Total change of attribute due to Stock_event. Does not include the base value.
          */
-        float sum_attribute(stock_modifiers attribute);
+        float sumEventModifiersAttribute(stock_modifiers attribute);
 
         /**
-         * Call this when the game proceed to next round.
-         * @todo Finish the implementation of this function.
-         *       This function should update the stock price based on the standard deviation and skewness
-         *       by calling functions in random_price.h file that Jeremy will provide.
-         *       It should remove the obselete events from the linked list
-         *       and update the history array with the current price too.
+         * @brief Call this when the game proceed to next round.
          */
-        void next_round(void);
+        void gotoNextRound(void);
 
-        /** Add an event to the stock.
+        /** @brief Add an event to the stock.
          * @param event The event to be added. See events.h for more information about the
          * class Stock_Event.
          */
-        void add_event(Stock_event event);
+        void addEvent(Stock_event event);
 
         /**
-         * Get the stock price of recent rounds.
+         * @brief Get the stock price of recent rounds.
          * @param rounds The number of rounds to look back. 5 means the last 5 rounds.
          * @return A vector of stock prices.
          *         If the number of rounds is greater than the history size, return the whole history.
          *         Otherwise, return the most recent rounds.
          *         If the history is empty, return an empty vector.
          */
-        std::vector<float> return_most_recent_history(unsigned int rounds);
+        std::vector<float> returnMostRecentHistory(unsigned int rounds);
 
         /**
-         * Get the name of the stock. Getter function.
+         * @brief Get the name of the stock. Getter function.
          * @return Name of the stock as float.
          */
-        std::string get_name(void) {
-            return name;
-        }
+        std::string getName(void) { return name; }
 
         /**
-         * Get the price of the stock. Getter function.
+         * @brief Get the price of the stock. Getter function.
          * @return Price of the stock as float.
          */
-        float get_price(void) {
-            return price;
-        }
+        float getPrice(void) { return price; }
 
         /**
-         * Get the category of the stock. Getter function.
+         * @brief Get the category of the stock. Getter function.
          * @return Category of the stock as unsigned int.
          */
-        unsigned int get_category(void) {
-            return category;
-        }
+        unsigned int getCategory(void) { return category; }
 
         /**
-         * Get the quantity of the stock. Getter function.
+         * @brief Get the quantity of the stock. Getter function.
          * @return Quantity of the stock as float.
          */
-        unsigned int get_quantity(void) {
-            return quantity;
-        }
+        unsigned int getQuantity(void) { return quantity; }
 
         /**
-         * Get the money spent on the stock. Getter function.
+         * @brief Get the money spent on the stock. Getter function.
          * @return Money spent on the stock as float.
          */
-        float get_money_spent(void) {
-            return money_spent;
-        }
+        float getMoneySpent(void) { return spentMoney; }
 
         /**
-         * Get the initial price of the stock. Getter function.
+         * @brief Get the initial price of the stock. Getter function.
          * @return Initial price of the stock as float.
          */
-        float get_initial_price(void) {
-            return history[0];
-        }
+        float getInitPrice(void) { return history[0]; }
 
         /**
-         * Get the base value of stock_attributes of the stock. Getter function.
+         * @brief Get the base value of stock_attributes of the stock. Getter function.
          * @param attribute The attribute to get. E.g. standard_deviation, mean, lower_limit, upper_limit
          * @return Base value of stock_attributes as float.
          */
-        float get_attribute(stock_modifiers attribute) {
-            return attributes[attribute];
-        }
+        float getStockAttribute(stock_modifiers attribute) { return attributes[attribute]; }
 
         /**
-         * Get size of the history.
+         * @brief Get size of the history.
          * @return Size of the history as unsigned int.
          */
-        unsigned int get_history_size(void) {
-            return history.size();
-        }
+        unsigned int getSizeOfHistory(void) { return history.size(); }
 
         /**
-         * Change the mean of the stock by delta_mean. Setter function.
+         * @brief Change the mean of the stock by delta_mean. Setter function.
          * @param delta_mean The change in mean.
          */
-        void change_mean(float delta_mean) {
-            attributes[mean] += delta_mean;
-        }
+        void changeMean(float delta_mean) { attributes[mean] += delta_mean; }
 
         /**
-         * Return all the events that will apply to this stock specifically. Getter function.
+         * @brief Return all the events that will apply to this stock specifically. Getter function.
          * @return A list of Stock_event.
          */
-        std::list<Stock_event> get_events(void) {
-            return events;
-        }
+        std::list<Stock_event> getAllEvents(void) { return events; }
 
         /**
          * @brief Check if we can add the event to the stock.
@@ -202,37 +176,37 @@ class Stock {
          * @param event The event to be added.
          * @return True if the event can be added. False otherwise.
          */
-        bool can_add_event(Stock_event event);
+        bool canAddEvent(Stock_event event);
 
     private:
-        /** Name of the stock that we assigned to it. */
+        /** @brief Name of the stock that we assigned to it. */
         std::string name;
-        /** Current price of the stock. */
+        /** @brief Current price of the stock. */
         float price;
-        /** Number of stocks the player has purchased. */
+        /** @brief Number of stocks the player has purchased. */
         unsigned int quantity;
-        /** Use numbers to represent the category of the stock. The range of the numbers
-         * should be `[0, category_list_size - 1]`. See names.cpp for more information.
+        /** @brief Use numbers to represent the category of the stock. The range of the numbers
+         * should be `[0, sizeofCategoryList - 1]`. See names.cpp for more information.
          */
         unsigned int category;
-        /** Amount of money the player has spent on buying this stock. */
-        float money_spent;
+        /** @brief Amount of money the player has spent on buying this stock. */
+        float spentMoney;
 
-        /** Stores all the events that will apply to this stock specifically. */
+        /** @brief Stores all the events that will apply to this stock specifically. */
         std::list<Stock_event> events;
-        /** Stores the initial value of the stock_modifiers (e.g. standard deviation, mean and limits). */
+        /** @brief Stores the initial value of the stock_modifiers (e.g. standard deviation, mean and limits). */
         std::map<stock_modifiers, float> attributes;
-        /** Contains the stock price history. First element (index 0) is the oldest. */
+        /** @brief Contains the stock price history. First element (index 0) is the oldest. */
         std::vector<float> history;
 
         /** Update the history array with the current price */
-        void update_history(void);
+        void updatePriceHistory(void);
 
-        /** Remove obselete events from the list `events` that durations are
+        /** @brief Remove obselete events from the list `events` that durations are
          * less than/equal to 0 (In other words, expired).
-         * For internal use after the `Stock::next_round` function is called.
+         * @note For internal use after the `Stock::gotoNextRound` function is called.
          */
-        void remove_obselete_event(void);
+        void removeObseleteEvent(void);
 };
 
 #endif
