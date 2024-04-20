@@ -1,37 +1,35 @@
 /** @file events.cpp
- * stores the event texts and modifiers
+ * @brief Stores the event texts and modifiers.
  */
 #include "events.h"
 #include <iostream>
 #include <algorithm>
 
-/** Stock categories include:
- * "Adv&Market", "Aero&Def", "Airlines", "RenewEnergy", "Auto", "Banks", "Biotech",
- * "Broadcast", "Casinos&Gaming", "E-Commerce", "FinServices",
- * "Food&Beverage", "Healthcare", "Tech", "RealEstate", "Retail", "Telecom"
+/** @brief The list of all events that can be applied to the stocks.
+ * @ref category_list
+ * @details
+ * | Event ID Range | Affected Category |
+ * | -------------- | ----------------- |
+ * | 0 to 7         | All Stocks        |
+ * | 8 to 11        | Adv&Market        |
+ * | 12 to 16       | Aero&Def          |
+ * | 17 to 22       | Airlines          |
+ * | 23 to 27       | RenewEnergy       |
+ * | 28 to 31       | Auto              |
+ * | 32 to 34       | Banks             |
+ * | 35 to 37       | Biotech           |
+ * | 38 to 40       | Broadcast         |
+ * | 41 to 46       | Casinos&Gaming    |
+ * | 47 to 51       | E-Commerce        |
+ * | 52 to 55       | FinServices       |
+ * | 56 to 61       | Food&Beverage     |
+ * | 62 to 66       | Healthcare        |
+ * | 67 to 74       | Tech              |
+ * | 75 to 79       | RealEstate        |
+ * | 80 to 85       | Retail            |
+ * | 86 to 91       | Telecom           |
+ * | 92 to 98       | pick_random_stock |
  */
-
-/** The list of all events that can be applied to the stocks */
-// event_id 0 to 7 affect all stocks
-// event_id 8 to 11 affect category "Adv&Market"
-// event_id 12 to 16 affect category "Aero&Def"
-// event_id 17 to 22 affect category "Airlines"
-// event_id 23 to 27 affect category "RenewEnergy"
-// event_id 28 to 31 affect category "Auto"
-// event_id 32 to 34 affect category "Banks"
-// event_id 35 to 37 affect category "Biotech"
-// event_id 38 to 40 affect category "Broadcast"
-// event_id 41 to 46 affect category "Casinos&Gaming"
-// event_id 47 to 51 affect category "E-Commerce"
-// event_id 52 to 55 affect category "FinServices"
-// event_id 56 to 61 affect category "Food&Beverage"
-// event_id 62 to 66 affect category "Healthcare"
-// event_id 67 to 74 affect category "Tech"
-// event_id 75 to 79 affect category "RealEstate"
-// event_id 80 to 85 affect category "Retail"
-// event_id 86 to 91 affect category "Telecom"
-// event_id 92 to 98 affect pick_random_stock
-
 std::vector<Stock_event> all_stock_events = {
     // event_id 0 to 7 affect all stocks
     {/** event_id */ 0,
@@ -890,7 +888,7 @@ std::map<unsigned int, std::vector<unsigned int>> check_mutual_exclusivity(std::
             }
         }
     }
-    return mut_excl_map; // Add the missing return statement
+    return mut_excl_map;
 }
 
 std::vector<Stock_event> pick_events(std::vector<Stock_event> all_events, unsigned int num_events) {
@@ -902,6 +900,13 @@ std::vector<Stock_event> pick_events(std::vector<Stock_event> all_events, unsign
         for (Stock_event event : all_events) {
             total_permille += event.probability_permille;
         }
+        /** E.g. if there are 3 events with probability_permille 10, 20, 30.
+         * total_permille = 60;
+         * random_permille = 0 to 59;
+         * If random_permille is 0 to 9, pick the first event;
+         * If random_permille is 10 to 29, pick the second event;
+         * If random_permille is 30 to 59, pick the third event.
+         */
         unsigned int random_permille = rand() % total_permille;
         for (Stock_event event : all_events) {
             total_permille -= event.probability_permille;

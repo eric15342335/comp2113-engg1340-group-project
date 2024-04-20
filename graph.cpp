@@ -95,6 +95,7 @@ void graph_plotting(string stockname, int width, int height) {
         graph[i][0] = maxstring[i];
         graph[i][height - 1] = minstring[i];
     }
+    // \DeclareUnicodeCharacter{2517}{\L}
     graph[8][height - 1] = "┗";
 
     for (unsigned int i = 0; i < stockpricehistory.size() - 1; i++) {

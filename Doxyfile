@@ -5,9 +5,9 @@ EXTRACT_ALL            = YES
 EXTRACT_PRIVATE        = YES
 QUIET                  = YES
 USE_MDFILE_AS_MAINPAGE = README.md
-# SOURCE_BROWSER       = YES
-VERBATIM_HEADERS = NO
-# INLINE_SOURCES       = YES
+# SOURCE_BROWSER         = YES
+VERBATIM_HEADERS       = YES
+# INLINE_SOURCES         = YES
 REFERENCED_BY_RELATION = YES
 REFERENCES_RELATION    = YES
 GENERATE_TREEVIEW      = YES
@@ -18,6 +18,3 @@ CALLER_GRAPH           = YES
 INTERACTIVE_SVG        = YES
 HTML_COLORSTYLE        = TOGGLE
 HAVE_DOT = YES
-
-# Graphviz settings for windows-latest actions only
-# DOT_PATH = C:\ProgramData\chocolatey\bin
