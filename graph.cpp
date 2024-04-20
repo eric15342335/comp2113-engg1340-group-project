@@ -60,7 +60,7 @@ vector<float> graphinput(string stockname, unsigned int width) {
         stockpricehistory.push_back(x);
     }
     if (stockpricehistory.size() > (width - 9)) { // limit graph size to width
-        stockpricehistory.erase(stockpricehistory.begin(), stockpricehistory.end() - 71);
+        stockpricehistory.erase(stockpricehistory.begin(), stockpricehistory.end() - (width - 9));
     }
     stockpricehistory.shrink_to_fit();
     return stockpricehistory;
