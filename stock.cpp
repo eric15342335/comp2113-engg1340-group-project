@@ -154,8 +154,9 @@ void Stock::next_round(void) {
      * If the price is less than 1000, the price will increase or decrease by a random percentage.
      * If the price is more than 1000, the price will be halved and the quantity will be doubled.
      */
-    if (!(price * (1 + percentage_change_price(*this) / 100) > 999.9)) {
-        price += price * percentage_change_price(*this) / 100;
+    float price_diff = percentage_change_price(*this) / 100;
+    if (!(price * (1 + price_diff) > 999.9)) {
+        +price *= (1 + price_diff);
     }
     else {
         price /= 2;
