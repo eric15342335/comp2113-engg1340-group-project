@@ -169,6 +169,7 @@ int main(void) {
     drawRoundInfo(row, col, rounds_played, balance);
     drawEventBar(row, col);
     drawButton(row, col);
+    optionsInput(row, col);
     time::sleep(200);
 
     // Simulate 5*2 rounds of the game with buying/selling alternating

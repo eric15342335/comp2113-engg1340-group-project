@@ -3,6 +3,7 @@
 #include <vector>
 #include "draw.h"
 #include "format.h"
+#include "input_events.h"
 
 void drawLogo(int row, int col) {
     const int wordWidth = 73; // Width of the longest word
@@ -116,4 +117,17 @@ void drawButton(int row, int col) {
     }
     */
     std::cout << textReset << "\n";
+}
+
+void quitConfirmation (int row, int col) {
+    col++; // Shutup compiler
+    char input;
+    std::cout << setCursorPosition(row, 0) << "\x1b[2K";
+    std::cout << "Are you sure? [Y/N]: ";
+    std::cin >> input;
+    if (input == 'Y' || input == 'y') {
+        std::exit(0);
+    } else {
+        optionsInput(row, col);
+    }
 }
