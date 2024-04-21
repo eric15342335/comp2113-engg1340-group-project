@@ -1,5 +1,4 @@
 #include <iostream>
-#include <sys/stat.h>
 #include <fstream>
 #include <filesystem>
 #include "file_io.h"
@@ -21,11 +20,11 @@ void createplayer(string &playername){
     std::__fs::filesystem::create_directory(foldername);
 }
 
-void savestatus(int rounds_played,vector<Stock> stocks_list, float balance, string playername){
+void savestatus(unsigned int rounds_played,vector<Stock> stocks_list, float balance, string playername){
     string stocksave;
     ofstream fout;
     stocksave = "saves/" + playername + "/playerstatus.save";
-    fout.open(stocksave);
+    fout.open(stocksave.c_str());
     fout << playername << " " << rounds_played << " " << balance << endl;
     fout.close();
     for (unsigned long i = 0; i < stocks_list.size();i++){
@@ -33,15 +32,43 @@ void savestatus(int rounds_played,vector<Stock> stocks_list, float balance, stri
     }
 }
 
-void loadstatus(int rounds_played,vector<Stock> stocks_list, float balance, string playername){
-    string stocksave,stockname;
+void loadstatus(unsigned int &rounds_played,vector<Stock> &stocks_list, float &balance, string &playername){
+    string stockload,stockname,inputname;
     ifstream fin;
-    stocksave = "saves/" + playername + "/playerstatus.save";
-    fin.open(stocksave);
+    vector<string> players;
+    players = get_saves();
+    cout << "Enter player name from the following:" << endl;
+
+    printvector(players);
+    cin >> inputname;
+    while (std::find(players.begin(), players.end(), inputname) == players.end()){
+        cout << "Player name does not exist, please enter a new name from the following:" << endl;
+        printvector(players);
+        cin >> inputname;
+    }
+
+    stockload = "saves/" + inputname + "/playerstatus.save";
+    playername = inputname;
+    fin.open(stockload.c_str());
     fin >> playername >> rounds_played >> balance;
     fin.close();
     
     for (unsigned long i = 0; i < 20;i++){ //hard code 20 stocks
-        stocks_list[i].load(playername,i);
+        stocks_list[i].load(inputname,i);
     }
+}
+
+vector<string> get_saves(){
+    vector<string> saves;
+    for (const auto & entry : std::__fs::filesystem::directory_iterator("saves")){
+        saves.push_back(entry.path().string().substr(6));
+    }
+    return saves;
+}
+
+void printvector(vector<string> avector){
+    for (unsigned long i = 0; i < avector.size();i++){
+        cout << avector[i] << ", ";
+    }
+    cout << endl;
 }

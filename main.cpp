@@ -171,8 +171,8 @@ int main(void) {
             stocks_list.push_back(stock); // Add the stock to the vector
         }
     }
-    else{
-        loadstatus(rounds_played,stocks_list,balance,playername);
+    if (loadsave == "1"){
+        loadstatus(rounds_played, stocks_list, balance, playername);
     }
 
     drawLogo(row, col);

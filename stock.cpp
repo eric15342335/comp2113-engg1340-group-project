@@ -3,7 +3,7 @@
  * @author eric15342335
  * @brief Implementation of the Stock class.
  */
-
+#include <iostream>
 #include <fstream>
 #include "stock.h"
 #include "names.h"
@@ -29,7 +29,7 @@ void Stock::save(std::string playername,int i){
     std::string filesave;
     std::ofstream fout;
     filesave = "saves/" + playername + "/" + std::to_string(i) + ".save";
-    fout.open(filesave);
+    fout.open(filesave.c_str());
     fout << category << std::endl;
     fout << name << std::endl;
     for (unsigned int i = 0; i < history.size(); i++) {
@@ -50,8 +50,13 @@ void Stock::load(std::string playername,int i){
     float stockloadprice;
     std::ifstream fin;
     fileload = "saves/" + playername + "/" + std::to_string(i) + ".save";
-    fin.open(fileload);
-    fin >> category;
+    std::cout << fileload << std::endl;
+    fin.open(fileload.c_str());
+
+    fin >> category;  //problems here
+
+
+
     fin >> name;
     fin >> stockloadprice;
     while (stockloadprice != -1){
@@ -68,7 +73,7 @@ void Stock::load(std::string playername,int i){
 }
 
 
-float Stock::purchase(float & balance, unsigned int amount, float trading_fees_percent) {
+float Stock::purchase(float & balance, int amount, float trading_fees_percent) {
     float total_cost = price * amount * (1 + trading_fees_percent);
     // Check if the player has enough balance to buy the stock
     if (total_cost > balance && price <= 0) {
@@ -81,7 +86,7 @@ float Stock::purchase(float & balance, unsigned int amount, float trading_fees_p
     return total_cost;
 }
 
-float Stock::sell(float & balance, unsigned int amount, float trading_fees_percent) {
+float Stock::sell(float & balance, int amount, float trading_fees_percent) {
     // Check if the player has enough stocks to sell
     if (quantity < amount && price <= 0) {
         return -1;

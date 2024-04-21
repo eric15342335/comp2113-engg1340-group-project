@@ -44,7 +44,7 @@ class Stock {
          * @return Successful: Total cost of the purchase.
          *         Failed: -1 if the player does not have enough balance to buy the stock.
          */
-        float purchase(float & balance, unsigned int amount, float trading_fees_percent);
+        float purchase(float & balance, int amount, float trading_fees_percent);
 
         /**
          * Sell a given number of stocks.
@@ -54,7 +54,7 @@ class Stock {
          * @return Successful: Amount of money the player receive.
          *         Failed: -1 if the player does not have enough stocks to sell.
          */
-        float sell(float & balance, unsigned int amount, float trading_fees_percent);
+        float sell(float & balance, int amount, float trading_fees_percent);
 
         /**
          * @param balance The balance of the player.
@@ -213,11 +213,11 @@ class Stock {
         /** Current price of the stock. */
         float price;
         /** Number of stocks the player has purchased. */
-        unsigned int quantity;
+        int quantity;
         /** Use numbers to represent the category of the stock. The range of the numbers
          * should be `[0, category_list_size - 1]`. See names.cpp for more information.
          */
-        unsigned int category;
+        int category;
         /** Amount of money the player has spent on buying this stock. */
         float money_spent;
 

@@ -6,6 +6,8 @@
 //https://stackoverflow.com/questions/12573816/linker-command-failed-with-exit-code-1-use-v-to-see-invocation
 
 void createplayer(std::string &playername);
-void savestatus(int rounds_played,std::vector<Stock> stocks_list, float balance,std::string playername);
-void loadstatus(int rounds_played,std::vector<Stock> stocks_list, float balance,std::string playername);
+void savestatus(unsigned int rounds_played,std::vector<Stock> stocks_list, float balance,std::string playername);
+void loadstatus(unsigned int &rounds_played,std::vector<Stock> &stocks_list, float &balance,std::string &playername);
+std::vector<std::string> get_saves();
+void printvector(std::vector<std::string> avector);
 #endif
