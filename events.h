@@ -9,6 +9,9 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <sstream>
+#include <istream>
+
 
 /**
  * @enum stock_modifiers
@@ -97,6 +100,56 @@ struct Stock_event {
              * But the event_id is the same.
              */
             return event_id == other.event_id && text == other.text;
+        }
+
+        /**
+         * Serialize the event as std::ostream object.
+         * @param outputstream The std::ostream object to write the data.
+         * @param event The event object to get the data from.
+         * @return A std:ostream object contains all the data of the event.
+         * @code
+         * Stock_event event;                     // Create a event object by calling the constructor
+         * std::cout << event << std::endl; // Print the data of the event.
+         * @endcode
+         */
+        friend std::ostream & operator<<(std::ostream & outputstream, Stock_event & event) {
+            // @todo Implement this function
+            outputstream << event.event_id << " ";
+            for (unsigned int i = 0; i < event.mutually_exclusive_events.size(); i++) {
+                outputstream << event.mutually_exclusive_events[i] << " ";
+            }
+            outputstream << ";" << event.text << ";" << event.duration << " "
+                        << event.probability_permille << " " << event.type_of_event << " "
+                        << event.category << " ";
+            for (auto &modifier : event.modifiers) {
+                outputstream << modifier.second << " ";
+            }
+            return outputstream;
+        }
+
+        /**
+         * Deserialize the event from a std::istream object.
+         * @param inputstream The std::istream object to read the data.
+         * @param event The event object to store the data.
+         * @return A std:istream object contains all the data of the event.
+         */
+        friend std::istream & operator>>(std::istream & inputstream, Stock_event & event) {
+            // fix the bug that mutually_exclusive_events is not read correctly
+            inputstream >> event.event_id;
+            std::string mutually_exclusive_events;
+            std::getline(inputstream, mutually_exclusive_events, ';');
+            std::istringstream mutually_exclusive_events_stream(mutually_exclusive_events);
+            unsigned int event_id;
+            while (mutually_exclusive_events_stream >> event_id) {
+                event.mutually_exclusive_events.push_back(event_id);
+            }
+            std::getline(inputstream, event.text, ';');
+            unsigned int temp_type;
+            inputstream >> event.duration >> event.probability_permille >> temp_type >> event.category;
+            event.type_of_event = static_cast<event_type>(temp_type);
+            inputstream >> event.modifiers[standard_deviation] >> event.modifiers[mean]
+                        >> event.modifiers[lower_limit] >> event.modifiers[upper_limit];
+            return inputstream;
         }
 };
 
