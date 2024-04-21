@@ -33,6 +33,11 @@ float percentage_change_price(Stock & stock) {
     std::random_device rd;
     std::mt19937 gen(rd());
     if (current_price < init_price / 10) {
+        // Jeremy will fix the issue of current_price being too low e.g. 0
+        // This action will have negligible effect on the stock price
+        // I recommend to change the mean of the stock price
+        // and add a new event "stock price rescue operation" via the add_event function
+        // to push up the mean temporarily.
         stock.change_mean(current_price * 0.3);
     }
     float temp = 100 * abs(init_price - current_price) / init_price;
@@ -62,5 +67,9 @@ float percentage_change_price(Stock & stock) {
 }
 
 unsigned int random_integer(unsigned int max_integer) {
-    return rand() % max_integer;
+    // uniform distribution
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<unsigned int> distribution(0, max_integer - 1);
+    return distribution(gen);
 }
