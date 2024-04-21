@@ -117,11 +117,11 @@ std::vector<Stock_event> pick_events(std::vector<Stock_event> all_events, unsign
  * @param all_events The list of all events
  * @return A map of event_id to a vector of mutually exclusive event_ids that does not exist but should.
  */
-std::map<unsigned int, std::vector<unsigned int> > check_mutual_exclusivity(std::vector<Stock_event> all_events);
+std::map<unsigned int, std::vector<unsigned int>> check_mutual_exclusivity(std::vector<Stock_event> all_events);
 
 /** Print a map to std::cout.
  * @param map The std::map object you want to print.
  */
-void print_map(std::map<unsigned int, std::vector<unsigned int> > map);
+void print_map(std::map<unsigned int, std::vector<unsigned int>> map);
 
 #endif

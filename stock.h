@@ -30,11 +30,9 @@
  */
 class Stock {
     public:
-
-        void save(std::string playername,int i);
-        void load(std::string playername,int i);
+        void save(std::string playername, int i);
+        void load(std::string playername, int i);
         void random();
-
 
         /**
          * Purchase a given number of stocks.

@@ -9,7 +9,7 @@
 #include "names.h"
 #include "random_price.h"
 
-void Stock::random(){
+void Stock::random() {
     category = random_integer(category_list_size);
     name = generate_name(category, 1)[0];
     /** The distribution of initial stock price will be consistent across same categories
@@ -24,7 +24,7 @@ void Stock::random(){
     update_history();
 }
 
-void Stock::save(std::string playername,int i){
+void Stock::save(std::string playername, int i) {
     std::string filesave;
     std::ofstream fout;
     filesave = "saves/" + playername + "/" + std::to_string(i) + ".save";
@@ -43,7 +43,7 @@ void Stock::save(std::string playername,int i){
     fout.close();
 }
 
-void Stock::load(std::string playername,int i){
+void Stock::load(std::string playername, int i) {
     std::string fileload;
     float stockloadprice;
     std::ifstream fin;
@@ -65,7 +65,7 @@ void Stock::load(std::string playername,int i){
     // the second line is entirely the stock name
     std::getline(fin >> std::ws, name);
     fin >> stockloadprice;
-    while (stockloadprice != -1){
+    while (stockloadprice != -1) {
         history.push_back(stockloadprice);
         fin >> stockloadprice;
     }
@@ -76,7 +76,6 @@ void Stock::load(std::string playername,int i){
     fin >> attributes[upper_limit];
     fin.close();
 }
-
 
 float Stock::purchase(float & balance, unsigned int amount, float trading_fees_percent) {
     float total_cost = price * amount * (1 + trading_fees_percent);

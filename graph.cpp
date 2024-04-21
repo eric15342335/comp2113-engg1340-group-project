@@ -50,14 +50,14 @@ void printvector(vector<vector<string>> vectorname, vector<string> color, int wi
 
 // will delete print in the final version
 
-vector<float> graphinput(string player, int stocknum,string &stockname,unsigned int width) {
+vector<float> graphinput(string player, int stocknum, string & stockname, unsigned int width) {
     string filename = "saves/" + player + "/" + to_string(stocknum) + ".save";
     ifstream fin;
     float x;
     vector<float> stockpricehistory;
     fin.open(filename.c_str());
-    fin.ignore(256,'\n');
-    getline(fin,stockname);
+    fin.ignore(256, '\n');
+    getline(fin, stockname);
     fin >> x;
     while (x != -1) {
         stockpricehistory.push_back(x);
@@ -73,7 +73,7 @@ vector<float> graphinput(string player, int stocknum,string &stockname,unsigned 
 void graph_plotting(string player, int stocknum, int width, int height) {
     float max, min;
     string stockname;
-    vector<float> stockpricehistory = graphinput(player,stocknum,stockname, width);
+    vector<float> stockpricehistory = graphinput(player, stocknum, stockname, width);
     // convert the raw log input into the nearest "width" data points
     vector<string> color(width - 9, "white");
     color[width - 10] = "white";
