@@ -7,7 +7,7 @@
 
 # Compiler flags, consider removing `-Werror` before submitting.
 
-FLAGS = -Wall -Wextra -std=c++17 -Werror -pedantic-errors -g -Og
+FLAGS = -Wall -Wextra -std=c++17 -Werror -pedantic-errors -g -O0 -fsanitize=address -fsanitize=undefined
 
 
 # The default target is to compile the program.

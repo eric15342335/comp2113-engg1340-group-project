@@ -1,23 +1,25 @@
 #include <iostream>
 #include <fstream>
 #include <filesystem>
+#include <algorithm>
 #include "file_io.h"
 using namespace std;
- 
+
+
 void createplayer(string &playername){
     ofstream fout;
     string savefolder = "saves";
     string foldername;
-    std::__fs::filesystem::create_directory("saves");
+    filesystem::create_directory("saves");
     cout << "Enter player name:" << endl;
     cin >> playername;
     foldername = "saves/" + playername;
-    while (std::__fs::filesystem::exists(foldername)){
+    while (filesystem::exists(foldername)){
         cout << "Player name already exists, please enter a new name:" << endl;
         cin >> playername;
         foldername = "saves/" + playername;
     }
-    std::__fs::filesystem::create_directory(foldername);
+    filesystem::create_directory(foldername);
 }
 
 void savestatus(unsigned int rounds_played,vector<Stock> stocks_list, float balance, string playername){
@@ -60,7 +62,7 @@ void loadstatus(unsigned int &rounds_played,vector<Stock> &stocks_list, float &b
 
 vector<string> get_saves(){
     vector<string> saves;
-    for (const auto & entry : std::__fs::filesystem::directory_iterator("saves")){
+    for (const auto & entry : std::filesystem::directory_iterator("saves")){
         saves.push_back(entry.path().string().substr(6));
     }
     return saves;

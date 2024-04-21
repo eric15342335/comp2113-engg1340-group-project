@@ -44,7 +44,7 @@ class Stock {
          * @return Successful: Total cost of the purchase.
          *         Failed: -1 if the player does not have enough balance to buy the stock.
          */
-        float purchase(float & balance, int amount, float trading_fees_percent);
+        float purchase(float & balance, unsigned int amount, float trading_fees_percent);
 
         /**
          * @brief Sell a given number of stocks.
@@ -54,7 +54,7 @@ class Stock {
          * @return Successful: Amount of money the player receive.
          *         Failed: -1 if the player does not have enough stocks to sell.
          */
-        float sell(float & balance, int amount, float trading_fees_percent);
+        float sell(float & balance, unsigned int amount, float trading_fees_percent);
 
         /**
          * @param balance The balance of the player.

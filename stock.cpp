@@ -17,7 +17,6 @@ void Stock::random(){
      */
     price = init_stock_price(category % 3 + 1);
     quantity = 0;
-    money_spent = 0;
     attributes[standard_deviation] = init_sd();
     attributes[mean] = 0;
     attributes[lower_limit] = -40;
@@ -37,7 +36,6 @@ void Stock::save(std::string playername,int i){
     }
     fout << -1 << std::endl;
     fout << quantity << std::endl;
-    fout << money_spent << std::endl;
     fout << attributes[standard_deviation] << " ";
     fout << attributes[mean] << " ";
     fout << attributes[lower_limit] << " ";
@@ -64,7 +62,6 @@ void Stock::load(std::string playername,int i){
         fin >> stockloadprice;
     }
     fin >> quantity;
-    fin >> money_spent;
     fin >> attributes[standard_deviation];
     fin >> attributes[mean];
     fin >> attributes[lower_limit];
@@ -73,7 +70,7 @@ void Stock::load(std::string playername,int i){
 }
 
 
-float Stock::purchase(float & balance, int amount, float trading_fees_percent) {
+float Stock::purchase(float & balance, unsigned int amount, float trading_fees_percent) {
     float total_cost = price * amount * (1 + trading_fees_percent);
     // Check if the player has enough balance to buy the stock
     if (total_cost > balance && price <= 0) {
@@ -85,7 +82,7 @@ float Stock::purchase(float & balance, int amount, float trading_fees_percent) {
     return total_cost;
 }
 
-float Stock::sell(float & balance, int amount, float trading_fees_percent) {
+float Stock::sell(float & balance, unsigned int amount, float trading_fees_percent) {
     // Check if the player has enough stocks to sell
     if (quantity < amount && price <= 0) {
         return -1;
