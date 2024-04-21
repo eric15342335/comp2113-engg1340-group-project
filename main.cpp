@@ -198,7 +198,7 @@ int main(void) {
     time::sleep(200);
 
     // Simulate 5*2 rounds of the game with buying/selling alternating
-    for (int i = 0; i < 1000; i++) {
+    for (int i = 0; i < 10; i++) {
         // Simulate player selling stocks
         for (unsigned int i = 0; i < stocks_list.size(); i++) {
             int num_sellable = stocks_list[i].get_quantity();
@@ -225,6 +225,6 @@ int main(void) {
         time::sleep(200);
     }
 
-    graph_plotting("stockA", 20, 20);
+    graph_plotting(playername,0, 100, 20);
     return 0;
 }
