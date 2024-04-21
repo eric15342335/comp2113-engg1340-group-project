@@ -31,9 +31,10 @@
 class Stock {
     public:
         /** Constructor of the Stock object. */
-        Stock(void);
 
-        void save(std::string playername);
+        void save(std::string playername,int i);
+        void load(std::string playername,int i);
+        void random();
 
         /**
          * Purchase a given number of stocks.

@@ -7,4 +7,5 @@
 
 void createplayer(std::string &playername);
 void savestatus(int rounds_played,std::vector<Stock> stocks_list, float balance,std::string playername);
+void loadstatus(int rounds_played,std::vector<Stock> stocks_list, float balance,std::string playername);
 #endif

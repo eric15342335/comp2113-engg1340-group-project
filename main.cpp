@@ -155,7 +155,7 @@ int main(void) {
     int row; // Number of characters to fit in a column
     int col; // Number of characters to fit in a row
     fetchConsoleDimensions(row, col);
-    
+    std::vector<Stock> stocks_list; 
     std::string playername,loadsave;
     std::cout << "Enter 0 for new save or enter 1 for loading old save: ";
     std::cin >> loadsave;
@@ -165,15 +165,14 @@ int main(void) {
     }
     if (loadsave == "0"){
         createplayer(playername);
+        for (int i = 0; i < initial_stock_count; i++) {
+            Stock stock;
+            stock.random();
+            stocks_list.push_back(stock); // Add the stock to the vector
+        }
     }
     else{
-
-    }
-
-    std::vector<Stock> stocks_list; // Create a vector of stocks
-    for (int i = 0; i < initial_stock_count; i++) {
-        Stock stock;
-        stocks_list.push_back(stock); // Add the stock to the vector
+        loadstatus(rounds_played,stocks_list,balance,playername);
     }
 
     drawLogo(row, col);

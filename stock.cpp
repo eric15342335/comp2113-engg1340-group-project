@@ -9,26 +9,62 @@
 #include "names.h"
 #include "random_price.h"
 
-void Stock::save(std::string playername){
+void Stock::random(){
+    category = random_integer(category_list_size);
+    name = generate_name(category, 1)[0];
+    /** The distribution of initial stock price will be consistent across same categories
+     * Note that the value '3' is because currently init_stock_price has 3 possible input values.
+     */
+    price = init_stock_price(category % 3 + 1);
+    quantity = 0;
+    money_spent = 0;
+    attributes[standard_deviation] = init_sd();
+    attributes[mean] = 0;
+    attributes[lower_limit] = -40;
+    attributes[upper_limit] = 40;
+    update_history();
+}
+
+void Stock::save(std::string playername,int i){
     std::string filesave;
     std::ofstream fout;
-    filesave = "saves/" + playername + "/" + name + ".save";
+    filesave = "saves/" + playername + "/" + std::to_string(i) + ".save";
     fout.open(filesave);
     fout << category << std::endl;
     fout << name << std::endl;
     for (unsigned int i = 0; i < history.size(); i++) {
         fout << history[i] << " ";
     }
-    fout << std::endl;
+    fout << -1 << std::endl;
     fout << quantity << std::endl;
     fout << money_spent << std::endl;
-    fout << attributes[standard_deviation] << ";";
-    fout << attributes[mean] << ";";
-    fout << attributes[lower_limit] << ";";
+    fout << attributes[standard_deviation] << " ";
+    fout << attributes[mean] << " ";
+    fout << attributes[lower_limit] << " ";
     fout << attributes[upper_limit] << std::endl;
-    fout << events.size() << std::endl;
     fout.close();
+}
 
+void Stock::load(std::string playername,int i){
+    std::string fileload;
+    float stockloadprice;
+    std::ifstream fin;
+    fileload = "saves/" + playername + "/" + std::to_string(i) + ".save";
+    fin.open(fileload);
+    fin >> category;
+    fin >> name;
+    fin >> stockloadprice;
+    while (stockloadprice != -1){
+        history.push_back(stockloadprice);
+        fin >> stockloadprice;
+    }
+    fin >> quantity;
+    fin >> money_spent;
+    fin >> attributes[standard_deviation];
+    fin >> attributes[mean];
+    fin >> attributes[lower_limit];
+    fin >> attributes[upper_limit];
+    fin.close();
 }
 
 
@@ -159,22 +195,6 @@ float Stock::sum_attribute(stock_modifiers attribute) {
         event_itr++; // Bug fix: infinite loop
     }
     return sum;
-}
-
-Stock::Stock(void) {
-    category = random_integer(category_list_size);
-    name = generate_name(category, 1)[0];
-    /** The distribution of initial stock price will be consistent across same categories
-     * Note that the value '3' is because currently init_stock_price has 3 possible input values.
-     */
-    price = init_stock_price(category % 3 + 1);
-    quantity = 0;
-    money_spent = 0;
-    attributes[standard_deviation] = init_sd();
-    attributes[mean] = 0;
-    attributes[lower_limit] = -40;
-    attributes[upper_limit] = 40;
-    update_history();
 }
 
 void Stock::next_round(void) {
