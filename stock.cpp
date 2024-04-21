@@ -50,12 +50,20 @@ void Stock::load(std::string playername,int i){
     fileload = "saves/" + playername + "/" + std::to_string(i) + ".save";
     std::cout << fileload << std::endl;
     fin.open(fileload.c_str());
-
-    fin >> category;  //problems here
-
-
-
-    fin >> name;
+    // checks if the file is open successfully
+    if (!fin.is_open()) {
+        std::cerr << "Error: File not found" << std::endl;
+        return;
+    }
+    // checks file good
+    if (!fin.good()) {
+        std::cerr << "Error: File not good" << std::endl;
+        return;
+    }
+    // get the first line, which is category
+    fin >> category;
+    // the second line is entirely the stock name
+    std::getline(fin >> std::ws, name);
     fin >> stockloadprice;
     while (stockloadprice != -1){
         history.push_back(stockloadprice);

@@ -177,6 +177,11 @@ int main(void) {
         }
     }
     if (loadsave == "1"){
+        for (int i = 0; i < initial_stock_count; i++) {
+            Stock stock;
+            stock.random();
+            stocks_list.push_back(stock); // Add the stock to the vector
+        }
         loadstatus(rounds_played, stocks_list, balance, playername);
     }
 
