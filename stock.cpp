@@ -203,8 +203,28 @@ float Stock::sum_attribute(stock_modifiers attribute) {
 }
 
 void Stock::next_round(void) {
-    // Update the price of the stock.
-    price += price * percentage_change_price(*this) / 100;
+    /** Update the price of the stock.
+     * If the price is less than 1000, the price will increase or decrease by a random percentage.
+     * If the price is more than 1000, the price will be halved and the quantity will be doubled.
+     */
+    if (!(price * (1 + percentage_change_price(*this) / 100) > 999.9)) {
+        price += price * percentage_change_price(*this) / 100;
+    }
+    else {
+        price /= 2;
+        quantity *= 2;
+        add_event(Stock_event{// Stock split event
+                              /** event_id */ 65535,
+                              /** mutually_exclusive_events */ {},
+                              /** text */
+                              name + " has rised too high and the company has decide a stock split on it.",
+                              /** duration */ 1,
+                              /** percentage_permille */ 0,
+                              /** type_of_event */ pick_random_stock,
+                              /** category */ category,
+                              /** modifiers*/
+                              {{standard_deviation, 0}, {mean, 0}, {lower_limit, 0}, {upper_limit, 0}}});
+    }
     // Reduce all events duration by one.
     std::list<Stock_event>::iterator event_itr = events.begin();
     while (event_itr != events.end()) {

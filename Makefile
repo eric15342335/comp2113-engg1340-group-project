@@ -6,7 +6,9 @@
 # make fix - formats the code using clang-format and commits the changes to git
 
 # Compiler flags, consider removing `-Werror` before submitting.
-FLAGS = -Wall -Wextra -std=c++11 -Werror -pedantic-errors -g -Og -fsanitize=address
+
+FLAGS = -Wall -Wextra -std=c++17 -Werror -pedantic-errors -g -Og
+
 
 # The default target is to compile the program.
 default: stocksim
