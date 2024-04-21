@@ -7,15 +7,13 @@
 #include <fstream>
 #include "draw.h"
 #include "format.h"
-#include "draw.h"
-#include "format.h"
 #include "graph.h"
 #include "stock.h"
 #include "events.h"
 #include "random_price.h"
-#include "graph.h"
 #include "nonstdlibs/VariadicTable.h"
 #include "file_io.h"
+#include <numeric>
 
 /**
  * 0.01 means 1% trading fees.
@@ -34,33 +32,40 @@ float balance = 1000;
 /** Number of rounds played */
 unsigned int rounds_played = 1;
 
+std::string vectorToString(const std::vector<unsigned int> & vec) {
+    return std::accumulate(vec.begin(), vec.end(), std::string(), [](std::string s, int v) { return s.empty() ? std::to_string(v) : s + " " + std::to_string(v); });
+}
+
 /** Print the table of stocks. We put it in a function so we can call it multiple times.
  * @param stocks_list A vector of stocks. The stocks to be printed.
  * @param balance How much money the player has.
  */
 void print_table(std::vector<Stock> stocks_list, float balance) {
     // Create a table, note that R"(% Change)" is a raw string literal (C++11 feature).
-    VariadicTable<unsigned int, std::string, std::string, float, float, float, unsigned int, float, unsigned int>
-        table({"No.", "Category", "Name", "Last Price", "Change", R"(% Change)", "Quantity", "$ Spent", "Max"});
+    VariadicTable<unsigned int, std::string, std::string, float, float, float, unsigned int, unsigned int, int, float, std::string>
+        table({"No.", "Category", "Name", "Last Price", "Change", R"(% Change)", "Quantity", "Max", "Mean", " SD ", "event_id"});
     /* Set the precision and format of the columns.
      * Note: Precision and Format is ignored for std::string columns. */
-    table.setColumnPrecision({1, 0, 0, 2, 2, 2, 1, 2, 1});
-    table.setColumnFormat({
-        VariadicTableColumnFormat::AUTO,
-        VariadicTableColumnFormat::AUTO,
-        VariadicTableColumnFormat::AUTO,
-        VariadicTableColumnFormat::FIXED,
-        VariadicTableColumnFormat::FIXED,
-        VariadicTableColumnFormat::FIXED,
-        VariadicTableColumnFormat::AUTO,
-        VariadicTableColumnFormat::FIXED,
-        VariadicTableColumnFormat::AUTO,
-    });
+    table.setColumnPrecision({1, 0, 0, 2, 2, 2, 1, 1, 0, 1, 0});
+    table.setColumnFormat({VariadicTableColumnFormat::AUTO,
+                           VariadicTableColumnFormat::AUTO,
+                           VariadicTableColumnFormat::AUTO,
+                           VariadicTableColumnFormat::FIXED,
+                           VariadicTableColumnFormat::FIXED,
+                           VariadicTableColumnFormat::FIXED,
+                           VariadicTableColumnFormat::FIXED,
+                           VariadicTableColumnFormat::FIXED,
+                           VariadicTableColumnFormat::AUTO,
+                           VariadicTableColumnFormat::FIXED,
+                           VariadicTableColumnFormat::AUTO});
     for (unsigned int i = 0; i < stocks_list.size(); i++) {
         table.addRow(i + 1, stocks_list[i].category_name(), stocks_list[i].get_name(), stocks_list[i].get_price(),
                      stocks_list[i].delta_price(), stocks_list[i].delta_price_percentage() * 100,
-                     stocks_list[i].get_quantity(), stocks_list[i].get_money_spent(),
-                     stocks_list[i].num_stocks_affordable(balance, trading_fees_percent));
+                     stocks_list[i].get_quantity(),
+                     stocks_list[i].num_stocks_affordable(balance, trading_fees_percent),
+                     stocks_list[i].get_attribute(mean) + stocks_list[i].sum_attribute(mean),
+                     stocks_list[i].get_attribute(standard_deviation) + stocks_list[i].sum_attribute(standard_deviation),
+                     vectorToString(stocks_list[i].get_event_ids()));
     }
     table.print(std::cout);
     /* Display 2 decimal places for balance.
@@ -177,10 +182,10 @@ int main(void) {
 
     drawLogo(row, col);
     std::cout << "Welcome to the Stock Market Simulator!" << std::endl;
-    time::sleep(200);
+    time::sleep(100);
     std::cout << "Current trading fees are charged at " << trading_fees_percent * 100 << " %" << std::endl;
-    time::sleep(200);
-    std::cout << textClear << setCursorPosition(5, 0);
+    time::sleep(100);
+    std::cout << textClear << setCursorPosition(0, 0);
     print_table(stocks_list, balance); // Print the table of stocks
     drawRoundInfo(row, col, rounds_played, balance);
     drawEventBar(row, col);
@@ -188,7 +193,14 @@ int main(void) {
     time::sleep(200);
 
     // Simulate 5*2 rounds of the game with buying/selling alternating
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 1000; i++) {
+        // Simulate player selling stocks
+        for (unsigned int i = 0; i < stocks_list.size(); i++) {
+            int num_sellable = stocks_list[i].get_quantity();
+            if (num_sellable > 0) {
+                stocks_list[i].sell(balance, random_integer(num_sellable), trading_fees_percent);
+            }
+        }
         // Simulate player buying stocks
         for (unsigned int i = 0; i < stocks_list.size(); i++) {
             int num_buyable = stocks_list[i].num_stocks_affordable(balance, trading_fees_percent);
@@ -198,7 +210,6 @@ int main(void) {
                 stocks_list[i].purchase(balance, random_integer(num_buyable), trading_fees_percent);
             }
         }
-
         next_round_routine(rounds_played, stocks_list); // Call the next round routine
         savestatus(rounds_played, stocks_list, balance, playername);
         std::cout << textClear << setCursorPosition(5, 0);
@@ -206,32 +217,8 @@ int main(void) {
         drawRoundInfo(row, col, rounds_played, balance); // Prints the round number and balance
         drawEventBar(row, col);
         drawButton(row, col);
-
-        // Simulate player selling stocks
-        for (unsigned int i = 0; i < stocks_list.size(); i++) {
-            int num_sellable = stocks_list[i].get_quantity();
-            if (num_sellable > 0) {
-                // If the player has spent more than $100 on the stock, sell all the stocks
-                if (stocks_list[i].get_money_spent() > 100) {
-                    // Sell all the stocks
-                    stocks_list[i].sell(balance, num_sellable, trading_fees_percent);
-                }
-                else {
-                    // Sell random amount of the stocks
-                    stocks_list[i].sell(balance, random_integer(num_sellable), trading_fees_percent);
-                }
-            }
-        }
+        time::sleep(200);
     }
-
-    time::sleep(500);
-    std::cout << textClear << setCursorPosition(5, 0);
-    print_table(stocks_list, balance);
-    // graph_plotting("test", col * 2 / 3, row - 10);
-    drawRoundInfo(row, col, rounds_played, balance);
-    drawEventBar(row, col);
-    drawButton(row, col);
-    std::cout << "\n";
 
     graph_plotting("stockA", 20, 20);
     return 0;

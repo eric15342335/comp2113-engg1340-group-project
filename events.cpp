@@ -2,6 +2,7 @@
  * @brief Stores the event texts and modifiers.
  */
 #include "events.h"
+#include "random_price.h"
 #include <iostream>
 #include <algorithm>
 
@@ -907,7 +908,7 @@ std::vector<Stock_event> pick_events(std::vector<Stock_event> all_events, unsign
          * If random_permille is 10 to 29, pick the second event;
          * If random_permille is 30 to 59, pick the third event.
          */
-        unsigned int random_permille = rand() % total_permille;
+        unsigned int random_permille = random_integer(total_permille);
         for (Stock_event event : all_events) {
             total_permille -= event.probability_permille;
             if (total_permille <= random_permille) {

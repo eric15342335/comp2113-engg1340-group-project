@@ -82,7 +82,6 @@ float Stock::purchase(float & balance, int amount, float trading_fees_percent) {
     // Update the balance, quantity, and money_spent
     balance -= total_cost;
     quantity += amount;
-    money_spent += total_cost;
     return total_cost;
 }
 
@@ -95,7 +94,6 @@ float Stock::sell(float & balance, int amount, float trading_fees_percent) {
     float total_revenue = price * amount * (1 - trading_fees_percent);
     balance += total_revenue;
     quantity -= amount;
-    // money_spent -= total_revenue;
     return total_revenue;
 }
 
@@ -105,7 +103,7 @@ std::string Stock::category_name(void) {
 
 unsigned int Stock::num_stocks_affordable(float balance, float trading_fees_percent) {
     float value = balance / (price * (1 + trading_fees_percent));
-    return value < 0 ? 0 : (unsigned int)value;
+    return value < 0 ? 0 : static_cast<unsigned int>(value);
 }
 
 void Stock::update_history(void) {
@@ -207,8 +205,9 @@ void Stock::next_round(void) {
      * If the price is less than 1000, the price will increase or decrease by a random percentage.
      * If the price is more than 1000, the price will be halved and the quantity will be doubled.
      */
-    if (!(price * (1 + percentage_change_price(*this) / 100) > 999.9)) {
-        price += price * percentage_change_price(*this) / 100;
+    float price_diff = percentage_change_price(*this) / 100;
+    if (!(price * (1 + price_diff) > 999.9)) {
+        price *= (1 + price_diff);
     }
     else {
         price /= 2;
@@ -233,4 +232,14 @@ void Stock::next_round(void) {
     }
     remove_obselete_event();
     update_history();
+}
+
+std::vector<unsigned int> Stock::get_event_ids(void) {
+    std::vector<unsigned int> event_ids;
+    std::list<Stock_event>::iterator event_itr = events.begin();
+    while (event_itr != events.end()) {
+        event_ids.push_back(event_itr->event_id);
+        event_itr++;
+    }
+    return event_ids;
 }
