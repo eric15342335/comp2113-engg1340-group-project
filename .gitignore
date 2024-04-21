@@ -5,3 +5,6 @@
 stocksim
 html/
 latex/
+*.dSYM/*
+saves/
+
