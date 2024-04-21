@@ -200,6 +200,7 @@ int main(void) {
             int num_sellable = stocks_list[i].get_quantity();
             if (num_sellable > 0) {
                 stocks_list[i].sell(balance, random_integer(num_sellable), trading_fees_percent);
+                stocks_list[i].sell(balance, random_integer(num_sellable), trading_fees_percent);
             }
         }
     }

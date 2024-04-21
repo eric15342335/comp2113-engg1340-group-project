@@ -156,7 +156,7 @@ void Stock::next_round(void) {
      */
     float price_diff = percentage_change_price(*this) / 100;
     if (!(price * (1 + price_diff) > 999.9)) {
-        +price *= (1 + price_diff);
+        price *= (1 + price_diff);
     }
     else {
         price /= 2;
