@@ -216,7 +216,6 @@ int main(void) {
     drawButton(row, col);
     std::cout << "\n";
 
-    /** @todo Enable graph_plotting test case by fixing the segfault error */
-    // graph_plotting("stockA", 50, 50);
+    graph_plotting("stockA", 20, 20);
     return 0;
 }
