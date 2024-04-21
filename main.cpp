@@ -166,10 +166,10 @@ int main(void) {
 
     drawLogo(row, col);
     std::cout << "Welcome to the Stock Market Simulator!" << std::endl;
-    time::sleep(200);
+    time::sleep(100);
     std::cout << "Current trading fees are charged at " << trading_fees_percent * 100 << " %" << std::endl;
-    time::sleep(200);
-    std::cout << textClear << setCursorPosition(5, 0);
+    time::sleep(100);
+    std::cout << textClear << setCursorPosition(0, 0);
     print_table(stocks_list, balance); // Print the table of stocks
     drawRoundInfo(row, col, rounds_played, balance);
     drawEventBar(row, col);
@@ -177,7 +177,14 @@ int main(void) {
     time::sleep(200);
 
     // Simulate 5*2 rounds of the game with buying/selling alternating
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 1000; i++) {
+        // Simulate player selling stocks
+        for (unsigned int i = 0; i < stocks_list.size(); i++) {
+            int num_sellable = stocks_list[i].get_quantity();
+            if (num_sellable > 0) {
+                stocks_list[i].sell(balance, random_integer(num_sellable), trading_fees_percent);
+            }
+        }
         // Simulate player buying stocks
         for (unsigned int i = 0; i < stocks_list.size(); i++) {
             int num_buyable = stocks_list[i].num_stocks_affordable(balance, trading_fees_percent);
@@ -187,32 +194,14 @@ int main(void) {
                 stocks_list[i].purchase(balance, random_integer(num_buyable), trading_fees_percent);
             }
         }
-
         next_round_routine(rounds_played, stocks_list); // Call the next round routine
         std::cout << textClear << setCursorPosition(5, 0);
         print_table(stocks_list, balance);
         drawRoundInfo(row, col, rounds_played, balance); // Prints the round number and balance
         drawEventBar(row, col);
         drawButton(row, col);
-
-        // Simulate player selling stocks
-        for (unsigned int i = 0; i < stocks_list.size(); i++) {
-            int num_sellable = stocks_list[i].get_quantity();
-            if (num_sellable > 0) {
-                stocks_list[i].sell(balance, random_integer(num_sellable), trading_fees_percent);
-                stocks_list[i].sell(balance, random_integer(num_sellable), trading_fees_percent);
-            }
-        }
+        time::sleep(200);
     }
-
-    time::sleep(500);
-    std::cout << textClear << setCursorPosition(5, 0);
-    print_table(stocks_list, balance);
-    // graph_plotting("test", col * 2 / 3, row - 10);
-    drawRoundInfo(row, col, rounds_played, balance);
-    drawEventBar(row, col);
-    drawButton(row, col);
-    std::cout << "\n";
 
     graph_plotting("stockA", 20, 20);
     return 0;
