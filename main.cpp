@@ -3,15 +3,14 @@
  * @brief Hello! Welcome to the Stock Market Simulator!
  * @authors Everyone in the group project.
  */
+
 #include "draw.h"
 #include "format.h"
-#include "draw.h"
-#include "format.h"
+#include "events.h"
 #include "graph.h"
 #include "stock.h"
-#include "events.h"
 #include "random_price.h"
-#include "graph.h"
+#include "input_events.h"
 #include "nonstdlibs/VariadicTable.h"
 
 /**
@@ -153,6 +152,7 @@ int main(void) {
     int col; // Number of characters to fit in a row
     fetchConsoleDimensions(row, col);
 
+    // char command;
     std::vector<Stock> stocks_list; // Create a vector of stocks
     for (int i = 0; i < initial_stock_count; i++) {
         Stock stock;
@@ -209,13 +209,11 @@ int main(void) {
 
     time::sleep(500);
     std::cout << textClear << setCursorPosition(5, 0);
-    print_table(stocks_list, balance);
-    // graph_plotting("test", col * 2 / 3, row - 10);
+    // print_table(stocks_list, balance);
+    graph_plotting("stockA", col * 2 / 3, row - 10);
     drawRoundInfo(row, col, rounds_played, balance);
     drawEventBar(row, col);
     drawButton(row, col);
     std::cout << "\n";
-
-    graph_plotting("stockA", 20, 20);
     return 0;
 }
