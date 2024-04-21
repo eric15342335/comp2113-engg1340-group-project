@@ -10,7 +10,7 @@
 #include "graph.h"
 #include "stock.h"
 #include "random_price.h"
-#include "input_events.h"
+#include "controls.h"
 #include "nonstdlibs/VariadicTable.h"
 
 /**
@@ -172,6 +172,7 @@ int main(void) {
     optionsInput(row, col);
     time::sleep(200);
 
+    /*
     // Simulate 5*2 rounds of the game with buying/selling alternating
     for (int i = 0; i < 5; i++) {
         // Simulate player buying stocks
@@ -207,14 +208,14 @@ int main(void) {
             }
         }
     }
-
-    time::sleep(500);
+    */
     std::cout << textClear << setCursorPosition(5, 0);
     // print_table(stocks_list, balance);
     graph_plotting("stockA", col * 2 / 3, row - 10);
     drawRoundInfo(row, col, rounds_played, balance);
     drawEventBar(row, col);
     drawButton(row, col);
+    optionsInput(row, col);
     std::cout << "\n";
     return 0;
 }

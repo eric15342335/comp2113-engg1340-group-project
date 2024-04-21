@@ -32,11 +32,11 @@ draw.o: draw.cpp draw.h format.h
 graph.o: graph.h graph.cpp
 	g++ $(FLAGS) -c graph.cpp -o graph.o
 
-input_events.o: input_events.cpp input_events.h
-	g++ $(FLAGS) -c input_events.cpp -o input_events.o
+controls.o: controls.cpp controls.h
+	g++ $(FLAGS) -c controls.cpp -o controls.o
 
-stocksim: main.cpp stock.o random_price.o events.o names.o graph.o format.o draw.o input_events.o
-	g++ $(FLAGS) main.cpp stock.o random_price.o events.o names.o graph.o format.o draw.o input_events.o -o stocksim
+stocksim: main.cpp stock.o random_price.o events.o names.o graph.o format.o draw.o controls.o
+	g++ $(FLAGS) main.cpp stock.o random_price.o events.o names.o graph.o format.o draw.o controls.o -o stocksim
 
 test: stocksim
 	./stocksim

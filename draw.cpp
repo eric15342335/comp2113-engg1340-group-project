@@ -1,9 +1,9 @@
 #include <iostream>
 #include <string>
+#include <tuple>
 #include <vector>
 #include "draw.h"
 #include "format.h"
-#include "input_events.h"
 
 void drawLogo(int row, int col) {
     const int wordWidth = 73; // Width of the longest word
@@ -34,7 +34,7 @@ void drawLogo(int row, int col) {
 }
 
 void drawRoundInfo(int row, int col, int round, float balance) {
-    row++; // Shutup compiler
+    std::ignore = row;
     std::cout << setCursorPosition(3, 5);
     std::cout << "Round " << round;
     std::cout << setCursorPosition(3, col - 10);
@@ -59,7 +59,7 @@ void drawEventBar(int row, int col) {
 }
 
 void listEvents(int row, int col) {
-    row++;
+    std::ignore = row;
     // broken rn
     int height = 10; // placeholder
     int width = col - 30;
@@ -117,17 +117,4 @@ void drawButton(int row, int col) {
     }
     */
     std::cout << textReset << "\n";
-}
-
-void quitConfirmation (int row, int col) {
-    col++; // Shutup compiler
-    char input;
-    std::cout << setCursorPosition(row, 0) << "\x1b[2K";
-    std::cout << "Are you sure? [Y/N]: ";
-    std::cin >> input;
-    if (input == 'Y' || input == 'y') {
-        std::exit(0);
-    } else {
-        optionsInput(row, col);
-    }
 }

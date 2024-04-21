@@ -2,10 +2,13 @@
 #define DRAW_H
 
 void drawLogo(int row, int col);
+
 void drawRoundInfo(int row, int col, int round, float balance);
+
 void drawEventBar(int row, int col);
+
 void listEvents(int row, int col);
+
 void drawButton(int row, int col);
-void quitConfirmation(int row, int col);
 
 #endif
