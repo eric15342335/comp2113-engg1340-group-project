@@ -228,7 +228,7 @@ int main(void) {
         time::sleep(200);
     }
     */
- 
+
     std::cout << textClear << setCursorPosition(5, 0);
     // print_table(stocks_list, balance);
     // A test case for the graphs. Also can get a better understanding
