@@ -16,7 +16,7 @@ default: stocksim
 random_price.o: random_price.h random_price.cpp
 	g++ $(FLAGS) -c random_price.cpp -o random_price.o
 	
-file_io.o: file_io.cpp file_io.h stock.cpp stock.h names.h random_price.h events.h
+file_io.o: file_io.cpp file_io.h stock.h
 	g++ $(FLAGS) -c file_io.cpp -o file_io.o
 
 stock.o: stock.cpp stock.h names.h random_price.h events.h
