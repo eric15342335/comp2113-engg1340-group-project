@@ -3,6 +3,8 @@
  * @brief Hello! Welcome to the Stock Market Simulator!
  * @authors Everyone in the group project.
  */
+#include <string>
+#include <fstream>
 #include "draw.h"
 #include "format.h"
 #include "graph.h"
@@ -10,6 +12,7 @@
 #include "events.h"
 #include "random_price.h"
 #include "nonstdlibs/VariadicTable.h"
+#include "file_io.h"
 #include <numeric>
 
 /**
@@ -157,11 +160,23 @@ int main(void) {
     int row; // Number of characters to fit in a column
     int col; // Number of characters to fit in a row
     fetchConsoleDimensions(row, col);
-
-    std::vector<Stock> stocks_list; // Create a vector of stocks
+    std::vector<Stock> stocks_list;
+    std::string playerName, loadsave;
+    std::cout << "Enter 0 for new save or enter 1 for loading old save: ";
+    std::cin >> loadsave;
+    while (loadsave != "0" && loadsave != "1") {
+        std::cout << "Invalid input. Please enter 0 for new save or enter 1 for loading old save: ";
+        std::cin >> loadsave; // choose new file or load previous file
+    }
     for (int i = 0; i < initial_stock_count; i++) {
         Stock stock;
         stocks_list.push_back(stock); // Add the stock to the vector
+    }
+    if (loadsave == "1") {
+        loadstatus(rounds_played, stocks_list, balance, playerName);
+    }
+    if (loadsave == "0") {
+        createplayer(playerName); // create a new save file
     }
 
     drawLogo(row, col);
@@ -177,7 +192,7 @@ int main(void) {
     time::sleep(200);
 
     // Simulate 5*2 rounds of the game with buying/selling alternating
-    for (int i = 0; i < 1000; i++) {
+    for (int i = 0; i < 10; i++) {
         // Simulate player selling stocks
         for (unsigned int i = 0; i < stocks_list.size(); i++) {
             int num_sellable = stocks_list[i].get_quantity();
@@ -195,6 +210,7 @@ int main(void) {
             }
         }
         next_round_routine(rounds_played, stocks_list); // Call the next round routine
+        savestatus(rounds_played, stocks_list, balance, playerName);
         std::cout << textClear << setCursorPosition(5, 0);
         print_table(stocks_list, balance);
         drawRoundInfo(row, col, rounds_played, balance); // Prints the round number and balance
@@ -203,6 +219,6 @@ int main(void) {
         time::sleep(200);
     }
 
-    graph_plotting("stockA", 20, 20);
+    graph_plotting(playerName, 0, 100, 20);
     return 0;
 }

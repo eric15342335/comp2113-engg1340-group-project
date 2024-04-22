@@ -24,7 +24,8 @@ jobs:
         make
     - name: Make test
       run: |
-        make test
+        echo "0 \nsaves" > input.txt
+        ./stocksim < input.txt
     - name: Doxygen Documentation
       if: always()
       run: |
