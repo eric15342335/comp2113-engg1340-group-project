@@ -41,7 +41,7 @@ void drawRoundInfo(int row, int col, int round, float balance) {
 }
 
 void drawEventBar(int row, int col) {
-    std::ignore = row // Shutup compiler
+    std::ignore = row; // Shutup compiler
     int width = col - 30;
 
     std::cout << setCursorPosition(2, 15) << "\u250C";
@@ -58,7 +58,7 @@ void drawEventBar(int row, int col) {
 }
 
 void listEvents(int row, int col) {
-    std::ignore = row
+    std::ignore = row;
     // broken rn
     int height = 10; // placeholder
     int width = col - 30;
