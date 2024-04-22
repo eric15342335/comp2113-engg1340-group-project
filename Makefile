@@ -7,7 +7,7 @@
 
 # Compiler flags, consider removing `-Werror` before submitting.
 
-FLAGS = -Wall -Wextra -std=c++17 -Werror -pedantic-errors -g -O0 -fsanitize=address -fsanitize=undefined
+FLAGS = -Wall -Wextra -std=c++17 -Werror -pedantic-errors -g -O0# -fsanitize=address -fsanitize=undefined
 
 
 # The default target is to compile the program.
@@ -44,7 +44,7 @@ test: stocksim
 	./stocksim
 
 clean:
-	rm *.o stocksim
+	rm *.o stocksim -r saves/ html/ latex/ *.dSYM/ 2>/dev/null || true
 
 # Generate documentation using `Doxygen`.
 # Windows only: open the generated documentation in the default browser.

@@ -1,3 +1,9 @@
+/**
+ * @file file_io.cpp
+ * @brief This file contains the implementation of the file input/output functions.
+ * @author Comet13579
+ */
+
 #include <iostream>
 #include <fstream>
 #include <filesystem>
@@ -5,35 +11,35 @@
 #include "file_io.h"
 using namespace std;
 
-void createplayer(string & playername) {
+void createplayer(string & playerName) {
     ofstream fout;
     string savefolder = "saves";
     string foldername;
     filesystem::create_directory("saves");
     cout << "Enter player name:" << endl;
-    cin >> playername;
-    foldername = "saves/" + playername;
+    cin >> playerName;
+    foldername = "saves/" + playerName;
     while (filesystem::exists(foldername)) {
         cout << "Player name already exists, please enter a new name:" << endl;
-        cin >> playername;
-        foldername = "saves/" + playername;
+        cin >> playerName;
+        foldername = "saves/" + playerName;
     }
     filesystem::create_directory(foldername);
 }
 
-void savestatus(unsigned int rounds_played, vector<Stock> stocks_list, float balance, string playername) {
+void savestatus(unsigned int rounds_played, vector<Stock> stocks_list, float balance, string playerName) {
     string stocksave;
     ofstream fout;
-    stocksave = "saves/" + playername + "/playerstatus.save";
+    stocksave = "saves/" + playerName + "/playerstatus.save";
     fout.open(stocksave.c_str());
-    fout << playername << " " << rounds_played << " " << balance << endl;
+    fout << playerName << " " << rounds_played << " " << balance << endl;
     fout.close();
     for (unsigned long i = 0; i < stocks_list.size(); i++) {
-        stocks_list[i].save(playername, i);
+        stocks_list[i].save(playerName, i);
     }
 }
 
-void loadstatus(unsigned int & rounds_played, vector<Stock> & stocks_list, float & balance, string & playername) {
+void loadstatus(unsigned int & rounds_played, vector<Stock> & stocks_list, float & balance, string & playerName) {
     string stockload, stockname, inputname;
     ifstream fin;
     vector<string> players;
@@ -49,9 +55,9 @@ void loadstatus(unsigned int & rounds_played, vector<Stock> & stocks_list, float
     }
 
     stockload = "saves/" + inputname + "/playerstatus.save";
-    playername = inputname;
+    playerName = inputname;
     fin.open(stockload.c_str());
-    fin >> playername >> rounds_played >> balance;
+    fin >> playerName >> rounds_played >> balance;
     fin.close();
 
     for (unsigned long i = 0; i < 20; i++) { // hard code 20 stocks

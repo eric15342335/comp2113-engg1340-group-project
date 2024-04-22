@@ -67,42 +67,41 @@ enum event_type {
  */
 struct Stock_event {
     public:
-        /** The id of the event.
+        /** @brief The id of the event.
          * This is still required for checking, despite the fact that we are using a vector.
          */
         unsigned int event_id;
 
-        /** A list of event_ids that this event is mutually exclusive with. */
+        /** @brief A list of event_ids that this event is mutually exclusive with. */
         std::vector<unsigned int> mutually_exclusive_events;
 
-        /** The text that will be displayed to the player. */
+        /** @brief The text that will be displayed to the player. */
         std::string text;
 
-        /** Number of rounds the event will last. If the event has duration <= 0 then it will be removed. */
+        /** @brief Number of rounds the event will last. If the event has duration <= 0 then it will be removed. */
         unsigned int duration;
 
-        /** 0 to 1000, so 114 means 11.4% */
+        /** @brief 0 to 1000, so 114 means 11.4% */
         unsigned int probability_permille;
 
-        /** The type of event: Apply to all stocks, in one category or randomly? */
+        /** @brief The type of event: Apply to all stocks, in one category or randomly? */
         event_type type_of_event;
 
         unsigned int category;
 
-        /** Stores the stock_modifiers that the event applies. */
+        /** @brief Stores the stock_modifiers that the event applies. */
         std::map<stock_modifiers, float> modifiers;
 
-        /** Overload the == operator to compare two Stock_event */
+        /** @brief Overload the == operator to compare two Stock_event */
         bool operator==(const Stock_event & other) const {
-            /** Events are the same if they have same event_id and same text.
-             * The latter is because for type_of_event == pick_random_stock, the text is different.
-             * But the event_id is the same.
-             */
-            return event_id == other.event_id && text == other.text;
+            return event_id == other.event_id && text == other.text &&
+                   probability_permille == other.probability_permille &&
+                   type_of_event == other.type_of_event && category == other.category &&
+                   modifiers == other.modifiers;
         }
 
         /**
-         * Serialize the event as std::ostream object.
+         * @brief Serialize the event as std::ostream object.
          * @param outputstream The std::ostream object to write the data.
          * @param event The event object to get the data from.
          * @return A std:ostream object contains all the data of the event.
@@ -112,15 +111,14 @@ struct Stock_event {
          * @endcode
          */
         friend std::ostream & operator<<(std::ostream & outputstream, Stock_event & event) {
-            // @todo Implement this function
             outputstream << event.event_id << " ";
             for (unsigned int i = 0; i < event.mutually_exclusive_events.size(); i++) {
                 outputstream << event.mutually_exclusive_events[i] << " ";
             }
             outputstream << ";" << event.text << ";" << event.duration << " "
-                         << event.probability_permille << " " << event.type_of_event << " "
-                         << event.category << " ";
-            for (auto & modifier : event.modifiers) {
+                        << event.probability_permille << " " << event.type_of_event << " "
+                        << event.category << " ";
+            for (auto &modifier : event.modifiers) {
                 outputstream << modifier.second << " ";
             }
             return outputstream;
@@ -146,16 +144,17 @@ struct Stock_event {
             unsigned int temp_type;
             inputstream >> event.duration >> event.probability_permille >> temp_type >> event.category;
             event.type_of_event = static_cast<event_type>(temp_type);
-            inputstream >> event.modifiers[standard_deviation] >> event.modifiers[mean] >> event.modifiers[lower_limit] >> event.modifiers[upper_limit];
+            inputstream >> event.modifiers[standard_deviation] >> event.modifiers[mean]
+                        >> event.modifiers[lower_limit] >> event.modifiers[upper_limit];
             return inputstream;
         }
 };
 
-/** The list of all events that will be applied to the stocks. */
+/** @brief The list of all events that will be applied to the stocks. */
 extern std::vector<Stock_event> all_stock_events;
 
 /**
- * Pick a random event from the list of events
+ * @brief Pick a random event from the list of events
  * @param all_events The list of all events
  * @param num_events The number of events to pick
  * @return A vector of Stock_event
@@ -163,14 +162,14 @@ extern std::vector<Stock_event> all_stock_events;
 std::vector<Stock_event> pick_events(std::vector<Stock_event> all_events, unsigned int num_events);
 
 /**
- * If A is mutually exclusive with B, then B is mutually exclusive with A.
+ * @brief If A is mutually exclusive with B, then B is mutually exclusive with A.
  * Check if these two events specifies each other as mutually exclusive in mutually_exclusive_events.
  * @param all_events The list of all events
  * @return A map of event_id to a vector of mutually exclusive event_ids that does not exist but should.
  */
 std::map<unsigned int, std::vector<unsigned int>> check_mutual_exclusivity(std::vector<Stock_event> all_events);
 
-/** Print a map to std::cout.
+/** @brief Print a map to std::cout.
  * @param map The std::map object you want to print.
  */
 void print_map(std::map<unsigned int, std::vector<unsigned int>> map);

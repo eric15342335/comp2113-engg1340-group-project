@@ -1,33 +1,34 @@
 /**
  * @file stock.cpp
- * @author eric15342335
+ * @authors eric15342335, comet13579 (save/load)
  * @brief Implementation of the Stock class.
  */
+
 #include <iostream>
 #include <fstream>
 #include "stock.h"
 #include "names.h"
 #include "random_price.h"
 
-void Stock::random() {
+Stock::Stock(void) {
     category = random_integer(category_list_size);
     name = generate_name(category, 1)[0];
     /** The distribution of initial stock price will be consistent across same categories
      * Note that the value '3' is because currently init_stock_price has 3 possible input values.
      */
-    price = init_stock_price(category % 3 + 1);
+    price = init_stock_price(random_integer(category % 3 + 1));
     quantity = 0;
     attributes[standard_deviation] = init_sd();
     attributes[mean] = 0;
-    attributes[lower_limit] = -40;
-    attributes[upper_limit] = 40;
+    attributes[lower_limit] = -20;
+    attributes[upper_limit] = 20;
     update_history();
 }
 
-void Stock::save(std::string playername, int i) {
+void Stock::save(std::string playerName, int i) {
     std::string filesave;
     std::ofstream fout;
-    filesave = "saves/" + playername + "/" + std::to_string(i) + ".save";
+    filesave = "saves/" + playerName + "/" + std::to_string(i) + ".save";
     fout.open(filesave.c_str());
     fout << category << std::endl;
     fout << name << std::endl;
@@ -39,41 +40,76 @@ void Stock::save(std::string playername, int i) {
     fout << attributes[standard_deviation] << " ";
     fout << attributes[mean] << " ";
     fout << attributes[lower_limit] << " ";
-    fout << attributes[upper_limit] << std::endl;
+    fout << attributes[upper_limit] << std::endl << std::endl;
+
+    // Save the ongoing events, separated by std::endl
+    std::list<Stock_event>::iterator event_itr = events.begin();
+    while (event_itr != events.end()) {
+        fout << *event_itr << std::endl;
+        event_itr++;
+    }
     fout.close();
 }
 
-void Stock::load(std::string playername, int i) {
-    std::string fileload;
-    float stockloadprice;
+void Stock::load(std::string playerName, int i) {
+    std::string fileToBeLoaded;
+    float loadedPrice;
     std::ifstream fin;
-    fileload = "saves/" + playername + "/" + std::to_string(i) + ".save";
-    std::cout << fileload << std::endl;
-    fin.open(fileload.c_str());
+    fileToBeLoaded = "saves/" + playerName + "/" + std::to_string(i) + ".save";
+    std::cout << fileToBeLoaded << std::endl;
+    fin.open(fileToBeLoaded.c_str());
     // checks if the file is open successfully
     if (!fin.is_open()) {
         std::cerr << "Error: File not found" << std::endl;
         return;
     }
-    // checks file good
-    if (!fin.good()) {
-        std::cerr << "Error: File not good" << std::endl;
-        return;
-    }
     // get the first line, which is category
     fin >> category;
+    // boundary check for category
+    if (category >= category_list_size) {
+        std::cerr << "Error: Invalid category loaded" << std::endl;
+        throw;
+    }
     // the second line is entirely the stock name
     std::getline(fin >> std::ws, name);
-    fin >> stockloadprice;
-    while (stockloadprice != -1) {
-        history.push_back(stockloadprice);
-        fin >> stockloadprice;
+    fin >> loadedPrice;
+    // Erase the history vector, since we called the constructor already
+    history.clear();
+    while (loadedPrice != -1) {
+        history.push_back(loadedPrice);
+        fin >> loadedPrice;
     }
+    // Set the price
+    price = history[history.size() - 1];
     fin >> quantity;
     fin >> attributes[standard_deviation];
     fin >> attributes[mean];
     fin >> attributes[lower_limit];
     fin >> attributes[upper_limit];
+    fin.ignore(1, '\n');
+    // Load the ongoing events, separated by std::endl
+    std::string loadedEventString;
+    while (std::getline(fin, loadedEventString)) {
+        Stock_event loadedEvent;
+        std::istringstream(loadedEventString) >> loadedEvent;
+        // Check the loaded event is valid
+        // Ignore the special case of event_id >= 65535
+        if (loadedEvent.event_id >= 65535) {
+            add_event(loadedEvent);
+            continue;
+        }
+        Stock_event comparedEvent = all_stock_events[loadedEvent.event_id];
+        if (loadedEvent == comparedEvent) {
+            add_event(loadedEvent);
+        }
+        else {
+            std::cerr << "Error: Invalid event loaded" << std::endl;
+            // Output the difference between the loaded event and the compared event
+            std::cerr << "Loaded event: " << loadedEvent << std::endl;
+            std::cerr << "Compared event: " << comparedEvent << std::endl;
+            throw;
+        }        
+    }
     fin.close();
 }
 

@@ -161,28 +161,22 @@ int main(void) {
     int col; // Number of characters to fit in a row
     fetchConsoleDimensions(row, col);
     std::vector<Stock> stocks_list;
-    std::string playername, loadsave;
+    std::string playerName, loadsave;
     std::cout << "Enter 0 for new save or enter 1 for loading old save: ";
     std::cin >> loadsave;
     while (loadsave != "0" && loadsave != "1") {
         std::cout << "Invalid input. Please enter 0 for new save or enter 1 for loading old save: ";
         std::cin >> loadsave;
     }
-    if (loadsave == "0") {
-        createplayer(playername);
-        for (int i = 0; i < initial_stock_count; i++) {
+    for (int i = 0; i < initial_stock_count; i++) {
             Stock stock;
-            stock.random();
             stocks_list.push_back(stock); // Add the stock to the vector
-        }
+    }
+    if (loadsave == "0") {
+        createplayer(playerName);
     }
     if (loadsave == "1") {
-        for (int i = 0; i < initial_stock_count; i++) {
-            Stock stock;
-            stock.random();
-            stocks_list.push_back(stock); // Add the stock to the vector
-        }
-        loadstatus(rounds_played, stocks_list, balance, playername);
+        loadstatus(rounds_played, stocks_list, balance, playerName);
     }
 
     drawLogo(row, col);
@@ -216,7 +210,7 @@ int main(void) {
             }
         }
         next_round_routine(rounds_played, stocks_list); // Call the next round routine
-        savestatus(rounds_played, stocks_list, balance, playername);
+        savestatus(rounds_played, stocks_list, balance, playerName);
         std::cout << textClear << setCursorPosition(5, 0);
         print_table(stocks_list, balance);
         drawRoundInfo(row, col, rounds_played, balance); // Prints the round number and balance
@@ -225,6 +219,6 @@ int main(void) {
         time::sleep(200);
     }
 
-    graph_plotting(playername, 0, 100, 20);
+    graph_plotting(playerName, 0, 100, 20);
     return 0;
 }

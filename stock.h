@@ -30,9 +30,22 @@
  */
 class Stock {
     public:
-        void save(std::string playername, int i);
-        void load(std::string playername, int i);
-        void random();
+        /** @brief Constructor of class Stock */
+        Stock(void);
+
+        /**
+         * @brief Save the stock from a file.
+         * @param playerName The name of the player.
+         * @param i The index of the stock.
+         */
+        void save(std::string playerName, int i);
+
+        /**
+         * @brief Load the stock from a file.
+         * @param playerName The name of the player.
+         * @param i The index of the stock.
+         */
+        void load(std::string playerName, int i);
 
         /**
          * Purchase a given number of stocks.
@@ -200,10 +213,13 @@ class Stock {
     private:
         /** @brief Name of the stock that we assigned to it. */
         std::string name;
+
         /** @brief Current price of the stock. */
         float price;
+
         /** @brief Number of stocks the player has purchased. */
         unsigned int quantity;
+
         /** @brief Use numbers to represent the category of the stock. The range of the numbers
          * should be `[0, category_list_size - 1]`. See names.cpp for more information.
          */
@@ -211,8 +227,10 @@ class Stock {
 
         /** @brief Stores all the events that will apply to this stock specifically. */
         std::list<Stock_event> events;
+
         /** @brief Stores the initial value of the stock_modifiers (e.g. standard deviation, mean and limits). */
         std::map<stock_modifiers, float> attributes;
+
         /** @brief Contains the stock price history. First element (index 0) is the oldest. */
         std::vector<float> history;
 
