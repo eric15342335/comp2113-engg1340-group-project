@@ -231,7 +231,11 @@ int main(void) {
  
     std::cout << textClear << setCursorPosition(5, 0);
     // print_table(stocks_list, balance);
-    graph_plotting("stockA", col * 2 / 3, row - 10);
+    // A test case for the graphs. Also can get a better understanding
+    // of stock price fluctuation.
+    // for (unsigned int i = 0; i < stocks_list.size(); i++) {
+    //     graph_plotting(playerName, i, col * 2 / 3, row - 10);
+    // }
     drawRoundInfo(row, col, rounds_played, balance);
     drawEventBar(row, col);
     drawButton(row, col);
