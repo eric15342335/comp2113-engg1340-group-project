@@ -1,7 +1,6 @@
 #include <ios>
 #include <iostream>
 #include <limits>
-#include <string>
 #include <tuple>
 #include "draw.h"
 #include "format.h"
@@ -79,7 +78,7 @@ void buyStocks(int row, int col) {
     int amount = 1;
 
     index = integerInput(row, col, "Enter the index of the stock as shown: ");
-    // stocks_list[index].purchase(balance, amount, trading_fees_percent);
+    // stocks_list[index - 1].purchase(balance, amount, trading_fees_percent);
 
     std::ignore = index;
     std::ignore = amount;
@@ -90,7 +89,7 @@ void sellStocks(int row, int col) {
     int amount = 1;
 
     index = integerInput(row, col, "Enter the index of the stock as shown: ");
-    // stocks_list[index].sell(balance, amount, trading_fees_percent);
+    // stocks_list[index - 1].sell(balance, amount, trading_fees_percent);
 
     std::ignore = index;
     std::ignore = amount;
@@ -100,7 +99,7 @@ void quitConfirmation(int row, int col) {
     std::ignore = col;
     char input;
     std::cout << setCursorPosition(row, 0) << "\x1b[2K";
-    std::cout << "Are you sure? [Y/N]: ";
+    std::cout << "Press [Y] to confirm: ";
     std::cin >> input;
     if (input == 'Y' || input == 'y') {
         std::exit(0);
