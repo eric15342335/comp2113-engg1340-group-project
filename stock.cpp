@@ -86,7 +86,14 @@ void Stock::load(std::string playerName, int i) {
     fin >> attributes[mean];
     fin >> attributes[lower_limit];
     fin >> attributes[upper_limit];
-    fin.ignore(1, '\n');
+    // Manually reposition the file pointer to the fifth line
+    // by going to the beginning of the file and skipping the first four lines
+    fin.seekg(0, std::ios::beg);
+    for (int i = 0; i < 6; i++) {
+        std::string line;
+        std::getline(fin, line);
+    }
+    
     // Load the ongoing events, separated by std::endl
     std::string loadedEventString;
     while (std::getline(fin, loadedEventString)) {
@@ -94,7 +101,7 @@ void Stock::load(std::string playerName, int i) {
         std::istringstream(loadedEventString) >> loadedEvent;
         // Check the loaded event is valid
         // Ignore the special case of event_id >= 65535
-        if (loadedEvent.event_id >= 65535) {
+        if (loadedEvent.event_id >= 65535 && loadedEvent.event_id < all_stock_events.size()) {
             add_event(loadedEvent);
             continue;
         }
@@ -108,7 +115,7 @@ void Stock::load(std::string playerName, int i) {
             std::cerr << "Loaded event: " << loadedEvent << std::endl;
             std::cerr << "Compared event: " << comparedEvent << std::endl;
             throw;
-        }        
+        }
     }
     fin.close();
 }
