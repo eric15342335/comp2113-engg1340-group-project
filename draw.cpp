@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <tuple> // for std::ignore
 #include "draw.h"
 #include "format.h"
 
