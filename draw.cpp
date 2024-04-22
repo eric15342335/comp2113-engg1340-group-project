@@ -2,6 +2,7 @@
 #include <string>
 #include <tuple>
 #include <vector>
+#include <tuple> // for std::ignore
 #include "draw.h"
 #include "format.h"
 
@@ -34,7 +35,7 @@ void drawLogo(int row, int col) {
 }
 
 void drawRoundInfo(int row, int col, int round, float balance) {
-    std::ignore = row;
+    std::ignore = row; // Shutup compiler
     std::cout << setCursorPosition(3, 5);
     std::cout << "Round " << round;
     std::cout << setCursorPosition(3, col - 10);
@@ -42,7 +43,7 @@ void drawRoundInfo(int row, int col, int round, float balance) {
 }
 
 void drawEventBar(int row, int col) {
-    row++; // Shutup compiler
+    std::ignore = row; // Shutup compiler
     int width = col - 30;
 
     std::cout << setCursorPosition(2, 15) << "\u250C";

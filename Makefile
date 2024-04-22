@@ -6,13 +6,18 @@
 # make fix - formats the code using clang-format and commits the changes to git
 
 # Compiler flags, consider removing `-Werror` before submitting.
-FLAGS = -Wall -Wextra -std=c++11 -Werror -pedantic-errors -g -O0
+
+FLAGS = -Wall -Wextra -std=c++17 -Werror -pedantic-errors -g -O0# -fsanitize=address -fsanitize=undefined
+
 
 # The default target is to compile the program.
 default: stocksim
 
 random_price.o: random_price.h random_price.cpp
 	g++ $(FLAGS) -c random_price.cpp -o random_price.o
+	
+file_io.o: file_io.cpp file_io.h stock.h
+	g++ $(FLAGS) -c file_io.cpp -o file_io.o
 
 stock.o: stock.cpp stock.h names.h random_price.h events.h
 	g++ $(FLAGS) -c stock.cpp -o stock.o
@@ -35,14 +40,15 @@ graph.o: graph.h graph.cpp
 controls.o: controls.cpp controls.h
 	g++ $(FLAGS) -c controls.cpp -o controls.o
 
-stocksim: main.cpp stock.o random_price.o events.o names.o graph.o format.o draw.o controls.o
-	g++ $(FLAGS) main.cpp stock.o random_price.o events.o names.o graph.o format.o draw.o controls.o -o stocksim
+stocksim: main.cpp stock.o random_price.o events.o names.o graph.o format.o draw.o file_io.o controls.o
+	g++ $(FLAGS) main.cpp stock.o random_price.o events.o names.o graph.o format.o draw.o file_io.o controls.o -o stocksim
+
 
 test: stocksim
 	./stocksim
 
 clean:
-	rm *.o stocksim
+	rm *.o stocksim -r saves/ html/ latex/ *.dSYM/ 2>/dev/null || true
 
 # Generate documentation using `Doxygen`.
 # Windows only: open the generated documentation in the default browser.

@@ -60,7 +60,7 @@ float percentage_change_price(Stock & stock) {
     }
     while (true) {
         float x = distribution(gen);
-        if (x < upper_limit and x > lower_limit) {
+        if (x > lower_limit && x < upper_limit) {
             return x;
         }
     }
