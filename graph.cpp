@@ -70,7 +70,7 @@ vector<float> graphinput(string player, int stocknum, string & stockname, unsign
     return stockpricehistory;
 }
 
-void graph_plotting(string player, int stocknum, int width, int height) {
+void graph_plotting(string player, unsigned int stocknum, int width, int height) {
     float max, min;
     string stockname;
     vector<float> stockpricehistory = graphinput(player, stocknum, stockname, width);

@@ -169,8 +169,8 @@ int main(void) {
         std::cin >> loadsave;
     }
     for (int i = 0; i < initial_stock_count; i++) {
-            Stock stock;
-            stocks_list.push_back(stock); // Add the stock to the vector
+        Stock stock;
+        stocks_list.push_back(stock); // Add the stock to the vector
     }
     if (loadsave == "0") {
         createplayer(playerName);

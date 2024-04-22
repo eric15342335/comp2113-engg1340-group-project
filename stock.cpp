@@ -40,7 +40,8 @@ void Stock::save(std::string playerName, int i) {
     fout << attributes[standard_deviation] << " ";
     fout << attributes[mean] << " ";
     fout << attributes[lower_limit] << " ";
-    fout << attributes[upper_limit] << std::endl << std::endl;
+    fout << attributes[upper_limit] << std::endl
+         << std::endl;
 
     // Save the ongoing events, separated by std::endl
     std::list<Stock_event>::iterator event_itr = events.begin();
@@ -93,7 +94,7 @@ void Stock::load(std::string playerName, int i) {
         std::string line;
         std::getline(fin, line);
     }
-    
+
     // Load the ongoing events, separated by std::endl
     std::string loadedEventString;
     while (std::getline(fin, loadedEventString)) {

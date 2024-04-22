@@ -116,9 +116,9 @@ struct Stock_event {
                 outputstream << event.mutually_exclusive_events[i] << " ";
             }
             outputstream << ";" << event.text << ";" << event.duration << " "
-                        << event.probability_permille << " " << event.type_of_event << " "
-                        << event.category << " ";
-            for (auto &modifier : event.modifiers) {
+                         << event.probability_permille << " " << event.type_of_event << " "
+                         << event.category << " ";
+            for (auto & modifier : event.modifiers) {
                 outputstream << modifier.second << " ";
             }
             return outputstream;
@@ -144,8 +144,7 @@ struct Stock_event {
             unsigned int temp_type;
             inputstream >> event.duration >> event.probability_permille >> temp_type >> event.category;
             event.type_of_event = static_cast<event_type>(temp_type);
-            inputstream >> event.modifiers[standard_deviation] >> event.modifiers[mean]
-                        >> event.modifiers[lower_limit] >> event.modifiers[upper_limit];
+            inputstream >> event.modifiers[standard_deviation] >> event.modifiers[mean] >> event.modifiers[lower_limit] >> event.modifiers[upper_limit];
             return inputstream;
         }
 };
