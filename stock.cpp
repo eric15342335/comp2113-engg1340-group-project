@@ -16,7 +16,7 @@ Stock::Stock(void) {
     /** The distribution of initial stock price will be consistent across same categories
      * Note that the value '3' is because currently init_stock_price has 3 possible input values.
      */
-    price = init_stock_price(random_integer(category % 3 + 1));
+    price = init_stock_price(category % 3 + 1);
     quantity = 0;
     attributes[standard_deviation] = init_sd();
     attributes[mean] = 0;
