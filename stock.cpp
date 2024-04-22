@@ -28,14 +28,14 @@ Stock::Stock(void) {
 void Stock::save(std::string playerName, int i) {
     std::string filesave;
     std::ofstream fout;
-    filesave = "saves/" + playerName + "/" + std::to_string(i) + ".save";
+    filesave = "saves/" + playerName + "/" + std::to_string(i) + ".save"; // creating the file path
     fout.open(filesave.c_str());
-    fout << category << std::endl;
+    fout << category << std::endl; // literally load everything into class into file
     fout << name << std::endl;
     for (unsigned int i = 0; i < history.size(); i++) {
         fout << history[i] << " ";
     }
-    fout << -1 << std::endl;
+    fout << -1 << std::endl; // -1 is the stop code for vector<float> history in filesave
     fout << quantity << std::endl;
     fout << attributes[standard_deviation] << " ";
     fout << attributes[mean] << " ";

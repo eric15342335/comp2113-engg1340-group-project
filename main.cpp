@@ -166,17 +166,17 @@ int main(void) {
     std::cin >> loadsave;
     while (loadsave != "0" && loadsave != "1") {
         std::cout << "Invalid input. Please enter 0 for new save or enter 1 for loading old save: ";
-        std::cin >> loadsave;
+        std::cin >> loadsave; // choose new file or load previous file
     }
     for (int i = 0; i < initial_stock_count; i++) {
         Stock stock;
         stocks_list.push_back(stock); // Add the stock to the vector
     }
-    if (loadsave == "0") {
-        createplayer(playerName);
-    }
     if (loadsave == "1") {
         loadstatus(rounds_played, stocks_list, balance, playerName);
+    }
+    if (loadsave == "0") {
+        createplayer(playerName); // create a new save file
     }
 
     drawLogo(row, col);
