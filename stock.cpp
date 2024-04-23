@@ -42,7 +42,8 @@ void Stock::save(std::string playerName, int i) {
     fout << attributes[mean] << " ";
     fout << attributes[lower_limit] << " ";
     fout << attributes[upper_limit] << std::endl;
-    fout << split_count << std::endl << std::endl;
+    fout << split_count << std::endl 
+         << std::endl;
 
     // Save the ongoing events, separated by std::endl
     std::list<Stock_event>::iterator event_itr = events.begin();
