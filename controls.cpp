@@ -13,28 +13,22 @@ void optionsInput(int row, int col) {
         std::cout << "Choose an option from the bar above: ";
         std::cin >> input;
         switch (input) {
+        // Fallthrough: https://en.cppreference.com/w/cpp/language/attributes/fallthrough
         case 'B':
-            buyStocks(row, col);
-            break;
         case 'b':
             buyStocks(row, col);
             break;
         case 'S':
-            sellStocks(row, col);
-            break;
         case 's':
             sellStocks(row, col);
             break;
         case 'T':
-            break;
         case 't':
             break;
         case 'E':
-            break;
         case 'e':
             break;
         case 'O':
-            break;
         case 'o':
             break;
         case 'X':
