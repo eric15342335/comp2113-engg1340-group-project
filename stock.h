@@ -205,7 +205,7 @@ class Stock {
          * @brief Get the split count of the stock. Getter function.
          * @return Split count of the stock as int.
          */
-        int get_split_count(void) {
+        unsigned int get_split_count(void) {
             return split_count;
         }
 
@@ -243,7 +243,7 @@ class Stock {
         std::vector<float> history;
 
         /** @brief Contains the spliting count of a stock */
-        int split_count;
+        unsigned int split_count;
 
         /** @brief Update the history array with the current price */
         void update_history(void);
