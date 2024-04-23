@@ -1,7 +1,5 @@
 # Stock Market Simulator
 
-<insert ascii art here>
-
 ## Menu
 
 1. [Team Members](#team-members)
@@ -80,7 +78,7 @@ In our game, we also included <num> events that will each have a possibility to 
 
 ## Data structures for storing game status (e.g., arrays, STL containers)
 
-In [`stock.h`], there is a class called `Stock` which utilizes STL `vector`, `list` and `map` to store various game data.
+In [`stock.h`](./stock.h), we declared class [`Stock`](https://eric15342335.github.io/comp2113-engg1340-group-project/classStock.html) which utilizes STL `vector`, `list` and `map` to store various game data:
 See [the Stock class documentation](https://eric15342335.github.io/comp2113-engg1340-group-project/classStock.html) for more information.
 
 ## Dynamic memory management (e.g., dynamic arrays, linked lists, STL containers)
@@ -89,13 +87,13 @@ Placeholder.
 
 ## File input/output (e.g., for loading/saving game status)
 
-Placeholder.
+Related files: [`file_io.cpp`](file_io.cpp) [`file_io.h`](file_io.h)
 
 ## Program codes in multiple files (recall separate compilation)
 
 We split our program codes into multiple files according to their functionality and purposes:
 - `main.cpp`:
-- `stock.cpp`:
+- [`stock.cpp` `stock.h`](https://eric15342335.github.io/comp2113-engg1340-group-project/classStock.html):
 - `events.cpp`:
 - `graph.cpp`:
 - `random_price.cpp`:
