@@ -102,11 +102,13 @@ void delsave(string & mode) {
         printvector(players);
         cin >> inputname;
     }
-    cout << "WARNING! This action is irreversible and will delete all data associated with the player save.";
+
+    cout << "WARNING! This action is irreversible and will delete all data associated with the player save." << "endl";
     cout << "Player save " << inputname << " is going to be deleted, please enter Y to confirm" << endl;
-    cin >> inputname;
-    if (inputname == "Y") {
-        stockdel = "saves/" + inputname + "/playerstatus.save";
+    cin >> confirm;
+    if (confirm == "Y") {
+        stockdel = "saves/" + inputname;
+        cout << stockdel << endl;
         std::filesystem::remove_all(stockdel);
         cout << "Player save " << inputname << " has been deleted." << endl;
     }
@@ -115,9 +117,10 @@ void delsave(string & mode) {
     }
 
     // choosing mode again
+    std::cout << "Please enter 0 for new save, enter 1 for loading old save, enter 2 for deleting more save or enter 3 for quit: ";
     std::cin >> mode;
     while (mode != "0" && mode != "1" && mode != "2" && mode != "3") {
-        std::cout << "Invalid input. Please enter 0 for new save, enter 1 for loading old save, enter 2 for deleting save or enter 3 for quit: ";
+        std::cout << "Invalid input. Please enter 0 for new save, enter 1 for loading old save, enter 2 for deleting more save or enter 3 for quit: ";
         std::cin >> mode; // choose new file or load previous file
     }
     if (mode == "2") {

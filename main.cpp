@@ -182,7 +182,7 @@ int main(void) {
     std::vector<Stock> stocks_list;
     std::vector<float> hsi_history;
     std::string loadsave;
-    std::cout << "Enter 0 for new save or enter 1 for loading old save: ";
+    std::cout << "Please enter 0 for new save, enter 1 for loading old save, enter 2 for deleting save or enter 3 for quit: ";
     std::cin >> loadsave;
     while (loadsave != "0" && loadsave != "1" && loadsave != "2" && loadsave != "3") {
         std::cout << "Invalid input. Please enter 0 for new save, enter 1 for loading old save, enter 2 for deleting save or enter 3 for quit: ";
@@ -192,7 +192,8 @@ int main(void) {
         delsave(loadsave); // delete existing file
     }
     if (loadsave == "3") {
-        std::cout << "Goodbye! Hope you had a good luck in the stock market!";
+        std::cout << "Goodbye! Hope you had a good luck in the stock market!" << std::endl;
+        ;
         return 0;
     }
     for (int i = 0; i < initial_stock_count; i++) {
