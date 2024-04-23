@@ -39,23 +39,23 @@ std::string vectorToString(const std::vector<unsigned int> & vec) {
     return std::accumulate(vec.begin(), vec.end(), std::string(), [](std::string s, int v) { return s.empty() ? std::to_string(v) : s + " " + std::to_string(v); });
 }
 
-void get_hsi(std::vector<Stock> stocks_list, std::vector<float> & hsi_history){
+void get_hsi(std::vector<Stock> stocks_list, std::vector<float> & hsi_history) {
     float hsi = 0;
     std::string filesave = "saves/" + playerName + "/hsi.save";
     std::vector<float> total;
     for (unsigned int i = 0; i < stocks_list.size(); i++) {
         total.push_back(stocks_list[i].get_price() / stocks_list[i].get_initial_price() * 1000 * pow(2, stocks_list[i].get_split_count()));
-        //HSI formula = (price/initial price) * 1000 * 2^split count
+        // HSI formula = (price/initial price) * 1000 * 2^split count
     }
     hsi = std::reduce(total.begin(), total.end()) / total.size();
     hsi_history.push_back(hsi);
     std::ofstream fout;
     fout.open(filesave.c_str(), std::ios::app);
     fout << hsi << ' ';
-    fout.close();    
+    fout.close();
 }
 
-void load_hsi(std::vector<float> hsi_history){
+void load_hsi(std::vector<float> hsi_history) {
     std::string filesave = "saves/" + playerName + "/hsi.save";
     std::ifstream fin;
     fin.open(filesave.c_str());
