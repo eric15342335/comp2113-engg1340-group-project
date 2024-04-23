@@ -55,28 +55,17 @@ void get_hsi(std::vector<Stock> stocks_list, std::vector<float> & hsi_history) {
     fout.close();
 }
 
-void load_hsi(std::vector<float> hsi_history) {
-    std::string filesave = "saves/" + playerName + "/hsi.save";
-    std::ifstream fin;
-    fin.open(filesave.c_str());
-    float hsi;
-    while (fin >> hsi) {
-        hsi_history.push_back(hsi);
-    }
-    fin.close();
-}
-
 /** Print the table of stocks. We put it in a function so we can call it multiple times.
  * @param stocks_list A vector of stocks. The stocks to be printed.
  * @param balance How much money the player has.
  */
 void print_table(std::vector<Stock> stocks_list, float balance) {
     // Create a table, note that R"(% Change)" is a raw string literal (C++11 feature).
-    VariadicTable<unsigned int, std::string, std::string, float, float, float, unsigned int, unsigned int, int, float, std::string>
-        table({"No.", "Category", "Name", "Last Price", "Change", R"(% Change)", "Quantity", "Max", "Mean", " SD ", "event_id"});
+    VariadicTable<unsigned int, std::string, std::string, float, float, float, unsigned int, unsigned int, float, float, float, float, std::string>
+        table({"No.", "Category", "Name", "Last Price", "Change", R"(% Change)", "Quantity", "Max", " Mean ", " SD ", "up", "low", "event_id"});
     /* Set the precision and format of the columns.
      * Note: Precision and Format is ignored for std::string columns. */
-    table.setColumnPrecision({1, 0, 0, 2, 2, 2, 1, 1, 0, 1, 0});
+    table.setColumnPrecision({1, 0, 0, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0});
     table.setColumnFormat({VariadicTableColumnFormat::AUTO,
                            VariadicTableColumnFormat::AUTO,
                            VariadicTableColumnFormat::AUTO,
@@ -85,7 +74,9 @@ void print_table(std::vector<Stock> stocks_list, float balance) {
                            VariadicTableColumnFormat::FIXED,
                            VariadicTableColumnFormat::FIXED,
                            VariadicTableColumnFormat::FIXED,
-                           VariadicTableColumnFormat::AUTO,
+                           VariadicTableColumnFormat::FIXED,
+                           VariadicTableColumnFormat::FIXED,
+                           VariadicTableColumnFormat::FIXED,
                            VariadicTableColumnFormat::FIXED,
                            VariadicTableColumnFormat::AUTO});
     for (unsigned int i = 0; i < stocks_list.size(); i++) {
@@ -95,6 +86,8 @@ void print_table(std::vector<Stock> stocks_list, float balance) {
                      stocks_list[i].num_stocks_affordable(balance, trading_fees_percent),
                      stocks_list[i].get_attribute(mean) + stocks_list[i].sum_attribute(mean),
                      stocks_list[i].get_attribute(standard_deviation) + stocks_list[i].sum_attribute(standard_deviation),
+                     stocks_list[i].get_attribute(upper_limit) + stocks_list[i].sum_attribute(upper_limit),
+                     stocks_list[i].get_attribute(lower_limit) + stocks_list[i].sum_attribute(lower_limit),
                      vectorToString(stocks_list[i].get_event_ids()));
     }
     table.print(std::cout);
@@ -193,19 +186,26 @@ int main(void) {
     std::vector<Stock> stocks_list;
     std::vector<float> hsi_history;
     std::string loadsave;
-    std::cout << "Enter 0 for new save or enter 1 for loading old save: ";
+    std::cout << "Please enter 0 for new save, enter 1 for loading old save, enter 2 for deleting save or enter 3 to quit: ";
     std::cin >> loadsave;
-    while (loadsave != "0" && loadsave != "1") {
-        std::cout << "Invalid input. Please enter 0 for new save or enter 1 for loading old save: ";
+    while (loadsave != "0" && loadsave != "1" && loadsave != "2" && loadsave != "3") {
+        std::cout << "Invalid input. Please enter 0 for new save, enter 1 for loading old save, enter 2 for deleting save or enter 3 to quit: ";
         std::cin >> loadsave; // choose new file or load previous file
+    }
+    if (loadsave == "2") {
+        delsave(loadsave); // delete existing file
+    }
+    if (loadsave == "3") {
+        std::cout << "Goodbye! Hope you had a good luck in the stock market!" << std::endl;
+        ;
+        return 0;
     }
     for (int i = 0; i < initial_stock_count; i++) {
         Stock stock;
         stocks_list.push_back(stock); // Add the stock to the vector
     }
     if (loadsave == "1") {
-        loadstatus(rounds_played, stocks_list, balance, playerName);
-        load_hsi(hsi_history);
+        loadstatus(rounds_played, stocks_list, balance, playerName, hsi_history);
     }
     if (loadsave == "0") {
         createplayer(playerName); // create a new save file

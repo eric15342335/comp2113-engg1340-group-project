@@ -148,7 +148,7 @@ class Stock {
 
         /**
          * @brief Get the quantity of the stock. Getter function.
-         * @return Quantity of the stock as float.
+         * @return Stock.quantity as unsigned int.
          */
         unsigned int get_quantity(void) {
             return quantity;
@@ -203,7 +203,7 @@ class Stock {
 
         /**
          * @brief Get the split count of the stock. Getter function.
-         * @return Split count of the stock as int.
+         * @return Stock.split_count as unsigned int.
          */
         unsigned int get_split_count(void) {
             return split_count;
