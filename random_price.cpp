@@ -14,14 +14,14 @@ float init_stock_price(int price_profile) {
         distribution.param(
             std::normal_distribution<float>::param_type(150.0, 50.0));
     }
-    return abs(distribution(gen));
+    return std::abs(distribution(gen));
 }
 
 float init_sd(void) {
     std::random_device rd;
     std::mt19937 gen(rd());
     std::normal_distribution<float> distribution(0.5, 0.5);
-    return abs(distribution(gen));
+    return std::abs(distribution(gen));
 }
 
 float percentage_change_price(Stock & stock) {
