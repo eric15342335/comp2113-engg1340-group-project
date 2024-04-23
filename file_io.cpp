@@ -92,7 +92,7 @@ void delsave(string & mode) {
         while (mode != "0" && mode != "1" && mode != "3") {
             std::cout << "Invalid input. Please enter 0 for new save or enter 3 to quit: ";
             std::cin >> mode; // choose new file or load previous file
-            }
+        }
         return;
     }
     cout << "Enter player name from the following:" << endl;
