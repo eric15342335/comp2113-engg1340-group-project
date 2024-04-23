@@ -14,6 +14,7 @@
 #include "nonstdlibs/VariadicTable.h"
 #include "file_io.h"
 #include <numeric>
+#include <cmath>
 
 /**
  * 0.01 means 1% trading fees.
@@ -34,6 +35,17 @@ unsigned int rounds_played = 1;
 
 std::string vectorToString(const std::vector<unsigned int> & vec) {
     return std::accumulate(vec.begin(), vec.end(), std::string(), [](std::string s, int v) { return s.empty() ? std::to_string(v) : s + " " + std::to_string(v); });
+}
+
+float get_hsi(std::vector<Stock> stocks_list){
+    float hsi = 0;
+    std::vector<float> total;
+    for (unsigned int i = 0; i < stocks_list.size(); i++) {
+        total.push_back(stocks_list[i].get_price() / stocks_list[i].get_initial_price() * 10000 * pow(2, stocks_list[i].get_split_count()));
+    }
+    hsi = std::reduce(total.begin(), total.end()) / total.size();
+    return hsi;
+
 }
 
 /** Print the table of stocks. We put it in a function so we can call it multiple times.
@@ -219,6 +231,7 @@ int main(void) {
         time::sleep(200);
     }
 
+    std::cout << "HSI: " << get_hsi(stocks_list) << std::endl;
     graph_plotting(playerName, 0, 100, 20);
     return 0;
 }

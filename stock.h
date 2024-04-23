@@ -202,6 +202,14 @@ class Stock {
         std::vector<unsigned int> get_event_ids(void);
 
         /**
+         * @brief Get the split count of the stock. Getter function.
+         * @return Split count of the stock as int.
+         */
+        int get_split_count(void) {
+            return split_count;
+        }
+
+        /**
          * @brief Check if we can add the event to the stock.
          *
          * A event can be added if the event is not mutually exclusive with any of the existing events.
@@ -233,6 +241,9 @@ class Stock {
 
         /** @brief Contains the stock price history. First element (index 0) is the oldest. */
         std::vector<float> history;
+
+        /** @brief Contains the spliting count of a stock */
+        int split_count;
 
         /** @brief Update the history array with the current price */
         void update_history(void);
