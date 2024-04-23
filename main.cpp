@@ -3,8 +3,6 @@
  * @brief Hello! Welcome to the Stock Market Simulator!
  * @authors Everyone in the group project.
  */
-#include <string>
-#include <fstream>
 #include "draw.h"
 #include "format.h"
 #include "graph.h"
@@ -14,6 +12,8 @@
 #include "nonstdlibs/VariadicTable.h"
 #include "file_io.h"
 #include <numeric>
+#include <cmath>
+#include <fstream>
 
 /**
  * 0.01 means 1% trading fees.
@@ -32,8 +32,38 @@ float balance = 1000;
 /** Number of rounds played */
 unsigned int rounds_played = 1;
 
+/** Player's name */
+std::string playerName;
+
 std::string vectorToString(const std::vector<unsigned int> & vec) {
     return std::accumulate(vec.begin(), vec.end(), std::string(), [](std::string s, int v) { return s.empty() ? std::to_string(v) : s + " " + std::to_string(v); });
+}
+
+void get_hsi(std::vector<Stock> stocks_list, std::vector<float> & hsi_history) {
+    float hsi = 0;
+    std::string filesave = "saves/" + playerName + "/hsi.save";
+    std::vector<float> total;
+    for (unsigned int i = 0; i < stocks_list.size(); i++) {
+        total.push_back(stocks_list[i].get_price() / stocks_list[i].get_initial_price() * 1000 * pow(2, stocks_list[i].get_split_count()));
+        // HSI formula = (price/initial price) * 1000 * 2^split count
+    }
+    hsi = std::reduce(total.begin(), total.end()) / total.size();
+    hsi_history.push_back(hsi);
+    std::ofstream fout;
+    fout.open(filesave.c_str(), std::ios::app);
+    fout << hsi << ' ';
+    fout.close();
+}
+
+void load_hsi(std::vector<float> hsi_history) {
+    std::string filesave = "saves/" + playerName + "/hsi.save";
+    std::ifstream fin;
+    fin.open(filesave.c_str());
+    float hsi;
+    while (fin >> hsi) {
+        hsi_history.push_back(hsi);
+    }
+    fin.close();
 }
 
 /** Print the table of stocks. We put it in a function so we can call it multiple times.
@@ -161,7 +191,8 @@ int main(void) {
     int col; // Number of characters to fit in a row
     fetchConsoleDimensions(row, col);
     std::vector<Stock> stocks_list;
-    std::string playerName, loadsave;
+    std::vector<float> hsi_history;
+    std::string loadsave;
     std::cout << "Enter 0 for new save or enter 1 for loading old save: ";
     std::cin >> loadsave;
     while (loadsave != "0" && loadsave != "1") {
@@ -174,11 +205,12 @@ int main(void) {
     }
     if (loadsave == "1") {
         loadstatus(rounds_played, stocks_list, balance, playerName);
+        load_hsi(hsi_history);
     }
     if (loadsave == "0") {
         createplayer(playerName); // create a new save file
     }
-
+    get_hsi(stocks_list, hsi_history);
     drawLogo(row, col);
     std::cout << "Welcome to the Stock Market Simulator!" << std::endl;
     time::sleep(100);
@@ -210,6 +242,7 @@ int main(void) {
             }
         }
         next_round_routine(rounds_played, stocks_list); // Call the next round routine
+        get_hsi(stocks_list, hsi_history);
         savestatus(rounds_played, stocks_list, balance, playerName);
         std::cout << textClear << setCursorPosition(5, 0);
         print_table(stocks_list, balance);
@@ -219,6 +252,8 @@ int main(void) {
         time::sleep(200);
     }
 
+    std::cout << "HSI: " << hsi_history[hsi_history.size() - 1] << std::endl;
     graph_plotting(playerName, 0, 100, 20);
+    graph_plotting(playerName, -1, 100, 20);
     return 0;
 }

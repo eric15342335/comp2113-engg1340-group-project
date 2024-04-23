@@ -22,6 +22,7 @@ Stock::Stock(void) {
     attributes[mean] = 0;
     attributes[lower_limit] = -20;
     attributes[upper_limit] = 20;
+    split_count = 0;
     update_history();
 }
 
@@ -40,7 +41,8 @@ void Stock::save(std::string playerName, int i) {
     fout << attributes[standard_deviation] << " ";
     fout << attributes[mean] << " ";
     fout << attributes[lower_limit] << " ";
-    fout << attributes[upper_limit] << std::endl
+    fout << attributes[upper_limit] << std::endl;
+    fout << split_count << std::endl
          << std::endl;
 
     // Save the ongoing events, separated by std::endl
@@ -87,10 +89,11 @@ void Stock::load(std::string playerName, int i) {
     fin >> attributes[mean];
     fin >> attributes[lower_limit];
     fin >> attributes[upper_limit];
-    // Manually reposition the file pointer to the fifth line
-    // by going to the beginning of the file and skipping the first four lines
+    fin >> split_count;
+    // Manually reposition the file pointer to the sixth line
+    // by going to the beginning of the file and skipping the first five lines
     fin.seekg(0, std::ios::beg);
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 7; i++) {
         std::string line;
         std::getline(fin, line);
     }
@@ -260,6 +263,7 @@ void Stock::next_round(void) {
     else {
         price /= 2;
         quantity *= 2;
+        split_count++;
         add_event(Stock_event{// Stock split event
                               /** event_id */ 65535,
                               /** mutually_exclusive_events */ {},
