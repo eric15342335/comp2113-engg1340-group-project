@@ -182,10 +182,10 @@ int main(void) {
     std::vector<Stock> stocks_list;
     std::vector<float> hsi_history;
     std::string loadsave;
-    std::cout << "Please enter 0 for new save, enter 1 for loading old save, enter 2 for deleting save or enter 3 for quit: ";
+    std::cout << "Please enter 0 for new save, enter 1 for loading old save, enter 2 for deleting save or enter 3 to quit: ";
     std::cin >> loadsave;
     while (loadsave != "0" && loadsave != "1" && loadsave != "2" && loadsave != "3") {
-        std::cout << "Invalid input. Please enter 0 for new save, enter 1 for loading old save, enter 2 for deleting save or enter 3 for quit: ";
+        std::cout << "Invalid input. Please enter 0 for new save, enter 1 for loading old save, enter 2 for deleting save or enter 3 to quit: ";
         std::cin >> loadsave; // choose new file or load previous file
     }
     if (loadsave == "2") {

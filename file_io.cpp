@@ -87,12 +87,13 @@ void delsave(string & mode) {
     filesystem::create_directory("saves"); // prevent error when no folder exists
     players = get_saves();                 // generate a vector of name of folders
     if (players.empty()) {
+        cout << "No player saves found, please enter 0 for new save or enter 3 to quit:";
         std::cin >> mode;
         while (mode != "0" && mode != "1" && mode != "3") {
-            std::cout << "Invalid input. Please enter 0 for new save, enter 1 for loading old save or enter 3 for quit: ";
+            std::cout << "Invalid input. Please enter 0 for new save or enter 3 to quit: ";
             std::cin >> mode; // choose new file or load previous file
-            return;
-        }
+            }
+        return;
     }
     cout << "Enter player name from the following:" << endl;
     printvector(players);
@@ -103,7 +104,7 @@ void delsave(string & mode) {
         cin >> inputname;
     }
 
-    cout << "WARNING! This action is irreversible and will delete all data associated with the player save." << "endl";
+    cout << "WARNING! This action is irreversible and will delete all data associated with the player save." << endl;
     cout << "Player save " << inputname << " is going to be deleted, please enter Y to confirm" << endl;
     cin >> confirm;
     if (confirm == "Y") {
@@ -117,10 +118,10 @@ void delsave(string & mode) {
     }
 
     // choosing mode again
-    std::cout << "Please enter 0 for new save, enter 1 for loading old save, enter 2 for deleting more save or enter 3 for quit: ";
+    std::cout << "Please enter 0 for new save, enter 1 for loading old save, enter 2 for deleting more save or enter 3 to quit: ";
     std::cin >> mode;
     while (mode != "0" && mode != "1" && mode != "2" && mode != "3") {
-        std::cout << "Invalid input. Please enter 0 for new save, enter 1 for loading old save, enter 2 for deleting more save or enter 3 for quit: ";
+        std::cout << "Invalid input. Please enter 0 for new save, enter 1 for loading old save, enter 2 for deleting more save or enter 3 to quit: ";
         std::cin >> mode; // choose new file or load previous file
     }
     if (mode == "2") {
