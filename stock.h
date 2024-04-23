@@ -6,26 +6,27 @@
 #ifndef STOCK_H
 #define STOCK_H
 
-#include <string>
-#include <vector>
+#include "events.h"
+
 #include <list>
 #include <map>
-#include "events.h"
+#include <string>
+#include <vector>
 
 /**
  * @class Stock stock.h "stock.h"
  * @brief A class that represents a stock object in the game.
- * The stock has a name, price, quantity, category, money spent, events, attributes, and history.
- * The stock can be purchased, sold, and updated.
+ * The stock has a name, price, quantity, category, money spent, events, attributes, and
+ * history. The stock can be purchased, sold, and updated.
  * @note Example usage:
  * @code {.cpp}
- * Stock stock;   // Create a stock object. The constructor will initialize the stock automatically.
- * float balance = 1000;
- * stock.purchase(balance, 1, 0.01);    // Purchase a stock.
- * stock.sell(balance, 1, 0.01);        // Sell a stock.
- * std::string name = stock.get_name(); // What is the name of the stock?
+ * Stock stock;   // Create a stock object. The constructor will initialize the stock
+ * automatically. float balance = 1000; stock.purchase(balance, 1, 0.01);    // Purchase
+ * a stock. stock.sell(balance, 1, 0.01);        // Sell a stock. std::string name =
+ * stock.get_name(); // What is the name of the stock?
  * // Get the upper limit of the percentage change of the stock price:
- * float upper_limit = stock.get_attribute(upper_limit) + stock.sum_attribute(upper_limit);
+ * float upper_limit = stock.get_attribute(upper_limit) +
+ * stock.sum_attribute(upper_limit);
  * @endcode
  */
 class Stock {
@@ -53,9 +54,11 @@ class Stock {
          * @param amount The number of stocks to purchase.
          * @param trading_fees_percent The trading fees percentage we charge the player.
          * @return Successful: Total cost of the purchase.
-         *         Failed: -1 if the player does not have enough balance to buy the stock.
+         *         Failed: -1 if the player does not have enough balance to buy the
+         * stock.
          */
-        float purchase(float & balance, unsigned int amount, float trading_fees_percent);
+        float purchase(
+            float & balance, unsigned int amount, float trading_fees_percent);
 
         /**
          * @brief Sell a given number of stocks.
@@ -81,23 +84,26 @@ class Stock {
         std::string category_name(void);
 
         /**
-         * @brief Return the change of stock price using the most recent price and the current price
+         * @brief Return the change of stock price using the most recent price and the
+         * current price
          * @return change in stock price.
          */
         float delta_price(void);
 
         /** @brief Return the percentage of change of stock price.
-         * @return Percentage of change in stock price. E.g. 0.05 means 5% increase in price.
+         * @return Percentage of change in stock price. E.g. 0.05 means 5% increase in
+         * price.
          */
         float delta_price_percentage(void);
 
         /**
-         * @brief Get the total change of attribute of the stock due to events only. Getter function. \n
-         * Example usage: @code {.cpp}
+         * @brief Get the total change of attribute of the stock due to events only.
+         * Getter function. \n Example usage: @code {.cpp}
          * stock.get_attribute(stock_modifiers::standard_deviation);
          * @endcode
          * @param attribute The attribute to get.
-         * @return Total change of attribute due to Stock_event. Does not include the base value.
+         * @return Total change of attribute due to Stock_event. Does not include the
+         * base value.
          */
         float sum_attribute(stock_modifiers attribute);
 
@@ -107,8 +113,8 @@ class Stock {
         void next_round(void);
 
         /** @brief Add an event to the stock.
-         * @param event The event to be added. See events.h for more information about the
-         * class Stock_Event.
+         * @param event The event to be added. See events.h for more information about
+         * the class Stock_Event.
          */
         void add_event(Stock_event event);
 
@@ -116,9 +122,9 @@ class Stock {
          * @brief Get the stock price of recent rounds.
          * @param rounds The number of rounds to look back. 5 means the last 5 rounds.
          * @return A vector of stock prices.
-         *         If the number of rounds is greater than the history size, return the whole history.
-         *         Otherwise, return the most recent rounds.
-         *         If the history is empty, return an empty vector.
+         *         If the number of rounds is greater than the history size, return the
+         * whole history. Otherwise, return the most recent rounds. If the history is
+         * empty, return an empty vector.
          */
         std::vector<float> return_most_recent_history(unsigned int rounds);
 
@@ -126,77 +132,62 @@ class Stock {
          * @brief Get the name of the stock. Getter function.
          * @return Name of the stock as float.
          */
-        std::string get_name(void) {
-            return name;
-        }
+        std::string get_name(void) { return name; }
 
         /**
          * @brief Get the price of the stock. Getter function.
          * @return Price of the stock as float.
          */
-        float get_price(void) {
-            return price;
-        }
+        float get_price(void) { return price; }
 
         /**
          * @brief Get the category of the stock. Getter function.
          * @return Category of the stock as unsigned int.
          */
-        unsigned int get_category(void) {
-            return category;
-        }
+        unsigned int get_category(void) { return category; }
 
         /**
          * @brief Get the quantity of the stock. Getter function.
          * @return Stock.quantity as unsigned int.
          */
-        unsigned int get_quantity(void) {
-            return quantity;
-        }
+        unsigned int get_quantity(void) { return quantity; }
 
         /**
          * @brief Get the initial price of the stock. Getter function.
          * @return Initial price of the stock as float.
          */
-        float get_initial_price(void) {
-            return history[0];
-        }
+        float get_initial_price(void) { return history[0]; }
 
         /**
          * @brief Get the base value of stock_attributes of the stock. Getter function.
-         * @param attribute The attribute to get. E.g. standard_deviation, mean, lower_limit, upper_limit
+         * @param attribute The attribute to get. E.g. standard_deviation, mean,
+         * lower_limit, upper_limit
          * @return Base value of stock_attributes as float.
          */
-        float get_attribute(stock_modifiers attribute) {
-            return attributes[attribute];
-        }
+        float get_attribute(stock_modifiers attribute) { return attributes[attribute]; }
 
         /**
          * @brief Get size of the history.
          * @return Size of the history as unsigned int.
          */
-        unsigned int get_history_size(void) {
-            return history.size();
-        }
+        unsigned int get_history_size(void) { return history.size(); }
 
         /**
          * @brief Change the mean of the stock by delta_mean. Setter function.
          * @param delta_mean The change in mean.
          */
-        void change_mean(float delta_mean) {
-            attributes[mean] += delta_mean;
-        }
+        void change_mean(float delta_mean) { attributes[mean] += delta_mean; }
 
         /**
-         * @brief Return all the events that will apply to this stock specifically. Getter function.
+         * @brief Return all the events that will apply to this stock specifically.
+         * Getter function.
          * @return A list of Stock_event.
          */
-        std::list<Stock_event> get_events(void) {
-            return events;
-        }
+        std::list<Stock_event> get_events(void) { return events; }
 
         /**
-         * @brief Get the event ids of all the events that will apply to this stock specifically. Getter function.
+         * @brief Get the event ids of all the events that will apply to this stock
+         * specifically. Getter function.
          * @return A vector of unsigned int.
          */
         std::vector<unsigned int> get_event_ids(void);
@@ -205,14 +196,13 @@ class Stock {
          * @brief Get the split count of the stock. Getter function.
          * @return Stock.split_count as unsigned int.
          */
-        unsigned int get_split_count(void) {
-            return split_count;
-        }
+        unsigned int get_split_count(void) { return split_count; }
 
         /**
          * @brief Check if we can add the event to the stock.
          *
-         * A event can be added if the event is not mutually exclusive with any of the existing events.
+         * A event can be added if the event is not mutually exclusive with any of the
+         * existing events.
          * @param event The event to be added.
          * @return True if the event can be added. False otherwise.
          */
@@ -235,18 +225,21 @@ class Stock {
         /** @brief Number of stocks the player has purchased. */
         unsigned int quantity;
 
-        /** @brief Use numbers to represent the category of the stock. The range of the numbers
-         * should be `[0, category_list_size - 1]`. See names.cpp for more information.
+        /** @brief Use numbers to represent the category of the stock. The range of the
+         * numbers should be `[0, category_list_size - 1]`. See names.cpp for more
+         * information.
          */
         unsigned int category;
 
         /** @brief Stores all the events that will apply to this stock specifically. */
         std::list<Stock_event> events;
 
-        /** @brief Stores the initial value of the stock_modifiers (e.g. standard deviation, mean and limits). */
+        /** @brief Stores the initial value of the stock_modifiers (e.g. standard
+         * deviation, mean and limits). */
         std::map<stock_modifiers, float> attributes;
 
-        /** @brief Contains the stock price history. First element (index 0) is the oldest. */
+        /** @brief Contains the stock price history. First element (index 0) is the
+         * oldest. */
         std::vector<float> history;
 
         /** @brief Contains the spliting count of a stock */
@@ -274,10 +267,7 @@ enum SortingMethods {
     by_sd
 };
 
-enum SortingDirections {
-    ascending,
-    descending
-};
+enum SortingDirections { ascending, descending };
 
 /**
  * @brief Sorts the stocks.
@@ -285,6 +275,7 @@ enum SortingDirections {
  * @param sortMethod Sorting method.
  * @param sortDirection Sorting direction. True for ascending, false for descending.
  */
-void sortStocksList(std::vector<Stock> & stocks_list, SortingMethods sortMethod, SortingDirections sortDirection);
+void sortStocksList(std::vector<Stock> & stocks_list, SortingMethods sortMethod,
+    SortingDirections sortDirection);
 
 #endif

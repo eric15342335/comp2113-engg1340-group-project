@@ -1,6 +1,7 @@
 /**
- * @file fileio.h
- * @brief This file contains the process of loading, saving and deleting the game status.
+ * @file file_io.h
+ * @brief This file contains the process of loading, saving and deleting the game
+ * status.
  * @author comet13579, eric15432235
  */
 
@@ -24,21 +25,25 @@ void createplayer(std::string & playerName);
  * @param balance The balance of the player
  * @param playerName The name of the player also the folder name
  */
-void savestatus(unsigned int rounds_played, std::vector<Stock> stocks_list, float balance, std::string playerName);
+void savestatus(unsigned int rounds_played, std::vector<Stock> stocks_list,
+    float balance, std::string playerName);
 
 /**
- * @brief Load an existing game status from .save files. Paramenters should be empty and values are returned by reference.
+ * @brief Load an existing game status from .save files. Paramenters should be empty and
+ * values are returned by reference.
  * @param rounds_played The number of rounds played
  * @param stocks_list A vector of stocks
  * @param balance The balance of the player
  * @param playerName The name of the player also the folder name
  * @param hsi_history A vector of HSI history
  */
-void loadstatus(unsigned int & rounds_played, std::vector<Stock> & stocks_list, float & balance, std::string & playerName, std::vector<float> & hsi_history);
+void loadstatus(unsigned int & rounds_played, std::vector<Stock> & stocks_list,
+    float & balance, std::string & playerName, std::vector<float> & hsi_history);
 
 /**
  * @brief Delete a save
- * @param mode Return the mode choice (0,1,2,3) by reference for further control after deleting
+ * @param mode Return the mode choice (0,1,2,3) by reference for further control after
+ * deleting
  */
 void delsave(std::string & mode);
 
