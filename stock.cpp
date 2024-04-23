@@ -303,48 +303,48 @@ float Stock::getTotalAttribute(stock_modifiers attribute) {
 
 void sortStocksList(std::vector<Stock> & stocks_list, SortingMethods sortMethod, SortingDirections sortDirection) {
     switch (sortMethod) {
-        case by_name:
-            std::sort(stocks_list.begin(), stocks_list.end(), [](Stock a, Stock b) {
-                return a.get_name() < b.get_name();
-            });
-            break;
-            case by_category:
-                std::sort(stocks_list.begin(), stocks_list.end(), [](Stock a, Stock b) {
-                    return a.get_category() < b.get_category();
-                });
-                break;
-            case by_price:
-                std::sort(stocks_list.begin(), stocks_list.end(), [](Stock a, Stock b) {
-                    return a.get_price() < b.get_price();
-                });
-                break;
-            case by_quantity:
-                std::sort(stocks_list.begin(), stocks_list.end(), [](Stock a, Stock b) {
-                    return a.get_quantity() < b.get_quantity();
-                });
-                break;
-            case by_sd:
-                std::sort(stocks_list.begin(), stocks_list.end(), [](Stock a, Stock b) {
-                    return a.getTotalAttribute(standard_deviation) < b.getTotalAttribute(standard_deviation);
-                });
-                break;
-            case by_mean:
-                std::sort(stocks_list.begin(), stocks_list.end(), [](Stock a, Stock b) {
-                    return a.getTotalAttribute(mean) < b.getTotalAttribute(mean);
-                });
-                break;
-            case by_lower_limit:
-                std::sort(stocks_list.begin(), stocks_list.end(), [](Stock a, Stock b) {
-                    return a.getTotalAttribute(lower_limit) < b.getTotalAttribute(lower_limit);
-                });
-                break;
-            case by_upper_limit:
-                std::sort(stocks_list.begin(), stocks_list.end(), [](Stock a, Stock b) {
-                    return a.getTotalAttribute(upper_limit) < b.getTotalAttribute(upper_limit);
-                });
-                break;
-        default:
-            break;
+    case by_name:
+        std::sort(stocks_list.begin(), stocks_list.end(), [](Stock a, Stock b) {
+            return a.get_name() < b.get_name();
+        });
+        break;
+    case by_category:
+        std::sort(stocks_list.begin(), stocks_list.end(), [](Stock a, Stock b) {
+            return a.get_category() < b.get_category();
+        });
+        break;
+    case by_price:
+        std::sort(stocks_list.begin(), stocks_list.end(), [](Stock a, Stock b) {
+            return a.get_price() < b.get_price();
+        });
+        break;
+    case by_quantity:
+        std::sort(stocks_list.begin(), stocks_list.end(), [](Stock a, Stock b) {
+            return a.get_quantity() < b.get_quantity();
+        });
+        break;
+    case by_sd:
+        std::sort(stocks_list.begin(), stocks_list.end(), [](Stock a, Stock b) {
+            return a.getTotalAttribute(standard_deviation) < b.getTotalAttribute(standard_deviation);
+        });
+        break;
+    case by_mean:
+        std::sort(stocks_list.begin(), stocks_list.end(), [](Stock a, Stock b) {
+            return a.getTotalAttribute(mean) < b.getTotalAttribute(mean);
+        });
+        break;
+    case by_lower_limit:
+        std::sort(stocks_list.begin(), stocks_list.end(), [](Stock a, Stock b) {
+            return a.getTotalAttribute(lower_limit) < b.getTotalAttribute(lower_limit);
+        });
+        break;
+    case by_upper_limit:
+        std::sort(stocks_list.begin(), stocks_list.end(), [](Stock a, Stock b) {
+            return a.getTotalAttribute(upper_limit) < b.getTotalAttribute(upper_limit);
+        });
+        break;
+    default:
+        break;
     }
     if (sortDirection == descending) {
         std::reverse(stocks_list.begin(), stocks_list.end());

@@ -284,7 +284,7 @@ enum SortingDirections {
  * @param stocks_list A vector of stocks. Pass by reference to modify the stocks.
  * @param sortMethod Sorting method.
  * @param sortDirection Sorting direction. True for ascending, false for descending.
-*/
+ */
 void sortStocksList(std::vector<Stock> & stocks_list, SortingMethods sortMethod, SortingDirections sortDirection);
 
 #endif
