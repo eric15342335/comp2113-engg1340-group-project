@@ -21,12 +21,15 @@
  * @note Example usage:
  * @code {.cpp}
  * Stock stock;   // Create a stock object. The constructor will initialize the stock
- * automatically. float balance = 1000; stock.purchase(balance, 1, 0.01);    // Purchase
- * a stock. stock.sell(balance, 1, 0.01);        // Sell a stock. std::string name =
- * stock.get_name(); // What is the name of the stock?
+ * automatically.
+ * // Purchase a stock.
+ * float balance = 1000; stock.purchase(balance, 1, 0.01);
+ * // Sell a stock.
+ * stock.sell(balance, 1, 0.01);
+ * // What is the name of the stock?
+ * std::string name = stock.get_name();
  * // Get the upper limit of the percentage change of the stock price:
- * float upper_limit = stock.get_attribute(upper_limit) +
- * stock.sum_attribute(upper_limit);
+ * float upper_limit = stock.getTotalAttribute(stock_modifiers::upper_limit);
  * @endcode
  */
 class Stock {
