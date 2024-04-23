@@ -87,19 +87,19 @@ void delsave(string & mode) {
     filesystem::create_directory("saves"); // prevent error when no folder exists
     players = get_saves();                 // generate a vector of name of folders
     if (players.empty()) {
-        cout << "No player saves found, please enter 0 for new save or enter 3 to quit:";
+        cout << "No player saves found, please enter 0 for new save or enter 3 to quit: ";
         std::cin >> mode;
         while (mode != "0" && mode != "1" && mode != "3") {
             std::cout << "Invalid input. Please enter 0 for new save or enter 3 to quit: ";
             std::cin >> mode; // choose new file or load previous file
-        }
+            }
         return;
     }
     cout << "Enter player name from the following:" << endl;
     printvector(players);
     cin >> inputname;
     while (std::find(players.begin(), players.end(), inputname) == players.end()) { // reject incorrect input
-        cout << "Player name does not exist, please enter a new name from the following:" << endl;
+        cout << "Player name does not exist, please enter a new name from the following: " << endl;
         printvector(players);
         cin >> inputname;
     }
