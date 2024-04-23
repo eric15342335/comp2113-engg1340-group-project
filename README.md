@@ -52,9 +52,9 @@
 
 ## Game Description
 
-"Stock Market Simulator" is a text-based game that attempts to introduce a realistic
-stock buying experience to the players. The game utilizes the random number generation
-capability of the operating system to mimic real-life stock unpredictable trends, while
+"Stock Market Simulator" is a game that attempts to introduce a realistic
+stock buying experience to players. The game utilizes the random number generation
+capability of the operating system to mimic real-life stock unpredictable trends while
 giving players breathing room to better think about their investing strategies.
 
 ## How to Play
@@ -68,7 +68,7 @@ make
 
 ## Generation of random game sets or events
 
-We used normal distribution to generate the percentage change of the stock price for each new round.
+We used normal distribution to generate the percentage change in the stock price for each new round.
 
 See [our documentation on events.h](https://eric15342335.github.io/comp2113-engg1340-group-project/events_8h.html) regarding how such distribution
 can be manipulated to suit our needs.
@@ -76,7 +76,7 @@ can be manipulated to suit our needs.
 You may want to consult our events.cpp source code, specifically the
 `std::vector<Stock_event> pick_events (std::vector<Stock_event>all_events, unsigned int num_events)` for how we implement this feature.
 
-In our game, we also included <num> events that will each has a possibility to happen in your individual gameplay.
+In our game, we also included <num> events that will each have a possibility to happen in your gameplay.
 
 ## Data structures for storing game status (e.g., arrays, STL containers)
 
