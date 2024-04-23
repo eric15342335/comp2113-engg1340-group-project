@@ -7,7 +7,8 @@
 
 void createplayer(std::string & playerName);
 void savestatus(unsigned int rounds_played, std::vector<Stock> stocks_list, float balance, std::string playerName);
-void loadstatus(unsigned int & rounds_played, std::vector<Stock> & stocks_list, float & balance, std::string & playerName);
+void loadstatus(unsigned int & rounds_played, std::vector<Stock> & stocks_list, float & balance, std::string & playerName, std::vector<float> & hsi_history);
 std::vector<std::string> get_saves();
 void printvector(std::vector<std::string> avector);
+void delsave(std::string & mode);
 #endif

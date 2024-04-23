@@ -55,17 +55,6 @@ void get_hsi(std::vector<Stock> stocks_list, std::vector<float> & hsi_history) {
     fout.close();
 }
 
-void load_hsi(std::vector<float> hsi_history) {
-    std::string filesave = "saves/" + playerName + "/hsi.save";
-    std::ifstream fin;
-    fin.open(filesave.c_str());
-    float hsi;
-    while (fin >> hsi) {
-        hsi_history.push_back(hsi);
-    }
-    fin.close();
-}
-
 /** Print the table of stocks. We put it in a function so we can call it multiple times.
  * @param stocks_list A vector of stocks. The stocks to be printed.
  * @param balance How much money the player has.
@@ -195,17 +184,23 @@ int main(void) {
     std::string loadsave;
     std::cout << "Enter 0 for new save or enter 1 for loading old save: ";
     std::cin >> loadsave;
-    while (loadsave != "0" && loadsave != "1") {
-        std::cout << "Invalid input. Please enter 0 for new save or enter 1 for loading old save: ";
+    while (loadsave != "0" && loadsave != "1" && loadsave != "2" && loadsave != "3") {
+        std::cout << "Invalid input. Please enter 0 for new save, enter 1 for loading old save, enter 2 for deleting save or enter 3 for quit: ";
         std::cin >> loadsave; // choose new file or load previous file
+    }
+    if (loadsave == "2") {
+        delsave(loadsave); // delete existing file
+    }
+    if (loadsave == "3") {
+        std::cout << "Goodbye! Hope you had a good luck in the stock market!";
+        return 0;
     }
     for (int i = 0; i < initial_stock_count; i++) {
         Stock stock;
         stocks_list.push_back(stock); // Add the stock to the vector
     }
     if (loadsave == "1") {
-        loadstatus(rounds_played, stocks_list, balance, playerName);
-        load_hsi(hsi_history);
+        loadstatus(rounds_played, stocks_list, balance, playerName, hsi_history);
     }
     if (loadsave == "0") {
         createplayer(playerName); // create a new save file
