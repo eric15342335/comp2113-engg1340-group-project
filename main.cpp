@@ -184,6 +184,12 @@ int main(void) {
     int col; // Number of characters to fit in a row
     fetchConsoleDimensions(row, col);
     std::vector<Stock> stocks_list;
+    for (int i = 0; i < initial_stock_count; i++) {
+        Stock stock;
+        stocks_list.push_back(stock); // Add the stock to the vector
+    }
+    sortStocksList(stocks_list, by_category, ascending);
+
     std::vector<float> hsi_history;
     std::string loadsave;
     std::cout << "Please enter 0 for new save, enter 1 for loading old save, enter 2 for deleting save or enter 3 to quit: ";
@@ -192,6 +198,12 @@ int main(void) {
         std::cout << "Invalid input. Please enter 0 for new save, enter 1 for loading old save, enter 2 for deleting save or enter 3 to quit: ";
         std::cin >> loadsave; // choose new file or load previous file
     }
+    if (loadsave == "0") {
+        createplayer(playerName); // create a new save file
+    }
+    if (loadsave == "1") {
+        loadstatus(rounds_played, stocks_list, balance, playerName, hsi_history);
+    }
     if (loadsave == "2") {
         delsave(loadsave); // delete existing file
     }
@@ -199,16 +211,6 @@ int main(void) {
         std::cout << "Goodbye! Hope you had a good luck in the stock market!" << std::endl;
         ;
         return 0;
-    }
-    for (int i = 0; i < initial_stock_count; i++) {
-        Stock stock;
-        stocks_list.push_back(stock); // Add the stock to the vector
-    }
-    if (loadsave == "1") {
-        loadstatus(rounds_played, stocks_list, balance, playerName, hsi_history);
-    }
-    if (loadsave == "0") {
-        createplayer(playerName); // create a new save file
     }
     get_hsi(stocks_list, hsi_history);
     drawLogo(row, col);
