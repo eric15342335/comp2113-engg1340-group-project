@@ -218,6 +218,13 @@ class Stock {
          */
         bool can_add_event(Stock_event event);
 
+        /**
+         * @brief Sums up get_attribute() and sum_attribute().
+         * @param attribute The attribute to get.
+         * @return Total value of the attribute. `float` type.
+         */
+        float getTotalAttribute(stock_modifiers attribute);
+
     private:
         /** @brief Name of the stock that we assigned to it. */
         std::string name;
@@ -254,5 +261,30 @@ class Stock {
          */
         void remove_obselete_event(void);
 };
+
+enum SortingMethods {
+    by_name,
+    by_price,
+    by_category,
+    by_quantity,
+    by_money_spent,
+    by_upper_limit,
+    by_lower_limit,
+    by_mean,
+    by_sd
+};
+
+enum SortingDirections {
+    ascending,
+    descending
+};
+
+/**
+ * @brief Sorts the stocks.
+ * @param stocks_list A vector of stocks. Pass by reference to modify the stocks.
+ * @param sortMethod Sorting method.
+ * @param sortDirection Sorting direction. True for ascending, false for descending.
+ */
+void sortStocksList(std::vector<Stock> & stocks_list, SortingMethods sortMethod, SortingDirections sortDirection);
 
 #endif
