@@ -38,7 +38,7 @@ void time::sleep(int dur) {
 
 string setCursorPosition(int offsetY, int offsetX) {
     string base = "\x1b[";
-    base = base + to_string(offsetY) + "," + to_string(offsetX) + "H";
+    base = base + to_string(offsetY) + ";" + to_string(offsetX) + "H";
     return base;
 }
 

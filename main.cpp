@@ -3,6 +3,8 @@
  * @brief Hello! Welcome to the Stock Market Simulator!
  * @authors Everyone in the group project.
  */
+
+#include "controls.h"
 #include "draw.h"
 #include "events.h"
 #include "file_io.h"
@@ -195,11 +197,13 @@ int main(void) {
     int row; // Number of characters to fit in a column
     int col; // Number of characters to fit in a row
     fetchConsoleDimensions(row, col);
+
     std::vector<Stock> stocks_list;
     for (int i = 0; i < initial_stock_count; i++) {
         Stock stock;
         stocks_list.push_back(stock); // Add the stock to the vector
     }
+
     sortStocksList(stocks_list, by_category, ascending);
 
     std::vector<float> hsi_history;
@@ -211,9 +215,6 @@ int main(void) {
         std::cout << "Invalid input. Please enter 0 for new save, enter 1 for loading "
                      "old save, enter 2 for deleting save or enter 3 to quit: ";
         std::cin >> loadsave; // choose new file or load previous file
-    }
-    if (loadsave == "0") {
-        createplayer(playerName); // create a new save file
     }
     if (loadsave == "1") {
         loadstatus(rounds_played, stocks_list, balance, playerName, hsi_history);
@@ -227,20 +228,24 @@ int main(void) {
         ;
         return 0;
     }
+    // Done loading/creating a new file.
+
     get_hsi(stocks_list, hsi_history);
+
     drawLogo(row, col);
-    std::cout << "Welcome to the Stock Market Simulator!" << std::endl;
     time::sleep(100);
     std::cout << "Current trading fees are charged at " << trading_fees_percent * 100
               << " %" << std::endl;
     time::sleep(100);
-    std::cout << textClear << setCursorPosition(0, 0);
+    std::cout << textClear << setCursorPosition(5, 0);
     print_table(stocks_list, balance); // Print the table of stocks
     drawRoundInfo(row, col, rounds_played, balance);
     drawEventBar(row, col);
     drawButton(row, col);
+    optionsInput(row, col, balance, trading_fees_percent, stocks_list);
     time::sleep(200);
 
+    /*
     // Simulate 5*2 rounds of the game with buying/selling alternating
     for (int i = 0; i < 10; i++) {
         // Simulate player selling stocks
@@ -274,9 +279,24 @@ int main(void) {
         drawButton(row, col);
         time::sleep(200);
     }
+    */
+
+    std::cout << textClear << setCursorPosition(5, 0);
+    print_table(stocks_list, balance);
+    // A test case for the graphs. Also can get a better understanding
+    // of stock price fluctuation.
+    // for (unsigned int i = 0; i < stocks_list.size(); i++) {
+    //     graph_plotting(playerName, i, col * 2 / 3, row - 10);
+    // }
+    drawRoundInfo(row, col, rounds_played, balance);
+    drawEventBar(row, col);
+    drawButton(row, col);
+    optionsInput(row, col, balance, trading_fees_percent, stocks_list);
+    std::cout << "\n";
 
     std::cout << "HSI: " << hsi_history[hsi_history.size() - 1] << std::endl;
     graph_plotting(playerName, 0, 100, 20);
     graph_plotting(playerName, -1, 100, 20);
+
     return 0;
 }
