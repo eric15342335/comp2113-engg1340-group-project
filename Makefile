@@ -63,10 +63,4 @@ fix:
 	git commit -a -m "Run clang-format" -m "make fix"
 	git push
 
-all:
-	make clean
-	make
-	make test
-	make docs
-
-.PHONY: test clean docs fix all
+.PHONY: test clean docs fix

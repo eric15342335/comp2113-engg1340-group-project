@@ -148,7 +148,7 @@ class Stock {
 
         /**
          * @brief Get the quantity of the stock. Getter function.
-         * @return Quantity of the stock as float.
+         * @return Stock.quantity as unsigned int.
          */
         unsigned int get_quantity(void) {
             return quantity;
@@ -203,7 +203,7 @@ class Stock {
 
         /**
          * @brief Get the split count of the stock. Getter function.
-         * @return Split count of the stock as int.
+         * @return Stock.split_count as unsigned int.
          */
         unsigned int get_split_count(void) {
             return split_count;
@@ -217,6 +217,13 @@ class Stock {
          * @return True if the event can be added. False otherwise.
          */
         bool can_add_event(Stock_event event);
+
+        /**
+         * @brief Sums up get_attribute() and sum_attribute().
+         * @param attribute The attribute to get.
+         * @return Total value of the attribute. `float` type.
+         */
+        float getTotalAttribute(stock_modifiers attribute);
 
     private:
         /** @brief Name of the stock that we assigned to it. */
@@ -254,5 +261,30 @@ class Stock {
          */
         void remove_obselete_event(void);
 };
+
+enum SortingMethods {
+    by_name,
+    by_price,
+    by_category,
+    by_quantity,
+    by_money_spent,
+    by_upper_limit,
+    by_lower_limit,
+    by_mean,
+    by_sd
+};
+
+enum SortingDirections {
+    ascending,
+    descending
+};
+
+/**
+ * @brief Sorts the stocks.
+ * @param stocks_list A vector of stocks. Pass by reference to modify the stocks.
+ * @param sortMethod Sorting method.
+ * @param sortDirection Sorting direction. True for ascending, false for descending.
+ */
+void sortStocksList(std::vector<Stock> & stocks_list, SortingMethods sortMethod, SortingDirections sortDirection);
 
 #endif
