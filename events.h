@@ -112,9 +112,10 @@ struct Stock_event {
          * @param event The event object to get the data from.
          * @return A std:ostream object contains all the data of the event.
          * @code
-         * Stock_event event;                     // Create a event object by calling
-         * the constructor std::cout << event << std::endl; // Print the data of the
-         * event.
+         * // Create a event object by calling the constructor
+         * Stock_event event;
+         * // Print the data of the event.
+         * std::cout << event << std::endl;
          * @endcode
          */
         friend std::ostream & operator<<(
@@ -133,7 +134,7 @@ struct Stock_event {
         }
 
         /**
-         * Deserialize the event from a std::istream object.
+         * @brief Deserialize the event from a std::istream object.
          * @param inputstream The std::istream object to read the data.
          * @param event The event object to store the data.
          * @return A std:istream object contains all the data of the event.
