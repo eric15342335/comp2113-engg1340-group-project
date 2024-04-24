@@ -81,9 +81,7 @@ To run the game:
 
 ## Generation of [random](./random_price.cpp) game sets or [events](https://eric15342335.github.io/comp2113-engg1340-group-project/events_8h.html)
 
-First, all our `random`-related code are stored in [`random_price.cpp`](https://eric15342335.github.io/comp2113-engg1340-group-project/random__price_8cpp.html).
-
-Generation of stock prices:
+Generation of stock prices [(file)](./random_price.cpp) [(docs)](https://eric15342335.github.io/comp2113-engg1340-group-project/random__price_8cpp.html):
 - We used normal distribution to generate the percentage change in the stock price for each new round.
 - Instead of generating new stock price based on current price, we discovered this is easier for us to code.
 
