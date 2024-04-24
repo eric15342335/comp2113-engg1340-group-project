@@ -89,15 +89,6 @@ void drawButton(int row, int col) {
     buttons = options.size();
     width = (int)(col / buttons);
 
-    /*
-    std::cout << setCursorPosition(row - 2, 3);
-    for (int i = 0; i < buttons; i++) {
-        i % 2 == 0 ? std::cout << textBlack << bgWhite : std::cout << textWhite <<
-    bgBlack; for (int j = 0; j < width; j++) { std::cout << " ";
-        }
-    }
-    */
-
     std::cout << textReset << setCursorPosition(row - 1, 3);
     for (int i = 0; i < buttons; i++) {
         i % 2 == 0 ? std::cout << bgWhite << textBlack
@@ -112,13 +103,5 @@ void drawButton(int row, int col) {
             std::cout << " ";
         }
     }
-    /*
-    std::cout << textReset << setCursorPosition(row, 3);
-    for (int i = 0; i < buttons; i++) {
-        i % 2 == 0 ? std::cout << textBlack << bgWhite : std::cout << textWhite <<
-    bgBlack; for (int j = 0; j < width; j++) { std::cout << " ";
-        }
-    }
-    */
     std::cout << textReset << "\n";
 }
