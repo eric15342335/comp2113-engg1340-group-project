@@ -1,4 +1,4 @@
-# Stock Market Simulator
+# [Stock](https://eric15342335.github.io/comp2113-engg1340-group-project/classStock.html) Market Simulator
 
 ## Menu
 
@@ -50,95 +50,89 @@
 
 ## Game Description
 
-"Stock Market Simulator" is a game that attempts to introduce a realistic
+"[Stock]((https://eric15342335.github.io/comp2113-engg1340-group-project/classStock.html)) Market Simulator" is a game that attempts to introduce a realistic
 stock buying experience to players. The game utilizes the random number generation
 capability of the operating system to mimic real-life stock unpredictable trends while
-giving players breathing room to better think about their investing strategies.
+giving players breathing room to better think about their [investing](https://en.wikipedia.org/wiki/Investment) strategies.
 
 ## How to Play
 
-Compile:
+To compile:
 ```bash
 make
+```
+To run the game:
+```bash
 ./stocksim
 ```
-
-Use your brain
+[Makefile usage](./Makefile)
 
 0 1 2 3 save/load game
 
 press what to buy/sell/check news/toggle view table/next round/exit
 
-win condition: no
+The game will proceed indefinitely unless you enter '[E] Exit`. There is no win condition.
 
 # Code Requirements
 
-## Generation of random game sets or events
+## Generation of [random](./random_price.cpp) game sets or [events](https://eric15342335.github.io/comp2113-engg1340-group-project/events_8h.html)
 
-We used normal distribution to generate the percentage change in the stock price for each new round.
+First, all our `random`-related code are stored in [`random_price.[cpp,h]`](https://eric15342335.github.io/comp2113-engg1340-group-project/random__price_8cpp.html).
+Generation of stock prices:
+- We used normal distribution to generate the percentage change in the stock price for each new round.
+- Instead of generating new stock price based on current price, we discovered this is easier for us to code.
 
-See [our documentation on events.h](https://eric15342335.github.io/comp2113-engg1340-group-project/events_8h.html) regarding how such distribution
-can be manipulated to suit our needs.
-
-You may want to consult our events.cpp source code, specifically the
-`std::vector<Stock_event> pick_events (std::vector<Stock_event>all_events, unsigned int num_events)` for how we implement this feature.
-
-In our game, we also included <num> events that will each have a possibility to happen in your gameplay.
+Generation of in-game [events](https://eric15342335.github.io/comp2113-engg1340-group-project/events_8h.html):
+- In our game, we also included *_99_* events that will each have a possibility to happen in your gameplay.
+  - The probability of each event is determined by the `probability_permille` member variable. (Despite the name, the value of this variable does not actually represent such meaning in our [implementation](https://eric15342335.github.io/comp2113-engg1340-group-project/events_8cpp.html#a24cd47ec3d81ef215901b99cbe434829))
 
 ## Data structures for storing game status (e.g., arrays, STL containers)
 
-In [`stock.h`](./stock.h), we declared class [`Stock`](https://eric15342335.github.io/comp2113-engg1340-group-project/classStock.html) which utilizes STL `vector`, `list` and `map` to store various game data:
-See [the Stock class documentation](https://eric15342335.github.io/comp2113-engg1340-group-project/classStock.html) for more information.
+In [`stock.h`](./stock.h), we declared [class `Stock`](https://eric15342335.github.io/comp2113-engg1340-group-project/classStock.html) which utilizes [STL `vector`](https://en.cppreference.com/w/cpp/container/vector), [`list`](https://en.cppreference.com/w/cpp/container/list) and [`map`](https://en.cppreference.com/w/cpp/container/map) to store various game data.
+
+Other than `class Stock`, we have [`struct Stock_event`](https://eric15342335.github.io/comp2113-engg1340-group-project/structStock__event.html) that represents an in-game event.
 
 ## Dynamic memory management (e.g., dynamic arrays, linked lists, STL containers)
 
-- stock history is stl vector
-- stock event list is stl list
-- stock attribute is stl map
+- `Stock.history` is an `std::vector<float>` that stores the history of the stock prices.
+- `Stock.events` is an `std::list<Stock_event>` that stores on-going events that applies to the stock itself.
+- `Stock.attributes` is an `std::map<stock_modifiers, float>` that stores the [properties](https://eric15342335.github.io/comp2113-engg1340-group-project/events_8h.html#a185fb61c0dff5e2a9b6c147a261736ee) related to stock price generation.
 
-## File input/output (e.g., for loading/saving game status)
+## [File input/output](./file_io.cpp) (e.g., for loading/saving game status)
 
-game saving and loading
-store all stocks and player data to saves/playername/*.save
-
-Related files: [`file_io.cpp`](file_io.cpp) [`file_io.h`](file_io.h)
+All game data is stored in `saves/<playername>/*.save`. Such as:
+- player's name and balance
+- data of all stocks, e.g. price, history, on-going events, modifiers, etc.
+- HSI value history
 
 ## Program codes in multiple files (recall separate compilation)
 
-We split our program codes into multiple files according to their functionality and purposes:
-- `main.cpp`: main program routine
-- [`stock.cpp` `stock.h`](https://eric15342335.github.io/comp2113-engg1340-group-project/classStock.html):
-- `events.cpp`: stores all the in-game events
-- `graph.cpp`: plot a graph
-- `random_price.cpp`: generate percentage change of the stock price
-- `names.cpp`: generate stock names according to their industry
-- `file_io.cpp`: save/load game state
-- `draw.cpp`: terminal output
-- `format.cpp`: idk
-- `controls.cpp`: idk
+We split our program codes into multiple files according to their functionality and purposes.
+[Click me to see the details of each file.](https://eric15342335.github.io/comp2113-engg1340-group-project/files.html)
 
 [Makefile](./Makefile)
 
 ## Proper indentation and naming styles
 
-We enforce our code formatting style via the use of `clang-format` tool. You can see our configuration file [here.](./.clang-format)
+We enforce our code formatting style via the use of [`clang-format`](https://clang.llvm.org/docs/ClangFormat.html) tool. You can see our configuration file [here.](./.clang-format)
+
+For naming styles, different members of our group has different preferences (list may not include all styles/files):
+- snake_case: @eric15342335 `stock.cpp` `stock.h`
+- camelCase: @Prismatiscence `format.cpp` `format.h` `draw.cpp` `draw.h` `controls.cpp` `controls.h`
 
 ## In-code documentation
 
-[Our `doxygen` documentation is available! (Click Me!)](https://eric15342335.github.io/comp2113-engg1340-group-project/)
+We take documentation seriously. In our code, we use `JavaDoc` as the format to write our comments. This allow us to integrate with third-party documentation auto-generate tools like `doxygen`.
+
+If you haven't noticed why we have so many hyperlinks in this [README.md](./README.md) file, click [here](https://eric15342335.github.io/comp2113-engg1340-group-project/) to know what the links are pointing to!
 
 # Credits
 
 ## Non-standard libraries used
 
-[VariadicTable](./nonstdlibs/README.md)
+For printing the prettified table, we used [VariadicTable](./nonstdlibs/README.md) in our code. VariadicTable is a third-party header-only library licensed
+under [LGPL-2.1](./nonstdlibs/LICENSE.VariadicTable.md).
 
 ## Logo
 
-The logo used here and in-game is generated with [Text to ASCII](https://www.asciiart.eu/text-to-ascii-art)
-
-# The End
-
-This is the end of our README.md. Thanks for reading!
-
-Group 88
+The logo used here and in-game is generated with [Text to ASCII](https://www.asciiart.eu/text-to-ascii-art).
