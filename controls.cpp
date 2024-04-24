@@ -72,20 +72,56 @@ int integerInput(int row, int col, std::string message) {
 void buyStocks(
     int row, int col, float & balance, float tax, std::vector<Stock> & stocks) {
     int index;
-    int amount;
+    unsigned int amount;
 
     index = integerInput(row, col, "Enter the index of the stock as shown: ");
+    while (index < 1 || index > 20) {
+        std::cout << setCursorPosition(row, 0) << "\x1b[2K";
+        std::cout << "Index out of range!";
+        time::sleep(1000);
+        index = integerInput(row, col, "Enter the index of the stock as shown: ");
+    }
     amount = integerInput(row, col, "Enter the amount to buy: ");
+    while (amount < 1) {
+        std::cout << setCursorPosition(row, 0) << "\x1b[2K";
+        std::cout << "You cannot purchase negative amounts!";
+        time::sleep(1000);
+        index = integerInput(row, col, "Enter the amount to buy: ");
+    }
+    while (amount > stocks[index - 1].num_stocks_affordable(balance, tax)) {
+        std::cout << setCursorPosition(row, 0) << "\x1b[2K";
+        std::cout << "Cannot afford!";
+        time::sleep(1000);
+        amount = integerInput(row, col, "Enter the amount to buy: ");
+    }
     stocks[index - 1].purchase(balance, amount, tax);
 }
 
 void sellStocks(
     int row, int col, float & balance, float tax, std::vector<Stock> & stocks) {
     int index;
-    int amount;
+    unsigned int amount;
 
     index = integerInput(row, col, "Enter the index of the stock as shown: ");
-    amount = integerInput(row, col, "Enter the amount to buy: ");
+    while (index < 1 || index > 20) {
+        std::cout << setCursorPosition(row, 0) << "\x1b[2K";
+        std::cout << "Index out of range!";
+        time::sleep(1000);
+        index = integerInput(row, col, "Enter the index of the stock as shown: ");
+    }
+    amount = integerInput(row, col, "Enter the amount to sell: ");
+    while (amount < 1) {
+        std::cout << setCursorPosition(row, 0) << "\x1b[2K";
+        std::cout << "You cannot sell negative amounts!";
+        time::sleep(1000);
+        index = integerInput(row, col, "Enter the amount to sell: ");
+    }
+    while (amount > stocks[index - 1].get_quantity()) {
+        std::cout << setCursorPosition(row, 0) << "\x1b[2K";
+        std::cout << "You do not have this many stocks!";
+        time::sleep(1000);
+        amount = integerInput(row, col, "Enter the amount to sell: ");
+    }
     stocks[index - 1].sell(balance, amount, tax);
 }
 
