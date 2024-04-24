@@ -1,5 +1,7 @@
-#include "events.h"
 #include "random_price.h"
+
+#include "events.h"
+
 #include <cstdlib>
 #include <random>
 // Included iostream for debugging uses.
@@ -13,8 +15,7 @@ float init_stock_price(int price_profile) {
         distribution.param(std::normal_distribution<float>::param_type(50.0, 20.0));
     }
     if (price_profile == 3) {
-        distribution.param(
-            std::normal_distribution<float>::param_type(150.0, 50.0));
+        distribution.param(std::normal_distribution<float>::param_type(150.0, 50.0));
     }
     return std::abs(distribution(gen));
 }
@@ -45,8 +46,9 @@ float percentage_change_price(Stock & stock) {
     // will be inappropriate in case of anyone tweaking the mean and sd of events.cpp
     // If you change those stuff please notify it before we discover
     // the stock prices traverse between heaven and hell or as invariant as John F. Kenedy's heart rate.
-    float offset = 0.0007 * (stock.get_attribute(mean) + stock.sum_attribute(mean));
-    float sd = 3.0 * (stock.get_attribute(standard_deviation) + stock.sum_attribute(standard_deviation));
+    float offset = 0.0007*(stock.get_attribute(mean) + stock.sum_attribute(mean));
+    float sd = 3.0*(stock.get_attribute(standard_deviation) +
+               stock.sum_attribute(standard_deviation));
     unsigned int rounds_passed = stock.get_history_size();
     std::random_device rd;
     std::mt19937 gen(rd());

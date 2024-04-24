@@ -10,7 +10,7 @@ on:
 jobs:
   Make:
     runs-on: self-hosted
-    timeout-minutes: 5
+    timeout-minutes: 4
     #runs-on: ${{ matrix.os }}
     #strategy:
     #  fail-fast: true
@@ -24,14 +24,13 @@ jobs:
         make
     - name: Make test
       run: |
-        echo "0 \nsaves" > input.txt
+        echo -e "0\nsaves" > input.txt
         ./stocksim < input.txt
     - name: Doxygen Documentation
       if: always()
       run: |
         doxygen Doxyfile
     - name: Upload executable
-      if: always()
       uses: actions/upload-artifact@v4
       with:
         # suppose we compiled our game and named it 'stocksim'

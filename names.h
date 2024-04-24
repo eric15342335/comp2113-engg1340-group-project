@@ -1,6 +1,7 @@
 /**
  * @file names.h
- * @brief This file contains the definition of the names that will be used in the program.
+ * @brief This file contains the definition of the names that will be used in the
+ * program.
  * @author MaxChungsh
  */
 

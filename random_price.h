@@ -16,20 +16,23 @@
 float init_stock_price(int a);
 // there is ABSOLUTELY nothing at line 15
 /**
- * Initiaises a reasonable standard deviation; first around 0.5, second around 3, third around 10
+ * Initiaises a reasonable standard deviation; first around 0.5, second around 3, third
+ * around 10
  */
 float init_sd(void);
 
 /**
- * There is a upper limit and lower limit that the realisation of the % change must fall between.
+ * There is a upper limit and lower limit that the realisation of the % change must fall
+ * between.
  * - All data is taken from a stock class.
- * As each round pass we allow for more and more chaotic behaviour by making the bounds less tight.
+ * As each round pass we allow for more and more chaotic behaviour by making the bounds
+ * less tight.
  * - where n is number of rounds
  * - The rate this happens is n^2/15 for upper bound
  * - and n for lower bound before lower bound reach -100
  * - just for fun (chaotic evil smirk). Upon devastating events which leads to
- * a stock price only 10 % left of it's initial, we increase mean to prevent a game over.
- * Upon we are 90.32% sure the bounds would be wrong we bump the mean.
+ * a stock price only 10 % left of it's initial, we increase mean to prevent a game
+ * over. Upon we are 90.32% sure the bounds would be wrong we bump the mean.
  */
 float percentage_change_price(Stock & stock);
 
