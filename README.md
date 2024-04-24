@@ -140,3 +140,4 @@ under [LGPL-2.1](./nonstdlibs/LICENSE.VariadicTable.md).
 
 The logo used here and in-game is generated with [Text to ASCII](https://www.asciiart.eu/text-to-ascii-art).
 
+[Back to top](#stock-market-simulator)
