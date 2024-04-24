@@ -9,7 +9,7 @@
 #include <tuple>
 
 void optionsInput(
-    int row, int col, float& balance, float tax, std::vector<Stock>& stocks) {
+    int row, int col, float & balance, float tax, std::vector<Stock> & stocks) {
     char input;
     while (1) {
         std::cout << setCursorPosition(row, 0) << "\x1b[2K";
@@ -69,7 +69,8 @@ int integerInput(int row, int col, std::string message) {
     }
 }
 
-void buyStocks(int row, int col, float& balance, float tax, std::vector<Stock>& stocks) {
+void buyStocks(
+    int row, int col, float & balance, float tax, std::vector<Stock> & stocks) {
     int index;
     int amount;
 
@@ -78,7 +79,8 @@ void buyStocks(int row, int col, float& balance, float tax, std::vector<Stock>& 
     stocks[index - 1].purchase(balance, amount, tax);
 }
 
-void sellStocks(int row, int col, float& balance, float tax, std::vector<Stock>& stocks) {
+void sellStocks(
+    int row, int col, float & balance, float tax, std::vector<Stock> & stocks) {
     int index;
     int amount;
 
@@ -88,7 +90,7 @@ void sellStocks(int row, int col, float& balance, float tax, std::vector<Stock>&
 }
 
 void quitConfirmation(
-    int row, int col, float& balance, float tax, std::vector<Stock>& stocks) {
+    int row, int col, float & balance, float tax, std::vector<Stock> & stocks) {
     std::ignore = col;
     char input;
     std::cout << setCursorPosition(row, 0) << "\x1b[2K";
