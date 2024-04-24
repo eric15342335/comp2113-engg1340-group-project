@@ -1,5 +1,7 @@
 # [Stock](https://eric15342335.github.io/comp2113-engg1340-group-project/classStock.html) Market Simulator
-
+[![clang-format](https://github.com/eric15342335/comp2113-engg1340-group-project/actions/workflows/clang-format.yml/badge.svg?branch=main)](https://github.com/eric15342335/comp2113-engg1340-group-project/actions/workflows/clang-format.yml)
+[![Make](https://github.com/eric15342335/comp2113-engg1340-group-project/actions/workflows/make.yml/badge.svg)](https://github.com/eric15342335/comp2113-engg1340-group-project/actions/workflows/make.yml)
+[![Deploy static content to pages](https://github.com/eric15342335/comp2113-engg1340-group-project/actions/workflows/static.yml/badge.svg)](https://github.com/eric15342335/comp2113-engg1340-group-project/actions/workflows/static.yml)
 ## Menu
 
 1. [Team Members](#team-members)
