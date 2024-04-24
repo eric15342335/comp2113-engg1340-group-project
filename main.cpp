@@ -233,7 +233,6 @@ int main(void) {
     get_hsi(stocks_list, hsi_history);
 
     drawLogo(row, col);
-    std::cout << "Welcome to the Stock Market Simulator!" << std::endl;
     time::sleep(100);
     std::cout << "Current trading fees are charged at " << trading_fees_percent * 100
               << " %" << std::endl;
@@ -283,7 +282,7 @@ int main(void) {
     */
 
     std::cout << textClear << setCursorPosition(5, 0);
-    // print_table(stocks_list, balance);
+    print_table(stocks_list, balance);
     // A test case for the graphs. Also can get a better understanding
     // of stock price fluctuation.
     // for (unsigned int i = 0; i < stocks_list.size(); i++) {
