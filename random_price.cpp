@@ -66,7 +66,7 @@ float percentage_change_price(Stock & stock) {
         // Attempt to return it 5 times. If it still fail to show above -100 we dismiss the return.
         for (int w = 0; w < 5; w++) {
             if (u > -100) {
-                return u;
+                return u/pow(2, stock.get_split_count());
             }
         }
     }
@@ -78,7 +78,7 @@ float percentage_change_price(Stock & stock) {
         // Still quite a bit of adjustment though at 100 %
         for (int w = 0; w < 5; w++) {
             if (u > -100) {
-                return u;
+                return u/pow(2, stock.get_split_count());
             }
         }
     }
@@ -126,13 +126,13 @@ float percentage_change_price(Stock & stock) {
         float x = distribution(gen);
         max_loop++;
         if (x > lower_lim && x < upper_lim) {
-            return x;
+            return x/pow(2, stock.get_split_count());
         }
         else if (max_loop > 1000) {
             // This is wanted because I need to still have some stocastic behavour even against a fault
             // so that it kind of works. This is the second and final defense against any infinite loops.
-            unsigned int i = random_integer(10);
-            float stocastics[10] = {0.95507, -0.74162, 1.642, -0.94774, -0.80314, 1.7885, -0.09846, 1.4693, 0.19288, -1.70222};
+            unsigned int i = random_integer(12);
+            float stocastics[12] = {0.95507, -0.74162, 1.642, -0.94774, -0.80314, 1.7885, -0.09846, 1.4693, 0.19288, -1.70222, 1.20933, -0.71088};
             return stocastics[i];
         }
     }
