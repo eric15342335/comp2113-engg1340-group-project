@@ -82,7 +82,8 @@ std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ all_stocks,
         /** category */ 0,
         /** modifiers*/
-        {{standard_deviation, 0.15}, {mean, -30}, {lower_limit, -30}, {upper_limit, 0}}},
+        {{standard_deviation, 0.15}, {mean, -30}, {lower_limit, -30},
+            {upper_limit, 0}}},
     {/** event_id */ 5,
         /** mutually_exclusive_events */ {},
         /** text */
@@ -101,7 +102,8 @@ std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ all_stocks,
         /** category */ 0,
         /** modifiers*/
-        {{standard_deviation, 0.08}, {mean, -10}, {lower_limit, -15}, {upper_limit, 5}}},
+        {{standard_deviation, 0.08}, {mean, -10}, {lower_limit, -15},
+            {upper_limit, 5}}},
     {/** event_id */ 7,
         /** mutually_exclusive_events */ {},
         /** text */ "Inflation Surges: Market Concerns Rise as Prices Soar",
