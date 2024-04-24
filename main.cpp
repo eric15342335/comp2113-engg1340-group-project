@@ -194,6 +194,7 @@ void next_round_routine(
 
 /** Main function, the entry point of the program */
 int main(void) {
+    bool viewMode = 0;
     bool advance;      // Whether to advance to the next round
     bool gameQuit = 0; // Whether the player wants to quit the game
     bool optionsQuit;
@@ -246,13 +247,16 @@ int main(void) {
         advance = 0;
         optionsQuit = 0;
         std::cout << textClear << setCursorPosition(5, 0);
-        print_table(stocks_list, balance); // Print the table of stocks
+        if (viewMode) {
+            graph_plotting(playerName, 1, col * 2/3, row - 10);
+        } else {
+            print_table(stocks_list, balance); // Print the table of stocks
+        }
         drawRoundInfo(row, col, rounds_played, balance);
         drawEventBar(row, col);
         drawButton(row, col);
         while (!optionsQuit) {
-            optionsInput(row, col, balance, trading_fees_percent, stocks_list, advance,
-                gameQuit, optionsQuit);
+            optionsInput(row, col, balance, trading_fees_percent, stocks_list, viewMode, advance, optionsQuit, gameQuit);
         }
         time::sleep(sleepShort);
 
@@ -263,15 +267,7 @@ int main(void) {
         }
     }
 
-    // A test case for the graphs. Also can get a better understanding
-    // of stock price fluctuation.
-    // for (unsigned int i = 0; i < stocks_list.size(); i++) {
-    //     graph_plotting(playerName, i, col * 2 / 3, row - 10);
-    // }
-
     std::cout << "HSI: " << hsi_history[hsi_history.size() - 1] << std::endl;
-    // graph_plotting(playerName, 0, 100, 20);
-    // graph_plotting(playerName, -1, 100, 20);
 
     return 0;
 }
