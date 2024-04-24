@@ -1,7 +1,12 @@
 # [Stock](https://eric15342335.github.io/comp2113-engg1340-group-project/classStock.html) Market Simulator
+
+![C++](https://img.shields.io/badge/c++-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=white)
+![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
+
 [![clang-format](https://github.com/eric15342335/comp2113-engg1340-group-project/actions/workflows/clang-format.yml/badge.svg?branch=main)](https://github.com/eric15342335/comp2113-engg1340-group-project/actions/workflows/clang-format.yml)
 [![Make](https://github.com/eric15342335/comp2113-engg1340-group-project/actions/workflows/make.yml/badge.svg)](https://github.com/eric15342335/comp2113-engg1340-group-project/actions/workflows/make.yml)
 [![Pages (doxygen)](https://github.com/eric15342335/comp2113-engg1340-group-project/actions/workflows/static.yml/badge.svg)](https://github.com/eric15342335/comp2113-engg1340-group-project/actions/workflows/static.yml)
+
 ## Menu
 
 1. [Team Members](#team-members)
@@ -62,7 +67,7 @@
 
 ## Game Description
 
-"[Stock]((https://eric15342335.github.io/comp2113-engg1340-group-project/classStock.html)) Market Simulator" is a game that attempts to introduce a realistic
+"[Stock](https://eric15342335.github.io/comp2113-engg1340-group-project/classStock.html) Market Simulator" is a game that attempts to introduce a realistic
 stock buying experience to players. The game utilizes the random number generation
 capability of the operating system to mimic real-life stock unpredictable trends while
 giving players breathing room to better think about their [investing](https://en.wikipedia.org/wiki/Investment) strategies.
@@ -134,6 +139,8 @@ If you haven't noticed that why we have so many hyperlinks in this [README.md](.
 # Credits
 
 ## Non-standard libraries used
+
+![External Libraries](https://img.shields.io/badge/External_Libraries-VariadicTable-darkgreen)
 
 For printing the prettified table, we used [VariadicTable](./nonstdlibs/README.md) in our code. VariadicTable is a third-party header-only library licensed
 under [LGPL-2.1](./nonstdlibs/LICENSE.VariadicTable.md).
