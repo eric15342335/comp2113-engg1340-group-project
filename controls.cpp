@@ -75,7 +75,7 @@ void buyStocks(
     unsigned int amount;
 
     index = integerInput(row, col, "Enter the index of the stock as shown: ");
-    while (index < 1 || index > 20) {
+    while (index < 1 || index > (int)stocks.size()) {
         std::cout << setCursorPosition(row, 0) << "\x1b[2K";
         std::cout << "Index out of range!";
         time::sleep(1000);
@@ -103,7 +103,7 @@ void sellStocks(
     unsigned int amount;
 
     index = integerInput(row, col, "Enter the index of the stock as shown: ");
-    while (index < 1 || index > 20) {
+    while (index < 1 || index > (int)stocks.size()) {
         std::cout << setCursorPosition(row, 0) << "\x1b[2K";
         std::cout << "Index out of range!";
         time::sleep(1000);

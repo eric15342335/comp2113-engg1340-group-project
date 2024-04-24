@@ -237,13 +237,16 @@ int main(void) {
     std::cout << "Current trading fees are charged at " << trading_fees_percent * 100
               << " %" << std::endl;
     time::sleep(100);
-    std::cout << textClear << setCursorPosition(5, 0);
-    print_table(stocks_list, balance); // Print the table of stocks
-    drawRoundInfo(row, col, rounds_played, balance);
-    drawEventBar(row, col);
-    drawButton(row, col);
-    optionsInput(row, col, balance, trading_fees_percent, stocks_list);
-    time::sleep(200);
+
+    while (1) {
+        std::cout << textClear << setCursorPosition(5, 0);
+        print_table(stocks_list, balance); // Print the table of stocks
+        drawRoundInfo(row, col, rounds_played, balance);
+        drawEventBar(row, col);
+        drawButton(row, col);
+        optionsInput(row, col, balance, trading_fees_percent, stocks_list);
+        time::sleep(200);
+    }
 
     /*
     // Simulate 5*2 rounds of the game with buying/selling alternating
@@ -281,18 +284,11 @@ int main(void) {
     }
     */
 
-    std::cout << textClear << setCursorPosition(5, 0);
-    print_table(stocks_list, balance);
     // A test case for the graphs. Also can get a better understanding
     // of stock price fluctuation.
     // for (unsigned int i = 0; i < stocks_list.size(); i++) {
     //     graph_plotting(playerName, i, col * 2 / 3, row - 10);
     // }
-    drawRoundInfo(row, col, rounds_played, balance);
-    drawEventBar(row, col);
-    drawButton(row, col);
-    optionsInput(row, col, balance, trading_fees_percent, stocks_list);
-    std::cout << "\n";
 
     std::cout << "HSI: " << hsi_history[hsi_history.size() - 1] << std::endl;
     graph_plotting(playerName, 0, 100, 20);
