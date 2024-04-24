@@ -44,7 +44,7 @@ std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ all_stocks,
         /** category */ 0,
         /** modifiers*/
-        {{standard_deviation, 0.1}, {mean, 2}, {lower_limit, 0}, {upper_limit, 20}}},
+        {{standard_deviation, 0.1}, {mean, 20}, {lower_limit, 0}, {upper_limit, 20}}},
     {/** event_id */ 1,
         /** mutually_exclusive_events */ {0, 3},
         /** text */ "The FED has increased the interest rate!",
@@ -53,7 +53,7 @@ std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ all_stocks,
         /** category */ 0,
         /** modifiers*/
-        {{standard_deviation, 0.1}, {mean, -2}, {lower_limit, -20}, {upper_limit, 0}}},
+        {{standard_deviation, 0.1}, {mean, -20}, {lower_limit, -20}, {upper_limit, 0}}},
     {/** event_id */ 2,
         /** mutually_exclusive_events */ {},
         /** text */ "Economic Recession: Market Downturn Signals Investor Concerns",
@@ -62,7 +62,7 @@ std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ all_stocks,
         /** category */ 0,
         /** modifiers*/
-        {{standard_deviation, 0.2}, {mean, -5}, {lower_limit, -50}, {upper_limit, 0}}},
+        {{standard_deviation, 0.2}, {mean, -50}, {lower_limit, -50}, {upper_limit, 0}}},
     {/** event_id */ 3,
         /** mutually_exclusive_events */ {1},
         /** text */
@@ -72,7 +72,7 @@ std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ all_stocks,
         /** category */ 0,
         /** modifiers*/
-        {{standard_deviation, 0.05}, {mean, 1}, {lower_limit, 0}, {upper_limit, 10}}},
+        {{standard_deviation, 0.05}, {mean, 10}, {lower_limit, 0}, {upper_limit, 10}}},
     {/** event_id */ 4,
         /** mutually_exclusive_events */ {},
         /** text */
@@ -82,7 +82,8 @@ std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ all_stocks,
         /** category */ 0,
         /** modifiers*/
-        {{standard_deviation, 0.15}, {mean, -3}, {lower_limit, -30}, {upper_limit, 0}}},
+        {{standard_deviation, 0.15}, {mean, -30}, {lower_limit, -30},
+            {upper_limit, 0}}},
     {/** event_id */ 5,
         /** mutually_exclusive_events */ {},
         /** text */
@@ -92,7 +93,7 @@ std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ all_stocks,
         /** category */ 0,
         /** modifiers*/
-        {{standard_deviation, 0.1}, {mean, -2}, {lower_limit, -20}, {upper_limit, 0}}},
+        {{standard_deviation, 0.1}, {mean, -20}, {lower_limit, -20}, {upper_limit, 0}}},
     {/** event_id */ 6,
         /** mutually_exclusive_events */ {},
         /** text */ "Government Policy Change: Market Impacted by New Regulations",
@@ -101,7 +102,8 @@ std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ all_stocks,
         /** category */ 0,
         /** modifiers*/
-        {{standard_deviation, 0.08}, {mean, -1}, {lower_limit, -15}, {upper_limit, 5}}},
+        {{standard_deviation, 0.08}, {mean, -10}, {lower_limit, -15},
+            {upper_limit, 5}}},
     {/** event_id */ 7,
         /** mutually_exclusive_events */ {},
         /** text */ "Inflation Surges: Market Concerns Rise as Prices Soar",
