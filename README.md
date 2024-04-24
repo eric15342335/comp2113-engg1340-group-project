@@ -57,10 +57,19 @@ giving players breathing room to better think about their investing strategies.
 
 ## How to Play
 
+Compile:
 ```bash
 make
 ./stocksim
 ```
+
+Use your brain
+
+0 1 2 3 save/load game
+
+press what to buy/sell/check news/toggle view table/next round/exit
+
+win condition: no
 
 # Code Requirements
 
@@ -119,6 +128,7 @@ We enforce our code formatting style via the use of `clang-format` tool. You can
 [Our `doxygen` documentation is available! (Click Me!)](https://eric15342335.github.io/comp2113-engg1340-group-project/)
 
 # Credits
+
 ## Non-standard libraries used
 
 [VariadicTable](./nonstdlibs/README.md)
@@ -130,4 +140,5 @@ The logo used here and in-game is generated with [Text to ASCII](https://www.asc
 # The End
 
 This is the end of our README.md. Thanks for reading!
+
 Group 88
