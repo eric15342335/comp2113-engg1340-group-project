@@ -1,14 +1,17 @@
 #ifndef CONTROLS_H
 #define CONTROLS_H
 
-void optionsInput(int row, int col);
+#include <vector>
+#include "stock.h"
+
+void optionsInput(int row, int col, float balance, float tax, std::vector<Stock> stocks);
 
 int integerInput(int row, int col, std::string message);
 
-void buyStocks(int row, int col);
+void buyStocks(int row, int col, float balance, float tax, std::vector<Stock> stocks);
 
-void sellStocks(int row, int col);
+void sellStocks(int row, int col, float balance, float tax, std::vector<Stock> stocks);
 
-void quitConfirmation(int row, int col);
+void quitConfirmation(int row, int col, float balance, float tax, std::vector<Stock> stocks);
 
 #endif

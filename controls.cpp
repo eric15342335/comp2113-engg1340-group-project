@@ -6,7 +6,7 @@
 #include "format.h"
 #include "controls.h"
 
-void optionsInput(int row, int col) {
+void optionsInput(int row, int col, float balance, float tax, std::vector<Stock> stocks) {
     char input;
     while (1) {
         std::cout << setCursorPosition(row, 0) << "\x1b[2K";
@@ -14,16 +14,16 @@ void optionsInput(int row, int col) {
         std::cin >> input;
         switch (input) {
         case 'B':
-            buyStocks(row, col);
+            buyStocks(row, col, balance, tax, stocks);
             break;
         case 'b':
-            buyStocks(row, col);
+            buyStocks(row, col, balance, tax, stocks);
             break;
         case 'S':
-            sellStocks(row, col);
+            sellStocks(row, col, balance, tax, stocks);
             break;
         case 's':
-            sellStocks(row, col);
+            sellStocks(row, col, balance, tax, stocks);
             break;
         case 'T':
             break;
@@ -38,10 +38,10 @@ void optionsInput(int row, int col) {
         case 'o':
             break;
         case 'X':
-            quitConfirmation(row, col);
+            quitConfirmation(row, col, balance, tax, stocks);
             break;
         case 'x':
-            quitConfirmation(row, col);
+            quitConfirmation(row, col, balance, tax, stocks);
             break;
         default:
             std::cout << setCursorPosition(row, 0) << "\x1b[2K";
@@ -73,29 +73,31 @@ int integerInput(int row, int col, std::string message) {
     }
 }
 
-void buyStocks(int row, int col) {
+void buyStocks(int row, int col, float balance, float tax, std::vector<Stock> stocks) {
     int index;
-    int amount = 1;
+    int amount;
 
     index = integerInput(row, col, "Enter the index of the stock as shown: ");
-    // stocks_list[index - 1].purchase(balance, amount, trading_fees_percent);
+    amount = integerInput(row, col, "Enter the amount to buy: ");
+    stocks[index - 1].purchase(balance, amount, tax);
 
-    std::ignore = index;
-    std::ignore = amount;
+    // std::ignore = index;
+    // std::ignore = amount;
 }
 
-void sellStocks(int row, int col) {
+void sellStocks(int row, int col, float balance, float tax, std::vector<Stock> stocks) {
     int index;
-    int amount = 1;
+    int amount;
 
     index = integerInput(row, col, "Enter the index of the stock as shown: ");
-    // stocks_list[index - 1].sell(balance, amount, trading_fees_percent);
+    amount = integerInput(row, col, "Enter the amount to buy: ");
+    stocks[index - 1].sell(balance, amount, tax);
 
-    std::ignore = index;
-    std::ignore = amount;
+    // std::ignore = index;
+    // std::ignore = amount;
 }
 
-void quitConfirmation(int row, int col) {
+void quitConfirmation(int row, int col, float balance, float tax, std::vector<Stock> stocks) {
     std::ignore = col;
     char input;
     std::cout << setCursorPosition(row, 0) << "\x1b[2K";
@@ -105,6 +107,6 @@ void quitConfirmation(int row, int col) {
         std::exit(0);
     }
     else {
-        optionsInput(row, col);
+        optionsInput(row, col, balance, tax, stocks);
     }
 }

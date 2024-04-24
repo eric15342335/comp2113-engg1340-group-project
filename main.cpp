@@ -172,6 +172,7 @@ int main(void) {
 
     // File IO related code, for game saving and loading
     std::string playerName, loadsave;
+    std::cout << textClear;
     std::cout << "Enter 0 for new save or enter 1 for loading old save: ";
     std::cin >> loadsave;
     while (loadsave != "0" && loadsave != "1") {
@@ -191,12 +192,12 @@ int main(void) {
     time::sleep(100);
     std::cout << "Current trading fees are charged at " << trading_fees_percent * 100 << " %" << std::endl;
     time::sleep(100);
-    std::cout << textClear << setCursorPosition(0, 0);
+    std::cout << textClear << setCursorPosition(5, 0);
     print_table(stocks_list, balance); // Print the table of stocks
     drawRoundInfo(row, col, rounds_played, balance);
     drawEventBar(row, col);
     drawButton(row, col);
-    optionsInput(row, col);
+    optionsInput(row, col, balance, trading_fees_percent, stocks_list);
     time::sleep(200);
 
     /*
@@ -239,7 +240,7 @@ int main(void) {
     drawRoundInfo(row, col, rounds_played, balance);
     drawEventBar(row, col);
     drawButton(row, col);
-    optionsInput(row, col);
+    optionsInput(row, col, balance, trading_fees_percent, stocks_list);
     std::cout << "\n";
     return 0;
 }
