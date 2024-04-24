@@ -6,9 +6,19 @@
 2. [Game Description](#game-description)
 3. [How to Play](#how-to-play)
 4. [Code Requirements](#code-requirements)
-5. [Non-standard Libraries Used](#non-standard-libraries-used)
+   1. [Generation of random game sets or events](#generation-of-random-game-sets-or-events)
+   2. [Data structures for storing game status (e.g., arrays, STL containers)]
+   3. [Dynamic memory management (e.g., dynamic arrays, linked lists, STL containers)
+   4. [File input/output (e.g., for loading/saving game status)]
+   5. [Program codes in multiple files (recall separate compilation)]
+   6. [Proper indentation and naming styles]
+   7. [In-code documentation]
+5. [Credits](#credits)
+   1. [Logo](#logo)
+   2. [Non-standard Libraries Used](#non-standard-libraries-used)
 
 ## Team members
+
 <!-- markdownlint-disable MD033 -->
 
 <table>
@@ -67,17 +77,12 @@ To run the game:
 ```
 [Makefile usage](./Makefile)
 
-0 1 2 3 save/load game
-
-press what to buy/sell/check news/toggle view table/next round/exit
-
-The game will proceed indefinitely unless you enter '[E] Exit`. There is no win condition.
-
 # Code Requirements
 
 ## Generation of [random](./random_price.cpp) game sets or [events](https://eric15342335.github.io/comp2113-engg1340-group-project/events_8h.html)
 
-First, all our `random`-related code are stored in [`random_price.[cpp,h]`](https://eric15342335.github.io/comp2113-engg1340-group-project/random__price_8cpp.html).
+First, all our `random`-related code are stored in [`random_price.cpp`](https://eric15342335.github.io/comp2113-engg1340-group-project/random__price_8cpp.html).
+
 Generation of stock prices:
 - We used normal distribution to generate the percentage change in the stock price for each new round.
 - Instead of generating new stock price based on current price, we discovered this is easier for us to code.
@@ -122,9 +127,9 @@ For naming styles, different members of our group has different preferences (lis
 
 ## In-code documentation
 
-We take documentation seriously. In our code, we use `JavaDoc` as the format to write our comments. This allow us to integrate with third-party documentation auto-generate tools like `doxygen`.
+We take documentation _seriously_. In our code, we use `JavaDoc` as the format to write our comments. This allow us to integrate with third-party documentation auto-generate tools like [`doxygen`](https://www.doxygen.nl/).
 
-If you haven't noticed why we have so many hyperlinks in this [README.md](./README.md) file, click [here](https://eric15342335.github.io/comp2113-engg1340-group-project/) to know what the links are pointing to!
+If you haven't noticed that why we have so many hyperlinks in this [README.md](./README.md) file, click [here](https://eric15342335.github.io/comp2113-engg1340-group-project/) to know what the links are pointing to!
 
 # Credits
 
