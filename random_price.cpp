@@ -53,7 +53,7 @@ float percentage_change_price(Stock & stock) {
     // stock prices traverse between heaven and hell or as invariant as John F. Kenedy's
     // heart rate.
     float offset = meanMultiplier * (stock.getTotalAttribute(mean));
-    float sd = sdMultiplier * (stock.getTotalAttribute(sd));
+    float sd = sdMultiplier * (stock.getTotalAttribute(standard_deviation));
     unsigned int rounds_passed = stock.get_history_size();
     std::random_device rd;
     std::mt19937 gen(rd());
