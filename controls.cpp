@@ -8,8 +8,8 @@
 #include <limits>
 #include <tuple>
 
-void optionsInput(
-    int row, int col, float & balance, float tax, std::vector<Stock> & stocks, bool& advance, bool& gameQuit, bool& optionsQuit) {
+void optionsInput(int row, int col, float & balance, float tax,
+    std::vector<Stock> & stocks, bool & advance, bool & gameQuit, bool & optionsQuit) {
     char input;
     while (1) {
         std::cout << setCursorPosition(row, 0) << "\x1b[2K";
@@ -127,7 +127,7 @@ void sellStocks(
     stocks[index - 1].sell(balance, amount, tax);
 }
 
-void advanceConfirmation(int row, int col, bool& advance, bool& optionsQuit) {
+void advanceConfirmation(int row, int col, bool & advance, bool & optionsQuit) {
     std::ignore = col;
     char input;
     std::cout << setCursorPosition(row, 0) << "\x1b[2K";
@@ -139,8 +139,7 @@ void advanceConfirmation(int row, int col, bool& advance, bool& optionsQuit) {
     }
 }
 
-void quitConfirmation(
-    int row, int col, bool& gameQuit, bool& optionsQuit) {
+void quitConfirmation(int row, int col, bool & gameQuit, bool & optionsQuit) {
     std::ignore = col;
     char input;
     std::cout << setCursorPosition(row, 0) << "\x1b[2K";

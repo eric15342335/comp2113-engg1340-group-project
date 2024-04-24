@@ -194,7 +194,7 @@ void next_round_routine(
 
 /** Main function, the entry point of the program */
 int main(void) {
-    bool advance; // Whether to advance to the next round
+    bool advance;      // Whether to advance to the next round
     bool gameQuit = 0; // Whether the player wants to quit the game
     bool optionsQuit;
     int row; // Number of characters to fit in a column
@@ -251,10 +251,11 @@ int main(void) {
         drawEventBar(row, col);
         drawButton(row, col);
         while (!optionsQuit) {
-            optionsInput(row, col, balance, trading_fees_percent, stocks_list, advance, gameQuit, optionsQuit);
+            optionsInput(row, col, balance, trading_fees_percent, stocks_list, advance,
+                gameQuit, optionsQuit);
         }
         time::sleep(200);
-        
+
         if (advance) {
             next_round_routine(rounds_played, stocks_list);
             get_hsi(stocks_list, hsi_history);
