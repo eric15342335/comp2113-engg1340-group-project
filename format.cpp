@@ -52,7 +52,7 @@ void fetchConsoleDimensions(int & row, int & col) {
     int mode = 2;
     switch (mode) {
         case 1:
-            row = 24;
+            row = 30;
             col = 80;
             break;
         case 2:
