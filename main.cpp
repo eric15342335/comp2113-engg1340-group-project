@@ -98,8 +98,8 @@ void print_table(std::vector<Stock> stocks_list, float balance, mode m = dev) {
                 stocks_list[i].delta_price_percentage() * 100,
                 stocks_list[i].get_quantity(),
                 stocks_list[i].num_stocks_affordable(balance, trading_fees_percent),
-                stocks_list[i].getTotalAttribute(mean),
-                stocks_list[i].getTotalAttribute(standard_deviation),
+                stocks_list[i].getTotalAttribute(mean) * meanMultiplier,
+                stocks_list[i].getTotalAttribute(standard_deviation) * sdMultiplier,
                 stocks_list[i].getTotalAttribute(upper_limit),
                 stocks_list[i].getTotalAttribute(lower_limit),
                 vectorToString(stocks_list[i].get_event_ids()));

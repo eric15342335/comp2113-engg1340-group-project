@@ -1,3 +1,9 @@
+/**
+ * @file random_price.cpp
+ * @brief Random price generator for stock market simulation
+ * @author 84ds84d8s
+ */
+
 #include "random_price.h"
 
 #include "events.h"
@@ -30,7 +36,6 @@ float init_sd(void) {
 unsigned int random_integer(unsigned int max_integer) {
     // Discrete uniform distribution
     // like python randint
-    // Moved up; this decision will be justified at about line 128 where it is used
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<unsigned int> distribution(0, max_integer - 1);
@@ -47,22 +52,12 @@ float percentage_change_price(Stock & stock) {
     // events.cpp If you change those stuff please notify it before we discover the
     // stock prices traverse between heaven and hell or as invariant as John F. Kenedy's
     // heart rate.
-    float offset = 0.0007 * (stock.get_attribute(mean) + stock.sum_attribute(mean));
-    float sd = 3.0 * (stock.get_attribute(standard_deviation) +
-                         stock.sum_attribute(standard_deviation));
+    float offset = meanMultiplier * (stock.getTotalAttribute(mean));
+    float sd = sdMultiplier * (stock.getTotalAttribute(sd));
     unsigned int rounds_passed = stock.get_history_size();
     std::random_device rd;
     std::mt19937 gen(rd());
     if (current_price < init_price / 10) {
-        // Previous Note By Eric:
-        // Jeremy will fix the issue of current_price being too low e.g. 0
-        // This action will have negligible effect on the stock price
-        // I recommend to change the mean of the stock price
-        // and add a new event "stock price rescue operation" via the add_event function
-        // to push up the mean temporarily.
-        // Note by Jeremy:
-        // this code was originally stock.change_mean(current_price * 0.3);
-        // Now we use another way to solve this problem:
         // Force the return of a significantly higher mean normal dist, by a bit over
         // doubling the price.
         std::normal_distribution<float> distribution(offset + 200, sd);
@@ -87,16 +82,24 @@ float percentage_change_price(Stock & stock) {
             }
         }
     }
+    /* There is a upper limit and lower limit that the realisation of the % change must
+     * fall between. As each round pass we allow for more and more chaotic behaviour by
+     * making the bounds less tight.
+     * - `n`: is number of rounds
+     * - The rate of this happens is n^2/15 for upper bound
+     * - and n for lower bound before lower bound reach -100
+     * - just for fun (chaotic evil smirk). Upon devastating events which leads to
+     * a stock price only 10 % left of it's initial, we increase mean to prevent a game
+     * over. Upon we are 90.32% sure the bounds would be wrong we bump the mean.
+     */
     float temp = 100 * abs(init_price - current_price) / init_price;
     // The unprocessed limits defined to make the lines look shorter w/o need to scroll
     // The names of variables here cannot be lower_limit as the stock attribute
     // lower_limit and upper_limit would crash with the float lower_ and upper_ limits
     // defined by the line 7x. So these variables and lines are of justified reason of
     // existence.
-    float unprocessed_upper_lim =
-        stock.get_attribute(upper_limit) + stock.sum_attribute(upper_limit);
-    float unprocessed_lower_lim =
-        stock.get_attribute(lower_limit) + stock.sum_attribute(lower_limit);
+    float unprocessed_upper_lim = stock.getTotalAttribute(upper_limit);
+    float unprocessed_lower_lim = stock.getTotalAttribute(lower_limit);
     float upper_lim = unprocessed_upper_lim + rounds_passed / 3 + temp;
     float lower_lim = -1 * (unprocessed_lower_lim + rounds_passed / 3 + temp);
     float z_score_upper_limit = (upper_limit - offset) / sd;
