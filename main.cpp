@@ -134,13 +134,19 @@ std::vector<Stock_event> get_ongoing_events(std::vector<Stock> stocks_list) {
 }
 
 /**
- * Generate new events and apply them to the stocks. Should be called at the beginning
- * of each round. We put it in a function so we can call it multiple times easily.
+ * @brief Generate new events and apply them to the stocks. Should be called at the
+ * beginning of each round.
  * @param stocks_list A vector of stocks. Pass by reference to modify the stocks.
  */
 void new_events_next_round(std::vector<Stock> & stocks_list) {
-    // Apply events into stocks
-    std::vector<Stock_event> picked_events = pick_events(all_stock_events, 5);
+    /** @note numEvents is the sum of these two values:
+     * - A random integer between 0 and 2
+     * - 1/5 of numOfRounds, or 2. Whichever is smaller
+     */
+    unsigned int numEvents =
+        random_integer(2) +
+        std::min(static_cast<int>(stocks_list[0].get_history_size() / 5), 2);
+    std::vector<Stock_event> picked_events = pick_events(all_stock_events, numEvents);
     for (Stock_event event : picked_events) {
         switch (event.type_of_event) {
             case all_stocks:
