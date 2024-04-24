@@ -236,11 +236,11 @@ int main(void) {
     get_hsi(stocks_list, hsi_history);
 
     drawLogo(row, col);
-    time::sleep(1000);
+    time::sleep(sleepMedium);
     std::cout << textClear << setCursorPosition(0, 0);
     std::cout << "Current trading fees are charged at " << trading_fees_percent * 100
               << " %" << std::endl;
-    time::sleep(1000);
+    time::sleep(sleepMedium);
 
     while (!gameQuit) {
         advance = 0;
@@ -254,7 +254,7 @@ int main(void) {
             optionsInput(row, col, balance, trading_fees_percent, stocks_list, advance,
                 gameQuit, optionsQuit);
         }
-        time::sleep(200);
+        time::sleep(sleepShort);
 
         if (advance) {
             next_round_routine(rounds_played, stocks_list);
@@ -270,8 +270,8 @@ int main(void) {
     // }
 
     std::cout << "HSI: " << hsi_history[hsi_history.size() - 1] << std::endl;
-    graph_plotting(playerName, 0, 100, 20);
-    graph_plotting(playerName, -1, 100, 20);
+    // graph_plotting(playerName, 0, 100, 20);
+    // graph_plotting(playerName, -1, 100, 20);
 
     return 0;
 }

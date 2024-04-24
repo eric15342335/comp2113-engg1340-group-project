@@ -30,6 +30,10 @@ extern const std::string bgMagenta;
 extern const std::string bgCyan;
 extern const std::string bgWhite;
 
+extern const int sleepShort;
+extern const int sleepMedium;
+extern const int sleepLong;
+
 class time {
     public:
         static void sleep(int dur); // unit is in ms
