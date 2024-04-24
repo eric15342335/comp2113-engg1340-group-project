@@ -14,27 +14,20 @@ void optionsInput(int row, int col, float balance, float tax, std::vector<Stock>
         std::cin >> input;
         switch (input) {
         case 'B':
-            buyStocks(row, col, balance, tax, stocks);
-            break;
         case 'b':
             buyStocks(row, col, balance, tax, stocks);
             break;
         case 'S':
-            sellStocks(row, col, balance, tax, stocks);
-            break;
         case 's':
             sellStocks(row, col, balance, tax, stocks);
             break;
         case 'T':
-            break;
         case 't':
             break;
         case 'E':
-            break;
         case 'e':
             break;
         case 'O':
-            break;
         case 'o':
             break;
         case 'X':
@@ -80,9 +73,6 @@ void buyStocks(int row, int col, float balance, float tax, std::vector<Stock> st
     index = integerInput(row, col, "Enter the index of the stock as shown: ");
     amount = integerInput(row, col, "Enter the amount to buy: ");
     stocks[index - 1].purchase(balance, amount, tax);
-
-    // std::ignore = index;
-    // std::ignore = amount;
 }
 
 void sellStocks(int row, int col, float balance, float tax, std::vector<Stock> stocks) {
@@ -92,9 +82,6 @@ void sellStocks(int row, int col, float balance, float tax, std::vector<Stock> s
     index = integerInput(row, col, "Enter the index of the stock as shown: ");
     amount = integerInput(row, col, "Enter the amount to buy: ");
     stocks[index - 1].sell(balance, amount, tax);
-
-    // std::ignore = index;
-    // std::ignore = amount;
 }
 
 void quitConfirmation(int row, int col, float balance, float tax, std::vector<Stock> stocks) {
