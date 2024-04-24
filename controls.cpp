@@ -9,7 +9,7 @@
 #include <tuple>
 
 void optionsInput(
-    int row, int col, float & balance, float tax, std::vector<Stock> & stocks) {
+    int row, int col, float & balance, float tax, std::vector<Stock> & stocks, bool& advance, bool& gameQuit, bool& optionsQuit) {
     char input;
     while (1) {
         std::cout << setCursorPosition(row, 0) << "\x1b[2K";
@@ -30,14 +30,16 @@ void optionsInput(
             case 'E':
             case 'e':
                 break;
+            case 'N':
+            case 'n':
+                advanceConfirmation(row, col, advance, optionsQuit);
+                break;
             case 'O':
             case 'o':
                 break;
             case 'X':
-                quitConfirmation(row, col, balance, tax, stocks);
-                break;
             case 'x':
-                quitConfirmation(row, col, balance, tax, stocks);
+                quitConfirmation(row, col, gameQuit, optionsQuit);
                 break;
             default:
                 std::cout << setCursorPosition(row, 0) << "\x1b[2K";
@@ -125,17 +127,27 @@ void sellStocks(
     stocks[index - 1].sell(balance, amount, tax);
 }
 
-void quitConfirmation(
-    int row, int col, float & balance, float tax, std::vector<Stock> & stocks) {
+void advanceConfirmation(int row, int col, bool& advance, bool& optionsQuit) {
     std::ignore = col;
     char input;
     std::cout << setCursorPosition(row, 0) << "\x1b[2K";
     std::cout << "Press [Y] to confirm: ";
     std::cin >> input;
     if (input == 'Y' || input == 'y') {
-        std::exit(0);
+        advance = 1;
+        optionsQuit = 1;
     }
-    else {
-        optionsInput(row, col, balance, tax, stocks);
+}
+
+void quitConfirmation(
+    int row, int col, bool& gameQuit, bool& optionsQuit) {
+    std::ignore = col;
+    char input;
+    std::cout << setCursorPosition(row, 0) << "\x1b[2K";
+    std::cout << "Press [Y] to confirm: ";
+    std::cin >> input;
+    if (input == 'Y' || input == 'y') {
+        gameQuit = 1;
+        optionsQuit = 1;
     }
 }

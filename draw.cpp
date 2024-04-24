@@ -84,7 +84,7 @@ void drawButton(int row, int col) {
     int buttons;
 
     std::vector<std::string> options = {"[B] Buy", "[S] Sell", "[T] Toggle View",
-        "[E] Events", "[O] Options", "[X] Exit"}; // Add stuff here
+        "[E] Events", "[N] Next Round", "[O] Options", "[X] Exit"}; // Add stuff here
 
     buttons = options.size();
     width = (int)(col / buttons);

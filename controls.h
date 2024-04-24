@@ -6,7 +6,7 @@
 #include <vector>
 
 void optionsInput(
-    int row, int col, float & balance, float tax, std::vector<Stock> & stocks);
+    int row, int col, float & balance, float tax, std::vector<Stock> & stocks, bool& advance, bool& gameQuit, bool& optionsQuit);
 
 int integerInput(int row, int col, std::string message);
 
@@ -16,7 +16,9 @@ void buyStocks(
 void sellStocks(
     int row, int col, float & balance, float tax, std::vector<Stock> & stocks);
 
+void advanceConfirmation(int row, int col, bool& advance, bool& optionsQuit);
+
 void quitConfirmation(
-    int row, int col, float & balance, float tax, std::vector<Stock> & stocks);
+    int row, int col, bool& gameQuit, bool& optionsQuit);
 
 #endif

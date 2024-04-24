@@ -194,6 +194,9 @@ void next_round_routine(
 
 /** Main function, the entry point of the program */
 int main(void) {
+    bool advance; // Whether to advance to the next round
+    bool gameQuit = 0; // Whether the player wants to quit the game
+    bool optionsQuit;
     int row; // Number of characters to fit in a column
     int col; // Number of characters to fit in a row
     fetchConsoleDimensions(row, col);
@@ -239,51 +242,25 @@ int main(void) {
               << " %" << std::endl;
     time::sleep(1000);
 
-    while (1) {
+    while (!gameQuit) {
+        advance = 0;
+        optionsQuit = 0;
         std::cout << textClear << setCursorPosition(5, 0);
         print_table(stocks_list, balance); // Print the table of stocks
         drawRoundInfo(row, col, rounds_played, balance);
         drawEventBar(row, col);
         drawButton(row, col);
-        optionsInput(row, col, balance, trading_fees_percent, stocks_list);
-        time::sleep(200);
-    }
-
-    /*
-    // Simulate 5*2 rounds of the game with buying/selling alternating
-    for (int i = 0; i < 10; i++) {
-        // Simulate player selling stocks
-        for (unsigned int i = 0; i < stocks_list.size(); i++) {
-            int num_sellable = stocks_list[i].get_quantity();
-            if (num_sellable > 0) {
-                stocks_list[i].sell(
-                    balance, random_integer(num_sellable), trading_fees_percent);
-            }
+        while (!optionsQuit) {
+            optionsInput(row, col, balance, trading_fees_percent, stocks_list, advance, gameQuit, optionsQuit);
         }
-        // Simulate player buying stocks
-        for (unsigned int i = 0; i < stocks_list.size(); i++) {
-            int num_buyable =
-                stocks_list[i].num_stocks_affordable(balance, trading_fees_percent);
-            // If the player can afford at least one stock, buy a random amount of
-            // stocks
-            if (num_buyable > 0) {
-                // Buy random amount of the stocks
-                stocks_list[i].purchase(
-                    balance, random_integer(num_buyable), trading_fees_percent);
-            }
-        }
-        next_round_routine(rounds_played, stocks_list); // Call the next round routine
-        get_hsi(stocks_list, hsi_history);
-        savestatus(rounds_played, stocks_list, balance, playerName);
-        std::cout << textClear << setCursorPosition(5, 0);
-        print_table(stocks_list, balance);
-        drawRoundInfo(
-            row, col, rounds_played, balance); // Prints the round number and balance
-        drawEventBar(row, col);
-        drawButton(row, col);
         time::sleep(200);
+        
+        if (advance) {
+            next_round_routine(rounds_played, stocks_list);
+            get_hsi(stocks_list, hsi_history);
+            savestatus(rounds_played, stocks_list, balance, playerName);
+        }
     }
-    */
 
     // A test case for the graphs. Also can get a better understanding
     // of stock price fluctuation.
