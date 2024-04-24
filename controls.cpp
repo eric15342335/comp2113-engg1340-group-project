@@ -43,7 +43,7 @@ void optionsInput(
                 std::cout << setCursorPosition(row, 0) << "\x1b[2K";
                 std::cout << "nope";
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                time::sleep(200);
+                time::sleep(1000);
                 continue;
         }
         break;
@@ -62,7 +62,7 @@ int integerInput(int row, int col, std::string message) {
             std::cout << setCursorPosition(row, 0) << "\x1b[2K";
             std::cout << "don't";
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            time::sleep(200);
+            time::sleep(1000);
             continue;
         }
         return num;

@@ -233,10 +233,11 @@ int main(void) {
     get_hsi(stocks_list, hsi_history);
 
     drawLogo(row, col);
-    time::sleep(100);
+    time::sleep(1000);
+    std::cout << textClear << setCursorPosition(0, 0);
     std::cout << "Current trading fees are charged at " << trading_fees_percent * 100
               << " %" << std::endl;
-    time::sleep(100);
+    time::sleep(1000);
 
     while (1) {
         std::cout << textClear << setCursorPosition(5, 0);

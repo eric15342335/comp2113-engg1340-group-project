@@ -20,12 +20,12 @@ void drawLogo(int row, int col) {
                   << "\n";
         time::sleep(1000);
         std::cout << textClear;
-        time::sleep(250);
+        time::sleep(500);
         std::cout << "Logo"
                   << "\n";
         time::sleep(1000);
         std::cout << textClear;
-        time::sleep(250);
+        time::sleep(500);
         std::cout << "Here"
                   << "\n";
     }
