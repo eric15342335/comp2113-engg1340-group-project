@@ -95,11 +95,11 @@ In [`stock.h`](./stock.h), we declared [class `Stock`](https://eric15342335.gith
 
 Other than `class Stock`, we have [`struct Stock_event`](https://eric15342335.github.io/comp2113-engg1340-group-project/structStock__event.html) that represents an in-game event.
 
-## Dynamic memory management (e.g., dynamic arrays, linked lists, STL containers)
+## Dynamic memory management (e.g., dynamic arrays, linked lists, [STL containers](https://en.cppreference.com/w/cpp/container))
 
-- `Stock.history` is an `std::vector<float>` that stores the history of the stock prices.
-- `Stock.events` is an `std::list<Stock_event>` that stores on-going events that applies to the stock itself.
-- `Stock.attributes` is an `std::map<stock_modifiers, float>` that stores the [properties](https://eric15342335.github.io/comp2113-engg1340-group-project/events_8h.html#a185fb61c0dff5e2a9b6c147a261736ee) related to stock price generation.
+- [`Stock.history`](https://eric15342335.github.io/comp2113-engg1340-group-project/random__price_8cpp.html) is an `std::vector<float>` that stores the history of the stock prices.
+- [`Stock.events`](https://eric15342335.github.io/comp2113-engg1340-group-project/random__price_8cpp.html) is an `std::list<Stock_event>` that stores on-going [events]((https://eric15342335.github.io/comp2113-engg1340-group-project/events_8h.html)) that applies to the stock itself.
+- [`Stock.attributes`](https://eric15342335.github.io/comp2113-engg1340-group-project/classStock.html#a5f6748d37037cc65608d15cc83b09bf2) is an `std::map<stock_modifiers, float>` that stores the [properties](https://eric15342335.github.io/comp2113-engg1340-group-project/events_8h.html#a185fb61c0dff5e2a9b6c147a261736ee) related to stock price generation.
 
 ## [File input/output](./file_io.cpp) (e.g., for loading/saving game status)
 
@@ -108,20 +108,20 @@ All game data is stored in `saves/<playername>/*.save`. Such as:
 - data of all stocks, e.g. price, history, on-going events, modifiers, etc.
 - HSI value history
 
-## Program codes in multiple files (recall separate compilation)
+## Program codes in multiple files (recall [separate compilation](./Makefile))
 
-We split our program codes into multiple files according to their functionality and purposes.
+We split our program codes into multiple files according to their functionality and purpose.
 [Click me to see the details of each file.](https://eric15342335.github.io/comp2113-engg1340-group-project/files.html)
-
-[Makefile](./Makefile)
 
 ## Proper indentation and naming styles
 
 We enforce our code formatting style via the use of [`clang-format`](https://clang.llvm.org/docs/ClangFormat.html) tool. You can see our configuration file [here.](./.clang-format)
 
-For naming styles, different members of our group has different preferences (list may not include all styles/files):
-- snake_case: @eric15342335 `stock.cpp` `stock.h`
-- camelCase: @Prismatiscence `format.cpp` `format.h` `draw.cpp` `draw.h` `controls.cpp` `controls.h`
+For naming styles, different [members](#team-members) of our group has different preferences.
+Some notable examples (list may not include all styles and files):
+- [snake_case](https://en.wikipedia.org/wiki/Snake_case): @eric15342335 [`stock.cpp`](./stock.cpp) [`stock.h`](./stock.h)
+- [camelCase](https://en.wikipedia.org/wiki/Camel_case): @Prismatiscence [`format.cpp`](./format.cpp) [`format.h`](./format.h)
+ [`draw.cpp`](./draw.cpp) [`draw.h`](./draw.h) [`controls.cpp`](./controls.cpp) [`controls.h`](./controls.h)
 
 ## In-code documentation
 
