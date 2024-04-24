@@ -63,42 +63,72 @@ void get_hsi(std::vector<Stock> stocks_list, std::vector<float> & hsi_history) {
     fout.close();
 }
 
+/**
+ * @brief hiding mean/sd/uplim/lowlim/event_id columns in the table
+ */
+enum mode { normal, dev };
+
 /** Print the table of stocks. We put it in a function so we can call it multiple times.
  * @param stocks_list A vector of stocks. The stocks to be printed.
  * @param balance How much money the player has.
+ * @param m mode to hide mean/sd/uplim/lowlim/event_id columns in the table
  */
-void print_table(std::vector<Stock> stocks_list, float balance) {
-    // Create a table, note that R"(% Change)" is a raw string literal (C++11 feature).
-    VariadicTable<unsigned int, std::string, std::string, float, float, float,
-        unsigned int, unsigned int, float, float, float, float, std::string>
-        table({"No.", "Category", "Name", "Last Price", "Change", R"(% Change)",
-            "Quantity", "Max", " Mean ", " SD ", "up", "low", "event_id"});
-    /* Set the precision and format of the columns.
-     * Note: Precision and Format is ignored for std::string columns. */
-    table.setColumnPrecision({1, 0, 0, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0});
-    table.setColumnFormat({VariadicTableColumnFormat::AUTO,
-        VariadicTableColumnFormat::AUTO, VariadicTableColumnFormat::AUTO,
-        VariadicTableColumnFormat::FIXED, VariadicTableColumnFormat::FIXED,
-        VariadicTableColumnFormat::FIXED, VariadicTableColumnFormat::FIXED,
-        VariadicTableColumnFormat::FIXED, VariadicTableColumnFormat::FIXED,
-        VariadicTableColumnFormat::FIXED, VariadicTableColumnFormat::FIXED,
-        VariadicTableColumnFormat::FIXED, VariadicTableColumnFormat::AUTO});
-    for (unsigned int i = 0; i < stocks_list.size(); i++) {
-        table.addRow(i + 1, stocks_list[i].category_name(), stocks_list[i].get_name(),
-            stocks_list[i].get_price(), stocks_list[i].delta_price(),
-            stocks_list[i].delta_price_percentage() * 100,
-            stocks_list[i].get_quantity(),
-            stocks_list[i].num_stocks_affordable(balance, trading_fees_percent),
-            stocks_list[i].get_attribute(mean) + stocks_list[i].sum_attribute(mean),
-            stocks_list[i].get_attribute(standard_deviation) +
-                stocks_list[i].sum_attribute(standard_deviation),
-            stocks_list[i].get_attribute(upper_limit) +
-                stocks_list[i].sum_attribute(upper_limit),
-            stocks_list[i].get_attribute(lower_limit) +
-                stocks_list[i].sum_attribute(lower_limit),
-            vectorToString(stocks_list[i].get_event_ids()));
+void print_table(std::vector<Stock> stocks_list, float balance, mode m = dev) {
+    if (m == dev) {
+        // Create a table, note that R"(% Change)" is a raw string literal (C++11
+        // feature).
+        VariadicTable<unsigned int, std::string, std::string, float, float, float,
+            unsigned int, unsigned int, float, float, float, float, std::string>
+            table({"No.", "Category", "Name", "Last Price", "Change", R"(% Change)",
+                "Quantity", "Max", " Mean ", " SD ", "up", "low", "event_id"});
+        /* Set the precision and format of the columns.
+         * Note: Precision and Format is ignored for std::string columns. */
+        table.setColumnPrecision({1, 0, 0, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0});
+        table.setColumnFormat({VariadicTableColumnFormat::AUTO,
+            VariadicTableColumnFormat::AUTO, VariadicTableColumnFormat::AUTO,
+            VariadicTableColumnFormat::FIXED, VariadicTableColumnFormat::FIXED,
+            VariadicTableColumnFormat::FIXED, VariadicTableColumnFormat::FIXED,
+            VariadicTableColumnFormat::FIXED, VariadicTableColumnFormat::FIXED,
+            VariadicTableColumnFormat::FIXED, VariadicTableColumnFormat::FIXED,
+            VariadicTableColumnFormat::FIXED, VariadicTableColumnFormat::AUTO});
+        for (unsigned int i = 0; i < stocks_list.size(); i++) {
+            table.addRow(i + 1, stocks_list[i].category_name(),
+                stocks_list[i].get_name(), stocks_list[i].get_price(),
+                stocks_list[i].delta_price(),
+                stocks_list[i].delta_price_percentage() * 100,
+                stocks_list[i].get_quantity(),
+                stocks_list[i].num_stocks_affordable(balance, trading_fees_percent),
+                stocks_list[i].getTotalAttribute(mean),
+                stocks_list[i].getTotalAttribute(standard_deviation),
+                stocks_list[i].getTotalAttribute(upper_limit),
+                stocks_list[i].getTotalAttribute(lower_limit),
+                vectorToString(stocks_list[i].get_event_ids()));
+        }
+        table.print(std::cout);
     }
-    table.print(std::cout);
+    else {
+        VariadicTable<unsigned int, std::string, std::string, float, float, float,
+            unsigned int, unsigned int>
+            table({"No.", "Category", "Name", "Last Price", "Change", R"(% Change)",
+                "Quantity", "Max"});
+        /* Set the precision and format of the columns.
+         * Note: Precision and Format is ignored for std::string columns. */
+        table.setColumnPrecision({1, 0, 0, 2, 2, 2, 1, 1});
+        table.setColumnFormat(
+            {VariadicTableColumnFormat::AUTO, VariadicTableColumnFormat::AUTO,
+                VariadicTableColumnFormat::AUTO, VariadicTableColumnFormat::FIXED,
+                VariadicTableColumnFormat::FIXED, VariadicTableColumnFormat::FIXED,
+                VariadicTableColumnFormat::FIXED, VariadicTableColumnFormat::FIXED});
+        for (unsigned int i = 0; i < stocks_list.size(); i++) {
+            table.addRow(i + 1, stocks_list[i].category_name(),
+                stocks_list[i].get_name(), stocks_list[i].get_price(),
+                stocks_list[i].delta_price(),
+                stocks_list[i].delta_price_percentage() * 100,
+                stocks_list[i].get_quantity(),
+                stocks_list[i].num_stocks_affordable(balance, trading_fees_percent));
+        }
+        table.print(std::cout);
+    }
     /* Display 2 decimal places for balance.
      * This line reverts the precision back to default after the table is printed.
      * Since the table uses std::auto (VariadicTableColumnFormat::AUTO), we need to
