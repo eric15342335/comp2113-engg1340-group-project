@@ -225,6 +225,7 @@ void next_round_routine(
 /** Main function, the entry point of the program */
 int main(void) {
     bool viewMode = 0;
+    int graphIndex;
     bool advance;      // Whether to advance to the next round
     bool gameQuit = 0; // Whether the player wants to quit the game
     bool optionsQuit;
@@ -276,11 +277,19 @@ int main(void) {
     while (!gameQuit) {
         advance = 0;
         optionsQuit = 0;
-        std::cout << textClear << setCursorPosition(5, 0);
         if (viewMode) {
+            graphIndex = integerInput(row, col, "Select stock index to display: ");
+            while (graphIndex < 1 || graphIndex > (int)stocks_list.size()) {
+                std::cout << setCursorPosition(row, 3) << "\x1b[2K";
+                std::cout << "Index out of range!";
+                time::sleep(sleepMedium);
+                graphIndex = integerInput(row, col, "Select stock index to display: ");
+            }
+            std::cout << textClear << setCursorPosition(5, 0);
             graph_plotting(playerName, 1, col * 2 / 3, row - 10);
         }
         else {
+            std::cout << textClear << setCursorPosition(5, 0);
             print_table(stocks_list, balance); // Print the table of stocks
         }
         drawRoundInfo(row, col, rounds_played, balance);
@@ -290,12 +299,13 @@ int main(void) {
             optionsInput(row, col, balance, trading_fees_percent, stocks_list, viewMode,
                 advance, optionsQuit, gameQuit);
         }
-        time::sleep(sleepShort);
 
         if (advance) {
             next_round_routine(rounds_played, stocks_list);
             get_hsi(stocks_list, hsi_history);
             savestatus(rounds_played, stocks_list, balance, playerName);
+            viewMode = 0;
+            time::sleep(sleepLong);
         }
     }
 
