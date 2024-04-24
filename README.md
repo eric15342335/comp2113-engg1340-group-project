@@ -56,6 +56,16 @@ giving players breathing room to better think about their investing strategies.
 ### Dynamic memory management (e.g., dynamic arrays, linked lists, STL containers)
 
 ### File input/output (e.g., for loading/saving game status)
+This game had options for players to create a new save, load an old save and delete
+save upon the startup of the game. The saves are distinguished by global variable
+std::string playerName. The name of the save folders are also in playerName. In each
+saves, every stock has a seperate .save file, while other basic information are stored
+in playerstatus.save and hsi in hsi.save . The saving process is automatic upon the end 
+of everyround to prevent lost of advancements of the game (and also prevent rollback)
+
+Moreover, this game relies heavily on c++17 library <filesystem> to maintain the tidiness
+of files. It enable us to obtain the name of avaiable saves, create folders and deleting
+saves.
 
 ### Program codes in multiple files (recall separate compilation)
 
