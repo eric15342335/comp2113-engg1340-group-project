@@ -7,10 +7,14 @@ on:
     pull_request:
     workflow_dispatch:
 
+concurrency:
+    group: "make"
+    cancel-in-progress: true
+
 jobs:
   Make:
     runs-on: self-hosted
-    timeout-minutes: 4
+    timeout-minutes: 2
     #runs-on: ${{ matrix.os }}
     #strategy:
     #  fail-fast: true
@@ -29,7 +33,7 @@ jobs:
     - name: Doxygen Documentation
       if: always()
       run: |
-        doxygen Doxyfile
+        make docs
     - name: Upload executable
       uses: actions/upload-artifact@v4
       with:
