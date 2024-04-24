@@ -1,6 +1,7 @@
+#include "format.h"
+
 #include <chrono>
 #include <thread>
-#include "format.h"
 using namespace std;
 
 const string textClear = "\x1b[2J";
@@ -46,21 +47,21 @@ void fetchConsoleDimensions(int & row, int & col) {
     // dynamic size needs testing on windows
     int mode = 2;
     switch (mode) {
-    case 1:
-        row = 24;
-        col = 80;
-        break;
-    case 2:
-        row = 36;
-        col = 120;
-        break;
-    case 3:
-        row = 48;
-        col = 160;
-        break;
-    default:
-        row = 36;
-        col = 120;
-        break;
+        case 1:
+            row = 24;
+            col = 80;
+            break;
+        case 2:
+            row = 36;
+            col = 120;
+            break;
+        case 3:
+            row = 48;
+            col = 160;
+            break;
+        default:
+            row = 36;
+            col = 120;
+            break;
     }
 }
