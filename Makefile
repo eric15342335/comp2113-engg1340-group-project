@@ -10,11 +10,10 @@
 FLAGS = -Wall -Wextra -std=c++17 -Werror -pedantic-errors -g -O0
 # -fsanitize=address -fsanitize=undefined
 
-
 # The default target is to compile the program.
 default: stocksim
 
-random_price.o: random_price.h random_price.cpp
+random_price.o: random_price.h random_price.cpp events.h stock.h
 	g++ $(FLAGS) -c random_price.cpp -o random_price.o
 	
 file_io.o: file_io.cpp file_io.h stock.h
@@ -23,7 +22,7 @@ file_io.o: file_io.cpp file_io.h stock.h
 stock.o: stock.cpp stock.h names.h random_price.h events.h
 	g++ $(FLAGS) -c stock.cpp -o stock.o
 
-events.o: events.h events.cpp
+events.o: events.h events.cpp random_price.h
 	g++ $(FLAGS) -c events.cpp -o events.o
 
 names.o: names.h names.cpp
@@ -38,7 +37,7 @@ draw.o: draw.cpp draw.h format.h
 graph.o: graph.h graph.cpp
 	g++ $(FLAGS) -c graph.cpp -o graph.o
 
-controls.o: controls.cpp controls.h
+controls.o: controls.cpp controls.h draw.h format.h stock.h
 	g++ $(FLAGS) -c controls.cpp -o controls.o
 
 stocksim: main.cpp stock.o random_price.o events.o names.o \
@@ -66,4 +65,11 @@ fix:
 	git commit -a -m "Run clang-format" -m "make fix"
 	git push
 
-.PHONY: test clean docs fix
+stats:
+	git checkout main
+	git remote prune origin
+	git pull --ff
+	git branch -av
+	git --no-pager log --oneline --graph -10
+
+.PHONY: test clean docs fix stats
