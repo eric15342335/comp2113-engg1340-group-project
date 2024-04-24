@@ -38,10 +38,13 @@ draw.o: draw.cpp draw.h format.h
 graph.o: graph.h graph.cpp
 	g++ $(FLAGS) -c graph.cpp -o graph.o
 
+controls.o: controls.cpp controls.h
+	g++ $(FLAGS) -c controls.cpp -o controls.o
+
 stocksim: main.cpp stock.o random_price.o events.o names.o \
-		  graph.o format.o draw.o file_io.o
+		  graph.o format.o draw.o file_io.o controls.o
 	g++ $(FLAGS) main.cpp stock.o random_price.o events.o names.o \
-				 graph.o format.o draw.o file_io.o \
+				 graph.o format.o draw.o file_io.o controls.o\
 				 -o stocksim
 
 test: stocksim
