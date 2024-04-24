@@ -7,7 +7,8 @@
 
 # Compiler flags, consider removing `-Werror` before submitting.
 
-FLAGS = -Wall -Wextra -std=c++17 -Werror -pedantic-errors -g -O0# -fsanitize=address -fsanitize=undefined
+FLAGS = -Wall -Wextra -std=c++17 -Werror -pedantic-errors -g -O0
+# -fsanitize=address -fsanitize=undefined
 
 
 # The default target is to compile the program.
@@ -40,9 +41,11 @@ graph.o: graph.h graph.cpp
 controls.o: controls.cpp controls.h
 	g++ $(FLAGS) -c controls.cpp -o controls.o
 
-stocksim: main.cpp stock.o random_price.o events.o names.o graph.o format.o draw.o file_io.o controls.o
-	g++ $(FLAGS) main.cpp stock.o random_price.o events.o names.o graph.o format.o draw.o file_io.o controls.o -o stocksim
-
+stocksim: main.cpp stock.o random_price.o events.o names.o \
+		  graph.o format.o draw.o file_io.o controls.o
+	g++ $(FLAGS) main.cpp stock.o random_price.o events.o names.o \
+				 graph.o format.o draw.o file_io.o controls.o\
+				 -o stocksim
 
 test: stocksim
 	./stocksim

@@ -1,10 +1,11 @@
+#include "draw.h"
+
+#include "format.h"
+
 #include <iostream>
 #include <string>
-#include <tuple>
-#include <vector>
 #include <tuple> // for std::ignore
-#include "draw.h"
-#include "format.h"
+#include <vector>
 
 void drawLogo(int row, int col) {
     const int wordWidth = 73; // Width of the longest word
@@ -82,22 +83,25 @@ void drawButton(int row, int col) {
     int width;
     int buttons;
 
-    std::vector<std::string> options = {"[B] Buy", "[S] Sell", "[T] Toggle View", "[E] Events", "[O] Options", "[X] Exit"}; // Add stuff here
+    std::vector<std::string> options = {"[B] Buy", "[S] Sell", "[T] Toggle View",
+        "[E] Events", "[O] Options", "[X] Exit"}; // Add stuff here
 
     buttons = options.size();
     width = (int)(col / buttons);
 
     std::cout << textReset << setCursorPosition(row - 1, 3);
     for (int i = 0; i < buttons; i++) {
-        i % 2 == 0 ? std::cout << bgWhite << textBlack : std::cout << bgBlack << textWhite;
+        i % 2 == 0 ? std::cout << bgWhite << textBlack
+                   : std::cout << bgBlack << textWhite;
         for (int j = 0; j < (int)((width - options[i].length()) / 2); j++) {
             std::cout << " ";
         }
         std::cout << textBold << options[i] << "\x1b[22m";
-        for (int j = 0; j < (int)(width - options[i].length() - (width - options[i].length()) / 2); j++) {
+        for (int j = 0;
+             j < (int)(width - options[i].length() - (width - options[i].length()) / 2);
+             j++) {
             std::cout << " ";
         }
     }
-
     std::cout << textReset << "\n";
 }

@@ -4,18 +4,21 @@
  * @brief Implementation of the Stock class.
  */
 
-#include <iostream>
-#include <fstream>
-#include <algorithm>
 #include "stock.h"
+
 #include "names.h"
 #include "random_price.h"
+
+#include <algorithm>
+#include <fstream>
+#include <iostream>
 
 Stock::Stock(void) {
     category = random_integer(category_list_size);
     name = generate_name(category, 1)[0];
-    /** The distribution of initial stock price will be consistent across same categories
-     * Note that the value '3' is because currently init_stock_price has 3 possible input values.
+    /** The distribution of initial stock price will be consistent across same
+     * categories Note that the value '3' is because currently init_stock_price has 3
+     * possible input values.
      */
     price = init_stock_price(category % 3 + 1);
     quantity = 0;
@@ -30,21 +33,22 @@ Stock::Stock(void) {
 void Stock::save(std::string playerName, int i) {
     std::string filesave;
     std::ofstream fout;
-    filesave = "saves/" + playerName + "/" + std::to_string(i) + ".save"; // creating the file path
+    filesave = "saves/" + playerName + "/" + std::to_string(i) +
+               ".save"; // creating the file path
     fout.open(filesave.c_str());
     fout << category << std::endl; // literally load everything into class into file
     fout << name << std::endl;
     for (unsigned int i = 0; i < history.size(); i++) {
         fout << history[i] << " ";
     }
-    fout << -1 << std::endl; // -1 is the stop code for vector<float> history in filesave
+    fout << -1
+         << std::endl; // -1 is the stop code for vector<float> history in filesave
     fout << quantity << std::endl;
     fout << attributes[standard_deviation] << " ";
     fout << attributes[mean] << " ";
     fout << attributes[lower_limit] << " ";
     fout << attributes[upper_limit] << std::endl;
-    fout << split_count << std::endl
-         << std::endl;
+    fout << split_count << std::endl << std::endl;
 
     // Save the ongoing events, separated by std::endl
     std::list<Stock_event>::iterator event_itr = events.begin();
@@ -106,7 +110,8 @@ void Stock::load(std::string playerName, int i) {
         std::istringstream(loadedEventString) >> loadedEvent;
         // Check the loaded event is valid
         // Ignore the special case of event_id >= 65535
-        if (loadedEvent.event_id >= 65535 && loadedEvent.event_id < all_stock_events.size()) {
+        if (loadedEvent.event_id >= 65535 &&
+            loadedEvent.event_id < all_stock_events.size()) {
             add_event(loadedEvent);
             continue;
         }
@@ -125,7 +130,8 @@ void Stock::load(std::string playerName, int i) {
     fin.close();
 }
 
-float Stock::purchase(float & balance, unsigned int amount, float trading_fees_percent) {
+float Stock::purchase(
+    float & balance, unsigned int amount, float trading_fees_percent) {
     float total_cost = price * amount * (1 + trading_fees_percent);
     // Check if the player has enough balance to buy the stock
     if (total_cost > balance && price <= 0) {
@@ -149,9 +155,7 @@ float Stock::sell(float & balance, unsigned int amount, float trading_fees_perce
     return total_revenue;
 }
 
-std::string Stock::category_name(void) {
-    return category_list[category];
-}
+std::string Stock::category_name(void) { return category_list[category]; }
 
 unsigned int Stock::num_stocks_affordable(float balance, float trading_fees_percent) {
     float value = balance / (price * (1 + trading_fees_percent));
@@ -185,7 +189,8 @@ float Stock::delta_price(void) {
 }
 
 float Stock::delta_price_percentage(void) {
-    if (history.size() < 2 || history[history.size() - 1] < 0 || history[history.size() - 2] < 0) {
+    if (history.size() < 2 || history[history.size() - 1] < 0 ||
+        history[history.size() - 2] < 0) {
         /** If there are less than two prices in the history array, return 0
          * If the last two prices are negative, return 0, as it is not possible to
          * calculate the percentage change
@@ -202,7 +207,8 @@ void Stock::add_event(Stock_event event) {
         return;
     }
     // If the event does not exist, add it to the std::list of events
-    // Otherwise, update the duration of the event by deleting the old one and add the new one.
+    // Otherwise, update the duration of the event by deleting the old one and add the
+    // new one.
     std::list<Stock_event>::iterator event_itr = events.begin();
     while (event_itr != events.end()) {
         if (*event_itr == event) {
@@ -219,7 +225,8 @@ bool Stock::can_add_event(Stock_event event) {
     std::list<Stock_event>::iterator event_itr = events.begin();
     while (event_itr != events.end()) {
         if (event_itr->mutually_exclusive_events.size() > 0) {
-            for (unsigned int i = 0; i < event_itr->mutually_exclusive_events.size(); i++) {
+            for (unsigned int i = 0; i < event_itr->mutually_exclusive_events.size();
+                 i++) {
                 if (event_itr->mutually_exclusive_events[i] == event.event_id) {
                     return false;
                 }
@@ -254,8 +261,9 @@ float Stock::sum_attribute(stock_modifiers attribute) {
 
 void Stock::next_round(void) {
     /** Update the price of the stock.
-     * If the price is less than 1000, the price will increase or decrease by a random percentage.
-     * If the price is more than 1000, the price will be halved and the quantity will be doubled.
+     * If the price is less than 1000, the price will increase or decrease by a random
+     * percentage. If the price is more than 1000, the price will be halved and the
+     * quantity will be doubled.
      */
     float price_diff = percentage_change_price(*this) / 100;
     if (!(price * (1 + price_diff) > 999.9)) {
@@ -266,16 +274,17 @@ void Stock::next_round(void) {
         quantity *= 2;
         split_count++;
         add_event(Stock_event{// Stock split event
-                              /** event_id */ 65535,
-                              /** mutually_exclusive_events */ {},
-                              /** text */
-                              name + " has rised too high and the company has decide a stock split on it.",
-                              /** duration */ 1,
-                              /** percentage_permille */ 0,
-                              /** type_of_event */ pick_random_stock,
-                              /** category */ category,
-                              /** modifiers*/
-                              {{standard_deviation, 0}, {mean, 0}, {lower_limit, 0}, {upper_limit, 0}}});
+            /** event_id */ 65535,
+            /** mutually_exclusive_events */ {},
+            /** text */
+            name +
+                " has rised too high and the company has decide a stock split on it.",
+            /** duration */ 1,
+            /** percentage_permille */ 0,
+            /** type_of_event */ pick_random_stock,
+            /** category */ category,
+            /** modifiers*/
+            {{standard_deviation, 0}, {mean, 0}, {lower_limit, 0}, {upper_limit, 0}}});
     }
     // Reduce all events duration by one.
     std::list<Stock_event>::iterator event_itr = events.begin();
@@ -301,50 +310,50 @@ float Stock::getTotalAttribute(stock_modifiers attribute) {
     return attributes[attribute] + sum_attribute(attribute);
 }
 
-void sortStocksList(std::vector<Stock> & stocks_list, SortingMethods sortMethod, SortingDirections sortDirection) {
+void sortStocksList(std::vector<Stock> & stocks_list, SortingMethods sortMethod,
+    SortingDirections sortDirection) {
     switch (sortMethod) {
-    case by_name:
-        std::sort(stocks_list.begin(), stocks_list.end(), [](Stock a, Stock b) {
-            return a.get_name() < b.get_name();
-        });
-        break;
-    case by_category:
-        std::sort(stocks_list.begin(), stocks_list.end(), [](Stock a, Stock b) {
-            return a.get_category() < b.get_category();
-        });
-        break;
-    case by_price:
-        std::sort(stocks_list.begin(), stocks_list.end(), [](Stock a, Stock b) {
-            return a.get_price() < b.get_price();
-        });
-        break;
-    case by_quantity:
-        std::sort(stocks_list.begin(), stocks_list.end(), [](Stock a, Stock b) {
-            return a.get_quantity() < b.get_quantity();
-        });
-        break;
-    case by_sd:
-        std::sort(stocks_list.begin(), stocks_list.end(), [](Stock a, Stock b) {
-            return a.getTotalAttribute(standard_deviation) < b.getTotalAttribute(standard_deviation);
-        });
-        break;
-    case by_mean:
-        std::sort(stocks_list.begin(), stocks_list.end(), [](Stock a, Stock b) {
-            return a.getTotalAttribute(mean) < b.getTotalAttribute(mean);
-        });
-        break;
-    case by_lower_limit:
-        std::sort(stocks_list.begin(), stocks_list.end(), [](Stock a, Stock b) {
-            return a.getTotalAttribute(lower_limit) < b.getTotalAttribute(lower_limit);
-        });
-        break;
-    case by_upper_limit:
-        std::sort(stocks_list.begin(), stocks_list.end(), [](Stock a, Stock b) {
-            return a.getTotalAttribute(upper_limit) < b.getTotalAttribute(upper_limit);
-        });
-        break;
-    default:
-        break;
+        case by_name:
+            std::sort(stocks_list.begin(), stocks_list.end(),
+                [](Stock a, Stock b) { return a.get_name() < b.get_name(); });
+            break;
+        case by_category:
+            std::sort(stocks_list.begin(), stocks_list.end(),
+                [](Stock a, Stock b) { return a.get_category() < b.get_category(); });
+            break;
+        case by_price:
+            std::sort(stocks_list.begin(), stocks_list.end(),
+                [](Stock a, Stock b) { return a.get_price() < b.get_price(); });
+            break;
+        case by_quantity:
+            std::sort(stocks_list.begin(), stocks_list.end(),
+                [](Stock a, Stock b) { return a.get_quantity() < b.get_quantity(); });
+            break;
+        case by_sd:
+            std::sort(stocks_list.begin(), stocks_list.end(), [](Stock a, Stock b) {
+                return a.getTotalAttribute(standard_deviation) <
+                       b.getTotalAttribute(standard_deviation);
+            });
+            break;
+        case by_mean:
+            std::sort(stocks_list.begin(), stocks_list.end(), [](Stock a, Stock b) {
+                return a.getTotalAttribute(mean) < b.getTotalAttribute(mean);
+            });
+            break;
+        case by_lower_limit:
+            std::sort(stocks_list.begin(), stocks_list.end(), [](Stock a, Stock b) {
+                return a.getTotalAttribute(lower_limit) <
+                       b.getTotalAttribute(lower_limit);
+            });
+            break;
+        case by_upper_limit:
+            std::sort(stocks_list.begin(), stocks_list.end(), [](Stock a, Stock b) {
+                return a.getTotalAttribute(upper_limit) <
+                       b.getTotalAttribute(upper_limit);
+            });
+            break;
+        default:
+            break;
     }
     if (sortDirection == descending) {
         std::reverse(stocks_list.begin(), stocks_list.end());
