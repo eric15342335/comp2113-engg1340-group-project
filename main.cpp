@@ -9,7 +9,6 @@
 #include "events.h"
 #include "file_io.h"
 #include "format.h"
-#include "events.h"
 #include "graph.h"
 #include "nonstdlibs/VariadicTable.h"
 #include "random_price.h"
