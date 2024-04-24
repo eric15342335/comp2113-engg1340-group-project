@@ -278,15 +278,17 @@ int main(void) {
         optionsQuit = 0;
         std::cout << textClear << setCursorPosition(5, 0);
         if (viewMode) {
-            graph_plotting(playerName, 1, col * 2/3, row - 10);
-        } else {
+            graph_plotting(playerName, 1, col * 2 / 3, row - 10);
+        }
+        else {
             print_table(stocks_list, balance); // Print the table of stocks
         }
         drawRoundInfo(row, col, rounds_played, balance);
         drawEventBar(row, col);
         drawButton(row, col);
         while (!optionsQuit) {
-            optionsInput(row, col, balance, trading_fees_percent, stocks_list, viewMode, advance, optionsQuit, gameQuit);
+            optionsInput(row, col, balance, trading_fees_percent, stocks_list, viewMode,
+                advance, optionsQuit, gameQuit);
         }
         time::sleep(sleepShort);
 

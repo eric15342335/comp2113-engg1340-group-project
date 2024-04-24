@@ -1,8 +1,8 @@
 #include "controls.h"
 
 #include "draw.h"
-#include "graph.h"
 #include "format.h"
+#include "graph.h"
 
 #include <ios>
 #include <iostream>
@@ -10,7 +10,8 @@
 #include <tuple>
 
 void optionsInput(int row, int col, float & balance, float tax,
-    std::vector<Stock> & stocks, bool& viewMode, bool & advance, bool & optionsQuit, bool & gameQuit) {
+    std::vector<Stock> & stocks, bool & viewMode, bool & advance, bool & optionsQuit,
+    bool & gameQuit) {
     char input;
     while (1) {
         std::cout << setCursorPosition(row, 3) << "\x1b[2K";
@@ -131,7 +132,7 @@ void sellStocks(int row, int col, float & balance, float tax,
     optionsQuit = 1;
 }
 
-void toggleView(bool& viewMode, bool& optionsQuit) {
+void toggleView(bool & viewMode, bool & optionsQuit) {
     viewMode = !viewMode;
     optionsQuit = 1;
 }
