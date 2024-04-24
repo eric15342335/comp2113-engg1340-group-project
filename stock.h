@@ -20,8 +20,8 @@
  * history. The stock can be purchased, sold, and updated.
  * @note Example usage:
  * @code {.cpp}
- * Stock stock;   // Create a stock object. The constructor will initialize the stock
- * automatically.
+ * // Create a stock object. The constructor will initialize the stock automatically.
+ * Stock stock;
  * // Purchase a stock.
  * float balance = 1000; stock.purchase(balance, 1, 0.01);
  * // Sell a stock.
@@ -203,7 +203,7 @@ class Stock {
 
         /**
          * @brief Check if we can add the event to the stock.
-         *
+         * @note
          * A event can be added if the event is not mutually exclusive with any of the
          * existing events.
          * @param event The event to be added.
@@ -228,9 +228,9 @@ class Stock {
         /** @brief Number of stocks the player has purchased. */
         unsigned int quantity;
 
-        /** @brief Use numbers to represent the category of the stock. The range of the
-         * numbers should be `[0, category_list_size - 1]`. See names.cpp for more
-         * information.
+        /** @brief Use numbers to represent the category of the stock.
+         * @note The range of the numbers should be `[0, category_list_size - 1]`.
+         * @ref category_list_size
          */
         unsigned int category;
 
@@ -275,10 +275,12 @@ enum SortingDirections { ascending, descending };
 /**
  * @brief Sorts the stocks.
  * @param stocks_list A vector of stocks. Pass by reference to modify the stocks.
- * @param sortMethod Sorting method.
+ * @param sortMethod Sorting method. Default is by_category.
  * @param sortDirection Sorting direction. True for ascending, false for descending.
+ * Default is ascending.
  */
-void sortStocksList(std::vector<Stock> & stocks_list, SortingMethods sortMethod,
-    SortingDirections sortDirection);
+void sortStocksList(std::vector<Stock> & stocks_list,
+    SortingMethods sortMethod = by_category,
+    SortingDirections sortDirection = ascending);
 
 #endif
