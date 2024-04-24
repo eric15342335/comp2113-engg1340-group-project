@@ -66,4 +66,11 @@ fix:
 	git commit -a -m "Run clang-format" -m "make fix"
 	git push
 
-.PHONY: test clean docs fix
+stats:
+	git checkout main
+	git remote prune origin
+	git pull --ff
+	git branch -av
+	git --no-pager log --oneline --graph -10
+
+.PHONY: test clean docs fix stats
