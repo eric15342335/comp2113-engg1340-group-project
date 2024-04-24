@@ -24,7 +24,7 @@ jobs:
         make
     - name: Make test
       run: |
-        echo -e "0\nsaves" > input.txt
+        echo -e "0\nsaves\nB\n1\n10\nX\nY" > input.txt
         ./stocksim < input.txt
     - name: Doxygen Documentation
       if: always()
