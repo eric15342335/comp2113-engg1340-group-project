@@ -71,8 +71,8 @@ int integerInput(int row, int col, std::string message) {
     }
 }
 
-void buyStocks(
-    int row, int col, float & balance, float tax, std::vector<Stock> & stocks, bool& optionsQuit) {
+void buyStocks(int row, int col, float & balance, float tax,
+    std::vector<Stock> & stocks, bool & optionsQuit) {
     int index;
     int amount;
 
@@ -100,8 +100,8 @@ void buyStocks(
     optionsQuit = 1;
 }
 
-void sellStocks(
-    int row, int col, float & balance, float tax, std::vector<Stock> & stocks, bool& optionsQuit) {
+void sellStocks(int row, int col, float & balance, float tax,
+    std::vector<Stock> & stocks, bool & optionsQuit) {
     int index;
     int amount;
 

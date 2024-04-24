@@ -10,11 +10,11 @@ void optionsInput(int row, int col, float & balance, float tax,
 
 int integerInput(int row, int col, std::string message);
 
-void buyStocks(
-    int row, int col, float & balance, float tax, std::vector<Stock> & stocks, bool& optionsQuit);
+void buyStocks(int row, int col, float & balance, float tax,
+    std::vector<Stock> & stocks, bool & optionsQuit);
 
-void sellStocks(
-    int row, int col, float & balance, float tax, std::vector<Stock> & stocks, bool& optionsQuit);
+void sellStocks(int row, int col, float & balance, float tax,
+    std::vector<Stock> & stocks, bool & optionsQuit);
 
 void advanceConfirmation(int row, int col, bool & advance, bool & optionsQuit);
 
