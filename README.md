@@ -83,24 +83,32 @@ See [the Stock class documentation](https://eric15342335.github.io/comp2113-engg
 
 ## Dynamic memory management (e.g., dynamic arrays, linked lists, STL containers)
 
-Placeholder.
+- stock history is stl vector
+- stock event list is stl list
+- stock attribute is stl map
 
 ## File input/output (e.g., for loading/saving game status)
+
+game saving and loading
+store all stocks and player data to saves/playername/*.save
 
 Related files: [`file_io.cpp`](file_io.cpp) [`file_io.h`](file_io.h)
 
 ## Program codes in multiple files (recall separate compilation)
 
 We split our program codes into multiple files according to their functionality and purposes:
-- `main.cpp`:
+- `main.cpp`: main program routine
 - [`stock.cpp` `stock.h`](https://eric15342335.github.io/comp2113-engg1340-group-project/classStock.html):
-- `events.cpp`:
-- `graph.cpp`:
-- `random_price.cpp`:
-- `names.cpp`:
-- `file_io.cpp`:
-- `draw.cpp`:
-- `format.cpp`:
+- `events.cpp`: stores all the in-game events
+- `graph.cpp`: plot a graph
+- `random_price.cpp`: generate percentage change of the stock price
+- `names.cpp`: generate stock names according to their industry
+- `file_io.cpp`: save/load game state
+- `draw.cpp`: terminal output
+- `format.cpp`: idk
+- `controls.cpp`: idk
+
+[Makefile](./Makefile)
 
 ## Proper indentation and naming styles
 
@@ -110,12 +118,16 @@ We enforce our code formatting style via the use of `clang-format` tool. You can
 
 [Our `doxygen` documentation is available! (Click Me!)](https://eric15342335.github.io/comp2113-engg1340-group-project/)
 
-# Non-standard libraries used
+# Credits
+## Non-standard libraries used
 
 [VariadicTable](./nonstdlibs/README.md)
-
-# Credits
 
 ## Logo
 
 The logo used here and in-game is generated with [Text to ASCII](https://www.asciiart.eu/text-to-ascii-art)
+
+# The End
+
+This is the end of our README.md. Thanks for reading!
+Group 88
