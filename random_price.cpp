@@ -6,8 +6,6 @@
 
 #include "random_price.h"
 
-#include "events.h"
-
 #include <cstdlib>
 #include <random>
 // Included iostream for debugging uses.
@@ -42,45 +40,17 @@ unsigned int random_integer(unsigned int max_integer) {
     return distribution(gen);
 }
 
-float percentage_change_price(Stock & stock) {
-    float current_price = stock.return_most_recent_history(1)[0];
-    float init_price = stock.return_most_recent_history(99999999)[0];
-    // Attention: The mean has been multiplied by 0.0007 and s.d. multiplied by 3.0
-    // which is the configuration I use to prevent shitcoin behaviour.
-    // This is as of events by 2024-04-23. These mearures to account for the systematic
-    // error will be inappropriate in case of anyone tweaking the mean and sd of
-    // events.cpp If you change those stuff please notify it before we discover the
-    // stock prices traverse between heaven and hell or as invariant as John F. Kenedy's
-    // heart rate.
-    float offset = meanMultiplier * (stock.getTotalAttribute(mean));
-    float sd = sdMultiplier * (stock.getTotalAttribute(standard_deviation));
+std::map<stock_modifiers, float> getProcessedModifiers(Stock & stock) {
+    float trueMean = meanMultiplier * (stock.getTotalAttribute(mean));
+    float trueSD = sdMultiplier * (stock.getTotalAttribute(standard_deviation));
     unsigned int rounds_passed = stock.get_history_size();
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    if (current_price < init_price / 10) {
+    if (stock.get_price() < stock.get_initial_price() / 10) {
         // Force the return of a significantly higher mean normal dist, by a bit over
         // doubling the price.
-        std::normal_distribution<float> distribution(offset + 200, sd);
-        float u = distribution(gen);
-        // Attempt to return it 5 times. If it still fail to show above -100 we dismiss
-        // the return.
-        for (int w = 0; w < 5; w++) {
-            if (u > -100) {
-                return u / pow(2, stock.get_split_count());
-            }
-        }
+        trueMean += 200;
     }
-    else if (current_price < init_price / 7) {
-        std::normal_distribution<float> distribution(offset + 100, sd);
-        float u = distribution(gen);
-        // This piece of code is triggered for a less catastrophic disaster,
-        // now given that we are less shitcoin.
-        // Still quite a bit of adjustment though at 100 %
-        for (int w = 0; w < 5; w++) {
-            if (u > -100) {
-                return u / pow(2, stock.get_split_count());
-            }
-        }
+    else if (stock.get_price() < stock.get_initial_price() / 7) {
+        trueMean += 100;
     }
     /* There is a upper limit and lower limit that the realisation of the % change must
      * fall between. As each round pass we allow for more and more chaotic behaviour by
@@ -92,65 +62,58 @@ float percentage_change_price(Stock & stock) {
      * a stock price only 10 % left of it's initial, we increase mean to prevent a game
      * over. Upon we are 90.32% sure the bounds would be wrong we bump the mean.
      */
-    float temp = 100 * abs(init_price - current_price) / init_price;
-    // The unprocessed limits defined to make the lines look shorter w/o need to scroll
-    // The names of variables here cannot be lower_limit as the stock attribute
-    // lower_limit and upper_limit would crash with the float lower_ and upper_ limits
-    // defined by the line 7x. So these variables and lines are of justified reason of
-    // existence.
-    float unprocessed_upper_lim = stock.getTotalAttribute(upper_limit);
-    float unprocessed_lower_lim = stock.getTotalAttribute(lower_limit);
-    float upper_lim = unprocessed_upper_lim + rounds_passed / 3 + temp;
-    float lower_lim = -1 * (unprocessed_lower_lim + rounds_passed / 3 + temp);
-    float z_score_upper_limit = (upper_limit - offset) / sd;
-    float z_score_lower_limit = (lower_limit - offset) / sd;
-    std::normal_distribution<float> distribution(offset, sd);
+    float temp = 100 * std::abs(stock.get_initial_price() - stock.get_price()) /
+                 stock.get_price();
+    float upper_lim = stock.getTotalAttribute(upper_limit) + rounds_passed / 3 + temp;
+    float lower_lim = stock.getTotalAttribute(lower_limit) - rounds_passed / 3 - temp;
+    // Standardize the upper and lower limit
+    float zScoreUpLimit = (upper_limit - trueMean) / trueSD;
+    float zScoreLowLimit = (lower_limit - trueMean) / trueSD;
     for (int i = 0; i < 10; i++) {
-        if (z_score_lower_limit > 1.3) {
+        if (zScoreLowLimit > 1.3) {
             // Very likely to fail lower_limit; about 90.32%; which means it is too low
             // and should realize at higher value;
-            distribution.param(
-                std::normal_distribution<float>::param_type(offset + 0.1, sd));
-            z_score_lower_limit = (lower_limit - offset - 0.1) / sd;
+            trueMean += 0.1;
+            zScoreLowLimit = (lower_limit - trueMean - 0.1) / trueSD;
         }
-        if (z_score_upper_limit < -1.3) { // converse
+        if (zScoreUpLimit < -1.3) {
+            // Converse
             // Reason: for N(0,1), probability of exceeed 1.3 is less that 10%
-            distribution.param(
-                std::normal_distribution<float>::param_type(offset - 0.1, sd));
-            z_score_upper_limit = (upper_limit - offset + 0.1) / sd;
+            trueMean -= 0.1;
+            zScoreUpLimit = (upper_limit - trueMean + 0.1) / trueSD;
         }
     }
+    // -100% is not applicable for a stock price, so we set it to -90%.
+    if (lower_lim < -90) {
+        lower_lim = -90;
+    }
+    else if (lower_lim > defaultLowerLimit) {
+        lower_lim = defaultLowerLimit;
+    }
+    if (upper_lim < defaultUpperLimit) {
+        upper_lim = defaultUpperLimit;
+    }
+    return {{standard_deviation, trueSD}, {mean, trueMean}, {lower_limit, lower_lim*lowerLimitMultiplier},
+        {upper_limit, upper_lim*upperLimitMultiplier}};
+}
 
-    if (lower_lim < -100) {
-        lower_lim = -100;
-    }
-    // Prevents circular lower_limit and upper_limit
-    // For good practive only (first layer of defense against infinite loop)
-    if (lower_lim > -5) {
-        lower_lim = -5;
-    }
-    if (upper_lim < 5) {
-        upper_lim = 5;
-    }
-    // Debug line here:
+float percentage_change_price(Stock & stock) {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::map<stock_modifiers, float> _modifiers = getProcessedModifiers(stock);
+    std::normal_distribution<float> distribution(
+        _modifiers[mean], _modifiers[standard_deviation]);
     // std::cout << offset << " " << sd << " " << lower_lim << " " << upper_lim <<
     // std::endl; Implementing a max loop here so will not be infinite if there is a
     // fault.
-    int max_loop = 0;
-    while (true) {
+    for (unsigned int max_loop = 0; max_loop < 100; max_loop++) {
         float x = distribution(gen);
-        max_loop++;
-        if (x > lower_lim && x < upper_lim) {
+        if (x > _modifiers[lower_limit] && x < _modifiers[upper_limit]) {
             return x / pow(2, stock.get_split_count());
         }
-        else if (max_loop > 1000) {
-            // This is wanted because I need to still have some stocastic behavour even
-            // against a fault so that it kind of works. This is the second and final
-            // defense against any infinite loops.
-            unsigned int i = random_integer(12);
-            float stocastics[12] = {0.95507, -0.74162, 1.642, -0.94774, -0.80314,
-                1.7885, -0.09846, 1.4693, 0.19288, -1.70222, 1.20933, -0.71088};
-            return stocastics[i];
-        }
     }
+    // Need to have some stocastic behavour against a fault.
+    float stocastics[12] = {0.95507, -0.74162, 1.642, -0.94774, -0.80314, 1.7885,
+        -0.09846, 1.4693, 0.19288, -1.70222, 1.20933, -0.71088};
+    return stocastics[random_integer(12)];
 }

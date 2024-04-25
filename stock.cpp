@@ -24,8 +24,8 @@ Stock::Stock(void) {
     quantity = 0;
     attributes[standard_deviation] = init_sd();
     attributes[mean] = 0;
-    attributes[lower_limit] = -20;
-    attributes[upper_limit] = 20;
+    attributes[lower_limit] = defaultLowerLimit;
+    attributes[upper_limit] = defaultUpperLimit;
     split_count = 0;
     update_history();
 }
