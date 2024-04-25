@@ -68,7 +68,8 @@ void listEvents(int row, int col, std::vector<Stock_event> events) {
     if ((int)events.size() < row - 10) {
         if ((int)events.size() != 0) {
             height = (int)events.size() + 2;
-        } else {
+        }
+        else {
             height = 3;
         }
     }
