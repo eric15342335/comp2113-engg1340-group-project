@@ -1,7 +1,12 @@
 # [Stock](https://eric15342335.github.io/comp2113-engg1340-group-project/classStock.html) Market Simulator
+
+![C++](https://img.shields.io/badge/c++-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=white)
+![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
+
 [![clang-format](https://github.com/eric15342335/comp2113-engg1340-group-project/actions/workflows/clang-format.yml/badge.svg?branch=main)](https://github.com/eric15342335/comp2113-engg1340-group-project/actions/workflows/clang-format.yml)
 [![Make](https://github.com/eric15342335/comp2113-engg1340-group-project/actions/workflows/make.yml/badge.svg)](https://github.com/eric15342335/comp2113-engg1340-group-project/actions/workflows/make.yml)
 [![Pages (doxygen)](https://github.com/eric15342335/comp2113-engg1340-group-project/actions/workflows/static.yml/badge.svg)](https://github.com/eric15342335/comp2113-engg1340-group-project/actions/workflows/static.yml)
+
 ## Menu
 
 1. [Team Members](#team-members)
@@ -9,9 +14,9 @@
 3. [How to Play](#how-to-play)
 4. [Code Requirements](#code-requirements)
    1. [Generation of random game sets or events](#generation-of-random-game-sets-or-events)
-   2. [Data structures for storing game status (e.g., arrays, STL containers)](#data-structures-for-storing-game-status-eg-arrays-STL-containers)
+   2. [Data structures for storing game status (e.g., arrays, STL containers)](#data-structures-for-storing-game-status-eg-arrays-stl-containers)
    3. [Dynamic memory management (e.g., dynamic arrays, linked lists, STL containers)](#dynamic-memory-management-eg-dynamic-arrays-linked-lists-stl-containers)
-   4. [File input/output (e.g., for loading/saving game status)](#file-input-output-eg-for-loading-saving-game-status)
+   4. [File input/output (e.g., for loading/saving game status)](#file-inputoutput-eg-for-loadingsaving-game-status)
    5. [Program codes in multiple files (recall separate compilation)](#program-codes-in-multiple-files-recall-separate-compilation)
    6. [Proper indentation and naming styles](#proper-indentation-and-naming-styles)
    7. [In-code documentation](#in-code-documentation)
@@ -62,7 +67,7 @@
 
 ## Game Description
 
-"[Stock]((https://eric15342335.github.io/comp2113-engg1340-group-project/classStock.html)) Market Simulator" is a game that attempts to introduce a realistic
+"[Stock](https://eric15342335.github.io/comp2113-engg1340-group-project/classStock.html) Market Simulator" is a game that attempts to introduce a realistic
 stock buying experience to players. The game utilizes the random number generation
 capability of the operating system to mimic real-life stock unpredictable trends while
 giving players breathing room to better think about their [investing](https://en.wikipedia.org/wiki/Investment) strategies.
@@ -85,7 +90,7 @@ To run the game:
 
 Generation of stock prices [(file)](./random_price.cpp) [(docs)](https://eric15342335.github.io/comp2113-engg1340-group-project/random__price_8cpp.html):
 - We used normal distribution to generate the percentage change in the stock price for each new round.
-- Instead of generating new stock price based on current price, we discovered this is easier for us to code.
+- Instead of generating a new stock price based on the current price, we discovered this is easier for us to code.
 
 Generation of in-game [events](https://eric15342335.github.io/comp2113-engg1340-group-project/events_8h.html):
 - In our game, we also included *_99_* events that will each have a possibility to happen in your gameplay.
@@ -105,10 +110,15 @@ Other than `class Stock`, we have [`struct Stock_event`](https://eric15342335.gi
 
 ## [File input/output](./file_io.cpp) (e.g., for loading/saving game status)
 
-All game data is stored in `saves/<playername>/*.save`. Such as:
-- player's name and balance
-- data of all stocks, e.g. price, history, on-going events, modifiers, etc.
-- HSI value history
+This game had options for players to create a new save, load an old save, and delete
+a save upon the startup of the game. The saves are distinguished by the variable
+`std::string playerName`, for example `saves/<playername>/*.save`. In each
+save, every stock has a separate `.save` file, while other basic information is stored
+in `playerstatus.save` and HSI in `hsi.save`. The saving process is automatic upon the end 
+of every round to prevent loss of advancements of the game (and also prevent rollback).
+
+Moreover, this game relies heavily on the C++17 library `<filesystem>` to maintain the tidiness
+of files. It enables us to obtain the names of available saves, create folders, and delete saves.
 
 ## Program codes in multiple files (recall [separate compilation](./Makefile))
 
@@ -127,15 +137,17 @@ Some notable examples (list may not include all styles and files):
 
 ## In-code documentation
 
-We take documentation _seriously_. In our code, we use `JavaDoc` as the format to write our comments. This allow us to integrate with third-party documentation auto-generate tools like [`doxygen`](https://www.doxygen.nl/).
+We take documentation _seriously_. In our code, we use `JavaDoc` as the format to write our comments. This allows us to integrate with third-party documentation auto-generate tools like [`doxygen`](https://www.doxygen.nl/).
 
-If you haven't noticed that why we have so many hyperlinks in this [README.md](./README.md) file, click [here](https://eric15342335.github.io/comp2113-engg1340-group-project/) to know what the links are pointing to!
+If you haven't noticed why we have so many hyperlinks in this [README.md](./README.md) file, click [here](https://eric15342335.github.io/comp2113-engg1340-group-project/) to know what the links are pointing to!
 
 # Credits
 
 ## Non-standard libraries used
 
-For printing the prettified table, we used [VariadicTable](./nonstdlibs/README.md) in our code. VariadicTable is a third-party header-only library licensed
+[![External Libraries](https://img.shields.io/badge/External_Libraries-VariadicTable-darkgreen)](https://github.com/friedmud/variadic_table)
+
+For printing the prettified table, we used [VariadicTable](./nonstdlibs/) in our code. VariadicTable is a third-party header-only library licensed
 under [LGPL-2.1](./nonstdlibs/LICENSE.VariadicTable.md).
 
 ## Logo
