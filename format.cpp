@@ -32,6 +32,10 @@ const string bgMagenta = "\x1b[45m";
 const string bgCyan = "\x1b[46m";
 const string bgWhite = "\x1b[47m";
 
+const int sleepShort = 100;
+const int sleepMedium = 500;
+const int sleepLong = 2000;
+
 void time::sleep(int dur) {
     std::this_thread::sleep_for(std::chrono::milliseconds(dur));
 }
@@ -48,7 +52,7 @@ void fetchConsoleDimensions(int & row, int & col) {
     int mode = 2;
     switch (mode) {
         case 1:
-            row = 24;
+            row = 30;
             col = 80;
             break;
         case 2:
