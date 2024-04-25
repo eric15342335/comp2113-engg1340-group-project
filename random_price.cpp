@@ -93,8 +93,9 @@ std::map<stock_modifiers, float> getProcessedModifiers(Stock & stock) {
     if (upper_lim < defaultUpperLimit) {
         upper_lim = defaultUpperLimit;
     }
-    return {{standard_deviation, trueSD}, {mean, trueMean}, {lower_limit, lower_lim*lowerLimitMultiplier},
-        {upper_limit, upper_lim*upperLimitMultiplier}};
+    return {{standard_deviation, trueSD}, {mean, trueMean},
+        {lower_limit, lower_lim * lowerLimitMultiplier},
+        {upper_limit, upper_lim * upperLimitMultiplier}};
 }
 
 float percentage_change_price(Stock & stock) {

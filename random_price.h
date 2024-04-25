@@ -23,10 +23,10 @@ const float lowerLimitMultiplier = 0.2;
 const float upperLimitMultiplier = 0.2;
 
 /// @brief Default lower limit
-const float defaultLowerLimit = -5/lowerLimitMultiplier;
+const float defaultLowerLimit = -5 / lowerLimitMultiplier;
 
 /// @brief Default upper limit
-const float defaultUpperLimit = 5/upperLimitMultiplier;
+const float defaultUpperLimit = 5 / upperLimitMultiplier;
 
 /**
  * @brief Initialize starting stock price.
