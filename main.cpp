@@ -242,11 +242,11 @@ void next_round_routine(
 int main(void) {
     // Set the console to UTF-8 mode
     SetConsoleOutputCP(65001);
-    bool viewMode = 0;
-    int graphIndex;
     bool advance;      // Whether to advance to the next round
     bool gameQuit = 0; // Whether the player wants to quit the game
+    bool viewMode = 0; // 0 to view table, 1 to view graph
     bool optionsQuit;
+    int indexGraph;
     int row; // Number of characters to fit in a column
     int col; // Number of characters to fit in a row
     fetchConsoleDimensions(row, col);
@@ -312,12 +312,12 @@ int main(void) {
         advance = 0;
         optionsQuit = 0;
         if (viewMode) {
-            graphIndex = integerInput(row, col, "Select stock index to display: ");
-            while (graphIndex < 1 || graphIndex > (int)stocks_list.size()) {
+            indexGraph = integerInput(row, col, "Select stock index to display: ");
+            while (indexGraph < 1 || indexGraph > (int)stocks_list.size()) {
                 std::cout << setCursorPosition(row, 3) << "\x1b[2K";
                 std::cout << "Index out of range!";
                 time::sleep(sleepMedium);
-                graphIndex = integerInput(row, col, "Select stock index to display: ");
+                indexGraph = integerInput(row, col, "Select stock index to display: ");
             }
             std::cout << textClear << setCursorPosition(5, 0);
             graph_plotting(playerName, 1, col * 2 / 3, row - 10);
@@ -326,7 +326,7 @@ int main(void) {
             std::cout << textClear << setCursorPosition(5, 0);
             print_table(stocks_list, balance); // Print the table of stocks
         }
-        drawRoundInfo(row, col, rounds_played, balance);
+        drawRoundInfo(row, col, rounds_played, balance, playerName, hsi_history[hsi_history.size()-1]);
         drawEventBar(row, col);
         drawButton(row, col);
         while (!optionsQuit) {

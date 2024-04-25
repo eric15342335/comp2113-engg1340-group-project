@@ -124,7 +124,7 @@ void delsave(string & mode) {
     cout << "Player save " << inputname
          << " is going to be deleted, please enter Y to confirm" << endl;
     cin >> confirm;
-    if (confirm == "Y") {
+    if (confirm == "Y" || confirm == "y") {
         stockdel = "saves/" + inputname;
         cout << stockdel << endl;
         std::filesystem::remove_all(stockdel);

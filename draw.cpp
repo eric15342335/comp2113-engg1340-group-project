@@ -3,7 +3,6 @@
 #include "format.h"
 
 #include <iostream>
-#include <string>
 #include <tuple> // for std::ignore
 #include <vector>
 
@@ -31,25 +30,35 @@ void drawLogo(int row, int col) {
     }
 }
 
-void drawRoundInfo(int row, int col, int round, float balance) {
+void drawRoundInfo(int row, int col, int round, float balance, std::string player, float indexHSI) {
     std::ignore = row; // Shutup compiler
-    std::cout << setCursorPosition(3, 5);
+    std::cout << setCursorPosition(2, 5);
     std::cout << "Round " << round;
-    std::cout << setCursorPosition(3, col - 10);
+
+    if (player.size() > 15) {
+        std::cout << setCursorPosition(4, 0);
+        std::cout << player.erase(12) << "...";
+    } else {
+        std::cout << setCursorPosition(4, (int)((15-player.size())/2+1));
+        std::cout << player;
+    }
+    std::cout << setCursorPosition(2, col - 10);
     std::cout << "$" << balance;
+    std::cout << setCursorPosition(4, col-12);
+    std::cout << "  HSI: " << indexHSI;
 }
 
 void drawEventBar(int row, int col) {
     std::ignore = row; // Shutup compiler
-    int width = col - 30;
+    int width = col - 32;
 
-    std::cout << setCursorPosition(2, 15) << "\u250C";
+    std::cout << setCursorPosition(2, 16) << "\u250C";
     for (int i = 0; i < width - 1; i++) {
         std::cout << "\u2500";
     }
-    std::cout << "\u2510" << setCursorPosition(3, 15) << "\u2502";
-    std::cout << setCursorPosition(3, width + 15) << "\u2502";
-    std::cout << setCursorPosition(4, 15) << "\u2514";
+    std::cout << "\u2510" << setCursorPosition(3, 16) << "\u2502";
+    std::cout << setCursorPosition(3, width + 16) << "\u2502";
+    std::cout << setCursorPosition(4, 16) << "\u2514";
     for (int i = 0; i < width - 1; i++) {
         std::cout << "\u2500";
     }
