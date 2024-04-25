@@ -245,7 +245,8 @@ int main(void) {
     bool advance;      // Whether to advance to the next round
     bool gameQuit = 0; // Whether the player wants to quit the game
     bool viewMode = 0; // 0 to view table, 1 to view graph
-    bool optionsQuit;
+    bool overlayEvent; // Whether the event bar is being shown
+    bool flush; // Whether the screen needs updating
     int indexGraph;
     int row; // Number of characters to fit in a column
     int col; // Number of characters to fit in a row
@@ -310,7 +311,8 @@ int main(void) {
 
     while (!gameQuit) {
         advance = 0;
-        optionsQuit = 0;
+        overlayEvent = 0;
+        flush = 0;
         if (viewMode) {
             indexGraph = integerInput(row, col, "Select stock index to display: ");
             while (indexGraph < 1 || indexGraph > (int)stocks_list.size()) {
@@ -337,9 +339,9 @@ int main(void) {
             }
         }
         */
-        while (!optionsQuit) {
+        while (!flush) {
             optionsInput(row, col, balance, trading_fees_percent, stocks_list,
-                get_ongoing_events(stocks_list), viewMode, advance, optionsQuit,
+                get_ongoing_events(stocks_list), viewMode, advance, overlayEvent, flush,
                 gameQuit);
         }
 
@@ -351,8 +353,6 @@ int main(void) {
             time::sleep(sleepLong);
         }
     }
-
-    std::cout << "HSI: " << hsi_history[hsi_history.size() - 1] << std::endl;
 
     return 0;
 }

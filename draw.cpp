@@ -87,6 +87,14 @@ void listEvents(int row, int col, std::vector<Stock_event> events) {
         std::cout << "\u2500";
     }
     std::cout << "\u2518";
+
+    for (int i = 0; i < (int)events.size(); i++) {
+        std::cout << setCursorPosition(i+7, 13);
+        std::cout << events[i].text;
+        for (int j = 0; j < width-(int)events[i].text.size()-1; j++) {
+            std::cout << " ";
+        }
+    }
 }
 
 void drawButton(int row, int col) {

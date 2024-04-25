@@ -14,20 +14,20 @@
 
 void optionsInput(int row, int col, float & balance, float tax,
     std::vector<Stock> & stocks, std::vector<Stock_event> events, bool & viewMode,
-    bool & advance, bool & gameQuit, bool & optionsQuit);
+    bool & advance, bool& overlayEvent, bool & gameQuit, bool & flush);
 
 int integerInput(int row, int col, std::string message);
 
 void buyStocks(int row, int col, float & balance, float tax,
-    std::vector<Stock> & stocks, bool & optionsQuit);
+    std::vector<Stock> & stocks, bool & flush);
 
 void sellStocks(int row, int col, float & balance, float tax,
-    std::vector<Stock> & stocks, bool & optionsQuit);
+    std::vector<Stock> & stocks, bool & flush);
 
-void toggleView(bool & viewMode, bool & optionsQuit);
+void toggleView(bool & viewMode, bool & flush);
 
-void advanceConfirmation(int row, int col, bool & advance, bool & optionsQuit);
+void advanceConfirmation(int row, int col, bool & advance, bool & flush);
 
-void quitConfirmation(int row, int col, bool & gameQuit, bool & optionsQuit);
+void quitConfirmation(int row, int col, bool & gameQuit, bool & flush);
 
 #endif
