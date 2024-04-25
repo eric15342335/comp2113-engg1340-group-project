@@ -16,7 +16,7 @@
    1. [Generation of random game sets or events](#generation-of-random-game-sets-or-events)
    2. [Data structures for storing game status (e.g., arrays, STL containers)](#data-structures-for-storing-game-status-eg-arrays-STL-containers)
    3. [Dynamic memory management (e.g., dynamic arrays, linked lists, STL containers)](#dynamic-memory-management-eg-dynamic-arrays-linked-lists-stl-containers)
-   4. [File input/output (e.g., for loading/saving game status)](#file-input-output-eg-for-loading-saving-game-status)
+   4. [File input/output (e.g., for loading/saving game status)](#file-inputoutput-eg-for-loadingsaving-game-status)
    5. [Program codes in multiple files (recall separate compilation)](#program-codes-in-multiple-files-recall-separate-compilation)
    6. [Proper indentation and naming styles](#proper-indentation-and-naming-styles)
    7. [In-code documentation](#in-code-documentation)
@@ -110,10 +110,15 @@ Other than `class Stock`, we have [`struct Stock_event`](https://eric15342335.gi
 
 ## [File input/output](./file_io.cpp) (e.g., for loading/saving game status)
 
-All game data is stored in `saves/<playername>/*.save`. Such as:
-- player's name and balance
-- data of all stocks, e.g. price, history, on-going events, modifiers, etc.
-- HSI value history
+This game had options for players to create a new save, load an old save, and delete
+a save upon the startup of the game. The saves are distinguished by the variable
+`std::string playerName`, for example `saves/<playername>/*.save`. In each
+save, every stock has a separate `.save` file, while other basic information is stored
+in `playerstatus.save` and HSI in `hsi.save`. The saving process is automatic upon the end 
+of every round to prevent loss of advancements of the game (and also prevent rollback).
+
+Moreover, this game relies heavily on the C++17 library `<filesystem>` to maintain the tidiness
+of files. It enables us to obtain the names of available saves, create folders, and delete saves.
 
 ## Program codes in multiple files (recall [separate compilation](./Makefile))
 
