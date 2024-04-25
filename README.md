@@ -16,7 +16,7 @@
    1. [Generation of random game sets or events](#generation-of-random-game-sets-or-events)
    2. [Data structures for storing game status (e.g., arrays, STL containers)](#data-structures-for-storing-game-status-eg-arrays-STL-containers)
    3. [Dynamic memory management (e.g., dynamic arrays, linked lists, STL containers)](#dynamic-memory-management-eg-dynamic-arrays-linked-lists-stl-containers)
-   4. [File input/output (e.g., for loading/saving game status)](#file-input-output-eg-for-loading-saving-game-status)
+   4. [File input/output (e.g., for loading/saving game status)](#file-inputoutput-eg-for-loadingsaving-game-status)
    5. [Program codes in multiple files (recall separate compilation)](#program-codes-in-multiple-files-recall-separate-compilation)
    6. [Proper indentation and naming styles](#proper-indentation-and-naming-styles)
    7. [In-code documentation](#in-code-documentation)
