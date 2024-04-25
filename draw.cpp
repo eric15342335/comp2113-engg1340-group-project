@@ -16,22 +16,18 @@ void drawLogo(int row, int col) {
     // Will not print logo if terminal cannot fit
     if (row > wordHeight && col > wordWidth) {
         // Will use fileIO for this
-        std::cout << "Insert"
-                  << "\n";
+        std::cout << "Insert" << "\n";
         time::sleep(sleepMedium);
         std::cout << textClear;
         time::sleep(sleepShort);
-        std::cout << "Logo"
-                  << "\n";
+        std::cout << "Logo" << "\n";
         time::sleep(sleepMedium);
         std::cout << textClear;
         time::sleep(sleepShort);
-        std::cout << "Here"
-                  << "\n";
+        std::cout << "Here" << "\n";
     }
     else {
-        std::cout << "Welcome to Stock Market Simulator!"
-                  << "\n";
+        std::cout << "Welcome to Stock Market Simulator!" << "\n";
     }
 }
 

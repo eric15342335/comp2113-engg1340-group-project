@@ -113,7 +113,8 @@ void graph_plotting(string player, int stocknum, int width, int height) {
     vector<string> color(width - 9, "white");
     color[width - 10] = "white";
     if (stockpricehistory.size() <= 1) {
-        cout << "Why do you want to plot graph if there is only one data point?" << endl;
+        cout << "Why do you want to plot graph if there is only one data point?"
+             << endl;
         return;
     }
     max = *max_element(stockpricehistory.begin(), stockpricehistory.end());

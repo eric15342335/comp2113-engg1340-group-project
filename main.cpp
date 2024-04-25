@@ -269,7 +269,7 @@ int main(void) {
         ;
         return 0;
     }
-    if (loadsave == "0"){
+    if (loadsave == "0") {
         createplayer(playerName);
         savestatus(rounds_played, stocks_list, balance, playerName);
     }
