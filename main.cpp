@@ -18,6 +18,12 @@
 #include <fstream>
 #include <numeric>
 
+#ifdef _WIN32
+#include <windows.h>
+#else
+#define SetConsoleOutputCP(x) // Do nothing
+#endif
+
 /**
  * 0.01 means 1% trading fees.
  *
@@ -234,6 +240,8 @@ void next_round_routine(
 
 /** Main function, the entry point of the program */
 int main(void) {
+    // Set the console to UTF-8 mode
+    SetConsoleOutputCP(65001);
     bool viewMode = 0;
     int graphIndex;
     bool advance;      // Whether to advance to the next round
