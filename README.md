@@ -110,7 +110,6 @@ Other than `class Stock`, we have [`struct Stock_event`](https://eric15342335.gi
 
 ## [File input/output](./file_io.cpp) (e.g., for loading/saving game status)
 
-### File input/output (e.g., for loading/saving game status)
 This game had options for players to create a new save, load an old save, and delete
 a save upon the startup of the game. The saves are distinguished by the variable
 `std::string playerName`, for example `saves/<playername>/*.save`. In each
