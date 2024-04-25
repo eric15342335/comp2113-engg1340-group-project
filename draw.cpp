@@ -1,11 +1,5 @@
 #include "draw.h"
 
-#include "format.h"
-
-#include <iostream>
-#include <tuple> // for std::ignore
-#include <vector>
-
 void drawLogo(int row, int col) {
     const int wordWidth = 73; // Width of the longest word
     const int wordHeight = 8; // Height for each word
@@ -30,7 +24,8 @@ void drawLogo(int row, int col) {
     }
 }
 
-void drawRoundInfo(int row, int col, int round, float balance, std::string player, float indexHSI) {
+void drawRoundInfo(
+    int row, int col, int round, float balance, std::string player, float indexHSI) {
     std::ignore = row; // Shutup compiler
     std::cout << setCursorPosition(2, 5);
     std::cout << "Round " << round;
@@ -38,13 +33,14 @@ void drawRoundInfo(int row, int col, int round, float balance, std::string playe
     if (player.size() > 15) {
         std::cout << setCursorPosition(4, 0);
         std::cout << player.erase(12) << "...";
-    } else {
-        std::cout << setCursorPosition(4, (int)((15-player.size())/2+1));
+    }
+    else {
+        std::cout << setCursorPosition(4, (int)((15 - player.size()) / 2 + 1));
         std::cout << player;
     }
     std::cout << setCursorPosition(2, col - 10);
     std::cout << "$" << balance;
-    std::cout << setCursorPosition(4, col-12);
+    std::cout << setCursorPosition(4, col - 12);
     std::cout << "  HSI: " << indexHSI;
 }
 
@@ -65,23 +61,32 @@ void drawEventBar(int row, int col) {
     std::cout << "\u2518";
 }
 
-void listEvents(int row, int col) {
-    std::ignore = row;
-    // broken rn
-    int height = 10; // placeholder
-    int width = col - 30;
+void listEvents(int row, int col, std::vector<Stock_event> events) {
+    int height;
+    int width = col - 24;
 
-    std::cout << setCursorPosition(2, 15) << "\u250C";
+    if ((int)events.size() < row-10) {
+        height = (int)events.size();
+    } else {
+        height = row - 10;
+    }
+
+    std::cout << setCursorPosition(6, 12) << "\u250C";
     for (int i = 0; i < width - 1; i++) {
         std::cout << "\u2500";
     }
     std::cout << "\u2510";
     for (int i = 0; i < height; i++) {
-        std::cout << setCursorPosition(i + 3, 15);
+        std::cout << setCursorPosition(i + 7, 12);
         std::cout << "\u2502";
-        std::cout << setCursorPosition(i + 3, width + 15);
+        std::cout << setCursorPosition(i + 7, width + 12);
         std::cout << "\u2502";
     }
+    std::cout << setCursorPosition(height+7, 12) << "\u2514";
+    for (int i = 0; i < width - 1; i++) {
+        std::cout << "\u2500";
+    }
+    std::cout << "\u2518";
 }
 
 void drawButton(int row, int col) {

@@ -1,17 +1,8 @@
 #include "controls.h"
 
-#include "draw.h"
-#include "format.h"
-#include "graph.h"
-
-#include <ios>
-#include <iostream>
-#include <limits>
-#include <tuple>
-
 void optionsInput(int row, int col, float & balance, float tax,
-    std::vector<Stock> & stocks, bool & viewMode, bool & advance, bool & optionsQuit,
-    bool & gameQuit) {
+    std::vector<Stock> & stocks, std::vector<Stock_event> events, bool & viewMode,
+    bool & advance, bool & optionsQuit, bool & gameQuit) {
     char input;
     while (1) {
         std::cout << setCursorPosition(row, 3) << "\x1b[2K";
@@ -32,6 +23,7 @@ void optionsInput(int row, int col, float & balance, float tax,
                 break;
             case 'E':
             case 'e':
+                listEvents(row, col, events);
                 break;
             case 'N':
             case 'n':

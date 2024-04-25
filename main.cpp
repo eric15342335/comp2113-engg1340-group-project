@@ -319,19 +319,28 @@ int main(void) {
                 time::sleep(sleepMedium);
                 indexGraph = integerInput(row, col, "Select stock index to display: ");
             }
-            std::cout << textClear << setCursorPosition(5, 0);
+            std::cout << textClear << setCursorPosition(6, 0);
             graph_plotting(playerName, 1, col * 2 / 3, row - 10);
         }
         else {
-            std::cout << textClear << setCursorPosition(5, 0);
+            std::cout << textClear << setCursorPosition(6, 0);
             print_table(stocks_list, balance); // Print the table of stocks
         }
-        drawRoundInfo(row, col, rounds_played, balance, playerName, hsi_history[hsi_history.size()-1]);
+        drawRoundInfo(row, col, rounds_played, balance, playerName,
+            hsi_history[hsi_history.size() - 1]);
         drawEventBar(row, col);
         drawButton(row, col);
+        /*
+        for (int i = 0; i < (int)get_ongoing_events(stocks_list).size(); i++) {
+            if (!get_ongoing_events(stocks_list)[i].text.empty()) {
+                std::cout << get_ongoing_events(stocks_list)[i].text << "\n";
+            }
+        }
+        */
         while (!optionsQuit) {
-            optionsInput(row, col, balance, trading_fees_percent, stocks_list, viewMode,
-                advance, optionsQuit, gameQuit);
+            optionsInput(row, col, balance, trading_fees_percent, stocks_list,
+                get_ongoing_events(stocks_list), viewMode, advance, optionsQuit,
+                gameQuit);
         }
 
         if (advance) {

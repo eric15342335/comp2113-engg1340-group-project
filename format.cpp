@@ -1,7 +1,5 @@
 #include "format.h"
 
-#include <chrono>
-#include <thread>
 using namespace std;
 
 const string textClear = "\x1b[2J";

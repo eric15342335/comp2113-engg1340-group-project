@@ -1,6 +1,9 @@
 #ifndef FORMAT_H
 #define FORMAT_H
+
+#include <chrono>
 #include <string>
+#include <thread>
 
 extern const std::string textClear;
 extern const std::string textReset;
