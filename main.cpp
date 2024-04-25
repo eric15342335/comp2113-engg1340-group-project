@@ -246,8 +246,7 @@ int main(void) {
 
     std::vector<Stock> stocks_list;
     for (int i = 0; i < initial_stock_count; i++) {
-        Stock stock;
-        stocks_list.emplace_back(stock); // Add the stock to the vector
+        stocks_list.emplace_back(Stock()); // Add the stock to the vector
     }
 
     sortStocksList(stocks_list, by_category, ascending);
