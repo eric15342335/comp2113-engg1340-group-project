@@ -1,11 +1,11 @@
 #include "graph.h"
-#include <iostream>
-#include <vector>
-#include <string>
-#include <fstream>
+
 #include <algorithm>
-#include <sstream>
+#include <fstream>
 #include <iomanip>
+#include <iostream>
+#include <sstream>
+#include <vector>
 using namespace std;
 
 string graphpriceformat(float price) { // lock the max/min value between 6 chars
@@ -27,7 +27,8 @@ string graphpriceformat(float price) { // lock the max/min value between 6 chars
     return pricestring;
 }
 
-void printstocknameandoverall(string stockname, vector<float> stockpricehistory, int stocknum) {
+void printstocknameandoverall(
+    string stockname, vector<float> stockpricehistory, int stocknum) {
     string stocknameprint;
     if (stocknum != -1) {
         stocknameprint = "Stock: " + stockname;
@@ -35,13 +36,16 @@ void printstocknameandoverall(string stockname, vector<float> stockpricehistory,
     else {
         stocknameprint = "HSI:";
     }
-    float overall = (stockpricehistory[stockpricehistory.size() - 1] - stockpricehistory[0]) / stockpricehistory[0] * 100;
+    float overall =
+        (stockpricehistory[stockpricehistory.size() - 1] - stockpricehistory[0]) /
+        stockpricehistory[0] * 100;
     cout << stocknameprint << R"(     % change: )";
     cout << graphpriceformat(overall) << "%" << endl;
     cout << endl;
 }
 
-void printvector(vector<vector<string>> vectorname, vector<string> color, int width, int height) {
+void printvector(
+    vector<vector<string>> vectorname, vector<string> color, int width, int height) {
     int colorint;
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
@@ -65,7 +69,8 @@ void printvector(vector<vector<string>> vectorname, vector<string> color, int wi
 
 // will delete print in the final version
 
-vector<float> graphinput(string player, int stocknum, string & stockname, unsigned int width) {
+vector<float> graphinput(
+    string player, int stocknum, string & stockname, unsigned int width) {
     string filename;
     if (stocknum != -1) {
         filename = "saves/" + player + "/" + to_string(stocknum) + ".save";
@@ -93,7 +98,8 @@ vector<float> graphinput(string player, int stocknum, string & stockname, unsign
         }
     }
     if (stockpricehistory.size() > (width - 9)) { // limit graph size to width
-        stockpricehistory.erase(stockpricehistory.begin(), stockpricehistory.end() - (width - 9));
+        stockpricehistory.erase(
+            stockpricehistory.begin(), stockpricehistory.end() - (width - 9));
     }
     stockpricehistory.shrink_to_fit();
     return stockpricehistory;
