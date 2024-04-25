@@ -269,6 +269,10 @@ int main(void) {
         ;
         return 0;
     }
+    if (loadsave == "0"){
+        createplayer(playerName);
+        savestatus(rounds_played, stocks_list, balance, playerName);
+    }
     // Done loading/creating a new file.
 
     get_hsi(stocks_list, hsi_history);

@@ -113,6 +113,7 @@ void graph_plotting(string player, int stocknum, int width, int height) {
     vector<string> color(width - 9, "white");
     color[width - 10] = "white";
     if (stockpricehistory.size() <= 1) {
+        cout << "Why do you want to plot graph if there is only one data point?" << endl;
         return;
     }
     max = *max_element(stockpricehistory.begin(), stockpricehistory.end());
@@ -136,7 +137,6 @@ void graph_plotting(string player, int stocknum, int width, int height) {
         graph[i][height - 1] = minstring[i];
     }
     // \DeclareUnicodeCharacter{2517}{\L}
-    graph[8][height - 1] = "┗";
 
     for (unsigned int i = 0; i < stockpricehistory.size() - 1; i++) {
         int start = 10, end = 10;
