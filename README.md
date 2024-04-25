@@ -14,7 +14,7 @@
 3. [How to Play](#how-to-play)
 4. [Code Requirements](#code-requirements)
    1. [Generation of random game sets or events](#generation-of-random-game-sets-or-events)
-   2. [Data structures for storing game status (e.g., arrays, STL containers)](#data-structures-for-storing-game-status-eg-arrays-STL-containers)
+   2. [Data structures for storing game status (e.g., arrays, STL containers)](#data-structures-for-storing-game-status-eg-arrays-stl-containers)
    3. [Dynamic memory management (e.g., dynamic arrays, linked lists, STL containers)](#dynamic-memory-management-eg-dynamic-arrays-linked-lists-stl-containers)
    4. [File input/output (e.g., for loading/saving game status)](#file-inputoutput-eg-for-loadingsaving-game-status)
    5. [Program codes in multiple files (recall separate compilation)](#program-codes-in-multiple-files-recall-separate-compilation)
@@ -90,7 +90,7 @@ To run the game:
 
 Generation of stock prices [(file)](./random_price.cpp) [(docs)](https://eric15342335.github.io/comp2113-engg1340-group-project/random__price_8cpp.html):
 - We used normal distribution to generate the percentage change in the stock price for each new round.
-- Instead of generating new stock price based on current price, we discovered this is easier for us to code.
+- Instead of generating a new stock price based on the current price, we discovered this is easier for us to code.
 
 Generation of in-game [events](https://eric15342335.github.io/comp2113-engg1340-group-project/events_8h.html):
 - In our game, we also included *_99_* events that will each have a possibility to happen in your gameplay.
@@ -137,17 +137,17 @@ Some notable examples (list may not include all styles and files):
 
 ## In-code documentation
 
-We take documentation _seriously_. In our code, we use `JavaDoc` as the format to write our comments. This allow us to integrate with third-party documentation auto-generate tools like [`doxygen`](https://www.doxygen.nl/).
+We take documentation _seriously_. In our code, we use `JavaDoc` as the format to write our comments. This allows us to integrate with third-party documentation auto-generate tools like [`doxygen`](https://www.doxygen.nl/).
 
-If you haven't noticed that why we have so many hyperlinks in this [README.md](./README.md) file, click [here](https://eric15342335.github.io/comp2113-engg1340-group-project/) to know what the links are pointing to!
+If you haven't noticed why we have so many hyperlinks in this [README.md](./README.md) file, click [here](https://eric15342335.github.io/comp2113-engg1340-group-project/) to know what the links are pointing to!
 
 # Credits
 
 ## Non-standard libraries used
 
-![External Libraries](https://img.shields.io/badge/External_Libraries-VariadicTable-darkgreen)
+[![External Libraries](https://img.shields.io/badge/External_Libraries-VariadicTable-darkgreen)](https://github.com/friedmud/variadic_table)
 
-For printing the prettified table, we used [VariadicTable](./nonstdlibs/README.md) in our code. VariadicTable is a third-party header-only library licensed
+For printing the prettified table, we used [VariadicTable](./nonstdlibs/) in our code. VariadicTable is a third-party header-only library licensed
 under [LGPL-2.1](./nonstdlibs/LICENSE.VariadicTable.md).
 
 ## Logo
