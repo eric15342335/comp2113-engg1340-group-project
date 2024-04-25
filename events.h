@@ -149,7 +149,7 @@ struct Stock_event {
                 mutually_exclusive_events);
             unsigned int event_id;
             while (mutually_exclusive_events_stream >> event_id) {
-                event.mutually_exclusive_events.push_back(event_id);
+                event.mutually_exclusive_events.emplace_back(event_id);
             }
             std::getline(inputstream, event.text, ';');
             unsigned int temp_type;

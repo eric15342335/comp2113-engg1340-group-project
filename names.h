@@ -18,7 +18,9 @@
  * It is used to determine the number of categories in the list.
  */
 const int category_list_size = 17;
+
 /**
+ * @brief List of stock categories.
  * The array category_list is declared as extern since it will be defined in names.cpp.
  * It is not defined in names.h to avoid multiple definition errors,
  * and to follow good programming practices.

@@ -84,7 +84,7 @@ void Stock::load(std::string playerName, int i) {
     // Erase the history vector, since we called the constructor already
     history.clear();
     while (loadedPrice != -1) {
-        history.push_back(loadedPrice);
+        history.emplace_back(loadedPrice);
         fin >> loadedPrice;
     }
     // Set the price
@@ -164,7 +164,7 @@ unsigned int Stock::num_stocks_affordable(float balance, float trading_fees_perc
 
 void Stock::update_history(void) {
     /** We use vector now! */
-    history.push_back(price);
+    history.emplace_back(price);
 }
 
 std::vector<float> Stock::return_most_recent_history(unsigned int rounds) {
@@ -173,7 +173,7 @@ std::vector<float> Stock::return_most_recent_history(unsigned int rounds) {
         return history;
     }
     for (unsigned int i = history.size() - rounds; i < history.size(); i++) {
-        recent_history.push_back(history[i]);
+        recent_history.emplace_back(history[i]);
     }
     return recent_history;
 }
@@ -218,7 +218,7 @@ void Stock::add_event(Stock_event event) {
             event_itr++;
         }
     }
-    events.push_back(event);
+    events.emplace_back(event);
 }
 
 bool Stock::can_add_event(Stock_event event) {
@@ -300,7 +300,7 @@ std::vector<unsigned int> Stock::get_event_ids(void) {
     std::vector<unsigned int> event_ids;
     std::list<Stock_event>::iterator event_itr = events.begin();
     while (event_itr != events.end()) {
-        event_ids.push_back(event_itr->event_id);
+        event_ids.emplace_back(event_itr->event_id);
         event_itr++;
     }
     return event_ids;

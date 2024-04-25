@@ -1020,7 +1020,7 @@ std::vector<Stock_event> all_stock_events = {
         /** modifiers */
         {{standard_deviation, 0.2}, {mean, 5}, {lower_limit, 0}, {upper_limit, 15}}},
     {/** event_id */ 95,
-        /** mutually_exclusive_events */ {},
+        /** mutually_exclusive_events */ {98},
         /** text */ "Market Slump Leads to Business Contraction",
         /** duration */ 4,
         /** percentage_permille */ 10,
@@ -1038,7 +1038,7 @@ std::vector<Stock_event> all_stock_events = {
         /** modifiers */
         {{standard_deviation, 0.1}, {mean, -2}, {lower_limit, -10}, {upper_limit, 0}}},
     {/** event_id */ 97,
-        /** mutually_exclusive_events */ {94},
+        /** mutually_exclusive_events */ {94, 98},
         /** text */ "Faces Bankruptcy, Forced to Cease Operations",
         /** duration */ 6,
         /** percentage_permille */ 10,
@@ -1088,7 +1088,7 @@ std::map<unsigned int, std::vector<unsigned int>> check_mutual_exclusivity(
     for (unsigned int i = 0; i < all_events.size(); i++) {
         for (unsigned int j = 0; j < all_events[i].mutually_exclusive_events.size();
              j++) {
-            mut_excl_map[all_events[i].event_id].push_back(
+            mut_excl_map[all_events[i].event_id].emplace_back(
                 all_events[i].mutually_exclusive_events[j]);
         }
     }
@@ -1133,7 +1133,7 @@ std::vector<Stock_event> pick_events(
         for (Stock_event event : all_events) {
             total_permille -= event.probability_permille;
             if (total_permille <= random_permille) {
-                picked_events.push_back(event);
+                picked_events.emplace_back(event);
                 break;
             }
         }

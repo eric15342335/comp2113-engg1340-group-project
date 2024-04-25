@@ -34,7 +34,7 @@ void load_hsi(std::vector<float> hsi_history, string playerName) {
     fin.open(filesave.c_str());
     float hsi;
     while (fin >> hsi) {
-        hsi_history.push_back(hsi);
+        hsi_history.emplace_back(hsi);
     }
     fin.close();
 }
@@ -152,7 +152,7 @@ void delsave(string & mode) {
 vector<string> get_saves() {
     vector<string> saves;
     for (const auto & entry : std::filesystem::directory_iterator("saves")) {
-        saves.push_back(entry.path().string().substr(6));
+        saves.emplace_back(entry.path().string().substr(6));
     }
     return saves;
 }

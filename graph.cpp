@@ -87,14 +87,14 @@ vector<float> graphinput(
         getline(fin, stockname);
         fin >> x;
         while (x != -1) {
-            stockpricehistory.push_back(x);
+            stockpricehistory.emplace_back(x);
             fin >> x;
         }
     }
     else {
         float x;
         while (fin >> x) {
-            stockpricehistory.push_back(x);
+            stockpricehistory.emplace_back(x);
         }
     }
     if (stockpricehistory.size() > (width - 9)) { // limit graph size to width
