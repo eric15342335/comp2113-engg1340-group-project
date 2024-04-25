@@ -15,12 +15,14 @@ string const category_list[category_list_size] = {"Adv&Market", "Aero&Def", "Air
     "Retail", "Telecom"};
 
 /**
- * @brief Generates a set of unique stock names based on the specified category and quantity.
+ * @brief Generates a set of unique stock names based on the specified category and
+ * quantity.
  * @param category The category index `[0 to category_list_size-1]` indicating the stock
  * category.
  * @param num The number of stock names to generate.
  * @return A vector of unique stock names.
- * @note There is a possibility of having an infinite loop if we called `generate_names(0,99999999999999)`.
+ * @note There is a possibility of having an infinite loop if we called
+ * `generate_names(0,99999999999999)`.
  */
 vector<string> generate_name(unsigned int category, unsigned int num) {
     // List of suffixes for stock names

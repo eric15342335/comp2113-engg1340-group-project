@@ -51,8 +51,8 @@ void get_hsi(std::vector<Stock> stocks_list, std::vector<float> & hsi_history) {
     std::vector<float> total;
     for (unsigned int i = 0; i < stocks_list.size(); i++) {
         total.emplace_back(stocks_list[i].get_price() /
-                        stocks_list[i].get_initial_price() * 1000 *
-                        pow(2, stocks_list[i].get_split_count()));
+                           stocks_list[i].get_initial_price() * 1000 *
+                           pow(2, stocks_list[i].get_split_count()));
         // HSI formula = (price/initial price) * 1000 * 2^split count
     }
     hsi = std::reduce(total.begin(), total.end()) / total.size();
@@ -243,7 +243,6 @@ int main(void) {
     int col; // Number of characters to fit in a row
     fetchConsoleDimensions(row, col);
 
-
     std::vector<Stock> stocks_list;
     for (int i = 0; i < initial_stock_count; i++) {
         stocks_list.emplace_back(Stock()); // Add the stock to the vector
@@ -254,15 +253,16 @@ int main(void) {
     std::vector<float> hsi_history;
     std::string loadsave;
     // Assert that the every key has no value.
-    std::map<unsigned int, std::vector<unsigned int>> checkEventResult = check_mutual_exclusivity(all_stock_events);
+    std::map<unsigned int, std::vector<unsigned int>> checkEventResult =
+        check_mutual_exclusivity(all_stock_events);
     for (auto & [key, value] : checkEventResult) {
         // If the assertion is raised, print the checkEventResult and exit the program.
         if (value.size() > 0) {
-            std::cout << "Error: detected mutual exclusivity violation! Details:" << std::endl;
+            std::cout << "Error: detected mutual exclusivity violation! Details:"
+                      << std::endl;
             print_map(checkEventResult);
             return 1;
         }
-
     }
 
     std::cout << "Please enter 0 for new save, enter 1 for loading old save, enter 2 "
