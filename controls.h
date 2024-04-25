@@ -14,7 +14,7 @@
 
 void optionsInput(int row, int col, float & balance, float tax,
     std::vector<Stock> & stocks, std::vector<Stock_event> events, bool & viewMode,
-    bool & advance, bool& overlayEvent, bool & gameQuit, bool & flush);
+    bool & advance, bool & overlayEvent, bool & gameQuit, bool & flush);
 
 int integerInput(int row, int col, std::string message);
 

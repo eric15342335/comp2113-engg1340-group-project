@@ -2,7 +2,7 @@
 
 void optionsInput(int row, int col, float & balance, float tax,
     std::vector<Stock> & stocks, std::vector<Stock_event> events, bool & viewMode,
-    bool & advance, bool& overlayEvent, bool & flush, bool & gameQuit) {
+    bool & advance, bool & overlayEvent, bool & flush, bool & gameQuit) {
     char input;
     while (1) {
         std::cout << setCursorPosition(row, 3) << "\x1b[2K";
@@ -26,7 +26,8 @@ void optionsInput(int row, int col, float & balance, float tax,
                 if (!overlayEvent) {
                     overlayEvent = 1;
                     listEvents(row, col, events);
-                } else {
+                }
+                else {
                     flush = 1;
                 }
                 break;

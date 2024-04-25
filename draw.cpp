@@ -63,35 +63,63 @@ void drawEventBar(int row, int col) {
 
 void listEvents(int row, int col, std::vector<Stock_event> events) {
     int height;
-    int width = col - 24;
+    int width = col - 20;
 
-    if ((int)events.size() < row-10) {
-        height = (int)events.size();
-    } else {
+    if ((int)events.size() < row - 10) {
+        if ((int)events.size() != 0) {
+            height = (int)events.size() + 2;
+        } else {
+            height = 3;
+        }
+    }
+    else {
         height = row - 10;
     }
 
-    std::cout << setCursorPosition(6, 12) << "\u250C";
+    std::cout << setCursorPosition(6, 10) << "\u250C";
     for (int i = 0; i < width - 1; i++) {
         std::cout << "\u2500";
     }
     std::cout << "\u2510";
     for (int i = 0; i < height; i++) {
-        std::cout << setCursorPosition(i + 7, 12);
+        std::cout << setCursorPosition(i + 7, 10);
         std::cout << "\u2502";
-        std::cout << setCursorPosition(i + 7, width + 12);
+        std::cout << setCursorPosition(i + 7, width + 10);
         std::cout << "\u2502";
     }
-    std::cout << setCursorPosition(height+7, 12) << "\u2514";
+    std::cout << setCursorPosition(height + 7, 10) << "\u2514";
     for (int i = 0; i < width - 1; i++) {
         std::cout << "\u2500";
     }
     std::cout << "\u2518";
 
-    for (int i = 0; i < (int)events.size(); i++) {
-        std::cout << setCursorPosition(i+7, 13);
-        std::cout << events[i].text;
-        for (int j = 0; j < width-(int)events[i].text.size()-1; j++) {
+    std::cout << setCursorPosition(7, 11);
+    for (int i = 0; i < width - 1; i++) {
+        std::cout << " ";
+    }
+    if ((int)events.size() == 0) {
+        std::cout << setCursorPosition(8, 11);
+        std::cout << "There are currently no events!";
+        for (int i = 0; i < width - 31; i++) {
+            std::cout << " ";
+        }
+        std::cout << setCursorPosition(9, 11);
+        for (int i = 0; i < width - 1; i++) {
+            std::cout << " ";
+        }
+    }
+    else {
+        for (int i = 1; i < (int)events.size() + 1; i++) {
+            std::cout << setCursorPosition(i + 7, 11);
+            std::cout << i << ". " << events[i - 1].text;
+            int digits = (int)(((i) / 10) + 1);
+            for (int j = 0; j < width - (int)events[i - 1].text.size() - 3 - digits;
+                 j++) {
+                std::cout << " ";
+            }
+        }
+        std::cout << setCursorPosition((int)events.size() + 8, 11);
+        for (int i = 0; i < width - 1; i++) {
             std::cout << " ";
         }
     }

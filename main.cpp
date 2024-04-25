@@ -246,7 +246,7 @@ int main(void) {
     bool gameQuit = 0; // Whether the player wants to quit the game
     bool viewMode = 0; // 0 to view table, 1 to view graph
     bool overlayEvent; // Whether the event bar is being shown
-    bool flush; // Whether the screen needs updating
+    bool flush;        // Whether the screen needs updating
     int indexGraph;
     int row; // Number of characters to fit in a column
     int col; // Number of characters to fit in a row
