@@ -56,13 +56,13 @@ void get_hsi(std::vector<Stock> stocks_list, std::vector<float> & hsi_history) {
     std::string filesave = "saves/" + playerName + "/hsi.save";
     std::vector<float> total;
     for (unsigned int i = 0; i < stocks_list.size(); i++) {
-        total.push_back(stocks_list[i].get_price() /
-                        stocks_list[i].get_initial_price() * 1000 *
-                        pow(2, stocks_list[i].get_split_count()));
+        total.emplace_back(stocks_list[i].get_price() /
+                           stocks_list[i].get_initial_price() * 1000 *
+                           pow(2, stocks_list[i].get_split_count()));
         // HSI formula = (price/initial price) * 1000 * 2^split count
     }
     hsi = std::reduce(total.begin(), total.end()) / total.size();
-    hsi_history.push_back(hsi);
+    hsi_history.emplace_back(hsi);
     std::ofstream fout;
     fout.open(filesave.c_str(), std::ios::app);
     fout << hsi << ' ';
@@ -165,7 +165,7 @@ std::vector<Stock_event> get_ongoing_events(std::vector<Stock> stocks_list) {
                 // If the event is not in the ongoing_events, add it.
                 if (std::find(ongoing_events.begin(), ongoing_events.end(), event) ==
                     ongoing_events.end()) {
-                    ongoing_events.push_back(event);
+                    ongoing_events.emplace_back(event);
                 }
             }
         }
@@ -209,7 +209,7 @@ void new_events_next_round(std::vector<Stock> & stocks_list) {
                     unsigned int choice = random_integer(stocks_list.size());
                     Stock lucky_stock = stocks_list[choice];
                     if (!lucky_stock.can_add_event(event)) {
-                        stocks_indices_not_suitable.push_back(choice);
+                        stocks_indices_not_suitable.emplace_back(choice);
                     }
                     else {
                         Stock_event modified_event = event;
@@ -253,14 +253,26 @@ int main(void) {
 
     std::vector<Stock> stocks_list;
     for (int i = 0; i < initial_stock_count; i++) {
-        Stock stock;
-        stocks_list.push_back(stock); // Add the stock to the vector
+        stocks_list.emplace_back(Stock()); // Add the stock to the vector
     }
 
     sortStocksList(stocks_list, by_category, ascending);
 
     std::vector<float> hsi_history;
     std::string loadsave;
+    // Assert that the every key has no value.
+    std::map<unsigned int, std::vector<unsigned int>> checkEventResult =
+        check_mutual_exclusivity(all_stock_events);
+    for (auto & [key, value] : checkEventResult) {
+        // If the assertion is raised, print the checkEventResult and exit the program.
+        if (value.size() > 0) {
+            std::cout << "Error: detected mutual exclusivity violation! Details:"
+                      << std::endl;
+            print_map(checkEventResult);
+            return 1;
+        }
+    }
+
     std::cout << "Please enter 0 for new save, enter 1 for loading old save, enter 2 "
                  "for deleting save or enter 3 to quit: ";
     std::cin >> loadsave;
