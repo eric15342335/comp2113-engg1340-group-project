@@ -12,6 +12,17 @@
 #include <iostream>
 using namespace std;
 
+vector<string> parseLogo() {
+    string line;
+    vector<string> logo;
+    ifstream file("logo.txt");
+    while (getline(file, line)) {
+        logo.emplace_back(line);
+    }
+    file.close();
+    return logo;
+}
+
 void createplayer(string & playerName) {
     ofstream fout;
     string savefolder = "saves"; // create folder when it does not exist (first run)

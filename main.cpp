@@ -274,8 +274,11 @@ int main(void) {
         }
     }
 
-    std::cout << "Please enter 0 for new save, enter 1 for loading old save, enter 2 "
-                 "for deleting save or enter 3 to quit: ";
+    drawLogo(row, col);
+    time::sleep(sleepMedium);
+
+    std::cout << "Please enter.\n0 for new save,\n1 for loading old save,\n2 "
+                 "for deleting save,\n3 to quit: ";
     std::cin >> loadsave;
     while (loadsave != "0" && loadsave != "1" && loadsave != "2" && loadsave != "3") {
         std::cout << "Invalid input. Please enter 0 for new save, enter 1 for loading "
@@ -302,7 +305,6 @@ int main(void) {
 
     get_hsi(stocks_list, hsi_history);
 
-    drawLogo(row, col);
     time::sleep(sleepMedium);
     std::cout << textClear << setCursorPosition(0, 0);
     std::cout << "Current trading fees are charged at " << trading_fees_percent * 100

@@ -1,27 +1,37 @@
 #include "draw.h"
 
+#include "file_io.h"
+
 void drawLogo(int row, int col) {
     const int wordWidth = 73; // Width of the longest word
     const int wordHeight = 8; // Height for each word
+    std::vector<std::string> logo = parseLogo();
 
     std::cout << textClear << setCursorPosition(0, 0);
 
     // Will not print logo if terminal cannot fit
     if (row > wordHeight && col > wordWidth) {
         // Will use fileIO for this
-        std::cout << "Insert\n";
+        for (int i = 0; i < 9; i++) {
+            std::cout << logo[i] << "\n";
+        }
         time::sleep(sleepMedium);
-        std::cout << textClear;
+        std::cout << textClear << setCursorPosition(0, 0);
         time::sleep(sleepShort);
-        std::cout << "Logo\n";
+        for (int i = 9; i < 18; i++) {
+            std::cout << logo[i] << "\n";
+        }
         time::sleep(sleepMedium);
-        std::cout << textClear;
+        std::cout << textClear << setCursorPosition(0, 0);
         time::sleep(sleepShort);
-        std::cout << "Here\n";
+        for (int i = 18; i < 27; i++) {
+            std::cout << logo[i] << "\n";
+        }
     }
     else {
         std::cout << "Welcome to Stock Market Simulator!\n";
     }
+    std::cout << textClear << setCursorPosition(0, 0);
 }
 
 void drawRoundInfo(
