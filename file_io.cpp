@@ -32,10 +32,12 @@ void createplayer(string & playerName) {
     cout << "Enter player name:" << endl;
     getline(cin, playerName);
     foldername = "saves/" + playerName;
-    while ((filesystem::exists(foldername) || playerName.find(" ") != negative1) || playerName.empty()) { // check whether file already exists
+    while ((filesystem::exists(foldername) || playerName.find(" ") != negative1) ||
+           playerName.empty()) { // check whether file already exists
         if (!playerName.empty()) {
             cout << "Invalid Playername. ";
-            cout << "Playername should not contain spaces or cannot be the same as existing ";
+            cout << "Playername should not contain spaces or cannot be the same as "
+                    "existing ";
             cout << "playername" << endl << "Please enter a new player name: " << endl;
         }
         getline(cin, playerName);
