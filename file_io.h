@@ -1,6 +1,6 @@
 /**
  * @file file_io.h
- * @brief This file contains the process of loading, saving and deleting the game
+ * @brief This file contains the process of loading, saving and deleting saves
  * status.
  * @author comet13579, eric15432235
  */
@@ -11,6 +11,12 @@
 
 // linker command failed with exit code 1 (use -v to see invocation)
 // https://stackoverflow.com/questions/12573816/linker-command-failed-with-exit-code-1-use-v-to-see-invocation
+
+/**
+ * @brief Loads the logo from "logo.txt" and returns a vector of string containing the
+ * logo.
+ */
+std::vector<std::string> parseLogo();
 
 /**
  * @brief Create a player folder.

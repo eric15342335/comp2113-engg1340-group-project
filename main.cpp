@@ -242,11 +242,12 @@ void next_round_routine(
 int main(void) {
     // Set the console to UTF-8 mode
     SetConsoleOutputCP(65001);
-    bool viewMode = 0;
-    int graphIndex;
     bool advance;      // Whether to advance to the next round
     bool gameQuit = 0; // Whether the player wants to quit the game
-    bool optionsQuit;
+    bool viewMode = 0; // 0 to view table, 1 to view graph
+    bool overlayEvent; // Whether the event bar is being shown
+    bool flush;        // Whether the screen needs updating
+    int indexGraph;
     int row; // Number of characters to fit in a column
     int col; // Number of characters to fit in a row
     fetchConsoleDimensions(row, col);
@@ -273,8 +274,11 @@ int main(void) {
         }
     }
 
-    std::cout << "Please enter 0 for new save, enter 1 for loading old save, enter 2 "
-                 "for deleting save or enter 3 to quit: ";
+    drawLogo(row, col);
+    time::sleep(sleepMedium);
+
+    std::cout << "Please enter.\n0 for new save,\n1 for loading old save,\n2 "
+                 "for deleting save,\n3 to quit: ";
     std::cin >> loadsave;
     while (loadsave != "0" && loadsave != "1" && loadsave != "2" && loadsave != "3") {
         std::cout << "Invalid input. Please enter 0 for new save, enter 1 for loading "
@@ -301,7 +305,6 @@ int main(void) {
 
     get_hsi(stocks_list, hsi_history);
 
-    drawLogo(row, col);
     time::sleep(sleepMedium);
     std::cout << textClear << setCursorPosition(0, 0);
     std::cout << "Current trading fees are charged at " << trading_fees_percent * 100
@@ -310,28 +313,38 @@ int main(void) {
 
     while (!gameQuit) {
         advance = 0;
-        optionsQuit = 0;
+        overlayEvent = 0;
+        flush = 0;
         if (viewMode) {
-            graphIndex = integerInput(row, col, "Select stock index to display: ");
-            while (graphIndex < 1 || graphIndex > (int)stocks_list.size()) {
+            indexGraph = integerInput(row, col, "Select stock index to display: ");
+            while (indexGraph < 1 || indexGraph > (int)stocks_list.size()) {
                 std::cout << setCursorPosition(row, 3) << "\x1b[2K";
                 std::cout << "Index out of range!";
                 time::sleep(sleepMedium);
-                graphIndex = integerInput(row, col, "Select stock index to display: ");
+                indexGraph = integerInput(row, col, "Select stock index to display: ");
             }
-            std::cout << textClear << setCursorPosition(5, 0);
+            std::cout << textClear << setCursorPosition(6, 0);
             graph_plotting(playerName, 1, col * 2 / 3, row - 10);
         }
         else {
-            std::cout << textClear << setCursorPosition(5, 0);
+            std::cout << textClear << setCursorPosition(6, 0);
             print_table(stocks_list, balance); // Print the table of stocks
         }
-        drawRoundInfo(row, col, rounds_played, balance);
+        drawRoundInfo(row, col, rounds_played, balance, playerName,
+            hsi_history[hsi_history.size() - 1]);
         drawEventBar(row, col);
         drawButton(row, col);
-        while (!optionsQuit) {
-            optionsInput(row, col, balance, trading_fees_percent, stocks_list, viewMode,
-                advance, optionsQuit, gameQuit);
+        /*
+        for (int i = 0; i < (int)get_ongoing_events(stocks_list).size(); i++) {
+            if (!get_ongoing_events(stocks_list)[i].text.empty()) {
+                std::cout << get_ongoing_events(stocks_list)[i].text << "\n";
+            }
+        }
+        */
+        while (!flush) {
+            optionsInput(row, col, balance, trading_fees_percent, stocks_list,
+                get_ongoing_events(stocks_list), viewMode, advance, overlayEvent, flush,
+                gameQuit);
         }
 
         if (advance) {
@@ -342,8 +355,6 @@ int main(void) {
             time::sleep(sleepLong);
         }
     }
-
-    std::cout << "HSI: " << hsi_history[hsi_history.size() - 1] << std::endl;
 
     return 0;
 }

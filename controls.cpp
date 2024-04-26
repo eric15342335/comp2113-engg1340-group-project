@@ -1,17 +1,8 @@
 #include "controls.h"
 
-#include "draw.h"
-#include "format.h"
-#include "graph.h"
-
-#include <ios>
-#include <iostream>
-#include <limits>
-#include <tuple>
-
 void optionsInput(int row, int col, float & balance, float tax,
-    std::vector<Stock> & stocks, bool & viewMode, bool & advance, bool & optionsQuit,
-    bool & gameQuit) {
+    std::vector<Stock> & stocks, std::vector<Stock_event> events, bool & viewMode,
+    bool & advance, bool & overlayEvent, bool & flush, bool & gameQuit) {
     char input;
     while (1) {
         std::cout << setCursorPosition(row, 3) << "\x1b[2K";
@@ -20,29 +11,36 @@ void optionsInput(int row, int col, float & balance, float tax,
         switch (input) {
             case 'B':
             case 'b':
-                buyStocks(row, col, balance, tax, stocks, optionsQuit);
+                buyStocks(row, col, balance, tax, stocks, flush);
                 break;
             case 'S':
             case 's':
-                sellStocks(row, col, balance, tax, stocks, optionsQuit);
+                sellStocks(row, col, balance, tax, stocks, flush);
                 break;
             case 'T':
             case 't':
-                toggleView(viewMode, optionsQuit);
+                toggleView(viewMode, flush);
                 break;
             case 'E':
             case 'e':
+                if (!overlayEvent) {
+                    overlayEvent = 1;
+                    listEvents(row, col, events);
+                }
+                else {
+                    flush = 1;
+                }
                 break;
             case 'N':
             case 'n':
-                advanceConfirmation(row, col, advance, optionsQuit);
+                advanceConfirmation(row, col, advance, flush);
                 break;
             case 'O':
             case 'o':
                 break;
             case 'X':
             case 'x':
-                quitConfirmation(row, col, optionsQuit, gameQuit);
+                quitConfirmation(row, col, flush, gameQuit);
                 break;
             default:
                 std::cout << setCursorPosition(row, 3) << "\x1b[2K";
@@ -75,7 +73,7 @@ int integerInput(int row, int col, std::string message) {
 }
 
 void buyStocks(int row, int col, float & balance, float tax,
-    std::vector<Stock> & stocks, bool & optionsQuit) {
+    std::vector<Stock> & stocks, bool & flush) {
     int index;
     int amount;
 
@@ -100,11 +98,11 @@ void buyStocks(int row, int col, float & balance, float tax,
         amount = integerInput(row, col, "Enter the amount to buy (0 to skip): ");
     }
     stocks[index - 1].purchase(balance, amount, tax);
-    optionsQuit = 1;
+    flush = 1;
 }
 
 void sellStocks(int row, int col, float & balance, float tax,
-    std::vector<Stock> & stocks, bool & optionsQuit) {
+    std::vector<Stock> & stocks, bool & flush) {
     int index;
     int amount;
 
@@ -129,15 +127,15 @@ void sellStocks(int row, int col, float & balance, float tax,
         amount = integerInput(row, col, "Enter the amount to sell (0 to skip): ");
     }
     stocks[index - 1].sell(balance, amount, tax);
-    optionsQuit = 1;
+    flush = 1;
 }
 
-void toggleView(bool & viewMode, bool & optionsQuit) {
+void toggleView(bool & viewMode, bool & flush) {
     viewMode = !viewMode;
-    optionsQuit = 1;
+    flush = 1;
 }
 
-void advanceConfirmation(int row, int col, bool & advance, bool & optionsQuit) {
+void advanceConfirmation(int row, int col, bool & advance, bool & flush) {
     std::ignore = col;
     char input;
     std::cout << setCursorPosition(row, 3) << "\x1b[2K";
@@ -145,11 +143,11 @@ void advanceConfirmation(int row, int col, bool & advance, bool & optionsQuit) {
     std::cin >> input;
     if (input == 'Y' || input == 'y') {
         advance = 1;
-        optionsQuit = 1;
+        flush = 1;
     }
 }
 
-void quitConfirmation(int row, int col, bool & optionsQuit, bool & gameQuit) {
+void quitConfirmation(int row, int col, bool & flush, bool & gameQuit) {
     std::ignore = col;
     char input;
     std::cout << setCursorPosition(row, 0) << "\x1b[2K";
@@ -157,6 +155,6 @@ void quitConfirmation(int row, int col, bool & optionsQuit, bool & gameQuit) {
     std::cin >> input;
     if (input == 'Y' || input == 'y') {
         gameQuit = 1;
-        optionsQuit = 1;
+        flush = 1;
     }
 }
