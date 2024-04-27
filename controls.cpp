@@ -35,9 +35,9 @@ void optionsInput(int row, int col, float & balance, float tax,
             case 'n':
                 advanceConfirmation(row, col, advance, flush);
                 break;
-            case 'O':
-            case 'o':
-                break;
+            // case 'O':
+            // case 'o':
+            //     break;
             case 'X':
             case 'x':
                 quitConfirmation(row, col, flush, gameQuit);
