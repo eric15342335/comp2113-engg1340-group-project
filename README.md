@@ -158,12 +158,12 @@ Some [additional columns](https://eric15342335.github.io/comp2113-engg1340-group
 
 ## Generation of [random](./random_price.cpp) game sets or [events](https://eric15342335.github.io/comp2113-engg1340-group-project/events_8h.html)
 
-Generation of stock prices [(file)](./random_price.cpp) [(docs)](https://eric15342335.github.io/comp2113-engg1340-group-project/random__price_8cpp.html):
+Generation of stock prices:
 
 - We used normal distribution to generate the percentage change in the stock price for each new round.
 - Instead of generating a new stock price based on the current price, we discovered this is easier for us to code.
 
-Generation of in-game [events](https://eric15342335.github.io/comp2113-engg1340-group-project/events_8h.html):
+Generation of in-game events:
 
 - In our game, we also included **99** events that will each have a possibility to happen in your gameplay.
   - The (relative) probability of each event is determined by the `Stock_event.probability_permille` member variable. ([Implementation](https://eric15342335.github.io/comp2113-engg1340-group-project/events_8cpp.html#a24cd47ec3d81ef215901b99cbe434829))
