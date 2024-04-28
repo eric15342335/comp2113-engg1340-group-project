@@ -47,6 +47,7 @@ string setCursorPosition(int offsetY, int offsetX) {
 void fetchConsoleDimensions(int & row, int & col) {
     // suggest terminal sizes
     // dynamic size needs testing on windows
+    // not implemented because of time constraints
     int mode = 2;
     switch (mode) {
         case 1:
