@@ -24,7 +24,7 @@ random_price.o: random_price.h random_price.cpp events.h stock.h
 file_io.o: file_io.cpp file_io.h stock.h
 	g++ $(FLAGS) -c file_io.cpp -o file_io.o
 
-stock.o: stock.cpp stock.h names.h random_price.h events.h
+stock.o: stock.cpp stock.h names.h random_price.h events.h format.h
 	g++ $(FLAGS) -c stock.cpp -o stock.o
 
 events.o: events.h events.cpp random_price.h

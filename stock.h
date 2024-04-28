@@ -13,6 +13,9 @@
 #include <string>
 #include <vector>
 
+/** @brief Initial stock count */
+const int initial_stock_count = 20;
+
 /**
  * @class Stock stock.h "stock.h"
  * @brief A class that represents a stock object in the game.

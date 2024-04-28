@@ -124,7 +124,7 @@ void loadstatus(unsigned int & rounds_played, vector<Stock> & stocks_list,
     fin >> playerName >> rounds_played >> balance;
     fin.close(); // output basic info from playerstatus.save and return by reference
     load_hsi(hsi_history, playerName);
-    for (unsigned long i = 0; i < 20; i++) { // hard code 20 stocks
+    for (unsigned long i = 0; i < initial_stock_count; i++) {
         stocks_list[i].load(
             inputname, i); // load stocks info to class in seperate files
     }
