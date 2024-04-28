@@ -52,13 +52,13 @@ const float lowerLimitMultiplier = 0.5;
 const float upperLimitMultiplier = 1;
 
 /// @brief Default lower limit
-const float defaultLowerLimit = -5 / lowerLimitMultiplier;
+const float defaultLowerLimit = -5 * lowerLimitMultiplier;
 
 /// @brief Default upper limit
-const float defaultUpperLimit = 5 / upperLimitMultiplier;
+const float defaultUpperLimit = 5 * upperLimitMultiplier;
 
 /// @brief Default mean
-const float defaultMean = 1;
+const float defaultMean = 0.4;
 
 /// @brief Rate of decrease of duration
 const unsigned int durationDecreaseMultiplier = 2;

@@ -1,4 +1,4 @@
-# [Stock](https://eric15342335.github.io/comp2113-engg1340-group-project/classStock.html) Market Simulator
+# Stock Market Simulator
 
 ![C++](https://img.shields.io/badge/c++-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=white)
 ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
@@ -75,13 +75,17 @@ giving players breathing room to better think about their [investing](https://en
 ## How to Play
 
 To compile:
+
 ```bash
 make
 ```
+
 To run the game:
+
 ```bash
 ./stocksim
 ```
+
 [Makefile usage](./Makefile)
 
 # Code Requirements
@@ -89,11 +93,13 @@ To run the game:
 ## Generation of [random](./random_price.cpp) game sets or [events](https://eric15342335.github.io/comp2113-engg1340-group-project/events_8h.html)
 
 Generation of stock prices [(file)](./random_price.cpp) [(docs)](https://eric15342335.github.io/comp2113-engg1340-group-project/random__price_8cpp.html):
+
 - We used normal distribution to generate the percentage change in the stock price for each new round.
 - Instead of generating a new stock price based on the current price, we discovered this is easier for us to code.
 
 Generation of in-game [events](https://eric15342335.github.io/comp2113-engg1340-group-project/events_8h.html):
-- In our game, we also included *_99_* events that will each have a possibility to happen in your gameplay.
+
+- In our game, we also included **99** events that will each have a possibility to happen in your gameplay.
   - The probability of each event is determined by the `probability_permille` member variable. (Despite the name, the value of this variable does not actually represent such meaning in our [implementation](https://eric15342335.github.io/comp2113-engg1340-group-project/events_8cpp.html#a24cd47ec3d81ef215901b99cbe434829))
 
 ## Data structures for storing game status (e.g., arrays, STL containers)
@@ -114,7 +120,7 @@ This game had options for players to create a new save, load an old save, and de
 a save upon the startup of the game. The saves are distinguished by the variable
 `std::string playerName`, for example `saves/<playername>/*.save`. In each
 save, every stock has a separate `.save` file, while other basic information is stored
-in `playerstatus.save` and HSI in `hsi.save`. The saving process is automatic upon the end 
+in `playerstatus.save` and HSI in `hsi.save`. The saving process is automatic upon the end
 of every round to prevent loss of advancements of the game (and also prevent rollback).
 
 Moreover, this game relies heavily on the C++17 library `<filesystem>` to maintain the tidiness
@@ -131,13 +137,15 @@ We enforce our code formatting style via the use of [`clang-format`](https://cla
 
 For naming styles, different [members](#team-members) of our group has different preferences.
 Some notable examples (list may not include all styles and files):
+
 - [snake_case](https://en.wikipedia.org/wiki/Snake_case): @eric15342335 [`stock.cpp`](./stock.cpp) [`stock.h`](./stock.h)
+
 - [camelCase](https://en.wikipedia.org/wiki/Camel_case): @Prismatiscence [`format.cpp`](./format.cpp) [`format.h`](./format.h)
  [`draw.cpp`](./draw.cpp) [`draw.h`](./draw.h) [`controls.cpp`](./controls.cpp) [`controls.h`](./controls.h)
 
 ## In-code documentation
 
-We take documentation _seriously_. In our code, we use `JavaDoc` as the format to write our comments. This allows us to integrate with third-party documentation auto-generate tools like [`doxygen`](https://www.doxygen.nl/).
+We take documentation *seriously*. In our code, we use `JavaDoc` as the format to write our comments. This allows us to integrate with third-party documentation auto-generate tools like [`doxygen`](https://www.doxygen.nl/).
 
 If you haven't noticed why we have so many hyperlinks in this [README.md](./README.md) file, click [here](https://eric15342335.github.io/comp2113-engg1340-group-project/) to know what the links are pointing to!
 

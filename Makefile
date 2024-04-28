@@ -4,6 +4,7 @@
 # make clean - removes the compiled program and object files
 # make docs - generates the documentation using Doxygen
 # make fix - formats the code using clang-format and commits the changes to git
+# make stats - shows the last 10 commits and the current branches
 
 # Compiler flags, consider removing `-Werror` before submitting.
 
