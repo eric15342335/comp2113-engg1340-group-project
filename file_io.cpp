@@ -15,11 +15,35 @@ using namespace std;
 vector<string> parseLogo() {
     string line;
     vector<string> logo;
-    ifstream file("logo.txt");
-    while (getline(file, line)) {
-        logo.emplace_back(line);
-    }
-    file.close();
+    // clang-format off
+    logo.emplace_back("            __                       __");
+    logo.emplace_back(R"(           |  \                     |  \)");
+    logo.emplace_back("  _______ _| $$_    ______   _______| $$   __");
+    logo.emplace_back(R"( /       |   $$ \  /      \ /       | $$  /  \)");
+    logo.emplace_back(R"(|  $$$$$$$\$$$$$$ |  $$$$$$|  $$$$$$| $$_/  $$)");
+    logo.emplace_back(R"( \$$    \  | $$ __| $$  | $| $$     | $$   $$)");
+    logo.emplace_back(R"( _\$$$$$$\ | $$|  | $$__/ $| $$_____| $$$$$$\)");
+    logo.emplace_back(R"(|       $$  \$$  $$\$$    $$\$$     | $$  \$$\)");
+    logo.emplace_back(R"( \$$$$$$$    \$$$$  \$$$$$$  \$$$$$$$\$$   \$$)");
+    logo.emplace_back("                                __                 __");
+    logo.emplace_back(R"(                               |  \               |  \)");
+    logo.emplace_back(" ______ ____   ______   ______ | $$   __  ______ _| $$_");
+    logo.emplace_back(R"(|      \    \ |      \ /      \| $$  /  \/      |   $$ \)");
+    logo.emplace_back(R"(| $$$$$$\$$$$\ \$$$$$$|  $$$$$$| $$_/  $|  $$$$$$\$$$$$$)");
+    logo.emplace_back(R"(| $$ | $$ | $$/      $| $$   \$| $$   $$| $$    $$| $$ __)");
+    logo.emplace_back(R"(| $$ | $$ | $|  $$$$$$| $$     | $$$$$$\| $$$$$$$$| $$|  \)");
+    logo.emplace_back(R"(| $$ | $$ | $$\$$    $| $$     | $$  \$$\\$$     \ \$$  $$)");
+    logo.emplace_back(R"( \$$  \$$  \$$ \$$$$$$$\$$      \$$   \$$ \$$$$$$$  \$$$$)");
+    logo.emplace_back("          __                       __           __");
+    logo.emplace_back(R"(         |  \                     |  \         |  \)");
+    logo.emplace_back(R"(  _______ \$$______ ____  __    __| $$ ______ _| $$_    ______   ______)");
+    logo.emplace_back(R"( /       |  |      \    \|  \  |  | $$|      |   $$ \  /      \ /      \)");
+    logo.emplace_back(R"(|  $$$$$$| $| $$$$$$\$$$$| $$  | $| $$ \$$$$$$\$$$$$$ |  $$$$$$|  $$$$$$\)");
+    logo.emplace_back(R"( \$$    \| $| $$ | $$ | $| $$  | $| $$/      $$| $$ __| $$  | $| $$   \$$)");
+    logo.emplace_back(R"( _\$$$$$$| $| $$ | $$ | $| $$__/ $| $|  $$$$$$$| $$|  | $$__/ $| $$)");
+    logo.emplace_back(R"(|       $| $| $$ | $$ | $$\$$    $| $$\$$    $$ \$$  $$\$$    $| $$)");
+    logo.emplace_back(R"( \$$$$$$$ \$$\$$  \$$  \$$ \$$$$$$ \$$ \$$$$$$$  \$$$$  \$$$$$$ \$$      )");
+    // clang-format on
     return logo;
 }
 
