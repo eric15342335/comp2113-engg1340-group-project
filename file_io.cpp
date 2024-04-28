@@ -27,12 +27,11 @@ void createplayer(string & playerName) {
     ofstream fout;
     string savefolder = "saves"; // create folder when it does not exist (first run)
     string foldername;
-    unsigned long negative1 = -1;
     filesystem::create_directory("saves");
     cout << "Enter player name:" << endl;
     getline(cin, playerName);
     foldername = "saves/" + playerName;
-    while ((filesystem::exists(foldername) || playerName.find(" ") != negative1) ||
+    while ((filesystem::exists(foldername) || playerName.find(" ") != string::npos) ||
            playerName.empty()) { // check whether file already exists
         if (!playerName.empty()) {
             cout << "Invalid Playername. ";
