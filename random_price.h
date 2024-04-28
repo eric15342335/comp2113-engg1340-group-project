@@ -10,24 +10,6 @@
 #include "events.h"
 #include "stock.h"
 
-/// @brief Multiplier for mean
-const float meanMultiplier = 0.05;
-
-/// @brief Multiplier for standard deviation
-const float sdMultiplier = 3.0;
-
-/// @brief Lower limit multiplier
-const float lowerLimitMultiplier = 0.2;
-
-/// @brief Upper limit multiplier
-const float upperLimitMultiplier = 0.2;
-
-/// @brief Default lower limit
-const float defaultLowerLimit = -5 / lowerLimitMultiplier;
-
-/// @brief Default upper limit
-const float defaultUpperLimit = 5 / upperLimitMultiplier;
-
 /**
  * @brief Initialize starting stock price.
  * @details
@@ -53,7 +35,7 @@ float init_sd(void);
  * @note the values of the processed modifiers are final values that will be used to
  * calculate the percentage change of the stock price
  */
-std::map<stock_modifiers, float> getProcessedModifiers(Stock & stock);
+std::map<stock_modifiers, float> getProcessedModifiers(Stock stock);
 
 /**
  * @brief Calculate the percentage change of the stock price.
