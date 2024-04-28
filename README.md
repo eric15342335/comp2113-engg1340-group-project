@@ -231,7 +231,7 @@ Some notable examples (list may not include all styles and files):
 
 We place a strong emphasis on code documentation in our project. We utilize the `JavaDoc` format to write our comments, which enables seamless integration with third-party documentation auto-generation tools like [Doxygen](https://www.doxygen.nl/).
 
-If you've noticed the numerous hyperlinks throughout this README.md file, they are pointing to the automatically generated documentation hosted on our GitHub Pages site. You can access this documentation by clicking [here](https://eric15342335.github.io/comp2113-engg1340-group-project/).
+If you've noticed the numerous hyperlinks throughout this `README.md` file, they are pointing to the automatically generated documentation hosted on our GitHub Pages site. You can access this documentation by clicking [here](https://eric15342335.github.io/comp2113-engg1340-group-project/).
 
 # Credits
 
@@ -239,11 +239,11 @@ If you've noticed the numerous hyperlinks throughout this README.md file, they a
 
 [![External Libraries](https://img.shields.io/badge/External_Libraries-VariadicTable-darkgreen)](https://github.com/friedmud/variadic_table)
 
-For printing the prettified table, we used [VariadicTable](./nonstdlibs/) in our code. VariadicTable is a third-party header-only library licensed
-under [LGPL-2.1](./nonstdlibs/LICENSE.VariadicTable.md).
+For printing prettified tables in our code, we used the [VariadicTable](./nonstdlibs/) library.
+VariadicTable is a third-party header-only library licensed under [LGPL-2.1](./nonstdlibs/LICENSE.VariadicTable.md).
 
 ## Logo
 
-The logo used in-game is generated with [Text to ASCII](https://www.asciiart.eu/text-to-ascii-art).
+The logo used in this game is generated with [Text to ASCII](https://www.asciiart.eu/text-to-ascii-art).
 
 [Back to top](#stock-market-simulator)
