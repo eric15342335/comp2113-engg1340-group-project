@@ -100,13 +100,17 @@ To ensure an optimal gaming experience, follow these steps before running the ga
 ### Terminal Size
 
 Maximize your terminal window to its fullest extent.
-On Windows, you can achieve this by pressing the Alt+Enter key combination, which will toggle the terminal to fullscreen mode.
+
+On Windows, you can achieve this by pressing the `Alt+Enter` key combination, which will toggle the terminal to fullscreen mode.
+
 
 ### Font Size Adjustment
 
 Reduce your terminal's font size initially.
-A larger font size may cause the table displaying stock information and data to be cut off or misaligned within the terminal window.
-Start with a smaller font size to ensure the stock table displays correctly, then increase the size if needed.
+
+An unsuitably large font size may cause the table displaying stock information and data to be cut off or misaligned within the terminal window.
+
+Start with a smaller font size, such as `10`, to ensure the stock table displays correctly, and then increase the size if needed.
 
 ### Tutorial
 
