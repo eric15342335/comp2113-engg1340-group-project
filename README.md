@@ -174,19 +174,25 @@ https://github.com/eric15342335/comp2113-engg1340-group-project/blob/ec1a655eff4
 
 ## Data structures for storing game status (e.g., arrays, STL containers)
 
-In [`stock.h`](./stock.h), we declared class [`Stock`](https://eric15342335.github.io/comp2113-engg1340-group-project/classStock.html) which utilizes STL `vector`, `list` and `map` to store various game data.
+In [stock.h](./stock.h), we declared class [Stock](https://eric15342335.github.io/comp2113-engg1340-group-project/classStock.html) which utilizes STL `vector`, `list` and `map` to store various game data.
 
-https://github.com/eric15342335/comp2113-engg1340-group-project/blob/ec1a655eff49cb5a46dd5b009c0b11502b1c23cf/stock.h#L240-L249
+https://github.com/eric15342335/comp2113-engg1340-group-project/blob/ec1a655eff49cb5a46dd5b009c0b11502b1c23cf/stock.h#L224-L239
 
-Other than `class Stock`, we have struct [`Stock_event`](https://eric15342335.github.io/comp2113-engg1340-group-project/structStock__event.html) that represents an in-game event.
+The class `Stock` itself represents an Stock object, which you can purchase, sell, generate a new price for it, etc.
+
+https://github.com/eric15342335/comp2113-engg1340-group-project/blob/ec1a655eff49cb5a46dd5b009c0b11502b1c23cf/stock.h#L19-L38
+
+Other than `class Stock`, we have struct [Stock_event](https://eric15342335.github.io/comp2113-engg1340-group-project/structStock__event.html) that represents an in-game event.
 
 https://github.com/eric15342335/comp2113-engg1340-group-project/blob/ec1a655eff49cb5a46dd5b009c0b11502b1c23cf/events.h#L95-L188
 
 ## Dynamic memory management (e.g., dynamic arrays, linked lists, [STL containers](https://en.cppreference.com/w/cpp/container))
 
-- [`Stock.history`](https://eric15342335.github.io/comp2113-engg1340-group-project/random__price_8cpp.html) is an `std::vector<float>` that stores the history of the stock prices.
-- [`Stock.events`](https://eric15342335.github.io/comp2113-engg1340-group-project/random__price_8cpp.html) is an `std::list<Stock_event>` that stores on-going [events]((https://eric15342335.github.io/comp2113-engg1340-group-project/events_8h.html)) that applies to the stock itself.
-- [`Stock.attributes`](https://eric15342335.github.io/comp2113-engg1340-group-project/classStock.html#a5f6748d37037cc65608d15cc83b09bf2) is an `std::map<stock_modifiers, float>` that stores the [properties](https://eric15342335.github.io/comp2113-engg1340-group-project/events_8h.html#a185fb61c0dff5e2a9b6c147a261736ee) related to stock price generation.
+- [Stock.history](https://eric15342335.github.io/comp2113-engg1340-group-project/random__price_8cpp.html) is an `std::vector<float>` that stores the history of the stock prices.
+- [Stock.events](https://eric15342335.github.io/comp2113-engg1340-group-project/random__price_8cpp.html) is an `std::list<Stock_event>` that stores on-going [events]((https://eric15342335.github.io/comp2113-engg1340-group-project/events_8h.html)) that applies to the stock itself.
+- [Stock.attributes](https://eric15342335.github.io/comp2113-engg1340-group-project/classStock.html#a5f6748d37037cc65608d15cc83b09bf2) is an `std::map<stock_modifiers, float>` that stores the [properties](https://eric15342335.github.io/comp2113-engg1340-group-project/events_8h.html#a185fb61c0dff5e2a9b6c147a261736ee) related to stock price generation.
+
+https://github.com/eric15342335/comp2113-engg1340-group-project/blob/ec1a655eff49cb5a46dd5b009c0b11502b1c23cf/stock.h#L240-L249
 
 ## [File input/output](./file_io.cpp) (e.g., for loading/saving game status)
 
@@ -221,7 +227,7 @@ We split our program codes into multiple files according to their functionality 
 
 ## Proper indentation and naming styles
 
-We enforce our code formatting style via the use of [`clang-format`](https://clang.llvm.org/docs/ClangFormat.html) tool. You can see our configuration file [here.](./.clang-format)
+We enforce our code formatting style via the use of [clang-format](https://clang.llvm.org/docs/ClangFormat.html) tool. You can see our configuration file [here.](./.clang-format)
 
 For naming styles, different [members](#team-members) of our group has different preferences.
 Some notable examples (list may not include all styles and files):
