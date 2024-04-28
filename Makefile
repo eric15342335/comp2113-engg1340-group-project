@@ -11,6 +11,10 @@ FLAGS = -Wall -Wextra -std=c++17 -Werror -pedantic-errors -g -O0\
 		-mtune=native
 # -fsanitize=address -fsanitize=undefined
 
+ifeq ("$(OS)","Windows_NT")
+FLAGS += -static
+endif
+
 # The default target is to compile the program.
 default: stocksim
 
