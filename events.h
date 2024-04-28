@@ -43,7 +43,7 @@ enum stock_modifiers {
 const float meanMultiplier = 0.5;
 
 /// @brief Multiplier for standard deviation
-const float sdMultiplier = 20.0;
+const float sdMultiplier = 10.0;
 
 /// @brief Lower limit multiplier
 const float lowerLimitMultiplier = 0.5;

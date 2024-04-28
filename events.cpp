@@ -40,7 +40,7 @@ std::vector<Stock_event> all_stock_events = {
         /** mutually_exclusive_events */ {1},
         /** text */ "The FED has decreased the interest rate!",
         /** duration */ 5,
-        /** percentage_permille */ 10,
+        /** percentage_permille */ 4,
         /** type_of_event */ all_stocks,
         /** category */ 0,
         /** modifiers*/
@@ -49,7 +49,7 @@ std::vector<Stock_event> all_stock_events = {
         /** mutually_exclusive_events */ {0, 3},
         /** text */ "The FED has increased the interest rate!",
         /** duration */ 5,
-        /** percentage_permille */ 10,
+        /** percentage_permille */ 4,
         /** type_of_event */ all_stocks,
         /** category */ 0,
         /** modifiers*/
@@ -58,7 +58,7 @@ std::vector<Stock_event> all_stock_events = {
         /** mutually_exclusive_events */ {},
         /** text */ "Economic Recession: Market Downturn Signals Investor Concerns",
         /** duration */ 7,
-        /** percentage_permille */ 20,
+        /** percentage_permille */ 4,
         /** type_of_event */ all_stocks,
         /** category */ 0,
         /** modifiers*/
@@ -68,7 +68,7 @@ std::vector<Stock_event> all_stock_events = {
         /** text */
         "Central Bank Cuts Interest Rates: Market Stimulus Boosts Investor Sentiment",
         /** duration */ 3,
-        /** percentage_permille */ 5,
+        /** percentage_permille */ 4,
         /** type_of_event */ all_stocks,
         /** category */ 0,
         /** modifiers*/
@@ -78,7 +78,7 @@ std::vector<Stock_event> all_stock_events = {
         /** text */
         "Trade War Escalates: Global Market Volatility Amidst Rising Tensions",
         /** duration */ 5,
-        /** percentage_permille */ 15,
+        /** percentage_permille */ 4,
         /** type_of_event */ all_stocks,
         /** category */ 0,
         /** modifiers*/
@@ -89,7 +89,7 @@ std::vector<Stock_event> all_stock_events = {
         /** text */
         "Natural Disaster Strikes: Stock Market Reacts to Catastrophic Event",
         /** duration */ 7,
-        /** percentage_permille */ 10,
+        /** percentage_permille */ 4,
         /** type_of_event */ all_stocks,
         /** category */ 0,
         /** modifiers*/
