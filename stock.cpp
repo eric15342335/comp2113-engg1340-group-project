@@ -289,7 +289,7 @@ void Stock::next_round(void) {
     // Reduce all events duration by one.
     std::list<Stock_event>::iterator event_itr = events.begin();
     while (event_itr != events.end()) {
-        if (event_itr->duration >  durationDecreaseMultiplier) {
+        if (event_itr->duration > durationDecreaseMultiplier) {
             event_itr->duration -= durationDecreaseMultiplier;
         }
         else {

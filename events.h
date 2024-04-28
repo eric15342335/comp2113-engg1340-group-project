@@ -63,7 +63,6 @@ const float defaultMean = 1;
 /// @brief Rate of decrease of duration
 const unsigned int durationDecreaseMultiplier = 2;
 
-
 /** @enum event_type
  * @brief The type of event that will be applied to the stocks
  * @note These objects does not have any values, they are used to specify the type of
