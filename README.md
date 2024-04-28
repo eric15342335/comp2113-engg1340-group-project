@@ -186,19 +186,29 @@ Other than `class Stock`, we have struct [`Stock_event`](https://eric15342335.gi
 
 ## [File input/output](./file_io.cpp) (e.g., for loading/saving game status)
 
-This game had options for players to create a new save, load an old save, and delete
-a save upon the startup of the game.
+This game provides players with the ability to create a new save file, load an existing save, or delete a save upon starting the game.
+The save files are distinguished by the `std::string playerName` variable.
 
-The saves are distinguished by the variable
-`std::string playerName`. In each
-save, every stock has a separate `.save` file, while other basic information is stored
-in `playerstatus.save`, and *Happy Stock Index (HSI)* in `hsi.save`.
+### Save File Structure
 
-The saving process is automatic upon the end
-of every round to prevent loss of advancements of the game (and also prevent rollback).
+- Each stock in the game has a separate `.save` file.
+- Basic player information is stored in the `playerstatus.save `file.
+- The *Happy Stock Index (HSI)* is stored in the `hsi.save` file.
 
-Moreover, this game relies heavily on the C++17 library `<filesystem>` to maintain the tidiness
-of files. It enables us to obtain the names of available saves, create folders, and delete saves.
+### Automatic Saving
+
+To prevent loss of progress and prevent rollbacks, the game automatically saves the current state at the end of every round.
+
+### File Management
+The game heavily relies on the `<filesystem>` library introduced in `C++17` to maintain file organization. This library enables the game to:
+
+- Obtain a list of available save files.
+- Create new folders for save files.
+- Delete existing save files.
+
+### Note for macOS and Linux Users
+
+If you are running the game on `macOS` or `Linux` and not from the terminal, the `saves` folder will be located in the root directory.
 
 ## Program codes in multiple files (recall [separate compilation](./Makefile))
 
