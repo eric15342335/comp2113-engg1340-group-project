@@ -161,7 +161,6 @@ Some [additional columns](https://eric15342335.github.io/comp2113-engg1340-group
 Generation of stock prices:
 
 - We used normal distribution to generate the percentage change in the stock price for each new round.
-- Instead of generating a new stock price based on the current price, we discovered this is easier for us to code.
 
 https://github.com/eric15342335/comp2113-engg1340-group-project/blob/ec1a655eff49cb5a46dd5b009c0b11502b1c23cf/random_price.cpp#L103-L117
 
