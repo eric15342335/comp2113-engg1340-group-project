@@ -1,4 +1,4 @@
-# [Stock](https://eric15342335.github.io/comp2113-engg1340-group-project/classStock.html) Market Simulator
+# Stock Market Simulator
 
 ![C++](https://img.shields.io/badge/c++-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=white)
 ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
@@ -74,51 +74,151 @@ giving players breathing room to better think about their [investing](https://en
 
 ## How to Play
 
+### Compilation
+
+Prerequisite:
+
+- This repository.
+- A working `g++` compiler that supports `C++17`
+- `make`
+- A terminal that supports [ANSI escape codes](https://en.wikipedia.org/wiki/ANSI_escape_code)
+
 To compile:
+
 ```bash
 make
 ```
+
 To run the game:
+
 ```bash
 ./stocksim
 ```
-[Makefile usage](./Makefile)
+
+To ensure an optimal gaming experience, follow these steps before running the game:
+
+### Terminal Size
+
+Maximize your terminal window to its fullest extent.
+
+On Windows, you can achieve this by pressing the `Alt+Enter` key combination, which will toggle the terminal to fullscreen mode.
+
+
+### Font Size Adjustment
+
+Reduce your terminal's font size initially.
+
+An unsuitably large font size may cause the table displaying stock information and data to be cut off or misaligned within the terminal window.
+
+Start with a smaller font size, such as `10`, to ensure the stock table displays correctly, and then increase the size if needed.
+
+### Tutorial
+
+After displaying the ASCII game logo, you will be prompted by this screen:
+
+```bash
+Please enter.
+0 for new save,
+1 for loading old save,
+2 for deleting save,
+3 to quit:
+```
+
+Type `0` and press `Enter`. Type your preferred name and press `Enter` again.
+
+Now you should enter the game's main menu.
+
+Some user inputs the game receives (case-insensitive):
+
+- `B`: Buy a stock.
+- `S`: Sell a stock.
+- `T`: Select a stock (or `0` for [*Happy Stock Index*](https://eric15342335.github.io/comp2113-engg1340-group-project/main_8cpp.html#a2b63ee26099544b05219dff874052fa8)) to display corresponding *price history* graph.
+- `E`: Display all on-going events. Enter `E` again to hide the pop-up.
+- `N`: Proceed to next round. The game will generate new stock prices and events.
+- `X`: Exit the game.
+
+You may wonder why there is no "[Save](https://en.wikipedia.org/wiki/Saved_game)" button. The answer is --- you don't need it!
+
+Each time when you enter `N: Next Round`, the game data is saved *automatically* in the
+`saves/` folder. See more information on [File I/O part](#file-inputoutput-eg-for-loadingsaving-game-status).
+
+Table column explaination:
+
+- `#`: The *index* of the stock. You will enter it when you are purchasing/selling a stock.
+- `Category`: The respective *categories* a stock is correspond to. Some events are applied to a [specific category](https://eric15342335.github.io/comp2113-engg1340-group-project/events_8h.html#a430b444c74dd3fd1472a31714ec5f1ce) only!
+- `Name`: Self-explainatory.
+- `$Price`: The current price (per unit) of the stock.
+- `Change`: The change of the stock price compared to last round.
+- `%Change`: The percentage change of stock price.
+- `#Has`: Number of stocks that you can sell.
+- `#Max`: Number of stocks that you can buy. This take account of [`trading_fees_percent`](https://eric15342335.github.io/comp2113-engg1340-group-project/main_8cpp.html#a1d043c1c24e1ba3966c9a78f4fcb8316).
+
+Some [additional columns](https://eric15342335.github.io/comp2113-engg1340-group-project/main_8cpp.html#a202ef3d53c7e07383aed69113ccbe680) are hidden, they served for debugging purposes only.
 
 # Code Requirements
 
 ## Generation of [random](./random_price.cpp) game sets or [events](https://eric15342335.github.io/comp2113-engg1340-group-project/events_8h.html)
 
-Generation of stock prices [(file)](./random_price.cpp) [(docs)](https://eric15342335.github.io/comp2113-engg1340-group-project/random__price_8cpp.html):
-- We used normal distribution to generate the percentage change in the stock price for each new round.
-- Instead of generating a new stock price based on the current price, we discovered this is easier for us to code.
+Generation of stock prices:
 
-Generation of in-game [events](https://eric15342335.github.io/comp2113-engg1340-group-project/events_8h.html):
-- In our game, we also included *_99_* events that will each have a possibility to happen in your gameplay.
-  - The probability of each event is determined by the `probability_permille` member variable. (Despite the name, the value of this variable does not actually represent such meaning in our [implementation](https://eric15342335.github.io/comp2113-engg1340-group-project/events_8cpp.html#a24cd47ec3d81ef215901b99cbe434829))
+- We used normal distribution to generate the percentage change in the stock price for each new round.
+
+https://github.com/eric15342335/comp2113-engg1340-group-project/blob/ec1a655eff49cb5a46dd5b009c0b11502b1c23cf/random_price.cpp#L103-L117
+
+Generation of in-game events:
+
+- In our game, we also included **99** events that will each have a possibility to happen in your gameplay.
+  - The (relative) probability of each event is determined by the `Stock_event.probability_permille` member variable.
+
+https://github.com/eric15342335/comp2113-engg1340-group-project/blob/ec1a655eff49cb5a46dd5b009c0b11502b1c23cf/events.cpp#L39-L43
 
 ## Data structures for storing game status (e.g., arrays, STL containers)
 
-In [`stock.h`](./stock.h), we declared [class `Stock`](https://eric15342335.github.io/comp2113-engg1340-group-project/classStock.html) which utilizes [STL `vector`](https://en.cppreference.com/w/cpp/container/vector), [`list`](https://en.cppreference.com/w/cpp/container/list) and [`map`](https://en.cppreference.com/w/cpp/container/map) to store various game data.
+In [stock.h](./stock.h), we declared class [Stock](https://eric15342335.github.io/comp2113-engg1340-group-project/classStock.html) which utilizes STL `vector`, `list` and `map` to store various game data.
 
-Other than `class Stock`, we have [`struct Stock_event`](https://eric15342335.github.io/comp2113-engg1340-group-project/structStock__event.html) that represents an in-game event.
+https://github.com/eric15342335/comp2113-engg1340-group-project/blob/ec1a655eff49cb5a46dd5b009c0b11502b1c23cf/stock.h#L224-L239
+
+The class `Stock` itself represents an Stock object, which you can purchase, sell, generate a new price for it, etc.
+
+https://github.com/eric15342335/comp2113-engg1340-group-project/blob/ec1a655eff49cb5a46dd5b009c0b11502b1c23cf/stock.h#L19-L38
+
+Other than `class Stock`, we have struct [Stock_event](https://eric15342335.github.io/comp2113-engg1340-group-project/structStock__event.html) that represents an in-game event.
+
+https://github.com/eric15342335/comp2113-engg1340-group-project/blob/ec1a655eff49cb5a46dd5b009c0b11502b1c23cf/events.h#L95-L188
 
 ## Dynamic memory management (e.g., dynamic arrays, linked lists, [STL containers](https://en.cppreference.com/w/cpp/container))
 
-- [`Stock.history`](https://eric15342335.github.io/comp2113-engg1340-group-project/random__price_8cpp.html) is an `std::vector<float>` that stores the history of the stock prices.
-- [`Stock.events`](https://eric15342335.github.io/comp2113-engg1340-group-project/random__price_8cpp.html) is an `std::list<Stock_event>` that stores on-going [events]((https://eric15342335.github.io/comp2113-engg1340-group-project/events_8h.html)) that applies to the stock itself.
-- [`Stock.attributes`](https://eric15342335.github.io/comp2113-engg1340-group-project/classStock.html#a5f6748d37037cc65608d15cc83b09bf2) is an `std::map<stock_modifiers, float>` that stores the [properties](https://eric15342335.github.io/comp2113-engg1340-group-project/events_8h.html#a185fb61c0dff5e2a9b6c147a261736ee) related to stock price generation.
+- [Stock.history](https://eric15342335.github.io/comp2113-engg1340-group-project/random__price_8cpp.html) is an `std::vector<float>` that stores the history of the stock prices.
+- [Stock.events](https://eric15342335.github.io/comp2113-engg1340-group-project/random__price_8cpp.html) is an `std::list<Stock_event>` that stores on-going [events]((https://eric15342335.github.io/comp2113-engg1340-group-project/events_8h.html)) that applies to the stock itself.
+- [Stock.attributes](https://eric15342335.github.io/comp2113-engg1340-group-project/classStock.html#a5f6748d37037cc65608d15cc83b09bf2) is an `std::map<stock_modifiers, float>` that stores the [properties](https://eric15342335.github.io/comp2113-engg1340-group-project/events_8h.html#a185fb61c0dff5e2a9b6c147a261736ee) related to stock price generation.
+
+https://github.com/eric15342335/comp2113-engg1340-group-project/blob/ec1a655eff49cb5a46dd5b009c0b11502b1c23cf/stock.h#L240-L249
 
 ## [File input/output](./file_io.cpp) (e.g., for loading/saving game status)
 
-This game had options for players to create a new save, load an old save, and delete
-a save upon the startup of the game. The saves are distinguished by the variable
-`std::string playerName`, for example `saves/<playername>/*.save`. In each
-save, every stock has a separate `.save` file, while other basic information is stored
-in `playerstatus.save` and HSI in `hsi.save`. The saving process is automatic upon the end 
-of every round to prevent loss of advancements of the game (and also prevent rollback).
+This game provides players with the ability to create a new save file, load an existing save, or delete a save upon starting the game.
+The save files are distinguished by the `std::string playerName` variable.
 
-Moreover, this game relies heavily on the C++17 library `<filesystem>` to maintain the tidiness
-of files. It enables us to obtain the names of available saves, create folders, and delete saves.
+### Save File Structure
+
+- Each stock in the game has a separate `.save` file.
+- Basic player information is stored in the `playerstatus.save` file.
+- The *Happy Stock Index (HSI)* is stored in the `hsi.save` file.
+
+### Automatic Saving
+
+To prevent loss of progress and prevent rollbacks, the game automatically saves the current state at the end of every round.
+
+### File Management
+The game heavily relies on the `<filesystem>` library introduced in `C++17` to maintain file organization. This library enables the game to:
+
+- Obtain a list of available save files.
+- Create new folders for save files.
+- Delete existing save files.
+
+### Note for macOS and Linux Users
+
+If you are running the game on `macOS` or `Linux` and not from the terminal, the `saves` folder will be located in the root directory.
 
 ## Program codes in multiple files (recall [separate compilation](./Makefile))
 
@@ -127,19 +227,21 @@ We split our program codes into multiple files according to their functionality 
 
 ## Proper indentation and naming styles
 
-We enforce our code formatting style via the use of [`clang-format`](https://clang.llvm.org/docs/ClangFormat.html) tool. You can see our configuration file [here.](./.clang-format)
+We enforce our code formatting style via the use of [clang-format](https://clang.llvm.org/docs/ClangFormat.html) tool. You can see our configuration file [here.](./.clang-format)
 
 For naming styles, different [members](#team-members) of our group has different preferences.
 Some notable examples (list may not include all styles and files):
-- [snake_case](https://en.wikipedia.org/wiki/Snake_case): @eric15342335 [`stock.cpp`](./stock.cpp) [`stock.h`](./stock.h)
-- [camelCase](https://en.wikipedia.org/wiki/Camel_case): @Prismatiscence [`format.cpp`](./format.cpp) [`format.h`](./format.h)
- [`draw.cpp`](./draw.cpp) [`draw.h`](./draw.h) [`controls.cpp`](./controls.cpp) [`controls.h`](./controls.h)
+
+- [snake_case](https://en.wikipedia.org/wiki/Snake_case): @eric15342335 [stock.cpp](./stock.cpp) [stock.h](./stock.h) [events.h](./events.h)
+
+- [camelCase](https://en.wikipedia.org/wiki/Camel_case): @Prismatiscence [format.cpp](./format.cpp) [format.h](./format.h)
+ [draw.cpp](./draw.cpp) [draw.h](./draw.h) [controls.cpp](./controls.cpp) [controls.h](./controls.h)
 
 ## In-code documentation
 
-We take documentation _seriously_. In our code, we use `JavaDoc` as the format to write our comments. This allows us to integrate with third-party documentation auto-generate tools like [`doxygen`](https://www.doxygen.nl/).
+We place a strong emphasis on code documentation in our project. We utilize the `JavaDoc` format to write our comments, which enables seamless integration with third-party documentation auto-generation tools like [Doxygen](https://www.doxygen.nl/).
 
-If you haven't noticed why we have so many hyperlinks in this [README.md](./README.md) file, click [here](https://eric15342335.github.io/comp2113-engg1340-group-project/) to know what the links are pointing to!
+If you've noticed the numerous hyperlinks throughout this `README.md` file, they are pointing to the automatically generated documentation hosted on our GitHub Pages site. You can access this documentation by clicking [here](https://eric15342335.github.io/comp2113-engg1340-group-project/).
 
 # Credits
 
@@ -147,11 +249,11 @@ If you haven't noticed why we have so many hyperlinks in this [README.md](./READ
 
 [![External Libraries](https://img.shields.io/badge/External_Libraries-VariadicTable-darkgreen)](https://github.com/friedmud/variadic_table)
 
-For printing the prettified table, we used [VariadicTable](./nonstdlibs/) in our code. VariadicTable is a third-party header-only library licensed
-under [LGPL-2.1](./nonstdlibs/LICENSE.VariadicTable.md).
+For printing prettified tables in our code, we used the [VariadicTable](./nonstdlibs/) library.
+VariadicTable is a third-party header-only library licensed under [LGPL-2.1](./nonstdlibs/LICENSE.VariadicTable.md).
 
 ## Logo
 
-The logo used in-game is generated with [Text to ASCII](https://www.asciiart.eu/text-to-ascii-art).
+The logo used in this game is generated with [Text to ASCII](https://www.asciiart.eu/text-to-ascii-art).
 
 [Back to top](#stock-market-simulator)

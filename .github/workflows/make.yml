@@ -14,7 +14,7 @@ concurrency:
 jobs:
   Make:
     runs-on: self-hosted
-    timeout-minutes: 2
+    timeout-minutes: 5
     #runs-on: ${{ matrix.os }}
     #strategy:
     #  fail-fast: true
@@ -25,10 +25,17 @@ jobs:
       uses: actions/checkout@v4
     - name: Make
       run: |
-        make
+        make clean default
     - name: Make test
       run: |
-        echo -e "0\n saves\nsaves\nN\nY\nT\n0\nT\nX\nY\n" > input.txt
+        # test for creating saves
+        echo -e "0\n saves\nsaves\nB\n1\n1\nN\nY\nN\nY\nN\nY\nT\n0\nT\n1\nT\n2\nE\nT\nX\nY\n" > input.txt
+        ./stocksim < input.txt
+        # test for loading saves
+        echo -e "1\nsaves\nN\nY\nN\nY\nN\nY\nN\nY\nT\n0\nT\nT\n3\nT\n4\nT\nS\n1\n1\nX\nY\n" > input.txt
+        ./stocksim < input.txt
+        # test for deleting saves
+        echo -e "2\nsaves\nY\n3\n" > input.txt
         ./stocksim < input.txt
     - name: Doxygen Documentation
       if: always()

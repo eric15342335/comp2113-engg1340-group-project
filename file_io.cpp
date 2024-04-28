@@ -13,7 +13,6 @@
 using namespace std;
 
 vector<string> parseLogo() {
-    string line;
     vector<string> logo;
     // clang-format off
     logo.emplace_back("            __                       __");
