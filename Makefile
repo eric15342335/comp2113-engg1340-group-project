@@ -55,6 +55,14 @@ stocksim: main.cpp stock.o random_price.o events.o names.o \
 test: stocksim
 	./stocksim
 
+goto: stocksim
+	rm -r saves/ 2>/dev/null || true
+	echo -e "0\nsave\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY" \
+	        "\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY" \
+			"\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY" \
+		    "\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nX\nY" | ./stocksim
+	echo -e "1\nsave\nT\n0\nX\nY\n" | ./stocksim
+
 clean:
 	rm *.o stocksim -r saves/ html/ latex/ *.dSYM/ 2>/dev/null || true
 
@@ -78,4 +86,4 @@ stats:
 	git branch -av
 	git --no-pager log --oneline --graph -10
 
-.PHONY: test clean docs fix stats
+.PHONY: test clean docs fix stats goto

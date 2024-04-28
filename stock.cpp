@@ -65,7 +65,7 @@ void Stock::load(std::string playerName, int i) {
     float loadedPrice;
     std::ifstream fin;
     fileToBeLoaded = "saves/" + playerName + "/" + std::to_string(i) + ".save";
-    std::cout << fileToBeLoaded << std::endl;
+    std::cout << "Loading " << fileToBeLoaded << " ... ";
     fin.open(fileToBeLoaded.c_str());
     // get the first line, which is category
     fin >> category;
@@ -124,7 +124,8 @@ void Stock::load(std::string playerName, int i) {
         }
     }
     fin.close();
-    time::sleep(1);
+    time::sleep(random_integer(sleepShort)); // optimize this
+    std::cout << "done" << std::endl;
 }
 
 float Stock::purchase(
