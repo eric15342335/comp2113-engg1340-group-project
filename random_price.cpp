@@ -40,7 +40,7 @@ unsigned int random_integer(unsigned int max_integer) {
     return distribution(gen);
 }
 
-std::map<stock_modifiers, float> getProcessedModifiers(Stock & stock) {
+std::map<stock_modifiers, float> getProcessedModifiers(Stock stock) {
     float trueMean = meanMultiplier * (stock.getTotalAttribute(mean));
     float trueSD = sdMultiplier * (stock.getTotalAttribute(standard_deviation));
     unsigned int rounds_passed = stock.get_history_size();
@@ -73,13 +73,13 @@ std::map<stock_modifiers, float> getProcessedModifiers(Stock & stock) {
         if (zScoreLowLimit > 1.3) {
             // Very likely to fail lower_limit; about 90.32%; which means it is too low
             // and should realize at higher value;
-            trueMean += 0.1;
+            trueMean += meanMultiplier;
             zScoreLowLimit = (lower_limit - trueMean - 0.1) / trueSD;
         }
         if (zScoreUpLimit < -1.3) {
             // Converse
             // Reason: for N(0,1), probability of exceeed 1.3 is less that 10%
-            trueMean -= 0.1;
+            trueMean -= meanMultiplier;
             zScoreUpLimit = (upper_limit - trueMean + 0.1) / trueSD;
         }
     }
@@ -110,7 +110,7 @@ float percentage_change_price(Stock & stock) {
     for (unsigned int max_loop = 0; max_loop < 100; max_loop++) {
         float x = distribution(gen);
         if (x > _modifiers[lower_limit] && x < _modifiers[upper_limit]) {
-            return x / pow(2, stock.get_split_count());
+            return x / std::pow(2, stock.get_split_count());
         }
     }
     // Need to have some stocastic behavour against a fault.

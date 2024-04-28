@@ -23,7 +23,7 @@ Stock::Stock(void) {
     price = init_stock_price(category % 3 + 1);
     quantity = 0;
     attributes[standard_deviation] = init_sd();
-    attributes[mean] = 0;
+    attributes[mean] = defaultMean;
     attributes[lower_limit] = defaultLowerLimit;
     attributes[upper_limit] = defaultUpperLimit;
     split_count = 0;
@@ -289,7 +289,12 @@ void Stock::next_round(void) {
     // Reduce all events duration by one.
     std::list<Stock_event>::iterator event_itr = events.begin();
     while (event_itr != events.end()) {
-        event_itr->duration--;
+        if (event_itr->duration > durationDecreaseMultiplier) {
+            event_itr->duration -= durationDecreaseMultiplier;
+        }
+        else {
+            event_itr->duration = 0;
+        }
         event_itr++;
     }
     remove_obselete_event();

@@ -98,7 +98,7 @@ std::vector<Stock_event> all_stock_events = {
         /** mutually_exclusive_events */ {},
         /** text */ "Government Policy Change: Market Impacted by New Regulations",
         /** duration */ 4,
-        /** percentage_permille */ 8,
+        /** percentage_permille */ 4,
         /** type_of_event */ all_stocks,
         /** category */ 0,
         /** modifiers*/
@@ -326,7 +326,7 @@ std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 4,
         /** modifiers */
-        {{standard_deviation, 0.08}, {mean, -2}, {lower_limit, -20}, {upper_limit, 0}}},
+        {{standard_deviation, 0.08}, {mean, -5}, {lower_limit, -20}, {upper_limit, 0}}},
     {/** event_id */ 30,
         /** mutually_exclusive_events */ {31},
         /** text */
@@ -336,7 +336,7 @@ std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 4,
         /** modifiers */
-        {{standard_deviation, 0.06}, {mean, 2}, {lower_limit, 0}, {upper_limit, 15}}},
+        {{standard_deviation, 0.06}, {mean, 5}, {lower_limit, 0}, {upper_limit, 15}}},
     {/** event_id */ 31,
         /** mutually_exclusive_events */ {30},
         /** text */ "Frequent Accidents raise safety Concerns",
@@ -748,7 +748,7 @@ std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 13,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, -5}, {lower_limit, -15}, {upper_limit, 0}}},
+        {{standard_deviation, 0.3}, {mean, -5}, {lower_limit, -15}, {upper_limit, 0}}},
     {/** event_id */ 69,
         /** mutually_exclusive_events */ {},
         /** text */

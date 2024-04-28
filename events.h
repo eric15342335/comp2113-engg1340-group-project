@@ -39,6 +39,30 @@ enum stock_modifiers {
     upper_limit
 };
 
+/// @brief Multiplier for mean
+const float meanMultiplier = 0.5;
+
+/// @brief Multiplier for standard deviation
+const float sdMultiplier = 20.0;
+
+/// @brief Lower limit multiplier
+const float lowerLimitMultiplier = 0.5;
+
+/// @brief Upper limit multiplier
+const float upperLimitMultiplier = 1;
+
+/// @brief Default lower limit
+const float defaultLowerLimit = -5 / lowerLimitMultiplier;
+
+/// @brief Default upper limit
+const float defaultUpperLimit = 5 / upperLimitMultiplier;
+
+/// @brief Default mean
+const float defaultMean = 1;
+
+/// @brief Rate of decrease of duration
+const unsigned int durationDecreaseMultiplier = 2;
+
 /** @enum event_type
  * @brief The type of event that will be applied to the stocks
  * @note These objects does not have any values, they are used to specify the type of

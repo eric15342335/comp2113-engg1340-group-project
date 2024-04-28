@@ -79,7 +79,7 @@ enum mode { normal, dev };
  * @param balance How much money the player has.
  * @param m mode to hide mean/sd/uplim/lowlim/event_id columns in the table
  */
-void print_table(std::vector<Stock> stocks_list, float balance, mode m = dev) {
+void print_table(std::vector<Stock> stocks_list, float balance, mode m = normal) {
     std::vector<std::string> defaultColumns = {
         "#", "Category", "Name", "$Price", "Change", R"(%Change)", "#Has", "#Max"};
     VariadicTable<unsigned int, std::string, std::string, float, float, float,
@@ -88,8 +88,8 @@ void print_table(std::vector<Stock> stocks_list, float balance, mode m = dev) {
     if (m == dev) {
         defaultColumns.emplace_back(" Mean ");
         defaultColumns.emplace_back(" SD ");
-        defaultColumns.emplace_back("up");
-        defaultColumns.emplace_back("low");
+        defaultColumns.emplace_back("up ");
+        defaultColumns.emplace_back("low ");
         defaultColumns.emplace_back("event_id");
         // Create a table, note that R"(% Change)" is a raw string literal (C++11
         // feature).
@@ -98,7 +98,7 @@ void print_table(std::vector<Stock> stocks_list, float balance, mode m = dev) {
             table({defaultColumns});
         /* Set the precision and format of the columns.
          * Note: Precision and Format is ignored for std::string columns. */
-        table.setColumnPrecision({0, 0, 0, 2, 2, 2, 0, 0, 2, 1, 0, 0, 0});
+        table.setColumnPrecision({0, 0, 0, 2, 2, 2, 0, 0, 2, 1, 1, 1, 0});
         table.setColumnFormat({VariadicTableColumnFormat::AUTO,
             VariadicTableColumnFormat::AUTO, VariadicTableColumnFormat::AUTO,
             VariadicTableColumnFormat::FIXED, VariadicTableColumnFormat::FIXED,
@@ -281,8 +281,9 @@ int main(void) {
                  "for deleting save,\n3 to quit: ";
     std::cin >> loadsave;
     while (loadsave != "0" && loadsave != "1" && loadsave != "2" && loadsave != "3") {
-        std::cout << "Invalid input. Please enter 0 for new save, enter 1 for loading "
-                     "old save, enter 2 for deleting save or enter 3 to quit: ";
+        std::cout << "Invalid input.\nPlease enter.\n0 for new save,\n1 for loading "
+                     "old save,\n2 "
+                     "for deleting save,\n3 to quit: ";
         std::cin >> loadsave; // choose new file or load previous file
     }
     if (loadsave == "1") {

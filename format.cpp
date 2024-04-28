@@ -32,7 +32,7 @@ const string bgWhite = "\x1b[47m";
 
 const int sleepShort = 100;
 const int sleepMedium = 500;
-const int sleepLong = 2000;
+const int sleepLong = 1000;
 
 void time::sleep(int dur) {
     std::this_thread::sleep_for(std::chrono::milliseconds(dur));
@@ -49,22 +49,29 @@ void fetchConsoleDimensions(int & row, int & col) {
     // dynamic size needs testing on windows
     // not implemented because of time constraints
     int mode = 2;
+    // Before moving to production, we use the printTable() function with
+    // the mode parameter set to "dev" for testing purposes.
+    // However, in production, we will use the mode parameter set to "normal"
+    // which will result in fewer columns being printed. This reduction in columns
+    // may cause misalignment of the table, so we need to adjust the offset accordingly.
+    // for dev mode, the offset is 0
+    const int normalTableModeOffset = 20;
     switch (mode) {
         case 1:
             row = 30;
-            col = 80;
+            col = 80 - normalTableModeOffset;
             break;
         case 2:
             row = 36;
-            col = 120;
+            col = 120 - normalTableModeOffset;
             break;
         case 3:
             row = 48;
-            col = 160;
+            col = 160 - normalTableModeOffset;
             break;
         default:
             row = 36;
-            col = 120;
+            col = 120 - normalTableModeOffset;
             break;
     }
 }
