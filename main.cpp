@@ -31,10 +31,8 @@
  *
  * see stock.cpp `Stock::purchase` and `Stock::sell` functions
  */
-const float trading_fees_percent = 0.01;
+const float trading_fees_percent = 0.1 / 100;
 
-/** Initial stock count */
-const int initial_stock_count = 20;
 
 /** Player's balance */
 float balance = 1000;
@@ -306,11 +304,10 @@ int main(void) {
 
     get_hsi(stocks_list, hsi_history);
 
-    time::sleep(sleepMedium);
-    std::cout << textClear << setCursorPosition(0, 0);
+    // std::cout << textClear << setCursorPosition(0, 0);
     std::cout << "Current trading fees are charged at " << trading_fees_percent * 100
               << " %" << std::endl;
-    time::sleep(sleepMedium);
+    time::sleep(sleepMedium*2);
 
     while (!gameQuit) {
         advance = 0;

@@ -5,7 +5,7 @@
  */
 
 #include "stock.h"
-
+#include "format.h"
 #include "names.h"
 #include "random_price.h"
 
@@ -66,11 +66,6 @@ void Stock::load(std::string playerName, int i) {
     fileToBeLoaded = "saves/" + playerName + "/" + std::to_string(i) + ".save";
     std::cout << fileToBeLoaded << std::endl;
     fin.open(fileToBeLoaded.c_str());
-    // checks if the file is open successfully
-    if (!fin.is_open()) {
-        std::cerr << "Error: File not found" << std::endl;
-        return;
-    }
     // get the first line, which is category
     fin >> category;
     // boundary check for category
@@ -128,6 +123,7 @@ void Stock::load(std::string playerName, int i) {
         }
     }
     fin.close();
+    time::sleep(1);
 }
 
 float Stock::purchase(
