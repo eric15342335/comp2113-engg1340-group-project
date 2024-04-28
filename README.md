@@ -138,6 +138,7 @@ Some user inputs the game receives (case-insensitive):
 - `X`: Exit the game.
 
 You may wonder why there is no ["Save"](https://en.wikipedia.org/wiki/Saved_game) button. The answer is --- you don't need it!
+
 Each time when you enter `N: Next Round`, the game data is saved *automatically* in the
 `saves/` folder. See more information on [File I/O part](#file-inputoutput-eg-for-loadingsaving-game-status).
 
@@ -218,7 +219,9 @@ Some notable examples (list may not include all styles and files):
 
 ## In-code documentation
 
-We take documentation *seriously*. In our code, we use `JavaDoc` as the format to write our comments. This allows us to integrate with third-party documentation auto-generate tools like [`doxygen`](https://www.doxygen.nl/).
+We take documentation *seriously*. In our code, we use `JavaDoc` as the format to write our comments.
+
+This allows us to integrate with third-party documentation auto-generate tools like [`doxygen`](https://www.doxygen.nl/).
 
 If you haven't noticed why we have so many hyperlinks in this [README.md](./README.md) file, click [here](https://eric15342335.github.io/comp2113-engg1340-group-project/) to know what the links are pointing to!
 
