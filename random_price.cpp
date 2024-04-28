@@ -64,8 +64,10 @@ std::map<stock_modifiers, float> getProcessedModifiers(Stock stock) {
      */
     float temp = 100 * std::abs(stock.get_initial_price() - stock.get_price()) /
                  stock.get_price();
-    float upper_lim = stock.getTotalAttribute(upper_limit) + rounds_passed / 3 * upperLimitMultiplier + temp;
-    float lower_lim = stock.getTotalAttribute(lower_limit) - rounds_passed / 3 * lowerLimitMultiplier - temp;
+    float upper_lim = stock.getTotalAttribute(upper_limit) +
+                      rounds_passed / 3 * upperLimitMultiplier + temp;
+    float lower_lim = stock.getTotalAttribute(lower_limit) -
+                      rounds_passed / 3 * lowerLimitMultiplier - temp;
     // Standardize the upper and lower limit
     float zScoreUpLimit = (upper_limit - trueMean) / trueSD;
     float zScoreLowLimit = (lower_limit - trueMean) / trueSD;
