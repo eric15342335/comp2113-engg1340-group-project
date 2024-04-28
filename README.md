@@ -232,10 +232,10 @@ We enforce our code formatting style via the use of [clang-format](https://clang
 For naming styles, different [members](#team-members) of our group has different preferences.
 Some notable examples (list may not include all styles and files):
 
-- [snake_case](https://en.wikipedia.org/wiki/Snake_case): @eric15342335 [`stock.cpp`](./stock.cpp) [`stock.h`](./stock.h)
+- [snake_case](https://en.wikipedia.org/wiki/Snake_case): @eric15342335 [stock.cpp](./stock.cpp) [stock.h](./stock.h) [events.h](./events.h)
 
-- [camelCase](https://en.wikipedia.org/wiki/Camel_case): @Prismatiscence [`format.cpp`](./format.cpp) [`format.h`](./format.h)
- [`draw.cpp`](./draw.cpp) [`draw.h`](./draw.h) [`controls.cpp`](./controls.cpp) [`controls.h`](./controls.h)
+- [camelCase](https://en.wikipedia.org/wiki/Camel_case): @Prismatiscence [format.cpp](./format.cpp) [format.h](./format.h)
+ [draw.cpp](./draw.cpp) [draw.h](./draw.h) [controls.cpp](./controls.cpp) [controls.h](./controls.h)
 
 ## In-code documentation
 
