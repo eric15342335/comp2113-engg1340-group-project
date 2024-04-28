@@ -79,7 +79,7 @@ enum mode { normal, dev };
  * @param balance How much money the player has.
  * @param m mode to hide mean/sd/uplim/lowlim/event_id columns in the table
  */
-void print_table(std::vector<Stock> stocks_list, float balance, mode m = normal) {
+void print_table(std::vector<Stock> stocks_list, float balance, mode m = dev) {
     std::vector<std::string> defaultColumns = {
         "#", "Category", "Name", "$Price", "Change", R"(%Change)", "#Has", "#Max"};
     VariadicTable<unsigned int, std::string, std::string, float, float, float,
@@ -88,8 +88,8 @@ void print_table(std::vector<Stock> stocks_list, float balance, mode m = normal)
     if (m == dev) {
         defaultColumns.emplace_back(" Mean ");
         defaultColumns.emplace_back(" SD ");
-        defaultColumns.emplace_back("up ");
-        defaultColumns.emplace_back("low ");
+        defaultColumns.emplace_back(" up ");
+        defaultColumns.emplace_back(" low ");
         defaultColumns.emplace_back("event_id");
         // Create a table, note that R"(% Change)" is a raw string literal (C++11
         // feature).
@@ -98,7 +98,7 @@ void print_table(std::vector<Stock> stocks_list, float balance, mode m = normal)
             table({defaultColumns});
         /* Set the precision and format of the columns.
          * Note: Precision and Format is ignored for std::string columns. */
-        table.setColumnPrecision({0, 0, 0, 2, 2, 2, 0, 0, 2, 1, 1, 1, 0});
+        table.setColumnPrecision({0, 0, 0, 2, 2, 2, 0, 0, 1, 0, 0, 0, 0});
         table.setColumnFormat({VariadicTableColumnFormat::AUTO,
             VariadicTableColumnFormat::AUTO, VariadicTableColumnFormat::AUTO,
             VariadicTableColumnFormat::FIXED, VariadicTableColumnFormat::FIXED,
