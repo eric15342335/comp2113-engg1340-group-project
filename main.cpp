@@ -317,15 +317,17 @@ int main(void) {
         overlayEvent = 0;
         flush = 0;
         if (viewMode) {
-            indexGraph = integerInput(row, col, "Select stock index to display: ");
-            while (indexGraph < 1 || indexGraph > (int)stocks_list.size()) {
+            indexGraph =
+                integerInput(row, col, "Select stock index to display (0 for HSI): ");
+            while (indexGraph < 0 || indexGraph > static_cast<int>(stocks_list.size())) {
                 std::cout << setCursorPosition(row, 3) << "\x1b[2K";
                 std::cout << "Index out of range!";
                 time::sleep(sleepMedium);
-                indexGraph = integerInput(row, col, "Select stock index to display: ");
+                indexGraph = integerInput(
+                    row, col, "Select stock index to display (0 for HSI): ");
             }
             std::cout << textClear << setCursorPosition(6, 0);
-            graph_plotting(playerName, 1, col * 2 / 3, row - 10);
+            graph_plotting(playerName, indexGraph - 1, col * 2 / 3, row - 10);
         }
         else {
             std::cout << textClear << setCursorPosition(6, 0);
