@@ -163,16 +163,20 @@ Generation of stock prices:
 - We used normal distribution to generate the percentage change in the stock price for each new round.
 - Instead of generating a new stock price based on the current price, we discovered this is easier for us to code.
 
+https://github.com/eric15342335/comp2113-engg1340-group-project/blob/ec1a655eff49cb5a46dd5b009c0b11502b1c23cf/random_price.cpp#L103-L117
+
 Generation of in-game events:
 
 - In our game, we also included **99** events that will each have a possibility to happen in your gameplay.
-  - The (relative) probability of each event is determined by the `Stock_event.probability_permille` member variable. ([Implementation](https://eric15342335.github.io/comp2113-engg1340-group-project/events_8cpp.html#a24cd47ec3d81ef215901b99cbe434829))
+  - The (relative) probability of each event is determined by the `Stock_event.probability_permille` member variable.
 
 ## Data structures for storing game status (e.g., arrays, STL containers)
 
-In [`stock.h`](./stock.h), we declared [class `Stock`](https://eric15342335.github.io/comp2113-engg1340-group-project/classStock.html) which utilizes [STL `vector`](https://en.cppreference.com/w/cpp/container/vector), [`list`](https://en.cppreference.com/w/cpp/container/list) and [`map`](https://en.cppreference.com/w/cpp/container/map) to store various game data.
+In [`stock.h`](./stock.h), we declared class [`Stock`](https://eric15342335.github.io/comp2113-engg1340-group-project/classStock.html) which utilizes STL `vector`, `list` and `map` to store various game data.
 
-Other than `class Stock`, we have [`struct Stock_event`](https://eric15342335.github.io/comp2113-engg1340-group-project/structStock__event.html) that represents an in-game event.
+https://github.com/eric15342335/comp2113-engg1340-group-project/blob/ec1a655eff49cb5a46dd5b009c0b11502b1c23cf/stock.h#L240-L249
+
+Other than `class Stock`, we have struct [`Stock_event`](https://eric15342335.github.io/comp2113-engg1340-group-project/structStock__event.html) that represents an in-game event.
 
 ## Dynamic memory management (e.g., dynamic arrays, linked lists, [STL containers](https://en.cppreference.com/w/cpp/container))
 
