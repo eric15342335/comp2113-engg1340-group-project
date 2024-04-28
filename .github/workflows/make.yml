@@ -14,7 +14,7 @@ concurrency:
 jobs:
   Make:
     runs-on: self-hosted
-    timeout-minutes: 2
+    timeout-minutes: 5
     #runs-on: ${{ matrix.os }}
     #strategy:
     #  fail-fast: true
