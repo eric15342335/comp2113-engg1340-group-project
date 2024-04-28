@@ -33,7 +33,6 @@
  */
 const float trading_fees_percent = 0.1 / 100;
 
-
 /** Player's balance */
 float balance = 1000;
 /** Number of rounds played */
@@ -307,7 +306,7 @@ int main(void) {
     // std::cout << textClear << setCursorPosition(0, 0);
     std::cout << "Current trading fees are charged at " << trading_fees_percent * 100
               << " %" << std::endl;
-    time::sleep(sleepMedium*2);
+    time::sleep(sleepMedium * 2);
 
     while (!gameQuit) {
         advance = 0;

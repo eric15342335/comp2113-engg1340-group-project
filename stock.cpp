@@ -5,6 +5,7 @@
  */
 
 #include "stock.h"
+
 #include "format.h"
 #include "names.h"
 #include "random_price.h"
