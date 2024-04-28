@@ -319,7 +319,8 @@ int main(void) {
         if (viewMode) {
             indexGraph =
                 integerInput(row, col, "Select stock index to display (0 for HSI): ");
-            while (indexGraph < 0 || indexGraph > static_cast<int>(stocks_list.size())) {
+            while (
+                indexGraph < 0 || indexGraph > static_cast<int>(stocks_list.size())) {
                 std::cout << setCursorPosition(row, 3) << "\x1b[2K";
                 std::cout << "Index out of range!";
                 time::sleep(sleepMedium);
