@@ -27,6 +27,7 @@ void drawLogo(int row, int col) {
         for (int i = 18; i < 27; i++) {
             std::cout << logo[i] << "\n";
         }
+        time::sleep(sleepMedium);
     }
     else {
         std::cout << "Welcome to Stock Market Simulator!\n";
