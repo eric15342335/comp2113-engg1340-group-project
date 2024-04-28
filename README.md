@@ -192,7 +192,7 @@ The save files are distinguished by the `std::string playerName` variable.
 ### Save File Structure
 
 - Each stock in the game has a separate `.save` file.
-- Basic player information is stored in the `playerstatus.save `file.
+- Basic player information is stored in the `playerstatus.save` file.
 - The *Happy Stock Index (HSI)* is stored in the `hsi.save` file.
 
 ### Automatic Saving
@@ -229,11 +229,9 @@ Some notable examples (list may not include all styles and files):
 
 ## In-code documentation
 
-We take documentation *seriously*. In our code, we use `JavaDoc` as the format to write our comments.
+We place a strong emphasis on code documentation in our project. We utilize the `JavaDoc` format to write our comments, which enables seamless integration with third-party documentation auto-generation tools like [Doxygen](https://www.doxygen.nl/).
 
-This allows us to integrate with third-party documentation auto-generate tools like [`doxygen`](https://www.doxygen.nl/).
-
-If you haven't noticed why we have so many hyperlinks in this [README.md](./README.md) file, click [here](https://eric15342335.github.io/comp2113-engg1340-group-project/) to know what the links are pointing to!
+If you've noticed the numerous hyperlinks throughout this README.md file, they are pointing to the automatically generated documentation hosted on our GitHub Pages site. You can access this documentation by clicking [here](https://eric15342335.github.io/comp2113-engg1340-group-project/).
 
 # Credits
 
