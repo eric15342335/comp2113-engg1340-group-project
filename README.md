@@ -95,6 +95,19 @@ To run the game:
 ./stocksim
 ```
 
+To ensure an optimal gaming experience, follow these steps before running the game:
+
+### Terminal Size
+
+Maximize your terminal window to its fullest extent.
+On Windows, you can achieve this by pressing the Alt+Enter key combination, which will toggle the terminal to fullscreen mode.
+
+### Font Size Adjustment
+
+Reduce your terminal's font size initially.
+A larger font size may cause the table displaying stock information and data to be cut off or misaligned within the terminal window.
+Start with a smaller font size to ensure the stock table displays correctly, then increase the size if needed.
+
 ### Tutorial
 
 After displaying the ASCII game logo, you will be prompted by this screen:
@@ -136,8 +149,6 @@ Table column explaination:
 - `#Max`: Number of stocks that you can buy. This take account of [`trading_fees_percent`](https://eric15342335.github.io/comp2113-engg1340-group-project/main_8cpp.html#a1d043c1c24e1ba3966c9a78f4fcb8316).
 
 Some [additional columns](https://eric15342335.github.io/comp2113-engg1340-group-project/main_8cpp.html#a202ef3d53c7e07383aed69113ccbe680) are hidden, they served for debugging purposes only.
-
-[Makefile usage](./Makefile)
 
 # Code Requirements
 
