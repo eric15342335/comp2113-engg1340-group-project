@@ -136,6 +136,24 @@ void print_table(std::vector<Stock> stocks_list, float balance, mode m = dev) {
         }
         table.print(std::cout);
     }
+    // Modify the stringstream so that for the column "Change", the text
+    // "Increase" is green and "Decrease" is red.
+    // @note This is a workaround because VariadicTable does not support
+    // modifying the text color of a specific cell.
+    // Warning: This is a hack and may not work in the future!
+    for (unsigned int i = 0; i < stocks_list.size(); i++) {
+        std::string index = std::to_string(i + 1);
+        if (i < 10 - 1) {
+            index = " " + index;
+        }
+        if (stocks_list[i].delta_price() > 0) {
+            std::cout << setCursorPosition(i + 9, 3) << textGreen << index;
+        }
+        else if (stocks_list[i].delta_price() < 0) {
+            std::cout << setCursorPosition(i + 9, 3) << textRed << index;
+        }
+    }
+    std::cout << textWhite;
     /* Display 2 decimal places for balance.
      * This line reverts the precision back to default after the table is printed.
      * Since the table uses std::auto (VariadicTableColumnFormat::AUTO), we need to
