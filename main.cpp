@@ -320,7 +320,7 @@ int main(void) {
     get_hsi(stocks_list, hsi_history);
 
     // std::cout << textClear << setCursorPosition(0, 0);
-    std::cout << "Current trading fees are charged at " << trading_fees_percent * 100
+    std::cout << "\nCurrent trading fees are charged at " << trading_fees_percent * 100
               << " %" << std::endl;
     time::sleep(sleepMedium * 2);
 

@@ -70,6 +70,7 @@ void createplayer(string & playerName) {
 
 void load_hsi(std::vector<float> hsi_history, string playerName) {
     std::string filesave = "saves/" + playerName + "/hsi.save";
+    std::cout << "Loading " << filesave << " ... ";
     std::ifstream fin;
     fin.open(filesave.c_str());
     float hsi;
@@ -77,6 +78,7 @@ void load_hsi(std::vector<float> hsi_history, string playerName) {
         hsi_history.emplace_back(hsi);
     }
     fin.close();
+    std::cout << "done\n";
 }
 
 void savestatus(unsigned int rounds_played, vector<Stock> stocks_list, float balance,
@@ -119,9 +121,11 @@ void loadstatus(unsigned int & rounds_played, vector<Stock> & stocks_list,
     }
     stockload = "saves/" + inputname + "/playerstatus.save";
     playerName = inputname;
+    std::cout << "Loading " << stockload << " ... ";
     fin.open(stockload.c_str());
     fin >> playerName >> rounds_played >> balance;
     fin.close(); // output basic info from playerstatus.save and return by reference
+    std::cout << "done\n";
     load_hsi(hsi_history, playerName);
     for (unsigned long i = 0; i < initial_stock_count; i++) {
         stocks_list[i].load(
