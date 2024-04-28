@@ -137,7 +137,7 @@ Some user inputs the game receives (case-insensitive):
 - `N`: Proceed to next round. The game will generate new stock prices and events.
 - `X`: Exit the game.
 
-You may wonder why there is no ["Save"](https://en.wikipedia.org/wiki/Saved_game) button. The answer is --- you don't need it!
+You may wonder why there is no "[Save](https://en.wikipedia.org/wiki/Saved_game)" button. The answer is --- you don't need it!
 
 Each time when you enter `N: Next Round`, the game data is saved *automatically* in the
 `saves/` folder. See more information on [File I/O part](#file-inputoutput-eg-for-loadingsaving-game-status).
