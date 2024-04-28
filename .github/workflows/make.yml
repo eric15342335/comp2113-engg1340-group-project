@@ -32,7 +32,7 @@ jobs:
         echo -e "0\n saves\nsaves\nB\n1\n1\nN\nY\nN\nY\nN\nY\nT\n0\nT\n1\nT\n2\nE\nT\nX\nY\n" > input.txt
         ./stocksim < input.txt
         # test for loading saves
-        echo -e "1\nsaves\nN\nY\nN\nY\nN\nY\nN\nY\nT\n0\nT\n3\nT\n4\nS\n1\n1\nX\nY\n" > input.txt
+        echo -e "1\nsaves\nN\nY\nN\nY\nN\nY\nN\nY\nT\n0\nT\nT\n3\nT\n4\nT\nS\n1\n1\nX\nY\n" > input.txt
         ./stocksim < input.txt
         # test for deleting saves
         echo -e "2\nsaves\nY\n3\n" > input.txt

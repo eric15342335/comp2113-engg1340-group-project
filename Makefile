@@ -5,6 +5,7 @@
 # make docs - generates the documentation using Doxygen
 # make fix - formats the code using clang-format and commits the changes to git
 # make stats - shows the last 10 commits and the current branches
+# make goto - proceed several rounds automatically and print the price history graph
 
 # Compiler flags, consider removing `-Werror` before submitting.
 
