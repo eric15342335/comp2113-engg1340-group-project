@@ -79,7 +79,7 @@ enum mode { normal, dev };
  * @param balance How much money the player has.
  * @param m mode to hide mean/sd/uplim/lowlim/event_id columns in the table
  */
-void print_table(std::vector<Stock> stocks_list, float balance, mode m = dev) {
+void print_table(std::vector<Stock> stocks_list, float balance, mode m = normal) {
     std::vector<std::string> defaultColumns = {
         "#", "Category", "Name", "$Price", "Change", R"(%Change)", "#Has", "#Max"};
     VariadicTable<unsigned int, std::string, std::string, float, float, float,
