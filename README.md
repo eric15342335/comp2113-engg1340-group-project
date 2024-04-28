@@ -178,6 +178,8 @@ https://github.com/eric15342335/comp2113-engg1340-group-project/blob/ec1a655eff4
 
 Other than `class Stock`, we have struct [`Stock_event`](https://eric15342335.github.io/comp2113-engg1340-group-project/structStock__event.html) that represents an in-game event.
 
+https://github.com/eric15342335/comp2113-engg1340-group-project/blob/ec1a655eff49cb5a46dd5b009c0b11502b1c23cf/events.cpp#L37-L48
+
 ## Dynamic memory management (e.g., dynamic arrays, linked lists, [STL containers](https://en.cppreference.com/w/cpp/container))
 
 - [`Stock.history`](https://eric15342335.github.io/comp2113-engg1340-group-project/random__price_8cpp.html) is an `std::vector<float>` that stores the history of the stock prices.
