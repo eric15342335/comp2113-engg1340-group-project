@@ -297,7 +297,8 @@ int main(void) {
     std::cin >> loadsave;
     while (loadsave != "0" && loadsave != "1" && loadsave != "2" && loadsave != "3") {
         std::cout << "Invalid input.\nPlease enter.\n0 for new save,\n1 for loading "
-                     "old save,\n2 for deleting save,\n3 to quit: ";
+                     "old save,\n2 for deleting save,\n3 to quit:"
+                  << std::endl;
         std::cin >> loadsave; // choose new file or load previous file
     }
     if (loadsave == "1") {

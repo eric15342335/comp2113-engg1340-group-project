@@ -15,6 +15,7 @@ using namespace std;
 vector<string> parseLogo() {
     vector<string> logo;
     // clang-format off
+    logo.reserve(27);
     logo.emplace_back("            __                       __");
     logo.emplace_back(R"(           |  \                     |  \)");
     logo.emplace_back("  _______ _| $$_    ______   _______| $$   __");
@@ -96,7 +97,7 @@ void savestatus(unsigned int rounds_played, vector<Stock> stocks_list, float bal
 
 void loadstatus(unsigned int & rounds_played, vector<Stock> & stocks_list,
     float & balance, string & playerName, vector<float> & hsi_history) {
-    string stockload, stockname, inputname;
+    string stockload, stockname;
     ifstream fin;
     vector<string> players;
     filesystem::create_directory("saves"); // prevent error when no folder exists
@@ -108,24 +109,24 @@ void loadstatus(unsigned int & rounds_played, vector<Stock> & stocks_list,
     }
     cout << "Enter player name from the following:" << endl;
     printvector(players);
-    cin >> inputname;
-    while (std::find(players.begin(), players.end(), inputname) ==
+    while (std::find(players.begin(), players.end(), playerName) ==
            players.end()) { // reject incorrect input
-        cout
-            << "Player name does not exist, please enter a new name from the following:"
-            << endl;
-        printvector(players);
-        cin >> inputname;
+        if (!playerName.empty()) {
+            cout << "Player name does not exist, please enter a new name from the "
+                    "following:"
+                 << endl;
+            printvector(players);
+        }
+        getline(cin, playerName);
     }
-    stockload = "saves/" + inputname + "/playerstatus.save";
-    playerName = inputname;
+    stockload = "saves/" + playerName + "/playerstatus.save";
     fin.open(stockload.c_str());
     fin >> playerName >> rounds_played >> balance;
     fin.close(); // output basic info from playerstatus.save and return by reference
     load_hsi(hsi_history, playerName);
     for (unsigned long i = 0; i < initial_stock_count; i++) {
         stocks_list[i].load(
-            inputname, i); // load stocks info to class in seperate files
+            playerName, i); // load stocks info to class in seperate files
     }
 }
 
@@ -148,14 +149,15 @@ void delsave(string & mode) {
     }
     cout << "Enter player name from the following:" << endl;
     printvector(players);
-    cin >> inputname;
     while (std::find(players.begin(), players.end(), inputname) ==
            players.end()) { // reject incorrect input
-        cout << "Player name does not exist, please enter a new name from the "
-                "following: "
-             << endl;
-        printvector(players);
-        cin >> inputname;
+        if (!inputname.empty()) {
+            cout << "Player name does not exist, please enter a new name from the "
+                    "following: "
+                 << endl;
+            printvector(players);
+        }
+        getline(cin, inputname);
     }
 
     cout << "WARNING! This action is irreversible and will delete all data associated "
@@ -166,7 +168,6 @@ void delsave(string & mode) {
     cin >> confirm;
     if (confirm == "Y" || confirm == "y") {
         stockdel = "saves/" + inputname;
-        cout << stockdel << endl;
         std::filesystem::remove_all(stockdel);
         cout << "Player save " << inputname << " has been deleted." << endl;
     }
@@ -175,7 +176,7 @@ void delsave(string & mode) {
     }
 
     // choosing mode again
-    std::cout << "Please enter 0 for new save, enter 1 for loading old save, enter 2 "
+    std::cout << "Please enter 0 for new save, enter 1 for loading old save,\n enter 2 "
                  "for deleting more save or enter 3 to quit: ";
     std::cin >> mode;
     while (mode != "0" && mode != "1" && mode != "2" && mode != "3") {
