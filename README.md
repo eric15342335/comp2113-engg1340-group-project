@@ -97,7 +97,7 @@ To run the game:
 ./stocksim
 ```
 
-To ensure an optimal gaming experience, follow these steps before running the game:
+To ensure an optimal gaming experience, please adopt the following recommendations before running the game:
 
 ### Terminal Size
 
@@ -110,7 +110,7 @@ On Windows, you can achieve this by pressing the `Alt+Enter` key combination, wh
 
 Reduce your terminal's font size initially.
 
-An unsuitably large font size may cause the table displaying stock information and data to be cut off or misaligned within the terminal window.
+Unsuitably large font sizes may cause the table displaying stock information and data to be cut off or misaligned within the terminal window.
 
 Start with a smaller font size, such as `10`, to ensure the stock table displays correctly, and then increase the size if needed.
 
@@ -121,7 +121,7 @@ After displaying the ASCII game logo, you will be prompted by this screen:
 ```bash
 Please enter.
 0 for new save,
-1 for loading old save,
+1 for loading old save(s),
 2 for deleting save,
 3 to quit:
 ```
@@ -134,9 +134,9 @@ Some user inputs the game receives (case-insensitive):
 
 - `B`: Buy a stock.
 - `S`: Sell a stock.
-- `T`: Select a stock (or `0` for [*Happy Stock Index*](https://eric15342335.github.io/comp2113-engg1340-group-project/main_8cpp.html#a2b63ee26099544b05219dff874052fa8)) to display corresponding *price history* graph.
-- `E`: Display all on-going events. Enter `E` again to hide the pop-up.
-- `N`: Proceed to next round. The game will generate new stock prices and events.
+- `T`: Select a stock (or `0` for [*Happy Stock Index*](https://eric15342335.github.io/comp2113-engg1340-group-project/main_8cpp.html#a2b63ee26099544b05219dff874052fa8)) to display corresponding *price history* graph which shows the performance of a stock in the past, ie the fluctuation in stock price. Enter `T` again to hide the pop-up.
+- `E`: Display all ongoing events that affect the performance of stocks. Enter `E` again to hide the pop-up.
+- `N`: Proceed to the next round. The game will generate new stock prices and events.
 - `X`: Exit the game.
 
 You may wonder why there is no "[Save](https://en.wikipedia.org/wiki/Saved_game)" button. The answer is --- you don't need it!
@@ -144,16 +144,16 @@ You may wonder why there is no "[Save](https://en.wikipedia.org/wiki/Saved_game)
 Each time when you enter `N: Next Round`, the game data is saved *automatically* in the
 `saves/` folder. See more information on [File I/O part](#file-inputoutput-eg-for-loadingsaving-game-status).
 
-Table column explaination:
+Table column explanation:
 
 - `#`: The *index* of the stock. You will enter it when you are purchasing/selling a stock.
-- `Category`: The respective *categories* a stock is correspond to. Some events are applied to a [specific category](https://eric15342335.github.io/comp2113-engg1340-group-project/events_8h.html#a430b444c74dd3fd1472a31714ec5f1ce) only!
+- `Category`: The respective *categories* a stock corresponds to. Some events are applied to a [specific category](https://eric15342335.github.io/comp2113-engg1340-group-project/events_8h.html#a430b444c74dd3fd1472a31714ec5f1ce) only!
 - `Name`: Self-explainatory.
 - `$Price`: The current price (per unit) of the stock.
-- `Change`: The change of the stock price compared to last round.
+- `Change`: The change in the stock price compared to the last round.
 - `%Change`: The percentage change of stock price.
 - `#Has`: Number of stocks that you can sell.
-- `#Max`: Number of stocks that you can buy. This take account of [`trading_fees_percent`](https://eric15342335.github.io/comp2113-engg1340-group-project/main_8cpp.html#a1d043c1c24e1ba3966c9a78f4fcb8316).
+- `#Max`: Number of stocks that you can buy. This takes account of [`trading_fees_percent`](https://eric15342335.github.io/comp2113-engg1340-group-project/main_8cpp.html#a1d043c1c24e1ba3966c9a78f4fcb8316).
 
 Some [additional columns](https://eric15342335.github.io/comp2113-engg1340-group-project/main_8cpp.html#a202ef3d53c7e07383aed69113ccbe680) are hidden, they served for debugging purposes only.
 
