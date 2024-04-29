@@ -111,13 +111,13 @@ void loadstatus(unsigned int & rounds_played, vector<Stock> & stocks_list,
     printvector(players);
     while (std::find(players.begin(), players.end(), playerName) ==
            players.end()) { // reject incorrect input
-        if (!playerName.empty()){
-        cout
-            << "Player name does not exist, please enter a new name from the following:"
-            << endl;
-        printvector(players);
+        if (!playerName.empty()) {
+            cout << "Player name does not exist, please enter a new name from the "
+                    "following:"
+                 << endl;
+            printvector(players);
         }
-        getline(cin,playerName);
+        getline(cin, playerName);
     }
     stockload = "saves/" + playerName + "/playerstatus.save";
     fin.open(stockload.c_str());
@@ -151,13 +151,13 @@ void delsave(string & mode) {
     printvector(players);
     while (std::find(players.begin(), players.end(), inputname) ==
            players.end()) { // reject incorrect input
-        if (!inputname.empty()){
-        cout << "Player name does not exist, please enter a new name from the "
-                "following: "
-             << endl;
-        printvector(players);
+        if (!inputname.empty()) {
+            cout << "Player name does not exist, please enter a new name from the "
+                    "following: "
+                 << endl;
+            printvector(players);
         }
-        getline(cin,inputname);
+        getline(cin, inputname);
     }
 
     cout << "WARNING! This action is irreversible and will delete all data associated "
@@ -168,7 +168,6 @@ void delsave(string & mode) {
     cin >> confirm;
     if (confirm == "Y" || confirm == "y") {
         stockdel = "saves/" + inputname;
-        cout << stockdel << endl;
         std::filesystem::remove_all(stockdel);
         cout << "Player save " << inputname << " has been deleted." << endl;
     }
