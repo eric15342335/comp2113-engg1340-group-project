@@ -72,11 +72,9 @@ stock buying experience to players. The game utilizes the random number generati
 capability of the operating system to mimic real-life stock unpredictable trends while
 giving players breathing room to better think about their [investing](https://en.wikipedia.org/wiki/Investment) strategies.
 
-Demo gameplay video:
-https://connecthkuhk-my.sharepoint.com/:v:/g/personal/maxcsh_connect_hku_hk/EUUeLr39qLJHh7RePm4zwA8BMFvg9WQOopkL9vd-6KSMgg?e=sSfgm0
-
-
 ## How to Play
+
+[![Demo gameplay video](https://github.com/eric15342335/comp2113-engg1340-group-project/assets/70310617/c8971d2d-8289-45f9-9dfc-71ed74345e98)](https://connecthkuhk-my.sharepoint.com/:v:/g/personal/maxcsh_connect_hku_hk/EUUeLr39qLJHh7RePm4zwA8BMFvg9WQOopkL9vd-6KSMgg)
 
 ### Compilation
 
