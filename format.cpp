@@ -32,7 +32,7 @@ const string bgWhite = "\x1b[47m";
 
 const int sleepShort = 100;
 const int sleepMedium = 500;
-const int sleepLong = 1;
+const int sleepLong = 1000;
 
 void time::sleep(int dur) {
     std::this_thread::sleep_for(std::chrono::milliseconds(dur));
