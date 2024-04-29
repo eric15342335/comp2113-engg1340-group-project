@@ -20,6 +20,10 @@
 
 #ifdef _WIN32
 #include <windows.h>
+/** @brief Enable Windows VT processing for ANSI escape codes
+ * @details Without this, ANSI escape codes will not work on Windows 10.
+ * E.g. text color, cursor position, etc.
+ */
 void enableWindowsVTProcessing(void) {
     // Set the console to UTF-8 mode
     SetConsoleOutputCP(65001);
@@ -29,6 +33,7 @@ void enableWindowsVTProcessing(void) {
     // Enable virtual terminal processing
     consoleMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
     SetConsoleMode(GetStdHandle(STD_OUTPUT_HANDLE), consoleMode);
+    std::cout << "Experimental Windows VT processing enabled." << std::endl;
 }
 #else
 #define enableWindowsVTProcessing() // Do nothing
