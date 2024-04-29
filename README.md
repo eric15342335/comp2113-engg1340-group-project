@@ -134,7 +134,7 @@ Some user inputs the game receives (case-insensitive):
 
 - `B`: Buy a stock.
 - `S`: Sell a stock.
-- `T`: Select a stock (or `0` for [*Happy Stock Index*](https://eric15342335.github.io/comp2113-engg1340-group-project/main_8cpp.html#a2b63ee26099544b05219dff874052fa8)) to display corresponding *price history* graph which shows the performance of a stock in the past, ie the fluctuation in stock price. Enter `T` again to hide the pop-up.
+- `T`: Select a stock (or `0` for [*Happy Stock Index*](https://eric15342335.github.io/comp2113-engg1340-group-project/main_8cpp.html#a2b63ee26099544b05219dff874052fa8)) to display a corresponding *price history* graph, which shows the historical performance of a stock and the fluctuations in stock price. Enter `T` again to hide the pop-up.
 - `E`: Display all ongoing events that affect the performance of stocks. Enter `E` again to hide the pop-up.
 - `N`: Proceed to the next round. The game will generate new stock prices and events.
 - `X`: Exit the game.
