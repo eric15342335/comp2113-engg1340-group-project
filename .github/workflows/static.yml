@@ -38,7 +38,7 @@ jobs:
       - name: Run Doxygen
         run: |
           # choco install doxygen.portable graphviz --yes -r --no-progress
-          doxygen Doxyfile
+          make docs
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

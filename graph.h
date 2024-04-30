@@ -7,12 +7,11 @@
 #define GRAPH_H
 #include <string>
 
-/** @brief plot the graph of the stock price history
+/** @brief Plot the graph of the stock price history to std::cout.
  * @param player the name of the player
  * @param stocknum the stock number of the stock, -1 for HSI
  * @param width the width of the graph
  * @param height the height of the graph
- * @return void. `std::cout` the graph
  */
 void graph_plotting(std::string player, int stocknum, int width, int height);
 

@@ -70,6 +70,7 @@ clean:
 # Generate documentation using `Doxygen`.
 # Windows only: open the generated documentation in the default browser.
 docs: Doxyfile
+	echo PROJECT_NUMBER = $(git log -n1 --format="%h") >> Doxyfile
 	doxygen Doxyfile
 	@if [ "$(OS)" = "Windows_NT" ]; then \
 		start "html/index.html"; \

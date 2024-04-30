@@ -17,8 +17,9 @@
 Stock::Stock(void) {
     category = random_integer(category_list_size);
     name = generate_name(category, 1)[0];
-    /** The distribution of initial stock price will be consistent across same
-     * categories Note that the value '3' is because currently init_stock_price has 3
+    /** The distribution of initial stock price will be consistent across the same
+     * categories.
+     * Note that the value '3' is because currently init_stock_price has 3
      * possible input values.
      */
     price = init_stock_price(category % 3 + 1);
