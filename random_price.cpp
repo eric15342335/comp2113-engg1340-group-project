@@ -6,6 +6,7 @@
 
 #include "random_price.h"
 
+#include <algorithm>
 #include <cstdlib>
 #include <random>
 // Included iostream for debugging uses.
@@ -27,8 +28,10 @@ float init_stock_price(int price_profile) {
 float init_sd(void) {
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::normal_distribution<float> distribution(0.5, 0.5);
-    return std::abs(distribution(gen));
+    // The old distribution was 0.5, 0.5.
+    // After applying std::abs(), the distribution is not symmetric anymore.
+    std::normal_distribution<float> distribution(0, 0.5);
+    return std::abs(distribution(gen)) + 0.5;
 }
 
 unsigned int random_integer(unsigned int max_integer) {
@@ -55,19 +58,20 @@ std::map<stock_modifiers, float> getProcessedModifiers(Stock stock) {
     /* There is a upper limit and lower limit that the realisation of the % change must
      * fall between. As each round pass we allow for more and more chaotic behaviour by
      * making the bounds less tight.
-     * - `n`: is number of rounds
-     * - The rate of this happens is n^2/15 for upper bound
-     * - and n for lower bound before lower bound reach -100
-     * - just for fun (chaotic evil smirk). Upon devastating events which leads to
+     * Just for fun (chaotic evil smirk). Upon devastating events which leads to
      * a stock price only 10 % left of it's initial, we increase mean to prevent a game
      * over. Upon we are 90.32% sure the bounds would be wrong we bump the mean.
      */
+    // temp is the percentage difference between the initial price and the current price
+    // of the stock.
     float temp = 100 * std::abs(stock.get_initial_price() - stock.get_price()) /
                  stock.get_price();
-    float upper_lim = stock.getTotalAttribute(upper_limit) +
-                      rounds_passed / 3 * upperLimitMultiplier + temp;
-    float lower_lim = stock.getTotalAttribute(lower_limit) -
-                      rounds_passed / 3 * lowerLimitMultiplier - temp;
+    float upper_lim = stock.get_attribute(upper_limit) +
+                      stock.sum_attribute(upper_limit) * upperLimitMultiplier +
+                      rounds_passed / 3 + temp;
+    float lower_lim = stock.get_attribute(lower_limit) +
+                      stock.sum_attribute(lower_limit) * lowerLimitMultiplier -
+                      rounds_passed / 3 - temp;
     // Standardize the upper and lower limit
     float zScoreUpLimit = (upper_limit - trueMean) / trueSD;
     float zScoreLowLimit = (lower_limit - trueMean) / trueSD;
@@ -95,12 +99,11 @@ std::map<stock_modifiers, float> getProcessedModifiers(Stock stock) {
     if (upper_lim < defaultUpperLimit) {
         upper_lim = defaultUpperLimit;
     }
-    return {{standard_deviation, trueSD}, {mean, trueMean},
-        {lower_limit, lower_lim * lowerLimitMultiplier},
-        {upper_limit, upper_lim * upperLimitMultiplier}};
+    return {{standard_deviation, trueSD}, {mean, trueMean}, {lower_limit, lower_lim},
+        {upper_limit, upper_lim}};
 }
 
-float percentage_change_price(Stock & stock) {
+float percentage_change_price(Stock stock) {
     std::random_device rd;
     std::mt19937 gen(rd());
     std::map<stock_modifiers, float> _modifiers = getProcessedModifiers(stock);

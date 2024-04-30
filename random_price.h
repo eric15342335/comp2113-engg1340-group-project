@@ -42,7 +42,7 @@ std::map<stock_modifiers, float> getProcessedModifiers(Stock stock);
  * @return the percentage change of the stock price
  * @param stock the stock to calculate the percentage change
  */
-float percentage_change_price(Stock & stock);
+float percentage_change_price(Stock stock);
 
 /**
  * @brief python randint like function
