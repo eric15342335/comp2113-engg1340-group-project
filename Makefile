@@ -70,11 +70,13 @@ clean:
 # Generate documentation using `Doxygen`.
 # Windows only: open the generated documentation in the default browser.
 docs: Doxyfile
-	echo PROJECT_NUMBER = $(git log -n1 --format="%h") >> Doxyfile
-	doxygen Doxyfile
+	cp Doxyfile Doxyfile.temp
+	echo PROJECT_NUMBER = $$(git log -n1 --format="%h") >> Doxyfile.temp
+	doxygen Doxyfile.temp
 	@if [ "$(OS)" = "Windows_NT" ]; then \
 		start "html/index.html"; \
 	fi
+	rm Doxyfile.temp
 
 fix:
 	clang-format --verbose -i *.cpp *.h
