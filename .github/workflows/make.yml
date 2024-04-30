@@ -41,6 +41,8 @@ jobs:
       if: always()
       run: |
         make docs
+        cd latex
+        make 2>/dev/null || true
     - name: Upload executable
       uses: actions/upload-artifact@v4
       with:
@@ -50,5 +52,11 @@ jobs:
         # name: stocksim-${{ matrix.os }}
         path: stocksim*
         compression-level: 9
-        retention-days: 90
+        if-no-files-found: error
+    - name: Upload reference manual
+      uses: actions/upload-artifact@v4
+      with:
+        name: refman
+        path: latex/refman.pdf
+        compression-level: 9
         if-no-files-found: error
