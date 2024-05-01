@@ -27,17 +27,17 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: [self-hosted]
-    # runs-on: windows-latest
+    #runs-on: [self-hosted]
+    runs-on: windows-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
-      #- name: Install and run doxygen via Chocolatey
-      - name: Run Doxygen
+      - name: Install and run doxygen via Chocolatey
+      #- name: Run Doxygen
         run: |
-          # choco install doxygen.portable graphviz --yes -r --no-progress
+          choco install doxygen.portable graphviz --yes -r --no-progress
           make docs
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
