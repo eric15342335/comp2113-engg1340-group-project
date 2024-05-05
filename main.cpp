@@ -18,7 +18,7 @@
 #include <fstream>
 #include <numeric>
 
-#define NOMINMAX // Prevent Windows.h from defining min and max macros
+#define NOMINMAX 1 // Prevent Windows.h from defining min and max macros
 
 #ifdef _WIN32
 #include <windows.h>
