@@ -1,31 +1,35 @@
-/**
- * @file file_io.h
- * @brief This file contains the process of loading, saving and deleting saves
- * status.
- * @author comet13579, eric15432235
- */
+/// @file file_io.h
+/// Header files for file operation functions related to the game.
+/*
+This program is free software: you can redistribute it and/or modify it under the
+terms of the GNU Lesser General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License along with this
+program. If not, see <https://www.gnu.org/licenses/>.
+*/
 
 #ifndef FILE_IO_H
 #define FILE_IO_H
 #include "stock.h"
 
-// linker command failed with exit code 1 (use -v to see invocation)
-// https://stackoverflow.com/questions/12573816/linker-command-failed-with-exit-code-1-use-v-to-see-invocation
-
 /**
- * @brief Loads the logo from "logo.txt" and returns a vector of string containing the
- * logo.
+ * @brief returns the game logo, which is hardcoded inside the function.
  */
 std::vector<std::string> parseLogo();
 
 /**
  * @brief Create a player folder.
- * create a folder while returning playerName by reference
+ * @param playerName Pass the playerName by reference.
  */
 void createplayer(std::string & playerName);
 
 /**
- * @brief Save the game status into .save files.
+ * @brief Save the game status into *.save files.
  * @param rounds_played The number of rounds played
  * @param stocks_list A vector of stocks
  * @param balance The balance of the player
