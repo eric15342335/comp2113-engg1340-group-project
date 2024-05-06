@@ -40,8 +40,8 @@ void Stock::save(std::string playerName, int i) {
     fout.open(filesave.c_str());
     fout << category << std::endl; // literally load everything into class into file
     fout << name << std::endl;
-    for (unsigned int i = 0; i < history.size(); i++) {
-        fout << history[i] << " ";
+    for (unsigned int index = 0; index < history.size(); index++) {
+        fout << history[index] << " ";
     }
     fout << -1
          << std::endl; // -1 is the stop code for vector<float> history in filesave
@@ -95,7 +95,7 @@ void Stock::load(std::string playerName, int i) {
     // Manually reposition the file pointer to the sixth line
     // by going to the beginning of the file and skipping the first five lines
     fin.seekg(0, std::ios::beg);
-    for (int i = 0; i < 7; i++) {
+    for (int lineCount = 0; lineCount < 7; lineCount++) {
         std::string line;
         std::getline(fin, line);
     }

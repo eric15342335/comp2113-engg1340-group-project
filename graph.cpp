@@ -92,9 +92,9 @@ vector<float> graphinput(
         }
     }
     else {
-        float x;
-        while (fin >> x) {
-            stockpricehistory.emplace_back(x);
+        float loadedPrice;
+        while (fin >> loadedPrice) {
+            stockpricehistory.emplace_back(loadedPrice);
         }
     }
     if (stockpricehistory.size() > (width - 9)) { // limit graph size to width

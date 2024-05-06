@@ -266,7 +266,6 @@ enum SortingMethods {
     by_price,
     by_category,
     by_quantity,
-    by_money_spent,
     by_upper_limit,
     by_lower_limit,
     by_mean,
