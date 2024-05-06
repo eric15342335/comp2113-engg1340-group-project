@@ -10,7 +10,8 @@
 # Compiler flags, consider removing `-Werror` before submitting.
 
 FLAGS = -Wall -Wextra -std=c++17 -Werror -pedantic-errors -g -O0\
-		-mtune=native
+        -mtune=native -Wdisabled-optimization -Wswitch-default -Wswitch-enum\
+        -Wshadow
 # -fsanitize=address -fsanitize=undefined
 
 ifeq ("$(OS)","Windows_NT")
