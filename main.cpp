@@ -258,8 +258,7 @@ void new_events_next_round(std::vector<Stock> & stocks_list) {
     }
 }
 
-void next_round_routine(
-    unsigned int & _rounds, std::vector<Stock> & stocks_list) {
+void next_round_routine(unsigned int & _rounds, std::vector<Stock> & stocks_list) {
     _rounds++; // Increment the round number
     new_events_next_round(
         stocks_list); // Generate new events and apply them to the stocks
