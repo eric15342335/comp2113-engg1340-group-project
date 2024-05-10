@@ -1,25 +1,21 @@
 name: Make
 
 on:
-    push:
-        branches:
-            - main
-    pull_request:
-    workflow_dispatch:
+    [push, workflow_dispatch]
 
-concurrency:
-    group: "make"
-    cancel-in-progress: false
+#concurrency:
+#    group: "make"
+#    cancel-in-progress: false
 
 jobs:
   Make:
-    runs-on: self-hosted
-    timeout-minutes: 5
-    #runs-on: ${{ matrix.os }}
-    #strategy:
-    #  fail-fast: true
-    #  matrix:
-    #    os: [ubuntu-latest, windows-latest]
+    #runs-on: self-hosted
+    timeout-minutes: 10
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-13, macos-latest]
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -31,36 +27,21 @@ jobs:
             cl -std:c++17 -EHsc -utf-8 *.cpp -Fe:stocksim.exe
         fi
     - name: Make test
+      shell: bash
       run: |
         # test for creating saves
-        echo -e "0\n saves\nsaves\nB\n1\n1\nN\nY\nN\nY\nN\nY\nT\n0\nT\n1\nT\n2\nE\nT\nX\nY\n" > input.txt
-        ./stocksim < input.txt
+        echo -e "0\n saves\nsaves\nB\n1\n1\nN\nY\nN\nY\nN\nY\nT\n0\nT\n1\nT\n2\nE\nT\nX\nY\n" | ./stocksim
         # test for loading saves
-        echo -e "1\nsaves\nN\nY\nN\nY\nN\nY\nN\nY\nT\n0\nT\nT\n3\nT\n4\nT\nS\n1\n1\nX\nY\n" > input.txt
-        ./stocksim < input.txt
+        echo -e "1\nsaves\nN\nY\nN\nY\nN\nY\nN\nY\nT\n0\nT\nT\n3\nT\n4\nT\nS\n1\n1\nX\nY\n" | ./stocksim
         # test for deleting saves
-        echo -e "2\nsaves\nY\n3\n" > input.txt
-        ./stocksim < input.txt
-    - name: Doxygen Documentation
-      if: always()
-      run: |
-        make docs
-        cd latex
-        make 2>/dev/null || true
+        echo -e "2\nsaves\nY\n3\n" | ./stocksim
     - name: Upload executable
       uses: actions/upload-artifact@v4
       with:
         # suppose we compiled our game and named it 'stocksim'
         # use wildcard to match the executable for all platforms
-        name: stocksim
-        # name: stocksim-${{ matrix.os }}
+        # name: stocksim
+        name: stocksim-${{ matrix.os }}
         path: stocksim*
-        compression-level: 9
-        if-no-files-found: error
-    - name: Upload reference manual
-      uses: actions/upload-artifact@v4
-      with:
-        name: refman
-        path: latex/refman.pdf
         compression-level: 9
         if-no-files-found: error
