@@ -1,17 +1,28 @@
-# MAKEFILE USAGE:
-# make - compiles the program
-# make test - runs the program
-# make clean - removes the compiled program and object files
-# make docs - generates the documentation using Doxygen
-# make fix - formats the code using clang-format and commits the changes to git
-# make stats - shows the last 10 commits and the current branches
-# make goto - proceed several rounds automatically and print the price history graph
+# Tips: call "make -j" to compile faster! (make sure to run "make clean" first)
+# make \
+compile program
+# make test \
+run program
+# make clean \
+removes executable, object files, saves, and docs
+
+# developer commands:
+# make docs \
+generates the html docs using Doxygen
+# make fix \
+formats the code using clang-format, commits, and pushes the changes
+# make stats \
+shows the last 10 commits and the current branches
+# make goto \
+proceed several rounds automatically and print the price history graph
 
 # Compiler flags, consider removing `-Werror` before submitting.
 
-FLAGS = -Wall -Wextra -std=c++17 -Werror -pedantic-errors -g -O0\
-		-mtune=native
-# -fsanitize=address -fsanitize=undefined
+FLAGS = -Wall -Wextra -std=c++17 -Werror -pedantic-errors -g -O0 \
+    -mtune=native -Wdisabled-optimization -Wswitch-default -Wswitch-enum \
+    -Wshadow \
+    # -D_FORTIFY_SOURCE=2 -fstack-protector-all -Og -fPIE -pie \
+    # -fsanitize=address -fsanitize=undefined \
 
 ifeq ("$(OS)","Windows_NT")
 FLAGS += -static
@@ -22,7 +33,7 @@ default: stocksim
 
 random_price.o: random_price.h random_price.cpp events.h stock.h
 	g++ $(FLAGS) -c random_price.cpp -o random_price.o
-	
+
 file_io.o: file_io.cpp file_io.h stock.h
 	g++ $(FLAGS) -c file_io.cpp -o file_io.o
 
@@ -50,8 +61,8 @@ controls.o: controls.cpp controls.h draw.h format.h stock.h
 stocksim: main.cpp stock.o random_price.o events.o names.o \
 		  graph.o format.o draw.o file_io.o controls.o
 	g++ $(FLAGS) main.cpp stock.o random_price.o events.o names.o \
-				 graph.o format.o draw.o file_io.o controls.o\
-				 -o stocksim
+	    graph.o format.o draw.o file_io.o controls.o \
+		-o stocksim
 
 test: stocksim
 	./stocksim

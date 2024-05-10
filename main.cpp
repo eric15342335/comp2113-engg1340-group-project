@@ -96,15 +96,15 @@ enum mode { normal, dev };
 
 /** Print the table of stocks. We put it in a function so we can call it multiple times.
  * @param stocks_list A vector of stocks. The stocks to be printed.
- * @param balance How much money the player has.
+ * @param _playerBal How much money the player has.
  * @param m mode to hide mean/sd/uplim/lowlim/event_id columns in the table
  */
-void print_table(std::vector<Stock> stocks_list, float balance, mode m = normal) {
+void print_table(std::vector<Stock> stocks_list, float _playerBal, mode m = normal) {
     std::vector<std::string> defaultColumns = {
         "#", "Category", "Name", "$Price", "Change", R"(%Change)", "#Has", "#Max"};
     VariadicTable<unsigned int, std::string, std::string, float, float, float,
         unsigned int, unsigned int>
-        table(defaultColumns);
+        defaultTable(defaultColumns);
     if (m == dev) {
         defaultColumns.emplace_back(" Mean ");
         defaultColumns.emplace_back(" SD ");
@@ -115,11 +115,11 @@ void print_table(std::vector<Stock> stocks_list, float balance, mode m = normal)
         // feature).
         VariadicTable<unsigned int, std::string, std::string, float, float, float,
             unsigned int, unsigned int, float, float, float, float, std::string>
-            table({defaultColumns});
+            devTable({defaultColumns});
         /* Set the precision and format of the columns.
          * Note: Precision and Format is ignored for std::string columns. */
-        table.setColumnPrecision({0, 0, 0, 2, 2, 2, 0, 0, 1, 0, 0, 0, 0});
-        table.setColumnFormat({VariadicTableColumnFormat::AUTO,
+        devTable.setColumnPrecision({0, 0, 0, 2, 2, 2, 0, 0, 1, 0, 0, 0, 0});
+        devTable.setColumnFormat({VariadicTableColumnFormat::AUTO,
             VariadicTableColumnFormat::AUTO, VariadicTableColumnFormat::AUTO,
             VariadicTableColumnFormat::FIXED, VariadicTableColumnFormat::FIXED,
             VariadicTableColumnFormat::FIXED, VariadicTableColumnFormat::FIXED,
@@ -129,35 +129,35 @@ void print_table(std::vector<Stock> stocks_list, float balance, mode m = normal)
         for (unsigned int i = 0; i < stocks_list.size(); i++) {
             std::map<stock_modifiers, float> modifiers =
                 getProcessedModifiers(stocks_list[i]);
-            table.addRow(i + 1, stocks_list[i].category_name(),
+            devTable.addRow(i + 1, stocks_list[i].category_name(),
                 stocks_list[i].get_name(), stocks_list[i].get_price(),
                 stocks_list[i].delta_price(),
                 stocks_list[i].delta_price_percentage() * 100,
                 stocks_list[i].get_quantity(),
-                stocks_list[i].num_stocks_affordable(balance, trading_fees_percent),
+                stocks_list[i].num_stocks_affordable(_playerBal, trading_fees_percent),
                 modifiers[mean], modifiers[standard_deviation], modifiers[upper_limit],
                 modifiers[lower_limit], vectorToString(stocks_list[i].get_event_ids()));
         }
-        table.print(std::cout);
+        devTable.print(std::cout);
     }
     else {
         /* Set the precision and format of the columns.
          * Note: Precision and Format is ignored for std::string columns. */
-        table.setColumnPrecision({0, 0, 0, 2, 2, 2, 0, 0});
-        table.setColumnFormat(
+        defaultTable.setColumnPrecision({0, 0, 0, 2, 2, 2, 0, 0});
+        defaultTable.setColumnFormat(
             {VariadicTableColumnFormat::AUTO, VariadicTableColumnFormat::AUTO,
                 VariadicTableColumnFormat::AUTO, VariadicTableColumnFormat::FIXED,
                 VariadicTableColumnFormat::FIXED, VariadicTableColumnFormat::FIXED,
                 VariadicTableColumnFormat::FIXED, VariadicTableColumnFormat::FIXED});
         for (unsigned int i = 0; i < stocks_list.size(); i++) {
-            table.addRow(i + 1, stocks_list[i].category_name(),
+            defaultTable.addRow(i + 1, stocks_list[i].category_name(),
                 stocks_list[i].get_name(), stocks_list[i].get_price(),
                 stocks_list[i].delta_price(),
                 stocks_list[i].delta_price_percentage() * 100,
                 stocks_list[i].get_quantity(),
-                stocks_list[i].num_stocks_affordable(balance, trading_fees_percent));
+                stocks_list[i].num_stocks_affordable(_playerBal, trading_fees_percent));
         }
-        table.print(std::cout);
+        defaultTable.print(std::cout);
     }
     // Modify the stringstream so that for the column "Change", the text
     // "Increase" is green and "Decrease" is red.
@@ -266,9 +266,8 @@ void new_events_next_round(std::vector<Stock> & stocks_list) {
     }
 }
 
-void next_round_routine(
-    unsigned int & rounds_played, std::vector<Stock> & stocks_list) {
-    rounds_played++; // Increment the round number
+void next_round_routine(unsigned int & _rounds, std::vector<Stock> & stocks_list) {
+    _rounds++; // Increment the round number
     new_events_next_round(
         stocks_list); // Generate new events and apply them to the stocks
     for (unsigned int i = 0; i < stocks_list.size(); i++) {

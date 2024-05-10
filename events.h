@@ -176,13 +176,13 @@ struct Stock_event {
             std::istream & inputstream, Stock_event & event) {
             // fix the bug that mutually_exclusive_events is not read correctly
             inputstream >> event.event_id;
-            std::string mutually_exclusive_events;
-            std::getline(inputstream, mutually_exclusive_events, ';');
+            std::string _mutually_exclusive_events;
+            std::getline(inputstream, _mutually_exclusive_events, ';');
             std::istringstream mutually_exclusive_events_stream(
-                mutually_exclusive_events);
-            unsigned int event_id;
-            while (mutually_exclusive_events_stream >> event_id) {
-                event.mutually_exclusive_events.emplace_back(event_id);
+                _mutually_exclusive_events);
+            unsigned int temp_id;
+            while (mutually_exclusive_events_stream >> temp_id) {
+                event.mutually_exclusive_events.emplace_back(temp_id);
             }
             std::getline(inputstream, event.text, ';');
             unsigned int temp_type;
