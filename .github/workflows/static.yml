@@ -2,12 +2,7 @@
 name: Pages (doxygen)
 
 on:
-  # Runs on pushes targeting the default branch
-  push:
-    branches: ["main"]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+  [push, workflow_dispatch]
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -22,23 +17,27 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # Single deploy job since we're just deploying
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install and run doxygen via Chocolatey
+      #- name: Run Doxygen
+        run: |
+          choco install doxygen.portable graphviz --yes -r --no-progress
+          make docs
   deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: [self-hosted]
-    # runs-on: windows-latest
+    #runs-on: [self-hosted]
+    runs-on: windows-latest
+    needs: build
+    if: github.ref == 'refs/heads/main'
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
-      #- name: Install and run doxygen via Chocolatey
-      - name: Run Doxygen
-        run: |
-          # choco install doxygen.portable graphviz --yes -r --no-progress
-          make docs
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
