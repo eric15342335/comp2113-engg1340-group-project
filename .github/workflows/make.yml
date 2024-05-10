@@ -20,8 +20,10 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
     - name: Make
+      shell: bash
       run: |
         make clean default
+        echo "Todo: Missing testcase for MSVC C++ compiler"
     - name: Make test
       shell: bash
       run: |

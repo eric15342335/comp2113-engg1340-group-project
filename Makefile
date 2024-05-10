@@ -76,7 +76,7 @@ goto: stocksim
 	echo -e "1\nsave\nT\n0\nX\nY\n" | ./stocksim
 
 clean:
-	rm *.o stocksim -r saves/ html/ latex/ *.dSYM/ 2>/dev/null || true
+	rm *.o stocksim -r saves/ html/ latex/ *.obj *.pdb *.ilk *.dSYM/ 2>/dev/null || true
 
 # Generate documentation using `Doxygen`.
 # Windows only: open the generated documentation in the default browser.
@@ -101,4 +101,13 @@ stats:
 	git branch -av
 	git --no-pager log --oneline --graph -10
 
-.PHONY: test clean docs fix stats goto
+msvc: *.cpp *.h
+	clear
+	# To compile the program using the Microsoft Visual C++ compiler,
+	# Launch the Visual Studio Developer Command Prompt
+	# and run the following command:
+	#
+	# cl -std:c++17 -EHsc -utf-8 *.cpp -Fe:stocksim.exe
+
+.PHONY: test clean docs fix stats goto \
+		msvc
