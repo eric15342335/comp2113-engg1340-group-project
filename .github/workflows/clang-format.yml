@@ -1,11 +1,7 @@
 name: clang-format
 
-on:
-    push:
-        branches:
-            - main
-    pull_request:
-    workflow_dispatch:
+on: 
+    [push, workflow_dispatch]
 
 #concurrency:
 #    group: "clang-format"
