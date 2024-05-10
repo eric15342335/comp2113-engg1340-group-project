@@ -23,7 +23,7 @@ jobs:
       shell: bash
       run: |
         make clean default
-        if [[ "$OSTYPE" == "windows"* ]]; then
+        if [[ "$OSTYPE" == "msys"* ]]; then
             cl -std:c++17 -EHsc -utf-8 *.cpp -Fe:stocksim.exe
         fi
     - name: Make test
