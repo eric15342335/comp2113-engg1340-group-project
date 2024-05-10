@@ -1,8 +1,17 @@
-/**
- * @file file_io.cpp
- * @brief This file contains the implementation of the file input/output functions.
- * @author Comet13579
- */
+/// @file file_io.cpp
+/// Implementation of the file input/output functions.
+/*
+This program is free software: you can redistribute it and/or modify it under the
+terms of the GNU Lesser General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License along with this
+program. If not, see <https://www.gnu.org/licenses/>.
+*/
 
 #include "file_io.h"
 

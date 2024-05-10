@@ -1,8 +1,17 @@
-/**
- * @file main.cpp
- * @brief Hello! Welcome to the Stock Market Simulator!
- * @authors Everyone in the group project.
- */
+/// @file main.cpp
+/// file with the main() function
+/*
+This program is free software: you can redistribute it and/or modify it under the
+terms of the GNU Lesser General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License along with this
+program. If not, see <https://www.gnu.org/licenses/>.
+*/
 
 #include "controls.h"
 #include "draw.h"
@@ -42,11 +51,8 @@ void enableWindowsVTProcessing(void) {
 #endif
 
 /**
- * 0.01 means 1% trading fees.
- *
- * Trading fees are applied to both buying and selling.
- *
- * see stock.cpp `Stock::purchase` and `Stock::sell` functions
+ * <value> / 100 means charging <value>% more/portion of the money involved in stock
+ * operations.
  */
 const float trading_fees_percent = 0.1 / 100;
 
@@ -337,7 +343,6 @@ int main(void) {
 
     get_hsi(stocks_list, hsi_history);
 
-    // std::cout << textClear << setCursorPosition(0, 0);
     std::cout << "Current trading fees are charged at " << trading_fees_percent * 100
               << " %" << std::endl;
     time::sleep(sleepMedium * 2);
@@ -368,13 +373,6 @@ int main(void) {
             hsi_history[hsi_history.size() - 1]);
         drawEventBar(row, col);
         drawButton(row, col);
-        /*
-        for (int i = 0; i < (int)get_ongoing_events(stocks_list).size(); i++) {
-            if (!get_ongoing_events(stocks_list)[i].text.empty()) {
-                std::cout << get_ongoing_events(stocks_list)[i].text << "\n";
-            }
-        }
-        */
         while (!flush) {
             optionsInput(row, col, balance, trading_fees_percent, stocks_list,
                 get_ongoing_events(stocks_list), viewMode, advance, overlayEvent, flush,
@@ -389,6 +387,5 @@ int main(void) {
             time::sleep(sleepLong);
         }
     }
-
     return 0;
 }
