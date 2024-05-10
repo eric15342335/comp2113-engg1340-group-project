@@ -1,4 +1,4 @@
-/// @file graph.cpp
+﻿/// @file graph.cpp
 /// Graph plotting functions.
 /*
 This program is free software: you can redistribute it and/or modify it under the
@@ -12,6 +12,8 @@ PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
 You should have received a copy of the GNU Lesser General Public License along with this
 program. If not, see <https://www.gnu.org/licenses/>.
 */
+// This file should be saved in UTF-8 with BOM encoding
+// to display the unicode characters correctly.
 #include "graph.h"
 
 #include <algorithm>

@@ -27,6 +27,8 @@ program. If not, see <https://www.gnu.org/licenses/>.
 #include <fstream>
 #include <numeric>
 
+#define NOMINMAX 1 // Prevent Windows.h from defining min and max macros
+
 #ifdef _WIN32
 #include <windows.h>
 /** @brief Enable Windows VT processing for ANSI escape codes
