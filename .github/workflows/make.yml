@@ -1,11 +1,7 @@
 name: Make
 
 on:
-    push:
-      branches:
-        - main
-    pull_request:
-    workflow_dispatch:
+    [push, workflow_dispatch]
 
 #concurrency:
 #    group: "make"
@@ -14,7 +10,7 @@ on:
 jobs:
   Make:
     #runs-on: self-hosted
-    timeout-minutes: 5
+    timeout-minutes: 10
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
