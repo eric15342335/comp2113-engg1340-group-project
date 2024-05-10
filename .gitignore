@@ -7,3 +7,6 @@ html/
 latex/
 *.dSYM/*
 saves/
+*.obj
+*.pdb
+*.ilk
