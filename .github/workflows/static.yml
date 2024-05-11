@@ -25,6 +25,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       # Because ubuntu doxygen is currently outdated (v1.9 instead of v1.10)
       - name: Install doxygen and graphviz via Chocolatey
         run: |
@@ -36,6 +38,7 @@ jobs:
           for branch in $(git branch | cut -c 3-)
           do
             echo $branch
+            git checkout $branch
             make clean
             make docs
             mv html docs-output/$branch
