@@ -23,7 +23,16 @@ jobs:
       shell: bash
       run: |
         make clean default
-        echo "Todo: Missing testcase for MSVC C++ compiler"
+    - name: Set up Microsoft Dev Cmd
+      if: matrix.os == 'windows-latest'
+      uses: ilammy/msvc-dev-cmd@v1.13.0
+      with:
+        arch: amd64
+    - name: Compile with cl
+      if: matrix.os == 'windows-latest'
+      shell: cmd
+      run: |
+        cl -std:c++17 -EHsc -utf-8 *.cpp -Fe:stocksim-msvc.exe
     - name: Make test
       shell: bash
       run: |
@@ -33,6 +42,11 @@ jobs:
         echo -e "1\nsaves\nN\nY\nN\nY\nN\nY\nN\nY\nT\n0\nT\nT\n3\nT\n4\nT\nS\n1\n1\nX\nY\n" | ./stocksim
         # test for deleting saves
         echo -e "2\nsaves\nY\n3\n" | ./stocksim
+        if [ -e stocksim-msvc.exe ]; then
+          echo -e "0\n saves\nsaves\nB\n1\n1\nN\nY\nN\nY\nN\nY\nT\n0\nT\n1\nT\n2\nE\nT\nX\nY\n" | ./stocksim-msvc.exe
+          echo -e "1\nsaves\nN\nY\nN\nY\nN\nY\nN\nY\nT\n0\nT\nT\n3\nT\n4\nT\nS\n1\n1\nX\nY\n" | ./stocksim-msvc.exe
+          echo -e "2\nsaves\nY\n3\n" | ./stocksim-msvc.exe
+        fi
     - name: Upload executable
       uses: actions/upload-artifact@v4
       with:
