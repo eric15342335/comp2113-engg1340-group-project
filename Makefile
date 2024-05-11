@@ -82,7 +82,7 @@ clean:
 # Windows only: open the generated documentation in the default browser.
 docs: Doxyfile
 	cp Doxyfile Doxyfile.temp
-	echo PROJECT_NUMBER = $$(git log -n1 --format="%h") >> Doxyfile.temp
+	echo PROJECT_NUMBER = $$(git branch --show-current) $$(git log -n1 --format="%h") >> Doxyfile.temp
 	doxygen Doxyfile.temp
 	@if [ "$(OS)" = "Windows_NT" ]; then \
 		start "html/index.html"; \
