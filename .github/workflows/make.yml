@@ -22,7 +22,8 @@ jobs:
     - name: Make
       shell: bash
       run: |
-        make clean default
+        make clean
+        make default -j
         echo "Todo: Missing testcase for MSVC C++ compiler"
     - name: Make test
       shell: bash
