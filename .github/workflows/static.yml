@@ -22,26 +22,29 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      # Because ubuntu doxygen is currently outdated (v1.9 instead of v1.10)
       - name: Install and run doxygen via Chocolatey
-      #- name: Run Doxygen
         run: |
           choco install doxygen.portable graphviz --yes -r --no-progress
           make docs
+      - name: Upload pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'html/'
   deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    #runs-on: [self-hosted]
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     needs: build
-    if: github.ref == 'refs/heads/main'
     steps:
+      - name: Dry run
+        run: |
+          echo "Job deploy has been triggered successfully."
       - name: Setup Pages
+        if: github.ref == 'refs/heads/main'
         uses: actions/configure-pages@v5
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: 'html/'
       - name: Deploy to GitHub Pages
+        if: github.ref == 'refs/heads/main'
         id: deployment
         uses: actions/deploy-pages@v4
