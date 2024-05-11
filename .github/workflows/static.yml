@@ -28,7 +28,7 @@ jobs:
       # Because ubuntu doxygen is currently outdated (v1.9 instead of v1.10)
       - name: Install doxygen and graphviz via Chocolatey
         run: |
-        choco install doxygen.portable graphviz --yes -r --no-progress
+          choco install doxygen.portable graphviz --yes -r --no-progress
       - name: Build documentation for every branch
         shell: bash
         run: |
@@ -40,10 +40,12 @@ jobs:
             make docs
             mv html docs-output/$branch
           done
+          mv docs-output/main html
+          mv docs-output html/other-branches
       - name: Upload pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-        path: 'docs-output/'
+          path: 'html/'
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Deploy to GitHub Pages
