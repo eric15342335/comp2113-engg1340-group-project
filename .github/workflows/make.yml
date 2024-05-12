@@ -22,7 +22,8 @@ jobs:
     - name: Make
       shell: bash
       run: |
-        make clean default
+        make clean
+        make default -j
     - name: Set up Microsoft Dev Cmd
       if: matrix.os == 'windows-latest'
       uses: ilammy/msvc-dev-cmd@v1.13.0
