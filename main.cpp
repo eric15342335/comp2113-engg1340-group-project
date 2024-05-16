@@ -278,6 +278,8 @@ void next_round_routine(unsigned int & _rounds, std::vector<Stock> & stocks_list
 /** Main function, the entry point of the program */
 int main(void) {
     enableWindowsVTProcessing();
+    std::cout << "The game was compiled on " << __DATE__ << " at " << __TIME__
+              << std::endl;
 
     bool advance;      // Whether to advance to the next round
     bool gameQuit = 0; // Whether the player wants to quit the game
