@@ -161,11 +161,11 @@ Table column explanation:
 - `#Has`: Number of stocks that you can sell.
 - `#Max`: Number of stocks that you can buy. This takes account of [`trading_fees_percent`](https://eric15342335.github.io/comp2113-engg1340-group-project/main_8cpp.html#a1d043c1c24e1ba3966c9a78f4fcb8316).
 
-Some [additional columns](https://eric15342335.github.io/comp2113-engg1340-group-project/main_8cpp.html#a202ef3d53c7e07383aed69113ccbe680) are hidden, they served for debugging purposes only.
+Some [additional columns](https://eric15342335.github.io/comp2113-engg1340-group-project/main_8cpp.html#ab13096bec8ac73e79de04d721ce4f863) are hidden, they served for debugging purposes only.
 
 # Code Requirements
 
-## Generation of [random](./random_price.cpp) game sets or [events](https://eric15342335.github.io/comp2113-engg1340-group-project/events_8h.html)
+## Generation of [random](./src/random_price.cpp) game sets or [events](https://eric15342335.github.io/comp2113-engg1340-group-project/events_8h.html)
 
 Generation of stock prices:
 
@@ -197,12 +197,12 @@ https://github.com/eric15342335/comp2113-engg1340-group-project/blob/ec1a655eff4
 ## Dynamic memory management (e.g., dynamic arrays, linked lists, [STL containers](https://en.cppreference.com/w/cpp/container))
 
 - [Stock.history](https://eric15342335.github.io/comp2113-engg1340-group-project/random__price_8cpp.html) is an `std::vector<float>` that stores the history of the stock prices.
-- [Stock.events](https://eric15342335.github.io/comp2113-engg1340-group-project/random__price_8cpp.html) is an `std::list<Stock_event>` that stores on-going [events]((https://eric15342335.github.io/comp2113-engg1340-group-project/events_8h.html)) that applies to the stock itself.
+- [Stock.events](https://eric15342335.github.io/comp2113-engg1340-group-project/random__price_8cpp.html) is an `std::list<Stock_event>` that stores on-going [events](https://eric15342335.github.io/comp2113-engg1340-group-project/events_8h.html) that applies to the stock itself.
 - [Stock.attributes](https://eric15342335.github.io/comp2113-engg1340-group-project/classStock.html#a5f6748d37037cc65608d15cc83b09bf2) is an `std::map<stock_modifiers, float>` that stores the [properties](https://eric15342335.github.io/comp2113-engg1340-group-project/events_8h.html#a185fb61c0dff5e2a9b6c147a261736ee) related to stock price generation.
 
 https://github.com/eric15342335/comp2113-engg1340-group-project/blob/ec1a655eff49cb5a46dd5b009c0b11502b1c23cf/stock.h#L240-L249
 
-## [File input/output](./file_io.cpp) (e.g., for loading/saving game status)
+## [File input/output](./src/file_io.cpp) (e.g., for loading/saving game status)
 
 This game provides players with the ability to create a new save file, load an existing save, or delete a save upon starting the game.
 The save files are distinguished by the `std::string playerName` variable.
@@ -240,10 +240,10 @@ We enforce our code formatting style via the use of [clang-format](https://clang
 For naming styles, different [members](#team-members) of our group has different preferences.
 Some notable examples (list may not include all styles and files):
 
-- [snake_case](https://en.wikipedia.org/wiki/Snake_case): @eric15342335 [stock.cpp](./stock.cpp) [stock.h](./stock.h) [events.h](./events.h)
+- [snake_case](https://en.wikipedia.org/wiki/Snake_case): @eric15342335 [stock.cpp](./src/stock.cpp) [stock.h](./include/stock.h) [events.h](./include/events.h)
 
-- [camelCase](https://en.wikipedia.org/wiki/Camel_case): @Prismatiscence [format.cpp](./format.cpp) [format.h](./format.h)
- [draw.cpp](./draw.cpp) [draw.h](./draw.h) [controls.cpp](./controls.cpp) [controls.h](./controls.h)
+- [camelCase](https://en.wikipedia.org/wiki/Camel_case): @Prismatiscence [format.cpp](./src/format.cpp) [format.h](./include/format.h)
+ [draw.cpp](./src/draw.cpp) [draw.h](./include/draw.h) [controls.cpp](./src/controls.cpp) [controls.h](./include/controls.h)
 
 ## In-code documentation
 
@@ -257,8 +257,8 @@ If you've noticed the numerous hyperlinks throughout this `README.md` file, they
 
 [![External Libraries](https://img.shields.io/badge/External_Libraries-VariadicTable-darkgreen)](https://github.com/friedmud/variadic_table)
 
-For printing prettified tables in our code, we used the [VariadicTable](./nonstdlibs/) library.
-VariadicTable is a third-party header-only library licensed under [LGPL-2.1](./nonstdlibs/LICENSE.VariadicTable.md).
+For printing prettified tables in our code, we used the [VariadicTable](./include/nonstdlibs/) library.
+VariadicTable is a third-party header-only library licensed under [LGPL-2.1](./include/nonstdlibs/LICENSE).
 
 ## Logo
 
