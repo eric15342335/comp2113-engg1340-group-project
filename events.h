@@ -1,9 +1,18 @@
-/**
- * @file events.h
- * @author eric15342335
- * @brief This file contains the definition of the events that will be applied to the
- * stocks.
- */
+/// @file events.h
+/// Implements event-related data structures and (declarations of) such functions.
+/*
+This program is free software: you can redistribute it and/or modify it under the
+terms of the GNU Lesser General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License along with this
+program. If not, see <https://www.gnu.org/licenses/>.
+*/
+
 #ifndef EVENTS_H
 #define EVENTS_H
 
@@ -167,13 +176,13 @@ struct Stock_event {
             std::istream & inputstream, Stock_event & event) {
             // fix the bug that mutually_exclusive_events is not read correctly
             inputstream >> event.event_id;
-            std::string mutually_exclusive_events;
-            std::getline(inputstream, mutually_exclusive_events, ';');
+            std::string _mutually_exclusive_events;
+            std::getline(inputstream, _mutually_exclusive_events, ';');
             std::istringstream mutually_exclusive_events_stream(
-                mutually_exclusive_events);
-            unsigned int event_id;
-            while (mutually_exclusive_events_stream >> event_id) {
-                event.mutually_exclusive_events.emplace_back(event_id);
+                _mutually_exclusive_events);
+            unsigned int temp_id;
+            while (mutually_exclusive_events_stream >> temp_id) {
+                event.mutually_exclusive_events.emplace_back(temp_id);
             }
             std::getline(inputstream, event.text, ';');
             unsigned int temp_type;

@@ -1,9 +1,17 @@
-/**
- * @file stock.cpp
- * @authors eric15342335, comet13579 (save/load)
- * @brief Implementation of the Stock class.
- */
+/// @file stock.cpp
+/// Implementation of the Stock class.
+/*
+This program is free software: you can redistribute it and/or modify it under the
+terms of the GNU Lesser General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later version.
 
+This program is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License along with this
+program. If not, see <https://www.gnu.org/licenses/>.
+*/
 #include "stock.h"
 
 #include "format.h"
@@ -13,6 +21,8 @@
 #include <algorithm>
 #include <fstream>
 #include <iostream>
+
+const int INVALID_OPERATION = -1;
 
 Stock::Stock(void) {
     category = random_integer(category_list_size);
@@ -40,8 +50,8 @@ void Stock::save(std::string playerName, int i) {
     fout.open(filesave.c_str());
     fout << category << std::endl; // literally load everything into class into file
     fout << name << std::endl;
-    for (unsigned int i = 0; i < history.size(); i++) {
-        fout << history[i] << " ";
+    for (unsigned int index = 0; index < history.size(); index++) {
+        fout << history[index] << " ";
     }
     fout << -1
          << std::endl; // -1 is the stop code for vector<float> history in filesave
@@ -95,7 +105,7 @@ void Stock::load(std::string playerName, int i) {
     // Manually reposition the file pointer to the sixth line
     // by going to the beginning of the file and skipping the first five lines
     fin.seekg(0, std::ios::beg);
-    for (int i = 0; i < 7; i++) {
+    for (int lineCount = 0; lineCount < 7; lineCount++) {
         std::string line;
         std::getline(fin, line);
     }
@@ -134,7 +144,7 @@ float Stock::purchase(
     float total_cost = price * amount * (1 + trading_fees_percent);
     // Check if the player has enough balance to buy the stock
     if (total_cost > balance && price <= 0) {
-        return -1;
+        return INVALID_OPERATION;
     }
     // Update the balance, quantity, and money_spent
     balance -= total_cost;
@@ -145,7 +155,7 @@ float Stock::purchase(
 float Stock::sell(float & balance, unsigned int amount, float trading_fees_percent) {
     // Check if the player has enough stocks to sell
     if (quantity < amount && price <= 0) {
-        return -1;
+        return INVALID_OPERATION;
     }
     // Calculate the total revenue
     float total_revenue = price * amount * (1 - trading_fees_percent);

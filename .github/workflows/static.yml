@@ -2,12 +2,7 @@
 name: Pages (doxygen)
 
 on:
-  # Runs on pushes targeting the default branch
-  push:
-    branches: ["main"]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+  [push, workflow_dispatch]
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -22,27 +17,41 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # Single deploy job since we're just deploying
   deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: [self-hosted]
-    # runs-on: windows-latest
+    runs-on: windows-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-      #- name: Install and run doxygen via Chocolatey
-      - name: Run Doxygen
+        with:
+          fetch-depth: 0
+      # Because ubuntu doxygen is currently outdated (v1.9 instead of v1.10)
+      - name: Install doxygen and graphviz via Chocolatey
         run: |
-          # choco install doxygen.portable graphviz --yes -r --no-progress
-          make docs
-      - name: Upload artifact
+          choco install doxygen.portable graphviz --yes -r --no-progress
+      - name: Build documentation for every branch
+        shell: bash
+        run: |
+          mkdir docs-output
+          branches="`git branch -lr | cut -c 10- | cut -d ' ' -f 1 | grep -v HEAD`"
+          for branch in $branches
+          do
+            echo $branch
+            git checkout $branch
+            make clean
+            make docs
+            mv html docs-output/$branch
+          done
+          mv docs-output/main html
+          mv docs-output html/other-branches
+      - name: Upload pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: 'html/'
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
