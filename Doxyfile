@@ -1,5 +1,6 @@
 # Doxygen configuration file for Stock Market Simulator
 PROJECT_NAME           = "Stock Market Simulator"
+INPUT                  = . src/ include/
 BUILTIN_STL_SUPPORT    = YES
 EXTRACT_ALL            = YES
 EXTRACT_PRIVATE        = YES

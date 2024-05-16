@@ -97,6 +97,12 @@ To run the game:
 ./stocksim
 ```
 
+Or if you prefer one step:
+
+```bash
+make all
+```
+
 To ensure an optimal gaming experience, please adopt the following recommendations before running the game:
 
 ### Terminal Size

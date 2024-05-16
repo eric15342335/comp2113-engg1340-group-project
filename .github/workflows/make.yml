@@ -22,8 +22,7 @@ jobs:
     - name: Make
       shell: bash
       run: |
-        make clean
-        make default -j
+        echo -e "3" | make all
     - name: Set up Microsoft Dev Cmd
       if: matrix.os == 'windows-latest'
       uses: ilammy/msvc-dev-cmd@v1.13.0
@@ -33,7 +32,7 @@ jobs:
       if: matrix.os == 'windows-latest'
       shell: cmd
       run: |
-        cl -std:c++17 -EHsc -utf-8 *.cpp -Fe:stocksim-msvc.exe
+        make msvc
     - name: Make test
       shell: bash
       run: |
