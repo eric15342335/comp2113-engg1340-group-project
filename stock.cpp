@@ -22,6 +22,8 @@ program. If not, see <https://www.gnu.org/licenses/>.
 #include <fstream>
 #include <iostream>
 
+const int INVALID_OPERATION = -1;
+
 Stock::Stock(void) {
     category = random_integer(category_list_size);
     name = generate_name(category, 1)[0];
@@ -142,7 +144,7 @@ float Stock::purchase(
     float total_cost = price * amount * (1 + trading_fees_percent);
     // Check if the player has enough balance to buy the stock
     if (total_cost > balance && price <= 0) {
-        return -1;
+        return INVALID_OPERATION;
     }
     // Update the balance, quantity, and money_spent
     balance -= total_cost;
@@ -153,7 +155,7 @@ float Stock::purchase(
 float Stock::sell(float & balance, unsigned int amount, float trading_fees_percent) {
     // Check if the player has enough stocks to sell
     if (quantity < amount && price <= 0) {
-        return -1;
+        return INVALID_OPERATION;
     }
     // Calculate the total revenue
     float total_revenue = price * amount * (1 - trading_fees_percent);
