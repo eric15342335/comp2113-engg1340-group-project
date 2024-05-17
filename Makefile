@@ -11,15 +11,17 @@ removes executable, object files, saves, and docs
 generates the html docs using Doxygen
 # make fix \
 formats the code using clang-format, commits, and pushes the changes
-# make stats \
-shows the last 10 commits and the current branches
 # make goto \
 proceed several rounds automatically and print the price history graph
+# make msvc \
+compile the program using the Microsoft Visual C++ compiler
+# make check \
+check the code for formatting and static analysis issues
 
 CC = g++
 INCLUDES = -Iinclude
 FLAGS = -Wall -Wextra -pedantic -std=c++17 -Werror -g -O0 \
-    -march=native -Wswitch -Wshadow
+    -mtune=native -Wswitch -Wshadow
     # -D_FORTIFY_SOURCE=2 -fstack-protector-all -Og
     # -fsanitize=address -fsanitize=undefined
 
@@ -108,6 +110,7 @@ msvc: src/*.cpp include/*.h
 
 check:
 	clang-format --dry-run --Werror src/*.cpp include/*.h
-	clang-tidy src/*.cpp --checks=performance-* -- -Iinclude -std=c++17
+	clang-tidy src/*.cpp --checks=performance-*,-performance-avoid-endl,readability-*,bugprone-*,portability-*,cert-* \
+		--fix-errors --fix-notes --format-style=file -- -Iinclude
 
 .PHONY: all clean docs fix goto msvc check

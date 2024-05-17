@@ -23,6 +23,6 @@ program. If not, see <https://www.gnu.org/licenses/>.
  * @param width the width of the graph
  * @param height the height of the graph
  */
-void graph_plotting(std::string player, int stocknum, int width, int height);
+void graph_plotting(const std::string & player, int stocknum, int width, int height);
 
 #endif
