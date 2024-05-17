@@ -14,6 +14,6 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-    - name: Run clang-format
+    - name: Make check
       run: |
-        clang-format --Werror --verbose --dry-run *.cpp *.h
+        make check
