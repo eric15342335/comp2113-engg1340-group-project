@@ -206,7 +206,7 @@ extern std::vector<Stock_event> all_stock_events;
  * @return A vector of Stock_event
  */
 std::vector<Stock_event> pick_events(
-    std::vector<Stock_event> all_events, unsigned int num_events);
+    const std::vector<Stock_event> & all_events, unsigned int num_events);
 
 /**
  * @brief If A is mutually exclusive with B, then B is mutually exclusive with A.
@@ -222,6 +222,6 @@ std::map<unsigned int, std::vector<unsigned int>> check_mutual_exclusivity(
 /** @brief Print a map to std::cout.
  * @param map The std::map object you want to print.
  */
-void print_map(std::map<unsigned int, std::vector<unsigned int>> map);
+void print_map(const std::map<unsigned int, std::vector<unsigned int>> & map);
 
 #endif

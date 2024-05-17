@@ -36,7 +36,7 @@ void createplayer(std::string & playerName);
  * @param playerName The name of the player also the folder name
  */
 void savestatus(unsigned int rounds_played, std::vector<Stock> stocks_list,
-    float balance, std::string playerName);
+    float balance, const std::string & playerName);
 
 /**
  * @brief Load an existing game status from .save files. Paramenters should be empty and
