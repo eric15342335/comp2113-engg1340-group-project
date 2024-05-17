@@ -64,7 +64,7 @@ void createplayer(string & playerName) {
     cout << "Enter player name:" << endl;
     getline(cin, playerName);
     foldername = "saves/" + playerName;
-    while ((filesystem::exists(foldername) || playerName.find(" ") != string::npos) ||
+    while ((filesystem::exists(foldername) || playerName.find(' ') != string::npos) ||
            playerName.empty()) { // check whether file already exists
         if (!playerName.empty()) {
             cout << "Invalid Playername. ";
@@ -78,7 +78,7 @@ void createplayer(string & playerName) {
     filesystem::create_directory(foldername); // create a empty folder for new save
 }
 
-void load_hsi(std::vector<float> hsi_history, string playerName) {
+void load_hsi(std::vector<float> hsi_history, const string & playerName) {
     std::string filesave = "saves/" + playerName + "/hsi.save";
     std::ifstream fin;
     fin.open(filesave.c_str());
@@ -90,7 +90,7 @@ void load_hsi(std::vector<float> hsi_history, string playerName) {
 }
 
 void savestatus(unsigned int rounds_played, vector<Stock> stocks_list, float balance,
-    string playerName) {
+    const string & playerName) {
     string stocksave;
     ofstream fout;
     stocksave = "saves/" + playerName + "/playerstatus.save";
@@ -106,7 +106,8 @@ void savestatus(unsigned int rounds_played, vector<Stock> stocks_list, float bal
 
 void loadstatus(unsigned int & rounds_played, vector<Stock> & stocks_list,
     float & balance, string & playerName, vector<float> & hsi_history) {
-    string stockload, stockname;
+    string stockload;
+    string stockname;
     ifstream fin;
     vector<string> players;
     filesystem::create_directory("saves"); // prevent error when no folder exists
@@ -140,7 +141,10 @@ void loadstatus(unsigned int & rounds_played, vector<Stock> & stocks_list,
 }
 
 void delsave(string & mode) {
-    string stockdel, stockname, inputname, confirm;
+    string stockdel;
+    string stockname;
+    string inputname;
+    string confirm;
     ifstream fin;
     vector<string> players;
     filesystem::create_directory("saves"); // prevent error when no folder exists
@@ -196,7 +200,6 @@ void delsave(string & mode) {
     if (mode == "2") {
         delsave(mode);
     }
-    return;
 }
 
 vector<string> get_saves() {

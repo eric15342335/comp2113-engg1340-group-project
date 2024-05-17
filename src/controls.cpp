@@ -15,10 +15,11 @@ program. If not, see <https://www.gnu.org/licenses/>.
 #include "controls.h"
 
 void optionsInput(int row, int col, float & balance, float tax,
-    std::vector<Stock> & stocks, std::vector<Stock_event> events, bool & viewMode,
-    bool & advance, bool & overlayEvent, bool & flush, bool & gameQuit) {
+    std::vector<Stock> & stocks, const std::vector<Stock_event> & events,
+    bool & viewMode, bool & advance, bool & overlayEvent, bool & flush,
+    bool & gameQuit) {
     char input;
-    while (1) {
+    while (true) {
         std::cout << setCursorPosition(row, 3) << "\x1b[2K";
         std::cout << "Choose an option from the bar above: ";
         std::cin >> input;
@@ -38,11 +39,11 @@ void optionsInput(int row, int col, float & balance, float tax,
             case 'E':
             case 'e':
                 if (!overlayEvent) {
-                    overlayEvent = 1;
+                    overlayEvent = true;
                     listEvents(row, col, events);
                 }
                 else {
-                    flush = 1;
+                    flush = true;
                 }
                 break;
             case 'N':
@@ -67,10 +68,10 @@ void optionsInput(int row, int col, float & balance, float tax,
     }
 }
 
-int integerInput(int row, int col, std::string message) {
+int integerInput(int row, int col, const std::string & message) {
     std::ignore = col;
     int num;
-    while (1) {
+    while (true) {
         std::cout << setCursorPosition(row, 3) << "\x1b[2K";
         std::cout << message;
         std::cin >> num;
@@ -112,7 +113,7 @@ void buyStocks(int row, int col, float & balance, float tax,
         amount = integerInput(row, col, "Enter the amount to buy (0 to skip): ");
     }
     stocks[index - 1].purchase(balance, amount, tax);
-    flush = 1;
+    flush = true;
 }
 
 void sellStocks(int row, int col, float & balance, float tax,
@@ -141,12 +142,12 @@ void sellStocks(int row, int col, float & balance, float tax,
         amount = integerInput(row, col, "Enter the amount to sell (0 to skip): ");
     }
     stocks[index - 1].sell(balance, amount, tax);
-    flush = 1;
+    flush = true;
 }
 
 void toggleView(bool & viewMode, bool & flush) {
     viewMode = !viewMode;
-    flush = 1;
+    flush = true;
 }
 
 void advanceConfirmation(int row, int col, bool & advance, bool & flush) {
@@ -156,8 +157,8 @@ void advanceConfirmation(int row, int col, bool & advance, bool & flush) {
     std::cout << "Press [Y] to confirm: ";
     std::cin >> input;
     if (input == 'Y' || input == 'y') {
-        advance = 1;
-        flush = 1;
+        advance = true;
+        flush = true;
     }
 }
 
@@ -168,7 +169,7 @@ void quitConfirmation(int row, int col, bool & flush, bool & gameQuit) {
     std::cout << "Press [Y] to confirm: ";
     std::cin >> input;
     if (input == 'Y' || input == 'y') {
-        gameQuit = 1;
-        flush = 1;
+        gameQuit = true;
+        flush = true;
     }
 }

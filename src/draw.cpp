@@ -138,7 +138,7 @@ void listEvents(int row, int col, std::vector<Stock_event> events) {
         for (int i = 1; i < (int)events.size() + 1; i++) {
             std::cout << setCursorPosition(i + 7, 11);
             std::cout << i << ". " << events[i - 1].text;
-            int digits = (int)(((i) / 10) + 1);
+            int digits = (((i) / 10) + 1);
             for (int j = 0; j < width - (int)events[i - 1].text.size() - 3 - digits;
                  j++) {
                 std::cout << " ";
@@ -159,7 +159,7 @@ void drawButton(int row, int col) {
         "[E] Events", "[N] Next Round", "[X] Exit"}; // Add stuff here
 
     buttons = options.size();
-    width = (int)(col / buttons);
+    width = (col / buttons);
 
     std::cout << textReset << setCursorPosition(row - 1, 3);
     for (int i = 0; i < buttons; i++) {

@@ -60,10 +60,12 @@ vector<string> generate_name(unsigned int category, unsigned int num) {
                     suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(
                         gen)];
                 if (find(companyNames.begin(), companyNames.end(), name) ==
-                    companyNames.end())
+                    companyNames.end()) {
                     companyNames.emplace_back(name);
-                else
+                }
+                else {
                     i--;
+                }
             }
             break;
         }
@@ -88,10 +90,12 @@ vector<string> generate_name(unsigned int category, unsigned int num) {
                     suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(
                         gen)];
                 if (find(companyNames.begin(), companyNames.end(), name) ==
-                    companyNames.end())
+                    companyNames.end()) {
                     companyNames.emplace_back(name);
-                else
+                }
+                else {
                     i--;
+                }
             }
             break;
         }
@@ -113,10 +117,12 @@ vector<string> generate_name(unsigned int category, unsigned int num) {
                     suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(
                         gen)];
                 if (find(companyNames.begin(), companyNames.end(), name) ==
-                    companyNames.end())
+                    companyNames.end()) {
                     companyNames.emplace_back(name);
-                else
+                }
+                else {
                     i--;
+                }
             }
             break;
         }
@@ -143,10 +149,12 @@ vector<string> generate_name(unsigned int category, unsigned int num) {
                     suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(
                         gen)];
                 if (find(companyNames.begin(), companyNames.end(), name) ==
-                    companyNames.end())
+                    companyNames.end()) {
                     companyNames.emplace_back(name);
-                else
+                }
+                else {
                     i--;
+                }
             }
             break;
         }
@@ -172,10 +180,12 @@ vector<string> generate_name(unsigned int category, unsigned int num) {
                     suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(
                         gen)];
                 if (find(companyNames.begin(), companyNames.end(), name) ==
-                    companyNames.end())
+                    companyNames.end()) {
                     companyNames.emplace_back(name);
-                else
+                }
+                else {
                     i--;
+                }
             }
             break;
         }
@@ -195,10 +205,12 @@ vector<string> generate_name(unsigned int category, unsigned int num) {
                     suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(
                         gen)];
                 if (find(companyNames.begin(), companyNames.end(), name) ==
-                    companyNames.end())
+                    companyNames.end()) {
                     companyNames.emplace_back(name);
-                else
+                }
+                else {
                     i--;
+                }
             }
             break;
         }
@@ -219,10 +231,12 @@ vector<string> generate_name(unsigned int category, unsigned int num) {
                     suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(
                         gen)];
                 if (find(companyNames.begin(), companyNames.end(), name) ==
-                    companyNames.end())
+                    companyNames.end()) {
                     companyNames.emplace_back(name);
-                else
+                }
+                else {
                     i--;
+                }
             }
             break;
         }
@@ -255,10 +269,12 @@ vector<string> generate_name(unsigned int category, unsigned int num) {
                     suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(
                         gen)];
                 if (find(companyNames.begin(), companyNames.end(), name) ==
-                    companyNames.end())
+                    companyNames.end()) {
                     companyNames.emplace_back(name);
-                else
+                }
+                else {
                     i--;
+                }
             }
             break;
         }
@@ -295,10 +311,12 @@ vector<string> generate_name(unsigned int category, unsigned int num) {
                     suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(
                         gen)];
                 if (find(companyNames.begin(), companyNames.end(), name) ==
-                    companyNames.end())
+                    companyNames.end()) {
                     companyNames.emplace_back(name);
-                else
+                }
+                else {
                     i--;
+                }
             }
             break;
         }
@@ -322,10 +340,12 @@ vector<string> generate_name(unsigned int category, unsigned int num) {
                     suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(
                         gen)];
                 if (find(companyNames.begin(), companyNames.end(), name) ==
-                    companyNames.end())
+                    companyNames.end()) {
                     companyNames.emplace_back(name);
-                else
+                }
+                else {
                     i--;
+                }
             }
             break;
         }
@@ -344,10 +364,12 @@ vector<string> generate_name(unsigned int category, unsigned int num) {
                     suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(
                         gen)];
                 if (find(companyNames.begin(), companyNames.end(), name) ==
-                    companyNames.end())
+                    companyNames.end()) {
                     companyNames.emplace_back(name);
-                else
+                }
+                else {
                     i--;
+                }
             }
             break;
         }
@@ -368,10 +390,12 @@ vector<string> generate_name(unsigned int category, unsigned int num) {
                     suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(
                         gen)];
                 if (find(companyNames.begin(), companyNames.end(), name) ==
-                    companyNames.end())
+                    companyNames.end()) {
                     companyNames.emplace_back(name);
-                else
+                }
+                else {
                     i--;
+                }
             }
             break;
         }
@@ -396,10 +420,12 @@ vector<string> generate_name(unsigned int category, unsigned int num) {
                     suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(
                         gen)];
                 if (find(companyNames.begin(), companyNames.end(), name) ==
-                    companyNames.end())
+                    companyNames.end()) {
                     companyNames.emplace_back(name);
-                else
+                }
+                else {
                     i--;
+                }
             }
             break;
         }
@@ -416,10 +442,12 @@ vector<string> generate_name(unsigned int category, unsigned int num) {
                     suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(
                         gen)];
                 if (find(companyNames.begin(), companyNames.end(), name) ==
-                    companyNames.end())
+                    companyNames.end()) {
                     companyNames.emplace_back(name);
-                else
+                }
+                else {
                     i--;
+                }
             }
             break;
         }
@@ -438,10 +466,12 @@ vector<string> generate_name(unsigned int category, unsigned int num) {
                     suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(
                         gen)];
                 if (find(companyNames.begin(), companyNames.end(), name) ==
-                    companyNames.end())
+                    companyNames.end()) {
                     companyNames.emplace_back(name);
-                else
+                }
+                else {
                     i--;
+                }
             }
             break;
         }
@@ -461,10 +491,12 @@ vector<string> generate_name(unsigned int category, unsigned int num) {
                     suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(
                         gen)];
                 if (find(companyNames.begin(), companyNames.end(), name) ==
-                    companyNames.end())
+                    companyNames.end()) {
                     companyNames.emplace_back(name);
-                else
+                }
+                else {
                     i--;
+                }
             }
             break;
         }
@@ -483,10 +515,12 @@ vector<string> generate_name(unsigned int category, unsigned int num) {
                     suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(
                         gen)];
                 if (find(companyNames.begin(), companyNames.end(), name) ==
-                    companyNames.end())
+                    companyNames.end()) {
                     companyNames.emplace_back(name);
-                else
+                }
+                else {
                     i--;
+                }
             }
             break;
         }

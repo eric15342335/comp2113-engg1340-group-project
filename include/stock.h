@@ -54,14 +54,14 @@ class Stock {
          * @param playerName The name of the player.
          * @param i The index of the stock.
          */
-        void save(std::string playerName, int i);
+        void save(const std::string & playerName, int i);
 
         /**
          * @brief Load the stock from a file.
          * @param playerName The name of the player.
          * @param i The index of the stock.
          */
-        void load(std::string playerName, int i);
+        void load(const std::string & playerName, int i);
 
         /**
          * Purchase a given number of stocks.
@@ -90,13 +90,14 @@ class Stock {
          * @param trading_fees_percent The trading fees percentage we charge the player.
          * @return Number of stocks that the player can afford with the balance.
          */
-        unsigned int num_stocks_affordable(float balance, float trading_fees_percent);
+        unsigned int num_stocks_affordable(
+            float balance, float trading_fees_percent) const;
 
         /**
          * @brief Return the name of the category the stock belongs to.
          * @return Name of the category as a string.
          */
-        std::string category_name(void);
+        std::string category_name(void) const;
 
         /**
          * @brief Return the change of stock price using the most recent price and the
@@ -131,7 +132,7 @@ class Stock {
          * @param event The event to be added. See events.h for more information about
          * the class Stock_Event.
          */
-        void add_event(Stock_event event);
+        void add_event(const Stock_event & event);
 
         /**
          * @brief Get the stock price of recent rounds.
@@ -221,7 +222,7 @@ class Stock {
          * @param event The event to be added.
          * @return True if the event can be added. False otherwise.
          */
-        bool can_add_event(Stock_event event);
+        bool can_add_event(const Stock_event & event);
 
         /**
          * @brief Sums up get_attribute() and sum_attribute().

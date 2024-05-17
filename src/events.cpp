@@ -1068,8 +1068,8 @@ std::vector<Stock_event> all_stock_events = {
         {{standard_deviation, 0.5}, {mean, 7}, {lower_limit, 0}, {upper_limit, 20}}}};
 
 // print a map
-void print_map(std::map<unsigned int, std::vector<unsigned int>> map) {
-    for (auto i : map) {
+void print_map(const std::map<unsigned int, std::vector<unsigned int>> & map) {
+    for (const auto & i : map) {
         std::cout << i.first << ": ";
         for (unsigned int j : i.second) {
             std::cout << j << " ";
@@ -1107,7 +1107,7 @@ std::map<unsigned int, std::vector<unsigned int>> check_mutual_exclusivity(
     // Remove such two events from the map.
     // E.g. {0: [1,2], 1: [0], 2:[]} -> {0: [2]}
     // In this case, 2 does not state that it is mutually exclusive with 0.
-    for (auto i : mut_excl_map) {
+    for (const auto & i : mut_excl_map) {
         for (unsigned int j : i.second) {
             if (std::find(mut_excl_map[j].begin(), mut_excl_map[j].end(), i.first) !=
                 mut_excl_map[j].end()) {
@@ -1124,13 +1124,13 @@ std::map<unsigned int, std::vector<unsigned int>> check_mutual_exclusivity(
 }
 
 std::vector<Stock_event> pick_events(
-    std::vector<Stock_event> all_events, unsigned int num_events) {
+    const std::vector<Stock_event> & all_events, unsigned int num_events) {
     std::vector<Stock_event> picked_events;
     // Pick num_events random events
     for (unsigned int i = 0; i < num_events; i++) {
         // When picking the event, consider event.probability_permille.
         unsigned int total_permille = 0;
-        for (Stock_event event : all_events) {
+        for (const Stock_event & event : all_events) {
             total_permille += event.probability_permille;
         }
         /** E.g. if there are 3 events with probability_permille 10, 20, 30.
@@ -1141,7 +1141,7 @@ std::vector<Stock_event> pick_events(
          * If random_permille is 30 to 59, pick the third event.
          */
         unsigned int random_permille = random_integer(total_permille);
-        for (Stock_event event : all_events) {
+        for (const Stock_event & event : all_events) {
             total_permille -= event.probability_permille;
             if (total_permille <= random_permille) {
                 picked_events.emplace_back(event);

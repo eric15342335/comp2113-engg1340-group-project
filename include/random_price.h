@@ -30,7 +30,7 @@ program. If not, see <https://www.gnu.org/licenses/>.
  * @param a the profile of the stock price
  * @return the initial stock price
  */
-float init_stock_price(int a);
+float init_stock_price(int price_profile);
 
 /**
  * @brief Initialize the standard deviation of the stock price

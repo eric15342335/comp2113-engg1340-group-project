@@ -42,7 +42,7 @@ Stock::Stock(void) {
     update_history();
 }
 
-void Stock::save(std::string playerName, int i) {
+void Stock::save(const std::string & playerName, int i) {
     std::string filesave;
     std::ofstream fout;
     filesave = "saves/" + playerName + "/" + std::to_string(i) +
@@ -71,7 +71,7 @@ void Stock::save(std::string playerName, int i) {
     fout.close();
 }
 
-void Stock::load(std::string playerName, int i) {
+void Stock::load(const std::string & playerName, int i) {
     std::string fileToBeLoaded;
     float loadedPrice;
     std::ifstream fin;
@@ -164,9 +164,10 @@ float Stock::sell(float & balance, unsigned int amount, float trading_fees_perce
     return total_revenue;
 }
 
-std::string Stock::category_name(void) { return category_list[category]; }
+std::string Stock::category_name(void) const { return category_list[category]; }
 
-unsigned int Stock::num_stocks_affordable(float balance, float trading_fees_percent) {
+unsigned int Stock::num_stocks_affordable(
+    float balance, float trading_fees_percent) const {
     float value = balance / (price * (1 + trading_fees_percent));
     return value < 0 ? 0 : static_cast<unsigned int>(value);
 }
@@ -209,7 +210,7 @@ float Stock::delta_price_percentage(void) {
     return delta_price() / history[history.size() - 2];
 }
 
-void Stock::add_event(Stock_event event) {
+void Stock::add_event(const Stock_event & event) {
     if (!can_add_event(event)) {
         // If the event is mutually exclusive with ongoing events,
         // ignore it and do nothing.
@@ -230,10 +231,10 @@ void Stock::add_event(Stock_event event) {
     events.emplace_back(event);
 }
 
-bool Stock::can_add_event(Stock_event event) {
+bool Stock::can_add_event(const Stock_event & event) {
     std::list<Stock_event>::iterator event_itr = events.begin();
     while (event_itr != events.end()) {
-        if (event_itr->mutually_exclusive_events.size() > 0) {
+        if (!event_itr->mutually_exclusive_events.empty()) {
             for (unsigned int i = 0; i < event_itr->mutually_exclusive_events.size();
                  i++) {
                 if (event_itr->mutually_exclusive_events[i] == event.event_id) {

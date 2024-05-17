@@ -66,7 +66,7 @@ std::string playerName;
 
 std::string vectorToString(const std::vector<unsigned int> & vec) {
     return std::accumulate(
-        vec.begin(), vec.end(), std::string(), [](std::string s, int v) {
+        vec.begin(), vec.end(), std::string(), [](const std::string & s, int v) {
             return s.empty() ? std::to_string(v) : s + " " + std::to_string(v);
         });
 }
@@ -195,7 +195,7 @@ std::vector<Stock_event> get_ongoing_events(std::vector<Stock> stocks_list) {
     std::vector<Stock_event> ongoing_events = {};
     for (unsigned int i = 0; i < stocks_list.size(); i++) {
         std::list<Stock_event> events = stocks_list[i].get_events();
-        for (Stock_event event : events) {
+        for (const Stock_event & event : events) {
             // Side note: Events with duration <= 0 are automatically removed from the
             // stock's event list. By stock.cpp Stock::next_round() which uses
             // Stock::remove_obselete_event()
@@ -225,7 +225,7 @@ void new_events_next_round(std::vector<Stock> & stocks_list) {
         random_integer(2) +
         std::min(static_cast<int>(stocks_list[0].get_history_size() / 5), 2);
     std::vector<Stock_event> picked_events = pick_events(all_stock_events, numEvents);
-    for (Stock_event event : picked_events) {
+    for (const Stock_event & event : picked_events) {
         switch (event.type_of_event) {
             case all_stocks:
                 for (unsigned int i = 0; i < stocks_list.size(); i++) {
@@ -241,7 +241,7 @@ void new_events_next_round(std::vector<Stock> & stocks_list) {
                 break;
             case pick_random_stock: {
                 std::vector<unsigned int> stocks_indices_not_suitable = {};
-                while (stocks_list.size() > 0 &&
+                while (!stocks_list.empty() &&
                        stocks_list.size() < stocks_indices_not_suitable.size()) {
                     // Pick a random stock
                     unsigned int choice = random_integer(stocks_list.size());
@@ -281,17 +281,18 @@ int main(void) {
     std::cout << "The game was compiled on " << __DATE__ << " at " << __TIME__
               << std::endl;
 
-    bool advance;      // Whether to advance to the next round
-    bool gameQuit = 0; // Whether the player wants to quit the game
-    bool viewMode = 0; // 0 to view table, 1 to view graph
-    bool overlayEvent; // Whether the event bar is being shown
-    bool flush;        // Whether the screen needs updating
+    bool advance;          // Whether to advance to the next round
+    bool gameQuit = false; // Whether the player wants to quit the game
+    bool viewMode = false; // 0 to view table, 1 to view graph
+    bool overlayEvent;     // Whether the event bar is being shown
+    bool flush;            // Whether the screen needs updating
     int indexGraph;
     int row; // Number of characters to fit in a column
     int col; // Number of characters to fit in a row
     fetchConsoleDimensions(row, col);
 
     std::vector<Stock> stocks_list;
+    stocks_list.reserve(initial_stock_count);
     for (int i = 0; i < initial_stock_count; i++) {
         stocks_list.emplace_back(Stock()); // Add the stock to the vector
     }
@@ -305,7 +306,7 @@ int main(void) {
         check_mutual_exclusivity(all_stock_events);
     for (auto & [key, value] : checkEventResult) {
         // If the assertion is raised, print the checkEventResult and exit the program.
-        if (value.size() > 0) {
+        if (!value.empty()) {
             std::cout << "Error: detected mutual exclusivity violation! Details:"
                       << std::endl;
             print_map(checkEventResult);
@@ -349,9 +350,9 @@ int main(void) {
     time::sleep(sleepMedium * 2);
 
     while (!gameQuit) {
-        advance = 0;
-        overlayEvent = 0;
-        flush = 0;
+        advance = false;
+        overlayEvent = false;
+        flush = false;
         if (viewMode) {
             indexGraph =
                 integerInput(row, col, "Select stock index to display (0 for HSI): ");
@@ -384,7 +385,7 @@ int main(void) {
             next_round_routine(rounds_played, stocks_list);
             get_hsi(stocks_list, hsi_history);
             savestatus(rounds_played, stocks_list, balance, playerName);
-            viewMode = 0;
+            viewMode = false;
             time::sleep(sleepLong);
         }
     }

@@ -21,6 +21,7 @@ program. If not, see <https://www.gnu.org/licenses/>.
 #include <iomanip>
 #include <iostream>
 #include <sstream>
+#include <utility>
 #include <vector>
 using namespace std;
 
@@ -44,7 +45,7 @@ string graphpriceformat(float price) { // lock the max/min value between 6 chars
 }
 
 void printstocknameandoverall(
-    string stockname, vector<float> stockpricehistory, int stocknum) {
+    const string & stockname, vector<float> stockpricehistory, int stocknum) {
     string stocknameprint;
     if (stocknum != -1) {
         stocknameprint = "Stock: " + stockname;
@@ -86,7 +87,7 @@ void printvector(
 // will delete print in the final version
 
 vector<float> graphinput(
-    string player, int stocknum, string & stockname, unsigned int width) {
+    const string & player, int stocknum, string & stockname, unsigned int width) {
     string filename;
     if (stocknum != -1) {
         filename = "saves/" + player + "/" + to_string(stocknum) + ".save";
@@ -122,9 +123,11 @@ vector<float> graphinput(
 }
 
 void graph_plotting(string player, int stocknum, int width, int height) {
-    float max, min;
+    float max;
+    float min;
     string stockname;
-    vector<float> stockpricehistory = graphinput(player, stocknum, stockname, width);
+    vector<float> stockpricehistory =
+        graphinput(std::move(player), stocknum, stockname, width);
     // convert the raw log input into the nearest "width" data points
     vector<string> color(width - 9, "white");
     color[width - 10] = "white";
@@ -139,7 +142,8 @@ void graph_plotting(string player, int stocknum, int width, int height) {
     vector<vector<string>> graph(width, vector<string>(height, " "));
     // height column width rows, this is not in the usual 2d array format
     //  horizontal array and vertical array is inverted
-    string maxstring, minstring;
+    string maxstring;
+    string minstring;
     if (interval == 0) {
         maxstring = graphpriceformat(max + 1);
         minstring = graphpriceformat(min - 1);
@@ -156,7 +160,8 @@ void graph_plotting(string player, int stocknum, int width, int height) {
     // \DeclareUnicodeCharacter{2517}{\L}
 
     for (unsigned int i = 0; i < stockpricehistory.size() - 1; i++) {
-        int start = 10, end = 10;
+        int start = 10;
+        int end = 10;
         if (interval != 0) {
             start = (height - 1) - (stockpricehistory[i] - min) / interval;
             end = (height - 1) - (stockpricehistory[i + 1] - min) / interval;
