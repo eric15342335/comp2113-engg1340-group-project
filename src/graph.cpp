@@ -122,12 +122,11 @@ vector<float> graphinput(
     return stockpricehistory;
 }
 
-void graph_plotting(string player, int stocknum, int width, int height) {
+void graph_plotting(const string & player, int stocknum, int width, int height) {
     float max;
     float min;
     string stockname;
-    vector<float> stockpricehistory =
-        graphinput(std::move(player), stocknum, stockname, width);
+    vector<float> stockpricehistory = graphinput(player, stocknum, stockname, width);
     // convert the raw log input into the nearest "width" data points
     vector<string> color(width - 9, "white");
     color[width - 10] = "white";
