@@ -320,12 +320,14 @@ int main(void) {
     {
         std::string loadsave;
         std::cout << "Please enter.\n0 for new save,\n1 for loading old save(s),\n2 "
-                    "for deleting save,\n3 to quit: ";
+                     "for deleting save,\n3 to quit: ";
         std::cin >> loadsave;
-        while (loadsave != "0" && loadsave != "1" && loadsave != "2" && loadsave != "3") {
-            std::cout << "Invalid input.\nPlease enter.\n0 for new save,\n1 for loading "
-                        "old save(s),\n2 for deleting save,\n3 to quit:"
-                    << std::endl;
+        while (
+            loadsave != "0" && loadsave != "1" && loadsave != "2" && loadsave != "3") {
+            std::cout
+                << "Invalid input.\nPlease enter.\n0 for new save,\n1 for loading "
+                   "old save(s),\n2 for deleting save,\n3 to quit:"
+                << std::endl;
             std::cin >> loadsave; // choose new file or load previous file
         }
         if (loadsave == "1") {
@@ -336,7 +338,7 @@ int main(void) {
         }
         if (loadsave == "3") {
             std::cout << "Goodbye! Hope you had a good luck in the stock market!"
-                    << std::endl;
+                      << std::endl;
             return 0;
         }
         if (loadsave == "0") {
