@@ -286,64 +286,67 @@ int main(void) {
     bool viewMode = false; // 0 to view table, 1 to view graph
     bool overlayEvent;     // Whether the event bar is being shown
     bool flush;            // Whether the screen needs updating
-    int indexGraph;
-    int row; // Number of characters to fit in a column
-    int col; // Number of characters to fit in a row
+    int row;               // Number of characters to fit in a column
+    int col;               // Number of characters to fit in a row
     fetchConsoleDimensions(row, col);
 
     std::vector<Stock> stocks_list;
     stocks_list.reserve(initial_stock_count);
     for (int i = 0; i < initial_stock_count; i++) {
-        stocks_list.emplace_back(Stock()); // Add the stock to the vector
+        stocks_list.emplace_back(); // Add the stock to the vector
     }
 
     sortStocksList(stocks_list, by_category, ascending);
 
-    std::vector<float> hsi_history;
-    std::string loadsave;
-    // Assert that the every key has no value.
-    std::map<unsigned int, std::vector<unsigned int>> checkEventResult =
-        check_mutual_exclusivity(all_stock_events);
-    for (auto & [key, value] : checkEventResult) {
-        // If the assertion is raised, print the checkEventResult and exit the program.
-        if (!value.empty()) {
-            std::cout << "Error: detected mutual exclusivity violation! Details:"
-                      << std::endl;
-            print_map(checkEventResult);
-            return 1;
+    {
+        // Assert that the every key has no value.
+        std::map<unsigned int, std::vector<unsigned int>> checkEventResult =
+            check_mutual_exclusivity(all_stock_events);
+        for (auto & [key, value] : checkEventResult) {
+            // If the assertion is raised, print the checkEventResult and exit the
+            // program.
+            if (!value.empty()) {
+                std::cout << "Error: detected mutual exclusivity violation! Details:"
+                          << std::endl;
+                print_map(checkEventResult);
+                return 1;
+            }
         }
     }
-
     drawLogo(row, col);
     time::sleep(sleepMedium);
-
-    std::cout << "Please enter.\n0 for new save,\n1 for loading old save(s),\n2 "
-                 "for deleting save,\n3 to quit: ";
-    std::cin >> loadsave;
-    while (loadsave != "0" && loadsave != "1" && loadsave != "2" && loadsave != "3") {
-        std::cout << "Invalid input.\nPlease enter.\n0 for new save,\n1 for loading "
-                     "old save(s),\n2 for deleting save,\n3 to quit:"
-                  << std::endl;
-        std::cin >> loadsave; // choose new file or load previous file
-    }
-    if (loadsave == "1") {
-        loadstatus(rounds_played, stocks_list, balance, playerName, hsi_history);
-    }
-    if (loadsave == "2") {
-        delsave(loadsave); // delete existing file
-    }
-    if (loadsave == "3") {
-        std::cout << "Goodbye! Hope you had a good luck in the stock market!"
-                  << std::endl;
-        return 0;
-    }
-    if (loadsave == "0") {
-        createplayer(playerName);
-        savestatus(rounds_played, stocks_list, balance, playerName);
-    }
-    // Done loading/creating a new file.
-
+    std::vector<float> hsi_history;
     get_hsi(stocks_list, hsi_history);
+    {
+        std::string loadsave;
+        std::cout << "Please enter.\n0 for new save,\n1 for loading old save(s),\n2 "
+                     "for deleting save,\n3 to quit: ";
+        std::cin >> loadsave;
+        while (
+            loadsave != "0" && loadsave != "1" && loadsave != "2" && loadsave != "3") {
+            std::cout
+                << "Invalid input.\nPlease enter.\n0 for new save,\n1 for loading "
+                   "old save(s),\n2 for deleting save,\n3 to quit:"
+                << std::endl;
+            std::cin >> loadsave; // choose new file or load previous file
+        }
+        if (loadsave == "1") {
+            loadstatus(rounds_played, stocks_list, balance, playerName, hsi_history);
+        }
+        if (loadsave == "2") {
+            delsave(loadsave); // delete existing file
+        }
+        if (loadsave == "3") {
+            std::cout << "Goodbye! Hope you had a good luck in the stock market!"
+                      << std::endl;
+            return 0;
+        }
+        if (loadsave == "0") {
+            createplayer(playerName);
+            savestatus(rounds_played, stocks_list, balance, playerName);
+        }
+        // Done loading/creating a new file.
+    }
 
     std::cout << "Current trading fees are charged at " << trading_fees_percent * 100
               << " %" << std::endl;
@@ -354,7 +357,7 @@ int main(void) {
         overlayEvent = false;
         flush = false;
         if (viewMode) {
-            indexGraph =
+            int indexGraph =
                 integerInput(row, col, "Select stock index to display (0 for HSI): ");
             while (
                 indexGraph < 0 || indexGraph > static_cast<int>(stocks_list.size())) {

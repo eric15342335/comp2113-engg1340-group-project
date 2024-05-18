@@ -98,7 +98,7 @@ docs: Doxyfile src/*.cpp include/*.h
 
 fix:
 	clang-format --verbose -i src/*.cpp include/*.h
-	git commit -a -m "Formatting: Run clang-format" -m "From Makefile: `make fix`"
+	git commit -a -m "Formatting: Run clang-format" -m "From Makefile: make fix"
 	git push
 
 msvc: src/*.cpp include/*.h
