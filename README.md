@@ -103,6 +103,14 @@ Or if you prefer one step:
 make all
 ```
 
+<!--
+If you use CMake:
+```bash
+cmake -B build -S . 
+cmake --build build
+```
+-->
+
 To ensure an optimal gaming experience, please adopt the following recommendations before running the game:
 
 ### Terminal Size
