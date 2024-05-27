@@ -27,9 +27,9 @@ program. If not, see <https://www.gnu.org/licenses/>.
 #include <fstream>
 #include <numeric>
 
-#define NOMINMAX 1 // Prevent Windows.h from defining min and max macros
-
 #ifdef _WIN32
+#define NOMINMAX 1 // Prevent Windows.h from defining min and max macros
+#define WIN32_LEAN_AND_MEAN // Exclude rarely-used stuff from Windows headers
 #include <windows.h>
 /** @brief Enable Windows VT processing for ANSI escape codes
  * @details Without this, ANSI escape codes will not work on Windows 10.
@@ -78,7 +78,7 @@ void get_hsi(std::vector<Stock> stocks_list, std::vector<float> & hsi_history) {
     for (unsigned int i = 0; i < stocks_list.size(); i++) {
         total.emplace_back(stocks_list[i].get_price() /
                            stocks_list[i].get_initial_price() * 1000 *
-                           pow(2, stocks_list[i].get_split_count()));
+                           static_cast<float>(std::pow(2, stocks_list[i].get_split_count())));
         // HSI formula = (price/initial price) * 1000 * 2^split count
     }
     hsi = std::reduce(total.begin(), total.end()) / total.size();
