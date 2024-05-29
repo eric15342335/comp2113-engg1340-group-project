@@ -83,7 +83,7 @@ void Stock::load(const std::string & playerName, int i) {
     // boundary check for category
     if (category >= category_list_size) {
         std::cerr << "Error: Invalid category loaded" << std::endl;
-        throw;
+        exit(1);
     }
     // the second line is entirely the stock name
     std::getline(fin >> std::ws, name);
@@ -131,7 +131,7 @@ void Stock::load(const std::string & playerName, int i) {
             // Output the difference between the loaded event and the compared event
             std::cerr << "Loaded event: " << loadedEvent << std::endl;
             std::cerr << "Compared event: " << comparedEvent << std::endl;
-            throw;
+            exit(1);
         }
     }
     fin.close();
