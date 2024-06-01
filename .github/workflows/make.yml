@@ -24,6 +24,11 @@ jobs:
       run: |
         # Enabling optimization checks -Wmaybe-uninitialized from -Wall
         echo -e "3" | FLAGS=-O2 make all
+    - name: CMake
+      shell: bash
+      run: |
+        cmake -B build -S .
+        cmake --build build
     - name: Set up Microsoft Dev Cmd
       if: matrix.os == 'windows-latest'
       uses: ilammy/msvc-dev-cmd@v1.13.0
