@@ -129,7 +129,7 @@ struct Stock_event {
         unsigned int category;
 
         /** @brief Stores the stock_modifiers that the event applies. */
-        std::map<stock_modifiers, float> modifiers;
+        std::map<stock_modifiers, double> modifiers;
 
         /** @brief Overload the == operator to compare two Stock_event */
         bool operator==(const Stock_event & other) const {
