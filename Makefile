@@ -20,8 +20,10 @@ check the code for formatting and static analysis issues
 
 CC = g++
 INCLUDES = -Iinclude
-FLAGS = -Wall -Wextra -pedantic -std=c++17 -Werror -g -O0 \
+FLAGS += -Wall -Wextra -pedantic -std=c++17 -Werror -g \
+    -Wcast-qual -Wundef -Wduplicated-cond -Wduplicated-branches \
     -mtune=native -Wswitch -Wshadow
+    # -Wconversion -Wfloat-equal
     # -D_FORTIFY_SOURCE=2 -fstack-protector-all -Og
     # -fsanitize=address -fsanitize=undefined
 
