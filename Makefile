@@ -27,6 +27,12 @@ FLAGS += -Wall -Wextra -pedantic -std=c++17 -Werror -g \
     # -D_FORTIFY_SOURCE=2 -fstack-protector-all -Og
     # -fsanitize=address -fsanitize=undefined
 
+# macOS uses clang++, which does not support these flag:
+# -Wduplicated-cond -Wduplicated-branches
+ifeq ($(shell uname),Darwin)
+FLAGS += -Wno-unknown-warning-option
+endif
+
 # eric15342335 will use the static flag on Windows.
 ifeq ("$(OS)","Windows_NT")
 FLAGS += -static
