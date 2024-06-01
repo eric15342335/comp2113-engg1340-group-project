@@ -22,7 +22,8 @@ jobs:
     - name: Make
       shell: bash
       run: |
-        echo -e "3" | make all
+        # Enabling optimization checks -Wmaybe-uninitialized from -Wall
+        echo -e "3" | FLAGS=-O2 make all
     - name: CMake
       shell: bash
       run: |
