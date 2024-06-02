@@ -21,11 +21,11 @@ check the code for formatting and static analysis issues
 CC = g++
 INCLUDES = -Iinclude
 FLAGS += -Wall -Wextra -pedantic -std=c++17 -Werror -g \
-    -Wcast-qual -Wundef -Wduplicated-cond -Wduplicated-branches \
-    -mtune=native -Wswitch -Wshadow
-    # -Wconversion -Wfloat-equal
-    # -D_FORTIFY_SOURCE=2 -fstack-protector-all -Og
-    # -fsanitize=address -fsanitize=undefined
+	-Wcast-qual -Wundef -Wduplicated-cond -Wduplicated-branches \
+	-mtune=native -Wswitch -Wshadow
+	# -Wconversion -Wfloat-equal
+	# -D_FORTIFY_SOURCE=2 -fstack-protector-all -Og
+	# -fsanitize=address -fsanitize=undefined
 
 # macOS uses clang++, which does not support these flag:
 # -Wduplicated-cond -Wduplicated-branches
@@ -89,9 +89,9 @@ all: clean
 goto: stocksim
 	rm -r saves/ 2>/dev/null || true
 	echo -e "0\nsave\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY" \
-	        "\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY" \
 			"\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY" \
-		    "\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nX\nY" | ./stocksim
+			"\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY" \
+			"\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nX\nY" | ./stocksim
 	echo -e "1\nsave\nT\n0\nX\nY\n" | ./stocksim
 
 clean:
