@@ -36,4 +36,15 @@ extern const std::string category_list[category_list_size];
 
 std::vector<std::string> generate_name(unsigned int category, unsigned int num);
 
+/**
+ * @brief Generates a list of company names by combining words and suffixes.
+ * @param num The number of company names to generate.
+ * @param words A list of words to use in the company names.
+ * @param suffixes A list of suffixes to use in the company names.
+ * @param companyNames The list of company names to generate. This list will be modified
+ * by the function.
+ */
+void pickUniqueNames(const unsigned int & num, const std::vector<std::string> & words,
+    const std::vector<std::string> & suffixes, std::vector<std::string> & companyNames);
+
 #endif
