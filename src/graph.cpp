@@ -16,16 +16,18 @@ program. If not, see <https://www.gnu.org/licenses/>.
 // to display the unicode characters correctly.
 #include "graph.h"
 
+#include "format.h"
+
 #include <algorithm>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
 #include <sstream>
-#include <utility>
-#include <vector>
+#include <cassert>
 using namespace std;
 
-string graphpriceformat(float price) { // lock the max/min value between 6 chars
+string graphpriceformat(float price) {
+    // lock the max/min value between 6 chars
     stringstream ss;
     unsigned int exponent;
     ss << fixed << setprecision(2) << price;
@@ -61,24 +63,26 @@ void printstocknameandoverall(
     cout << endl;
 }
 
-void printvector(
-    vector<vector<string>> vectorname, vector<string> color, int width, int height) {
-    int colorint;
-    for (int i = 0; i < height; i++) {
-        for (int j = 0; j < width; j++) {
-            colorint = j - 9;
-            if (colorint < 0) {
-                colorint = width - 10;
+void printgraphblocks(const vector<vector<string>> & screenElements,
+    const vector<string> & specifiedColorCoordinates, const int width, const int height) {
+    // Boundary check of width and height, otherwise may access screenElements out of bounds
+    assert(width <= static_cast<int>(screenElements.size()) && "Width exceeds screenElements width");
+    assert(height <= static_cast<int>(screenElements[0].size()) && "Height exceeds screenElements height");
+    int colorIndex;
+    for (int heightIndex = 0; heightIndex < height; heightIndex++) {
+        for (int widthIndex = 0; widthIndex < width; widthIndex++) {
+            colorIndex = widthIndex - 9;
+            if (colorIndex < 0) {
+                colorIndex = width - 10;
             }
-            if (color[colorint] == "green") {
-                cout << "\033[1;31m" << vectorname[j][i] << "\033[0m";
+            string colorCode = textDefault;
+            if (specifiedColorCoordinates[colorIndex] == textGreen) {
+                colorCode = textGreen;
             }
-            else if (color[colorint] == "red") {
-                cout << "\033[1;32m" << vectorname[j][i] << "\033[0m";
+            else if (specifiedColorCoordinates[colorIndex] == textRed) {
+                colorCode = textRed;
             }
-            else {
-                cout << vectorname[j][i];
-            }
+            cout << colorCode << screenElements[widthIndex][heightIndex] << textDefault;
         }
         cout << endl;
     }
@@ -123,33 +127,33 @@ vector<float> graphinput(
 }
 
 void graph_plotting(const string & player, int stocknum, int width, int height) {
-    float max;
-    float min;
+    float highest_price;
+    float lowest_price;
     string stockname;
     vector<float> stockpricehistory = graphinput(player, stocknum, stockname, width);
     // convert the raw log input into the nearest "width" data points
-    vector<string> color(width - 9, "white");
-    color[width - 10] = "white";
+    vector<string> color(width - 9, textWhite);
+    color[width - 10] = textWhite;
     if (stockpricehistory.size() <= 1) {
         cout << "Why do you want to plot graph if there is only one data point?"
              << endl;
         return;
     }
-    max = *max_element(stockpricehistory.begin(), stockpricehistory.end());
-    min = *min_element(stockpricehistory.begin(), stockpricehistory.end());
-    float interval = (max - min) / height;
+    highest_price = *max_element(stockpricehistory.begin(), stockpricehistory.end());
+    lowest_price = *min_element(stockpricehistory.begin(), stockpricehistory.end());
+    float interval = (highest_price - lowest_price) / height;
     vector<vector<string>> graph(width, vector<string>(height, " "));
     // height column width rows, this is not in the usual 2d array format
     //  horizontal array and vertical array is inverted
     string maxstring;
     string minstring;
     if (interval == 0) {
-        maxstring = graphpriceformat(max + 1);
-        minstring = graphpriceformat(min - 1);
+        maxstring = graphpriceformat(highest_price + 1);
+        minstring = graphpriceformat(lowest_price - 1);
     }
     else {
-        maxstring = graphpriceformat(max);
-        minstring = graphpriceformat(min);
+        maxstring = graphpriceformat(highest_price);
+        minstring = graphpriceformat(lowest_price);
     }
 
     for (int i = 0; i < 6; i++) {
@@ -162,8 +166,8 @@ void graph_plotting(const string & player, int stocknum, int width, int height) 
         int start = 10;
         int end = 10;
         if (interval != 0) {
-            start = (height - 1) - (stockpricehistory[i] - min) / interval;
-            end = (height - 1) - (stockpricehistory[i + 1] - min) / interval;
+            start = (height - 1) - (stockpricehistory[i] - lowest_price) / interval;
+            end = (height - 1) - (stockpricehistory[i + 1] - lowest_price) / interval;
             // Checks to prevent out of bounds (SEGFAULT)
             if (start < 0) {
                 start = 0;
@@ -181,27 +185,23 @@ void graph_plotting(const string & player, int stocknum, int width, int height) 
         if (start == end) {
             graph[i + 9][start] = "■";
             if (stockpricehistory[i] > stockpricehistory[i + 1]) {
-                color[i] = "green";
+                color[i] = textGreen;
             }
             else if (stockpricehistory[i] < stockpricehistory[i + 1]) {
-                color[i] = "red";
+                color[i] = textRed;
             }
-            else {
-                color[i] = "white";
-            }
-            continue;
         }
         if (start > end) {
             for (int j = end; j <= start; j++) {
                 graph[i + 9][j] = "■";
             }
-            color[i] = "red";
+            color[i] = textRed;
         }
         else if (start < end) {
             for (int j = start; j <= end; j++) {
                 graph[i + 9][j] = "■";
             }
-            color[i] = "green";
+            color[i] = textGreen;
         }
         // idk why the colour is inverted using the normal setup method but i dont care
         // anyway it is running in normal HK stock colour indentations
@@ -214,5 +214,5 @@ void graph_plotting(const string & player, int stocknum, int width, int height) 
     }
     graph[8][height - 1] = "┗";
     printstocknameandoverall(stockname, stockpricehistory, stocknum);
-    printvector(graph, color, width, height);
+    printgraphblocks(graph, color, width, height);
 }
