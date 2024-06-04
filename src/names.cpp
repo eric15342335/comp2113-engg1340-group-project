@@ -14,8 +14,9 @@ program. If not, see <https://www.gnu.org/licenses/>.
 */
 #include "names.h"
 
+#include "random_price.h"
+
 #include <algorithm>
-#include <random>
 using namespace std;
 
 string const category_list[category_list_size] = {"Adv&Market", "Aero&Def", "Airlines",
@@ -38,8 +39,6 @@ vector<string> generate_name(unsigned int category, unsigned int num) {
     vector<string> const suffixes = {"Holdings", "Ltd", "Group", "Corp", "Inc",
         "Enterprises", "Solutions", "Services"};
     vector<string> companyNames;
-    random_device rd;
-    mt19937 gen(rd());
 
     switch (category) {
         case 0: { // Generate a name for Adv&Market category
@@ -53,20 +52,7 @@ vector<string> generate_name(unsigned int category, unsigned int num) {
                 "Advertising", "Media", "Promotion", "Campaign", "Creative", "Strategy",
                 "Market", "Audience", "Brand", "Digital", "Social", "Influencer"};
 
-            for (unsigned int i = 0; i < num; i++) {
-                string name =
-                    words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] +
-                    " " +
-                    suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(
-                        gen)];
-                if (find(companyNames.begin(), companyNames.end(), name) ==
-                    companyNames.end()) {
-                    companyNames.emplace_back(name);
-                }
-                else {
-                    i--;
-                }
-            }
+            pickUniqueNames(num, words, suffixes, companyNames);
             break;
         }
         case 1: { // Generate a name for Aero&Def category
@@ -83,20 +69,7 @@ vector<string> generate_name(unsigned int category, unsigned int num) {
                 "Warrior", "Aircraft", "Airman", "Seiya", "Sanji", "Airbase",
                 "Stratosphere", "Airshow", "Combat", "Zoro"};
 
-            for (unsigned int i = 0; i < num; i++) {
-                string name =
-                    words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] +
-                    " " +
-                    suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(
-                        gen)];
-                if (find(companyNames.begin(), companyNames.end(), name) ==
-                    companyNames.end()) {
-                    companyNames.emplace_back(name);
-                }
-                else {
-                    i--;
-                }
-            }
+            pickUniqueNames(num, words, suffixes, companyNames);
             break;
         }
         case 2: { // Generate a name for Airlines category
@@ -110,20 +83,7 @@ vector<string> generate_name(unsigned int category, unsigned int num) {
                 "Airliner", "Jetsetter", "Airship", "Airterminal", "Airsteward",
                 "Airstrike", "Airtaxi", "Airway"};
 
-            for (unsigned int i = 0; i < num; i++) {
-                string name =
-                    words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] +
-                    " " +
-                    suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(
-                        gen)];
-                if (find(companyNames.begin(), companyNames.end(), name) ==
-                    companyNames.end()) {
-                    companyNames.emplace_back(name);
-                }
-                else {
-                    i--;
-                }
-            }
+            pickUniqueNames(num, words, suffixes, companyNames);
             break;
         }
         case 3: { // Generate a name for RenewEnergy&storage category
@@ -142,20 +102,7 @@ vector<string> generate_name(unsigned int category, unsigned int num) {
                 "PowerCell", "StorageSolutions", "ChargeMaster", "BatteryTech",
                 "PowerHub", "EcoStorage", "RenewableEnergy", "EfficientEnergies"};
 
-            for (unsigned int i = 0; i < num; i++) {
-                string name =
-                    words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] +
-                    " " +
-                    suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(
-                        gen)];
-                if (find(companyNames.begin(), companyNames.end(), name) ==
-                    companyNames.end()) {
-                    companyNames.emplace_back(name);
-                }
-                else {
-                    i--;
-                }
-            }
+            pickUniqueNames(num, words, suffixes, companyNames);
             break;
         }
         case 4: { // Generate a name for Auto category
@@ -173,20 +120,7 @@ vector<string> generate_name(unsigned int category, unsigned int num) {
                 "Land Hover", "Lincollin", "GMC", "Aubii", "Buddatti", "Maserahhi",
                 "McLaren", "Rage Rover"};
 
-            for (unsigned int i = 0; i < num; i++) {
-                string name =
-                    words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] +
-                    " " +
-                    suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(
-                        gen)];
-                if (find(companyNames.begin(), companyNames.end(), name) ==
-                    companyNames.end()) {
-                    companyNames.emplace_back(name);
-                }
-                else {
-                    i--;
-                }
-            }
+            pickUniqueNames(num, words, suffixes, companyNames);
             break;
         }
         case 5: { // Generate a name for Banks category
@@ -198,20 +132,7 @@ vector<string> generate_name(unsigned int category, unsigned int num) {
                 "Aegis", "Legacy", "Crown", "Krupt", "Meridian", "Encompass", "Equity",
                 "Stellar", "Eclipse"};
 
-            for (unsigned int i = 0; i < num; i++) {
-                string name =
-                    words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] +
-                    " " +
-                    suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(
-                        gen)];
-                if (find(companyNames.begin(), companyNames.end(), name) ==
-                    companyNames.end()) {
-                    companyNames.emplace_back(name);
-                }
-                else {
-                    i--;
-                }
-            }
+            pickUniqueNames(num, words, suffixes, companyNames);
             break;
         }
         case 6: { // Generate a name for Biotech category
@@ -224,20 +145,7 @@ vector<string> generate_name(unsigned int category, unsigned int num) {
                 "GenePrime", "BioSpectra", "InnoCell", "BioPlasma", "GeneTech",
                 "BioQuest", "GeneGenius", "InnoGene", "BioCure", "GeneCraft"};
 
-            for (unsigned int i = 0; i < num; i++) {
-                string name =
-                    words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] +
-                    " " +
-                    suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(
-                        gen)];
-                if (find(companyNames.begin(), companyNames.end(), name) ==
-                    companyNames.end()) {
-                    companyNames.emplace_back(name);
-                }
-                else {
-                    i--;
-                }
-            }
+            pickUniqueNames(num, words, suffixes, companyNames);
             break;
         }
         case 7: { // Generate a name for Broadcast category
@@ -262,20 +170,7 @@ vector<string> generate_name(unsigned int category, unsigned int num) {
                 "ListenIn", "StreamCenter", "VoicePulse", "RadioRadar", "ChannelWave",
                 "SoundSync"};
 
-            for (unsigned int i = 0; i < num; i++) {
-                string name =
-                    words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] +
-                    " " +
-                    suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(
-                        gen)];
-                if (find(companyNames.begin(), companyNames.end(), name) ==
-                    companyNames.end()) {
-                    companyNames.emplace_back(name);
-                }
-                else {
-                    i--;
-                }
-            }
+            pickUniqueNames(num, words, suffixes, companyNames);
             break;
         }
         case 8: { // Generate a name for Casinos&Gaming category
@@ -304,20 +199,7 @@ vector<string> generate_name(unsigned int category, unsigned int num) {
                 "GamingZone", "BetMasters", "GamblingKingdom", "LuckyLottery",
                 "SpinPalace", "Nario"};
 
-            for (unsigned int i = 0; i < num; i++) {
-                string name =
-                    words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] +
-                    " " +
-                    suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(
-                        gen)];
-                if (find(companyNames.begin(), companyNames.end(), name) ==
-                    companyNames.end()) {
-                    companyNames.emplace_back(name);
-                }
-                else {
-                    i--;
-                }
-            }
+            pickUniqueNames(num, words, suffixes, companyNames);
             break;
         }
         case 9: { // Generate a name for E-Commerce category
@@ -333,20 +215,7 @@ vector<string> generate_name(unsigned int category, unsigned int num) {
                 "ShoppingSolutions", "VirtualMarket", "SaleSolutions",
                 "Buyer'sParadise", "DealHaven", "CartConnect"};
 
-            for (unsigned int i = 0; i < num; i++) {
-                string name =
-                    words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] +
-                    " " +
-                    suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(
-                        gen)];
-                if (find(companyNames.begin(), companyNames.end(), name) ==
-                    companyNames.end()) {
-                    companyNames.emplace_back(name);
-                }
-                else {
-                    i--;
-                }
-            }
+            pickUniqueNames(num, words, suffixes, companyNames);
             break;
         }
         case 10: { // Generate a name for FinServices category
@@ -357,20 +226,7 @@ vector<string> generate_name(unsigned int category, unsigned int num) {
                 "InvestmentAdvisors", "SecureBanking", "SmartFunds",
                 "EconomicConsultancy", "FinancialExperts"};
 
-            for (unsigned int i = 0; i < num; i++) {
-                string name =
-                    words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] +
-                    " " +
-                    suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(
-                        gen)];
-                if (find(companyNames.begin(), companyNames.end(), name) ==
-                    companyNames.end()) {
-                    companyNames.emplace_back(name);
-                }
-                else {
-                    i--;
-                }
-            }
+            pickUniqueNames(num, words, suffixes, companyNames);
             break;
         }
         case 11: { // Generate a name for Food&Beverage category
@@ -383,20 +239,7 @@ vector<string> generate_name(unsigned int category, unsigned int num) {
                 "Plate", "Yum", "Morsel", "Nibble", "Digest", "Mouthful", "Bistro",
                 "Savor", "Crunch", "Sizzle", "Devour"};
 
-            for (unsigned int i = 0; i < num; i++) {
-                string name =
-                    words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] +
-                    " " +
-                    suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(
-                        gen)];
-                if (find(companyNames.begin(), companyNames.end(), name) ==
-                    companyNames.end()) {
-                    companyNames.emplace_back(name);
-                }
-                else {
-                    i--;
-                }
-            }
+            pickUniqueNames(num, words, suffixes, companyNames);
             break;
         }
         case 12: { // Generate a name for Healthcare&Pharm category
@@ -413,20 +256,7 @@ vector<string> generate_name(unsigned int category, unsigned int num) {
                 "Relief", "Recovery", "Dose", "MediCare", "Medix", "Healthy", "Fit",
                 "Strong", "Balance"};
 
-            for (unsigned int i = 0; i < num; i++) {
-                string name =
-                    words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] +
-                    " " +
-                    suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(
-                        gen)];
-                if (find(companyNames.begin(), companyNames.end(), name) ==
-                    companyNames.end()) {
-                    companyNames.emplace_back(name);
-                }
-                else {
-                    i--;
-                }
-            }
+            pickUniqueNames(num, words, suffixes, companyNames);
             break;
         }
         case 13: { // Generate a name for Tech category
@@ -435,20 +265,7 @@ vector<string> generate_name(unsigned int category, unsigned int num) {
                 "Nerd", "Geek", "Infinite", "System", "Guru", "Genius", "Solve",
                 "Pixel", "Bit", "Invent", "KKGarden"};
 
-            for (unsigned int i = 0; i < num; i++) {
-                string name =
-                    words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] +
-                    " " +
-                    suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(
-                        gen)];
-                if (find(companyNames.begin(), companyNames.end(), name) ==
-                    companyNames.end()) {
-                    companyNames.emplace_back(name);
-                }
-                else {
-                    i--;
-                }
-            }
+            pickUniqueNames(num, words, suffixes, companyNames);
             break;
         }
         case 14: { // Generate a name for RealEstate category
@@ -459,20 +276,7 @@ vector<string> generate_name(unsigned int category, unsigned int num) {
                 "Tower", "Plaza", "Villa", "Condo", "Develop", "Society", "Park",
                 "Living", "Urban", "Suburban"};
 
-            for (unsigned int i = 0; i < num; i++) {
-                string name =
-                    words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] +
-                    " " +
-                    suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(
-                        gen)];
-                if (find(companyNames.begin(), companyNames.end(), name) ==
-                    companyNames.end()) {
-                    companyNames.emplace_back(name);
-                }
-                else {
-                    i--;
-                }
-            }
+            pickUniqueNames(num, words, suffixes, companyNames);
             break;
         }
         case 15: { // Generate a name for Retail category
@@ -484,20 +288,7 @@ vector<string> generate_name(unsigned int category, unsigned int num) {
                 "Serendipity", "Wander", "Charm", "Spruce", "Eclectic", "Rustic",
                 "Vintage"};
 
-            for (unsigned int i = 0; i < num; i++) {
-                string name =
-                    words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] +
-                    " " +
-                    suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(
-                        gen)];
-                if (find(companyNames.begin(), companyNames.end(), name) ==
-                    companyNames.end()) {
-                    companyNames.emplace_back(name);
-                }
-                else {
-                    i--;
-                }
-            }
+            pickUniqueNames(num, words, suffixes, companyNames);
             break;
         }
         case 16: { // Generate a name for Telecom category
@@ -508,20 +299,7 @@ vector<string> generate_name(unsigned int category, unsigned int num) {
                 "Momentum", "Infinite", "Nexus", "Stream", "Sync", "Telepath",
                 "Radiant", "Blaze", "Quantum"};
 
-            for (unsigned int i = 0; i < num; i++) {
-                string name =
-                    words[uniform_int_distribution<int>(0, words.size() - 1)(gen)] +
-                    " " +
-                    suffixes[uniform_int_distribution<int>(0, suffixes.size() - 1)(
-                        gen)];
-                if (find(companyNames.begin(), companyNames.end(), name) ==
-                    companyNames.end()) {
-                    companyNames.emplace_back(name);
-                }
-                else {
-                    i--;
-                }
-            }
+            pickUniqueNames(num, words, suffixes, companyNames);
             break;
         }
         default:
@@ -531,4 +309,19 @@ vector<string> generate_name(unsigned int category, unsigned int num) {
             break;
     }
     return companyNames;
+}
+
+void pickUniqueNames(const unsigned int & num, const vector<string> & words,
+    const vector<string> & suffixes, vector<string> & companyNames) {
+    for (unsigned int i = 0; i < num; i++) {
+        string name = words[random_integer(words.size())] + " " +
+                      suffixes[random_integer(suffixes.size())];
+        if (find(companyNames.begin(), companyNames.end(), name) ==
+            companyNames.end()) {
+            companyNames.emplace_back(name);
+        }
+        else {
+            i--;
+        }
+    }
 }
