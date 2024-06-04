@@ -374,3 +374,11 @@ void sortStocksList(std::vector<Stock> & stocks_list, SortingMethods sortMethod,
         std::reverse(stocks_list.begin(), stocks_list.end());
     }
 }
+
+float Stock::calculateStockValue(const float & trading_fees_percent) const {
+    return price * quantity * (1 - trading_fees_percent);
+}
+
+float Stock::calculateTradingFeesLost(const float & trading_fees_percent) const {
+    return price * quantity * trading_fees_percent;
+}
