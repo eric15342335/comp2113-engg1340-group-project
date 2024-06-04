@@ -45,7 +45,7 @@ program. If not, see <https://www.gnu.org/licenses/>.
  * | 86 to 91       | Telecom           |
  * | 92 to 98       | pick_random_stock |
  */
-std::vector<Stock_event> all_stock_events = {
+const std::vector<Stock_event> all_stock_events = {
     // event_id 0 to 7 affect all stocks
     {/** event_id */ 0,
         /** mutually_exclusive_events */ {1},
@@ -1123,16 +1123,21 @@ std::map<unsigned int, std::vector<unsigned int>> check_mutual_exclusivity(
     return mut_excl_map;
 }
 
+constexpr inline decltype(Stock_event::probability_permille) calculateAllEventsProbability(void) {
+    decltype(Stock_event::probability_permille) total_permille = 0;
+    for (size_t i = 0; i < sizeof(all_stock_events) / sizeof(all_stock_events[0]); i++) {
+        total_permille += all_stock_events[i].probability_permille;
+    }
+    return total_permille;
+}
+
 std::vector<Stock_event> pick_events(
     const std::vector<Stock_event> & all_events, unsigned int num_events) {
     std::vector<Stock_event> picked_events;
     // Pick num_events random events
     for (unsigned int i = 0; i < num_events; i++) {
         // When picking the event, consider event.probability_permille.
-        unsigned int total_permille = 0;
-        for (const Stock_event & event : all_events) {
-            total_permille += event.probability_permille;
-        }
+        unsigned int total_permille = calculateAllEventsProbability();
         /** E.g. if there are 3 events with probability_permille 10, 20, 30.
          * total_permille = 60;
          * random_permille = 0 to 59;

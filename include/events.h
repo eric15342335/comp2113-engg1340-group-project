@@ -152,7 +152,7 @@ struct Stock_event {
          * @endcode
          */
         friend std::ostream & operator<<(
-            std::ostream & outputstream, Stock_event & event) {
+            std::ostream & outputstream, const Stock_event & event) {
             outputstream << event.event_id << " ";
             for (unsigned int i = 0; i < event.mutually_exclusive_events.size(); i++) {
                 outputstream << event.mutually_exclusive_events[i] << " ";
@@ -160,7 +160,7 @@ struct Stock_event {
             outputstream << ";" << event.text << ";" << event.duration << " "
                          << event.probability_permille << " " << event.type_of_event
                          << " " << event.category << " ";
-            for (auto & modifier : event.modifiers) {
+            for (const auto & modifier : event.modifiers) {
                 outputstream << modifier.second << " ";
             }
             return outputstream;
@@ -197,7 +197,7 @@ struct Stock_event {
 };
 
 /** @brief The list of all events that will be applied to the stocks. */
-extern std::vector<Stock_event> all_stock_events;
+extern const std::vector<Stock_event> all_stock_events;
 
 /**
  * @brief Pick a random event from the list of events
