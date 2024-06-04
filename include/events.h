@@ -223,7 +223,7 @@ std::map<unsigned int, std::vector<unsigned int>> check_mutual_exclusivity(
  * @brief Check if there are mutual exclusivity violations in all_stock_events.
  * @return True if the events are mutually exclusive with each other.
  */
-bool inline assertion_check_mutual_exclusivity(void);
+bool assertion_check_mutual_exclusivity(void);
 
 /** @brief Print a map to std::cout.
  * @param map The std::map object you want to print.

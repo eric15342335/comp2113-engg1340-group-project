@@ -1123,7 +1123,7 @@ std::map<unsigned int, std::vector<unsigned int>> check_mutual_exclusivity(
     return mut_excl_map;
 }
 
-bool inline assertion_check_mutual_exclusivity(void) {
+bool assertion_check_mutual_exclusivity(void) {
     // Assert that the every key has no value.
     auto checkEventResult = check_mutual_exclusivity(all_stock_events);
     for (const auto & [key, value] : checkEventResult) {
