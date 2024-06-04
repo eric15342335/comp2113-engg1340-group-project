@@ -1123,9 +1123,11 @@ std::map<unsigned int, std::vector<unsigned int>> check_mutual_exclusivity(
     return mut_excl_map;
 }
 
-constexpr inline decltype(Stock_event::probability_permille) calculateAllEventsProbability(void) {
+constexpr inline decltype(Stock_event::probability_permille)
+calculateAllEventsProbability(void) {
     decltype(Stock_event::probability_permille) total_permille = 0;
-    for (size_t i = 0; i < sizeof(all_stock_events) / sizeof(all_stock_events[0]); i++) {
+    for (size_t i = 0; i < sizeof(all_stock_events) / sizeof(all_stock_events[0]);
+         i++) {
         total_permille += all_stock_events[i].probability_permille;
     }
     return total_permille;
