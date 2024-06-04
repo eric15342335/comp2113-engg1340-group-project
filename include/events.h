@@ -230,7 +230,8 @@ constexpr inline decltype(Stock_event::probability_permille)
 calculateAllEventsProbability(void) {
     decltype(Stock_event::probability_permille) total_permille = 0;
     for (unsigned int index = 0; index <= lastEventID; index++) {
-        total_permille += all_stock_events[index].probability_permille;
+        total_permille += const_cast<Stock_event const &>(all_stock_events[index])
+                              .probability_permille;
     }
     return total_permille;
 }
