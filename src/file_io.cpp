@@ -64,7 +64,7 @@ void createplayer(string & playerName) {
     filesystem::create_directory(SAVE_FOLDER_PREFIX);
     cout << "Enter player name:" << endl;
     getline(cin, playerName);
-    foldername = "saves/" + playerName;
+    foldername = SAVE_FOLDER_PREFIX + playerName;
     while ((filesystem::exists(foldername) || playerName.find(' ') != string::npos) ||
            playerName.empty()) { // check whether file already exists
         if (!playerName.empty()) {
@@ -74,13 +74,13 @@ void createplayer(string & playerName) {
             cout << "playername" << endl << "Please enter a new player name: " << endl;
         }
         getline(cin, playerName);
-        foldername = "saves/" + playerName;
+        foldername = SAVE_FOLDER_PREFIX + playerName;
     }
     filesystem::create_directory(foldername); // create a empty folder for new save
 }
 
 void load_hsi(std::vector<float> hsi_history, const string & playerName) {
-    std::string filesave = "saves/" + playerName + "/hsi.save";
+    std::string filesave = SAVE_FOLDER_PREFIX + playerName + "/hsi.save";
     std::ifstream fin;
     fin.open(filesave.c_str());
     float hsi;
@@ -94,7 +94,7 @@ void savestatus(unsigned int rounds_played, vector<Stock> stocks_list, float bal
     const string & playerName) {
     string stocksave;
     ofstream fout;
-    stocksave = "saves/" + playerName + "/playerstatus.save";
+    stocksave = SAVE_FOLDER_PREFIX + playerName + "/playerstatus.save";
     fout.open(stocksave.c_str());
     fout << playerName << " " << rounds_played << " " << balance
          << endl; // saving basic info out of class inside playerstatus.save
@@ -131,7 +131,7 @@ void loadstatus(unsigned int & rounds_played, vector<Stock> & stocks_list,
         }
         getline(cin, playerName);
     }
-    stockload = "saves/" + playerName + "/playerstatus.save";
+    stockload = SAVE_FOLDER_PREFIX + playerName + "/playerstatus.save";
     fin.open(stockload.c_str());
     fin >> playerName >> rounds_played >> balance;
     fin.close(); // output basic info from playerstatus.save and return by reference
@@ -183,7 +183,7 @@ void delsave(string & mode) {
          << " is going to be deleted, please enter Y to confirm" << endl;
     cin >> confirm;
     if (confirm == "Y" || confirm == "y") {
-        stockdel = "saves/" + inputname;
+        stockdel = SAVE_FOLDER_PREFIX + inputname;
         std::filesystem::remove_all(stockdel);
         cout << "Player save " << inputname << " has been deleted." << endl;
     }

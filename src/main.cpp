@@ -73,7 +73,7 @@ std::string vectorToString(const std::vector<unsigned int> & vec) {
 
 void get_hsi(std::vector<Stock> stocks_list, std::vector<float> & hsi_history) {
     float hsi = 0;
-    std::string filesave = "saves/" + playerName + "/hsi.save";
+    std::string filesave = SAVE_FOLDER_PREFIX + playerName + "/hsi.save";
     std::vector<float> total;
     for (unsigned int i = 0; i < stocks_list.size(); i++) {
         total.emplace_back(

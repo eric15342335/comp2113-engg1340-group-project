@@ -14,6 +14,7 @@ program. If not, see <https://www.gnu.org/licenses/>.
 */
 #include "stock.h"
 
+#include "file_io.h"
 #include "format.h"
 #include "names.h"
 #include "random_price.h"
@@ -45,7 +46,7 @@ Stock::Stock(void) {
 void Stock::save(const std::string & playerName, int i) {
     std::string filesave;
     std::ofstream fout;
-    filesave = "saves/" + playerName + "/" + std::to_string(i) +
+    filesave = SAVE_FOLDER_PREFIX + playerName + "/" + std::to_string(i) +
                ".save"; // creating the file path
     fout.open(filesave.c_str());
     fout << category << std::endl; // literally load everything into class into file
@@ -75,7 +76,8 @@ void Stock::load(const std::string & playerName, int i) {
     std::string fileToBeLoaded;
     float loadedPrice;
     std::ifstream fin;
-    fileToBeLoaded = "saves/" + playerName + "/" + std::to_string(i) + ".save";
+    fileToBeLoaded =
+        SAVE_FOLDER_PREFIX + playerName + "/" + std::to_string(i) + ".save";
     std::cout << "Loading " << fileToBeLoaded << " ... ";
     fin.open(fileToBeLoaded.c_str());
     // get the first line, which is category
