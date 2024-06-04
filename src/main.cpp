@@ -298,21 +298,11 @@ int main(void) {
 
     sortStocksList(stocks_list, by_category, ascending);
 
-    {
-        // Assert that the every key has no value.
-        std::map<unsigned int, std::vector<unsigned int>> checkEventResult =
-            check_mutual_exclusivity(all_stock_events);
-        for (auto & [key, value] : checkEventResult) {
-            // If the assertion is raised, print the checkEventResult and exit the
-            // program.
-            if (!value.empty()) {
-                std::cout << "Error: detected mutual exclusivity violation! Details:"
-                          << std::endl;
-                print_map(checkEventResult);
-                return 1;
-            }
-        }
+    // Check if the events are mutually exclusive
+    if (assertion_check_mutual_exclusivity()) {
+        exit(1);
     }
+
     drawLogo(row, col);
     time::sleep(sleepMedium);
     std::vector<float> hsi_history;
