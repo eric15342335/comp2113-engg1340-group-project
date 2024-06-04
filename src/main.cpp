@@ -328,6 +328,7 @@ int main(void) {
         }
         if (loadsave.compare(USER_SAVE_OPTION::NEW_GAME) == 0) {
             createplayer(playerName);
+            savestatus(rounds_played, stocks_list, balance, playerName);
         }
         if (loadsave.compare(USER_SAVE_OPTION::LOAD_GAME) == 0) {
             loadstatus(rounds_played, stocks_list, balance, playerName, hsi_history);
