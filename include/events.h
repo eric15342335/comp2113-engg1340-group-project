@@ -231,8 +231,8 @@ const unsigned int lastEventID = 98;
 #if !defined(__clang__) && !defined(__apple_build_version__)
 constexpr
 #endif
-inline decltype(Stock_event::probability_permille)
-calculateAllEventsProbability(void) {
+    inline decltype(Stock_event::probability_permille)
+    calculateAllEventsProbability(void) {
     decltype(Stock_event::probability_permille) total_permille = 0;
     for (unsigned int index = 0; index <= lastEventID; index++) {
         total_permille += static_cast<Stock_event const &>(all_stock_events[index])
