@@ -1057,7 +1057,7 @@ const std::vector<Stock_event> all_stock_events = {
         /** category */ 0,
         /** modifiers */
         {{standard_deviation, 0.5}, {mean, -9}, {lower_limit, -30}, {upper_limit, 0}}},
-    {/** event_id */ 98,
+    {/** event_id */ lastEventID,
         /** mutually_exclusive_events */ {95, 97},
         /** text */ "Opens New Branches in Multiple Locations",
         /** duration */ 6,
@@ -1065,7 +1065,12 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ pick_random_stock,
         /** category */ 0,
         /** modifiers */
-        {{standard_deviation, 0.5}, {mean, 7}, {lower_limit, 0}, {upper_limit, 20}}}};
+        {{standard_deviation, 0.5}, {mean, 7}, {lower_limit, 0}, {upper_limit, 20}}}
+    // @note: When adding new events, make sure to update the lastEventID variable in
+    // events.h; the last event ID should be the event ID of the last event in the list.
+    // It is used for evaluating the total number of events in the game.
+    // So that it can `constexpr` sum of all events probability.
+};
 
 // print a map
 void print_map(const std::map<unsigned int, std::vector<unsigned int>> & map) {
@@ -1170,4 +1175,25 @@ std::vector<Stock_event> pick_events(
         }
     }
     return picked_events;
+}
+
+void test_calculateAllEventsProbability(void) {
+    // Assert total probability of all events is the same as calling
+    // the function calculateAllEventsProbability().
+    // Use an old school for loop method to manually calculate
+    // the total probability of all events.
+    unsigned int total_permille = 0;
+    for (const Stock_event & event : all_stock_events) {
+        total_permille += event.probability_permille;
+    }
+    if (total_permille != calculateAllEventsProbability()) {
+        std::cout << "Error: total_permille != calculateAllEventsProbability()"
+                  << std::endl;
+        // Print the total_permille and calculateAllEventsProbability() to
+        // debug the issue.
+        std::cout << "total_permille: " << total_permille << std::endl;
+        std::cout << "calculateAllEventsProbability(): "
+                  << calculateAllEventsProbability() << std::endl;
+        exit(1);
+    }
 }

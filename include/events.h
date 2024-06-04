@@ -224,14 +224,26 @@ std::map<unsigned int, std::vector<unsigned int>> check_mutual_exclusivity(
  */
 void print_map(const std::map<unsigned int, std::vector<unsigned int>> & map);
 
+const unsigned int lastEventID = 98;
+
 constexpr inline decltype(Stock_event::probability_permille)
 calculateAllEventsProbability(void) {
     decltype(Stock_event::probability_permille) total_permille = 0;
-    for (size_t i = 0; i < sizeof(all_stock_events) / sizeof(all_stock_events[0]);
-         i++) {
-        total_permille += all_stock_events[i].probability_permille;
+    for (unsigned int index = 0; index <= lastEventID; index++) {
+        total_permille += all_stock_events[index].probability_permille;
     }
     return total_permille;
 }
+
+/**
+ * @brief This function is used to test the calculateAllEventsProbability function.
+ *
+ * It does not take any parameters and does not return anything.
+ * It is responsible for testing the functionality of the calculateAllEventsProbability
+ * function.
+ * Call this function when running tests.
+ * @see calculateAllEventsProbability
+ */
+void test_calculateAllEventsProbability(void);
 
 #endif
