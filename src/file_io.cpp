@@ -25,6 +25,11 @@ const std::string USER_SAVE_OPTION::NEW_GAME = "0";
 const std::string USER_SAVE_OPTION::LOAD_GAME = "1";
 const std::string USER_SAVE_OPTION::DELETE_GAME = "2";
 const std::string USER_SAVE_OPTION::BACK = "3";
+const std::string USER_SAVE_OPTION_PROMPT =
+    "Please enter.\n" + USER_SAVE_OPTION::NEW_GAME + " for new save,\n" +
+    USER_SAVE_OPTION::LOAD_GAME + " for loading old save(s),\n" +
+    USER_SAVE_OPTION::DELETE_GAME + " for deleting save,\n" + USER_SAVE_OPTION::BACK +
+    " to quit: ";
 
 vector<string> parseLogo(void) {
     vector<string> logo;

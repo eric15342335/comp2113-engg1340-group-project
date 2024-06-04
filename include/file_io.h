@@ -26,11 +26,7 @@ class USER_SAVE_OPTION {
         static const std::string BACK;
 };
 
-const std::string USER_SAVE_OPTION_PROMPT =
-    "Please enter.\n" + USER_SAVE_OPTION::NEW_GAME + " for new save,\n" +
-    USER_SAVE_OPTION::LOAD_GAME + " for loading old save(s),\n" +
-    USER_SAVE_OPTION::DELETE_GAME + " for deleting save,\n" + USER_SAVE_OPTION::BACK +
-    " to quit: ";
+extern const std::string USER_SAVE_OPTION_PROMPT;
 
 /**
  * @brief Check if the input is valid. The input is valid if it is one of the options
