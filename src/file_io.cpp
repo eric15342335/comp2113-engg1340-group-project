@@ -58,7 +58,8 @@ vector<string> parseLogo() {
 
 void createplayer(string & playerName) {
     ofstream fout;
-    string savefolder = SAVE_FOLDER_PREFIX; // create folder when it does not exist (first run)
+    string savefolder =
+        SAVE_FOLDER_PREFIX; // create folder when it does not exist (first run)
     string foldername;
     filesystem::create_directory(SAVE_FOLDER_PREFIX);
     cout << "Enter player name:" << endl;
@@ -110,8 +111,9 @@ void loadstatus(unsigned int & rounds_played, vector<Stock> & stocks_list,
     string stockname;
     ifstream fin;
     vector<string> players;
-    filesystem::create_directory(SAVE_FOLDER_PREFIX); // prevent error when no folder exists
-    players = get_saves();                 // generate a vector of name of folders
+    filesystem::create_directory(
+        SAVE_FOLDER_PREFIX); // prevent error when no folder exists
+    players = get_saves();   // generate a vector of name of folders
     if (players.empty()) {
         cout << "No player saves found, please create a new player." << endl;
         createplayer(playerName);
@@ -147,8 +149,9 @@ void delsave(string & mode) {
     string confirm;
     ifstream fin;
     vector<string> players;
-    filesystem::create_directory(SAVE_FOLDER_PREFIX); // prevent error when no folder exists
-    players = get_saves();                 // generate a vector of name of folders
+    filesystem::create_directory(
+        SAVE_FOLDER_PREFIX); // prevent error when no folder exists
+    players = get_saves();   // generate a vector of name of folders
     if (players.empty()) {
         cout << "No player saves found, please enter 0 for new save or enter 3 to "
                 "quit: ";
