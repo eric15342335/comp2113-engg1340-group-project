@@ -226,7 +226,12 @@ void print_map(const std::map<unsigned int, std::vector<unsigned int>> & map);
 
 const unsigned int lastEventID = 98;
 
-constexpr inline decltype(Stock_event::probability_permille)
+// Mark this function as constexpr unless the compiler is Apple clang, then
+// ignore constexpr.
+#if !defined(__clang__) && !defined(__apple_build_version__)
+constexpr
+#endif
+inline decltype(Stock_event::probability_permille)
 calculateAllEventsProbability(void) {
     decltype(Stock_event::probability_permille) total_permille = 0;
     for (unsigned int index = 0; index <= lastEventID; index++) {

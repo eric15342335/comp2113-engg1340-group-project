@@ -23,6 +23,7 @@ jobs:
       shell: bash
       run: |
         # Enabling optimization checks -Wmaybe-uninitialized from -Wall
+        g++ --version
         echo -e "3" | FLAGS=-O2 make all
     - name: CMake
       shell: bash
