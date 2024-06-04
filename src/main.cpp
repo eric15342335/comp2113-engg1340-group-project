@@ -336,10 +336,10 @@ int main(void) {
         if (loadsave.compare(USER_SAVE_OPTION::DELETE_GAME) == 0) {
             delsave(loadsave); // delete existing file
         }
-        if (loadsave.compare(USER_SAVE_OPTION::DELETE_GAME) == 0) {
+        if (loadsave.compare(USER_SAVE_OPTION::BACK) == 0) {
             std::cout << "Goodbye! Hope you had a good luck in the stock market!"
                       << std::endl;
-            return 0;
+            return EXIT_SUCCESS;
         }
     }
     // Done loading/creating a new file.
