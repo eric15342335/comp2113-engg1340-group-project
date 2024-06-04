@@ -19,11 +19,11 @@ program. If not, see <https://www.gnu.org/licenses/>.
 #include "format.h"
 
 #include <algorithm>
+#include <cassert>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
 #include <sstream>
-#include <cassert>
 using namespace std;
 
 string graphpriceformat(float price) {
@@ -64,10 +64,14 @@ void printstocknameandoverall(
 }
 
 void printgraphblocks(const vector<vector<string>> & screenElements,
-    const vector<string> & specifiedColorCoordinates, const int width, const int height) {
-    // Boundary check of width and height, otherwise may access screenElements out of bounds
-    assert(width <= static_cast<int>(screenElements.size()) && "Width exceeds screenElements width");
-    assert(height <= static_cast<int>(screenElements[0].size()) && "Height exceeds screenElements height");
+    const vector<string> & specifiedColorCoordinates, const int width,
+    const int height) {
+    // Boundary check of width and height, otherwise may access screenElements out of
+    // bounds
+    assert(width <= static_cast<int>(screenElements.size()) &&
+           "Width exceeds screenElements width");
+    assert(height <= static_cast<int>(screenElements[0].size()) &&
+           "Height exceeds screenElements height");
     int colorIndex;
     for (int heightIndex = 0; heightIndex < height; heightIndex++) {
         for (int widthIndex = 0; widthIndex < width; widthIndex++) {

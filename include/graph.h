@@ -39,6 +39,7 @@ void graph_plotting(const std::string & player, int stocknum, int width, int hei
  * @param height The height of the screen.
  */
 void printgraphblocks(const std::vector<std::vector<std::string>> & screenElements,
-    const std::vector<std::string> & specifiedColorCoordinates, const int width, const int height);
+    const std::vector<std::string> & specifiedColorCoordinates, const int width,
+    const int height);
 
 #endif
