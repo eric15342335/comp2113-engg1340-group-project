@@ -26,7 +26,7 @@ const std::string USER_SAVE_OPTION::LOAD_GAME = "1";
 const std::string USER_SAVE_OPTION::DELETE_GAME = "2";
 const std::string USER_SAVE_OPTION::BACK = "3";
 
-vector<string> parseLogo() {
+vector<string> parseLogo(void) {
     vector<string> logo;
     // clang-format off
     logo.reserve(27);
