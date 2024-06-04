@@ -211,7 +211,7 @@ void delsave(string & mode) {
 vector<string> get_saves() {
     vector<string> saves;
     for (const auto & entry : std::filesystem::directory_iterator(SAVE_FOLDER_PREFIX)) {
-        saves.emplace_back(entry.path().string().substr(SAVE_FOLDER_PREFIX.size());
+        saves.emplace_back(entry.path().string().substr(SAVE_FOLDER_PREFIX.size()));
     }
     return saves;
 }
