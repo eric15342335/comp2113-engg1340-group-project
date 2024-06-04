@@ -80,7 +80,8 @@ void createplayer(string & playerName) {
 }
 
 void load_hsi(std::vector<float> hsi_history, const string & playerName) {
-    std::string filesave = SAVE_FOLDER_PREFIX + playerName + "/hsi.save";
+    std::string filesave =
+        SAVE_FOLDER_PREFIX + playerName + "/hsi" + SAVE_FILE_EXTENSION_TXT;
     std::ifstream fin;
     fin.open(filesave.c_str());
     float hsi;
@@ -94,7 +95,8 @@ void savestatus(unsigned int rounds_played, vector<Stock> stocks_list, float bal
     const string & playerName) {
     string stocksave;
     ofstream fout;
-    stocksave = SAVE_FOLDER_PREFIX + playerName + "/playerstatus.save";
+    stocksave =
+        SAVE_FOLDER_PREFIX + playerName + "/playerstatus" + SAVE_FILE_EXTENSION_TXT;
     fout.open(stocksave.c_str());
     fout << playerName << " " << rounds_played << " " << balance
          << endl; // saving basic info out of class inside playerstatus.save
@@ -131,7 +133,8 @@ void loadstatus(unsigned int & rounds_played, vector<Stock> & stocks_list,
         }
         getline(cin, playerName);
     }
-    stockload = SAVE_FOLDER_PREFIX + playerName + "/playerstatus.save";
+    stockload =
+        SAVE_FOLDER_PREFIX + playerName + "/playerstatus" + SAVE_FILE_EXTENSION_TXT;
     fin.open(stockload.c_str());
     fin >> playerName >> rounds_played >> balance;
     fin.close(); // output basic info from playerstatus.save and return by reference

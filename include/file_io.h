@@ -20,6 +20,9 @@ program. If not, see <https://www.gnu.org/licenses/>.
 // The prefix of the save folder
 const std::string SAVE_FOLDER_PREFIX = "saves/";
 
+// The extension of the save file, in plain text format
+const std::string SAVE_FILE_EXTENSION_TXT = ".save";
+
 /**
  * @brief returns the game logo, which is hardcoded inside the function.
  */

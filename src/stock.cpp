@@ -46,8 +46,8 @@ Stock::Stock(void) {
 void Stock::save(const std::string & playerName, int i) {
     std::string filesave;
     std::ofstream fout;
-    filesave = SAVE_FOLDER_PREFIX + playerName + "/" + std::to_string(i) +
-               ".save"; // creating the file path
+    filesave = SAVE_FOLDER_PREFIX + playerName + "/" + std::to_string(i) + "" +
+               SAVE_FILE_EXTENSION_TXT; // creating the file path
     fout.open(filesave.c_str());
     fout << category << std::endl; // literally load everything into class into file
     fout << name << std::endl;
@@ -76,8 +76,8 @@ void Stock::load(const std::string & playerName, int i) {
     std::string fileToBeLoaded;
     float loadedPrice;
     std::ifstream fin;
-    fileToBeLoaded =
-        SAVE_FOLDER_PREFIX + playerName + "/" + std::to_string(i) + ".save";
+    fileToBeLoaded = SAVE_FOLDER_PREFIX + playerName + "/" + std::to_string(i) + "" +
+                     SAVE_FILE_EXTENSION_TXT;
     std::cout << "Loading " << fileToBeLoaded << " ... ";
     fin.open(fileToBeLoaded.c_str());
     // get the first line, which is category
