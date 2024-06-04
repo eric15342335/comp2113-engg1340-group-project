@@ -233,7 +233,8 @@ class Stock {
 
         /**
          * @brief Calculate the total value of the stocks the player is holding.
-         * @param trading_fees_percent The trading fees percentage we charge the player. Set to 0 if you want to exclude trading fees from calculation.
+         * @param trading_fees_percent The trading fees percentage we charge the player.
+         * Set to 0 if you want to exclude trading fees from calculation.
          * @return The total value of the stocks.
          */
         float calculateStockValue(const float & trading_fees_percent) const;
