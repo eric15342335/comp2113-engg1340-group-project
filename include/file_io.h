@@ -17,10 +17,39 @@ program. If not, see <https://www.gnu.org/licenses/>.
 #define FILE_IO_H
 #include "stock.h"
 
+/// @brief The user save options
+class USER_SAVE_OPTION {
+    public:
+        static const std::string NEW_GAME;
+        static const std::string LOAD_GAME;
+        static const std::string DELETE_GAME;
+        static const std::string BACK;
+};
+
+const std::string USER_SAVE_OPTION_PROMPT =
+    "Please enter.\n" + USER_SAVE_OPTION::NEW_GAME + " for new save,\n" +
+    USER_SAVE_OPTION::LOAD_GAME + " for loading old save(s),\n" +
+    USER_SAVE_OPTION::DELETE_GAME + " for deleting save,\n" + USER_SAVE_OPTION::BACK +
+    " to quit: ";
+
+/**
+ * @brief Check if the input is valid. The input is valid if it is one of the options
+ * in the USER_SAVE_OPTION class.
+ * @param input The input string
+ * @return true if the input is valid, false otherwise
+ */
+inline bool checkValidInput(const std::string & input) {
+    return input.compare(USER_SAVE_OPTION::NEW_GAME) == 0 ||
+           input.compare(USER_SAVE_OPTION::LOAD_GAME) == 0 ||
+           input.compare(USER_SAVE_OPTION::DELETE_GAME) == 0 ||
+           input.compare(USER_SAVE_OPTION::BACK) == 0;
+}
+
 /**
  * @brief returns the game logo, which is hardcoded inside the function.
+ * @return a vector of strings, each string is a line of the logo
  */
-std::vector<std::string> parseLogo();
+std::vector<std::string> parseLogo(void);
 
 /**
  * @brief Create a player folder.
@@ -61,7 +90,7 @@ void delsave(std::string & mode);
  * @brief Get the list of saves aka player folders.
  * @return a vector containing the name all the player folders
  */
-std::vector<std::string> get_saves();
+std::vector<std::string> get_saves(void);
 
 /**
  * @brief Print the vector of saves aka player folders.

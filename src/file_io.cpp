@@ -21,6 +21,11 @@ program. If not, see <https://www.gnu.org/licenses/>.
 #include <iostream>
 using namespace std;
 
+const std::string USER_SAVE_OPTION::NEW_GAME = "0";
+const std::string USER_SAVE_OPTION::LOAD_GAME = "1";
+const std::string USER_SAVE_OPTION::DELETE_GAME = "2";
+const std::string USER_SAVE_OPTION::BACK = "3";
+
 vector<string> parseLogo() {
     vector<string> logo;
     // clang-format off
@@ -150,12 +155,13 @@ void delsave(string & mode) {
     filesystem::create_directory("saves"); // prevent error when no folder exists
     players = get_saves();                 // generate a vector of name of folders
     if (players.empty()) {
-        cout << "No player saves found, please enter 0 for new save or enter 3 to "
-                "quit: ";
+        cout << "No player saves found, please enter " << USER_SAVE_OPTION::NEW_GAME
+             << " for new save or enter " << USER_SAVE_OPTION::BACK << " to quit: ";
         std::cin >> mode;
-        while (mode != "0" && mode != "3") {
-            std::cout
-                << "Invalid input. Please enter 0 for new save or enter 3 to quit: ";
+        while (mode != USER_SAVE_OPTION::NEW_GAME && mode != USER_SAVE_OPTION::BACK) {
+            std::cout << "Invalid input. Please enter " + USER_SAVE_OPTION::NEW_GAME
+                      << " for new save or enter " + USER_SAVE_OPTION::BACK +
+                             " to quit: ";
             std::cin >> mode; // choose new file or load previous file
         }
         return;
@@ -189,20 +195,18 @@ void delsave(string & mode) {
     }
 
     // choosing mode again
-    std::cout << "Please enter 0 for new save, enter 1 for loading old save,\n enter 2 "
-                 "for deleting more save or enter 3 to quit: ";
+    std::cout << USER_SAVE_OPTION_PROMPT;
     std::cin >> mode;
-    while (mode != "0" && mode != "1" && mode != "2" && mode != "3") {
-        std::cout << "Invalid input. Please enter 0 for new save, enter 1 for loading "
-                     "old save, enter 2 for deleting more save or enter 3 to quit: ";
+    while (!checkValidInput(mode)) {
+        std::cout << "Invalid input. " + USER_SAVE_OPTION_PROMPT;
         std::cin >> mode; // choose new file or load previous file
     }
-    if (mode == "2") {
+    if (mode.compare(USER_SAVE_OPTION::DELETE_GAME) == 0) {
         delsave(mode);
     }
 }
 
-vector<string> get_saves() {
+vector<string> get_saves(void) {
     vector<string> saves;
     for (const auto & entry : std::filesystem::directory_iterator("saves")) {
         saves.emplace_back(entry.path().string().substr(6));
@@ -212,8 +216,8 @@ vector<string> get_saves() {
 
 void printvector(vector<string> avector) {
     cout << avector[0];
-    for (unsigned long i = 1; i < avector.size(); i++) {
-        cout << ", " << avector[i];
+    for (const auto & item : avector) {
+        cout << ", " << item;
     }
     cout << endl;
 }
