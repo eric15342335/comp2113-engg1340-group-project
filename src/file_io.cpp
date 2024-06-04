@@ -24,11 +24,11 @@ using namespace std;
 const std::string USER_SAVE_OPTION::NEW_GAME = "0";
 const std::string USER_SAVE_OPTION::LOAD_GAME = "1";
 const std::string USER_SAVE_OPTION::DELETE_GAME = "2";
-const std::string USER_SAVE_OPTION::BACK = "3";
+const std::string USER_SAVE_OPTION::EXIT_GAME = "3";
 const std::string USER_SAVE_OPTION_PROMPT =
     "Please enter.\n" + USER_SAVE_OPTION::NEW_GAME + " for new save,\n" +
     USER_SAVE_OPTION::LOAD_GAME + " for loading old save(s),\n" +
-    USER_SAVE_OPTION::DELETE_GAME + " for deleting save,\n" + USER_SAVE_OPTION::BACK +
+    USER_SAVE_OPTION::DELETE_GAME + " for deleting save,\n" + USER_SAVE_OPTION::EXIT_GAME +
     " to quit: ";
 
 vector<string> parseLogo(void) {
@@ -161,11 +161,11 @@ void delsave(string & mode) {
     players = get_saves();                 // generate a vector of name of folders
     if (players.empty()) {
         cout << "No player saves found, please enter " << USER_SAVE_OPTION::NEW_GAME
-             << " for new save or enter " << USER_SAVE_OPTION::BACK << " to quit: ";
+             << " for new save or enter " << USER_SAVE_OPTION::EXIT_GAME << " to quit: ";
         std::cin >> mode;
-        while (mode != USER_SAVE_OPTION::NEW_GAME && mode != USER_SAVE_OPTION::BACK) {
+        while (mode != USER_SAVE_OPTION::NEW_GAME && mode != USER_SAVE_OPTION::EXIT_GAME) {
             std::cout << "Invalid input. Please enter " + USER_SAVE_OPTION::NEW_GAME
-                      << " for new save or enter " + USER_SAVE_OPTION::BACK +
+                      << " for new save or enter " + USER_SAVE_OPTION::EXIT_GAME +
                              " to quit: ";
             std::cin >> mode; // choose new file or load previous file
         }

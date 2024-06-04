@@ -23,7 +23,7 @@ class USER_SAVE_OPTION {
         static const std::string NEW_GAME;
         static const std::string LOAD_GAME;
         static const std::string DELETE_GAME;
-        static const std::string BACK;
+        static const std::string EXIT_GAME;
 };
 
 extern const std::string USER_SAVE_OPTION_PROMPT;
@@ -38,7 +38,7 @@ inline bool checkValidInput(const std::string & input) {
     return input.compare(USER_SAVE_OPTION::NEW_GAME) == 0 ||
            input.compare(USER_SAVE_OPTION::LOAD_GAME) == 0 ||
            input.compare(USER_SAVE_OPTION::DELETE_GAME) == 0 ||
-           input.compare(USER_SAVE_OPTION::BACK) == 0;
+           input.compare(USER_SAVE_OPTION::EXIT_GAME) == 0;
 }
 
 /**
