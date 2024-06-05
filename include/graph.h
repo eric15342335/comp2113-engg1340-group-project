@@ -16,6 +16,7 @@ program. If not, see <https://www.gnu.org/licenses/>.
 #ifndef GRAPH_H
 #define GRAPH_H
 #include <string>
+#include <vector>
 
 /** @brief Plot the graph of the stock price history to std::cout.
  * @param player the name of the player
@@ -24,5 +25,21 @@ program. If not, see <https://www.gnu.org/licenses/>.
  * @param height the height of the graph
  */
 void graph_plotting(const std::string & player, int stocknum, int width, int height);
+
+/**
+ * @brief Prints the graph blocks on the screen.
+ *
+ * This function takes in a 2D vector of screen elements, a vector of specified color
+ * coordinates, the width and height of the screen, and prints the graph blocks on the
+ * screen based on the given elements and coordinates.
+ *
+ * @param screenElements A 2D vector of screen elements.
+ * @param specifiedColorCoordinates A vector of specified color coordinates.
+ * @param width The width of the screen.
+ * @param height The height of the screen.
+ */
+void printgraphblocks(const std::vector<std::vector<std::string>> & screenElements,
+    const std::vector<std::string> & specifiedColorCoordinates, const int width,
+    const int height);
 
 #endif
