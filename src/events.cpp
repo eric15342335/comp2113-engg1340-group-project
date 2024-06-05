@@ -1065,8 +1065,7 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ pick_random_stock,
         /** category */ 0,
         /** modifiers */
-        {{standard_deviation, 0.5}, {mean, 7}, {lower_limit, 0}, {upper_limit, 20}}}
-};
+        {{standard_deviation, 0.5}, {mean, 7}, {lower_limit, 0}, {upper_limit, 20}}}};
 
 // print a map
 void print_map(const std::map<unsigned int, std::vector<unsigned int>> & map) {
