@@ -1057,7 +1057,7 @@ const std::vector<Stock_event> all_stock_events = {
         /** category */ 0,
         /** modifiers */
         {{standard_deviation, 0.5}, {mean, -9}, {lower_limit, -30}, {upper_limit, 0}}},
-    {/** event_id */ lastEventID,
+    {/** event_id */ 98,
         /** mutually_exclusive_events */ {95, 97},
         /** text */ "Opens New Branches in Multiple Locations",
         /** duration */ 6,

@@ -230,10 +230,6 @@ bool assertion_check_mutual_exclusivity(void);
  */
 void print_map(const std::map<unsigned int, std::vector<unsigned int>> & map);
 
-const unsigned int lastEventID = 98;
-
-#include <iostream>
-
 /// @todo Understand this constexpr lambda
 inline const unsigned int sumOfAllEventsProbability = []() constexpr {
     unsigned int sum = 0;
