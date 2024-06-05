@@ -31,9 +31,9 @@ FLAGS += -Wall -Wextra -pedantic -std=c++17 -Werror -g -pipe -fPIE -pie \
 # macOS uses clang++, which does not support these flag:
 # -Wduplicated-cond -Wduplicated-branches
 ifeq ($(shell uname),Darwin)
-	FLAGS += -Wno-error=no-unknown-warning-option -Wno-error=no-unused-command-line-argument
+	FLAGS += -Qunknown-warning-option -Qunused-command-line-argument
 else ifeq ($(CC),clang++)
-	FLAGS += -Wno-error=no-unknown-warning-option -Wno-error=no-unused-command-line-argument
+	FLAGS += -Qunknown-warning-option -Qunused-command-line-argument
 endif
 # eric15342335 will use the static flag on Windows.
 ifeq ("$(OS)","Windows_NT")
