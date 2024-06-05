@@ -1145,10 +1145,7 @@ std::vector<Stock_event> pick_events(
     // Pick num_events random events
     for (unsigned int i = 0; i < num_events; i++) {
         // When picking the event, consider event.probability_permille.
-        unsigned int total_permille = 0;
-        for (const Stock_event & event : all_events) {
-            total_permille += event.probability_permille;
-        }
+        unsigned int total_permille = sumOfAllEventsProbability;
         /** E.g. if there are 3 events with probability_permille 10, 20, 30.
          * total_permille = 60;
          * random_permille = 0 to 59;

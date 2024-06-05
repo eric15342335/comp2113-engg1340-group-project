@@ -152,7 +152,7 @@ struct Stock_event {
          * @endcode
          */
         friend std::ostream & operator<<(
-            std::ostream & outputstream, Stock_event & event) {
+            std::ostream & outputstream, const Stock_event & event) {
             outputstream << event.event_id << " ";
             for (unsigned int i = 0; i < event.mutually_exclusive_events.size(); i++) {
                 outputstream << event.mutually_exclusive_events[i] << " ";
@@ -160,7 +160,7 @@ struct Stock_event {
             outputstream << ";" << event.text << ";" << event.duration << " "
                          << event.probability_permille << " " << event.type_of_event
                          << " " << event.category << " ";
-            for (auto & modifier : event.modifiers) {
+            for (const auto & modifier : event.modifiers) {
                 outputstream << modifier.second << " ";
             }
             return outputstream;
@@ -231,5 +231,14 @@ bool assertion_check_mutual_exclusivity(void);
 void print_map(const std::map<unsigned int, std::vector<unsigned int>> & map);
 
 extern Stock_event STOCK_SPLIT_EVENT;
+
+/// @todo Understand this constexpr lambda
+inline const unsigned int sumOfAllEventsProbability = []() {
+    unsigned int sum = 0;
+    for (const auto & event : all_stock_events) {
+        sum += event.probability_permille;
+    }
+    return sum;
+}();
 
 #endif
