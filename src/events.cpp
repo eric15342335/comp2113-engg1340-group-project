@@ -1066,10 +1066,6 @@ const std::vector<Stock_event> all_stock_events = {
         /** category */ 0,
         /** modifiers */
         {{standard_deviation, 0.5}, {mean, 7}, {lower_limit, 0}, {upper_limit, 20}}}
-    // @note: When adding new events, make sure to update the lastEventID variable in
-    // events.h; the last event ID should be the event ID of the last event in the list.
-    // It is used for evaluating the total number of events in the game.
-    // So that it can `constexpr` sum of all events probability.
 };
 
 // print a map
