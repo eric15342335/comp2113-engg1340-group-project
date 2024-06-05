@@ -68,12 +68,13 @@ vector<string> parseLogo(void) {
 
 void createplayer(string & playerName) {
     ofstream fout;
-    string savefolder = "saves"; // create folder when it does not exist (first run)
+    string savefolder =
+        SAVE_FOLDER_PREFIX; // create folder when it does not exist (first run)
     string foldername;
-    filesystem::create_directory("saves");
+    filesystem::create_directory(SAVE_FOLDER_PREFIX);
     cout << "Enter player name:" << endl;
     getline(cin, playerName);
-    foldername = "saves/" + playerName;
+    foldername = SAVE_FOLDER_PREFIX + playerName;
     while ((filesystem::exists(foldername) || playerName.find(' ') != string::npos) ||
            playerName.empty()) { // check whether file already exists
         if (!playerName.empty()) {
@@ -83,13 +84,14 @@ void createplayer(string & playerName) {
             cout << "playername" << endl << "Please enter a new player name: " << endl;
         }
         getline(cin, playerName);
-        foldername = "saves/" + playerName;
+        foldername = SAVE_FOLDER_PREFIX + playerName;
     }
     filesystem::create_directory(foldername); // create a empty folder for new save
 }
 
 void load_hsi(std::vector<float> hsi_history, const string & playerName) {
-    std::string filesave = "saves/" + playerName + "/hsi.save";
+    std::string filesave =
+        SAVE_FOLDER_PREFIX + playerName + "/hsi" + SAVE_FILE_EXTENSION_TXT;
     std::ifstream fin;
     fin.open(filesave.c_str());
     float hsi;
@@ -103,7 +105,8 @@ void savestatus(unsigned int rounds_played, vector<Stock> stocks_list, float bal
     const string & playerName) {
     string stocksave;
     ofstream fout;
-    stocksave = "saves/" + playerName + "/playerstatus.save";
+    stocksave =
+        SAVE_FOLDER_PREFIX + playerName + "/playerstatus" + SAVE_FILE_EXTENSION_TXT;
     fout.open(stocksave.c_str());
     fout << playerName << " " << rounds_played << " " << balance
          << endl; // saving basic info out of class inside playerstatus.save
@@ -120,8 +123,9 @@ void loadstatus(unsigned int & rounds_played, vector<Stock> & stocks_list,
     string stockname;
     ifstream fin;
     vector<string> players;
-    filesystem::create_directory("saves"); // prevent error when no folder exists
-    players = get_saves();                 // generate a vector of name of folders
+    filesystem::create_directory(
+        SAVE_FOLDER_PREFIX); // prevent error when no folder exists
+    players = get_saves();   // generate a vector of name of folders
     if (players.empty()) {
         cout << "No player saves found, please create a new player." << endl;
         createplayer(playerName);
@@ -139,7 +143,8 @@ void loadstatus(unsigned int & rounds_played, vector<Stock> & stocks_list,
         }
         getline(cin, playerName);
     }
-    stockload = "saves/" + playerName + "/playerstatus.save";
+    stockload =
+        SAVE_FOLDER_PREFIX + playerName + "/playerstatus" + SAVE_FILE_EXTENSION_TXT;
     fin.open(stockload.c_str());
     fin >> playerName >> rounds_played >> balance;
     fin.close(); // output basic info from playerstatus.save and return by reference
@@ -157,8 +162,9 @@ void delsave(string & mode) {
     string confirm;
     ifstream fin;
     vector<string> players;
-    filesystem::create_directory("saves"); // prevent error when no folder exists
-    players = get_saves();                 // generate a vector of name of folders
+    filesystem::create_directory(
+        SAVE_FOLDER_PREFIX); // prevent error when no folder exists
+    players = get_saves();   // generate a vector of name of folders
     if (players.empty()) {
         cout << "No player saves found, please enter " << USER_SAVE_OPTION::NEW_GAME
              << " for new save or enter " << USER_SAVE_OPTION::EXIT_GAME
@@ -193,7 +199,7 @@ void delsave(string & mode) {
          << " is going to be deleted, please enter Y to confirm" << endl;
     cin >> confirm;
     if (confirm == "Y" || confirm == "y") {
-        stockdel = "saves/" + inputname;
+        stockdel = SAVE_FOLDER_PREFIX + inputname;
         std::filesystem::remove_all(stockdel);
         cout << "Player save " << inputname << " has been deleted." << endl;
     }
@@ -215,8 +221,8 @@ void delsave(string & mode) {
 
 vector<string> get_saves(void) {
     vector<string> saves;
-    for (const auto & entry : std::filesystem::directory_iterator("saves")) {
-        saves.emplace_back(entry.path().string().substr(6));
+    for (const auto & entry : std::filesystem::directory_iterator(SAVE_FOLDER_PREFIX)) {
+        saves.emplace_back(entry.path().string().substr(SAVE_FOLDER_PREFIX.size()));
     }
     return saves;
 }
