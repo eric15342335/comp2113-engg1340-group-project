@@ -18,23 +18,22 @@ compile the program using the Microsoft Visual C++ compiler
 # make check \
 check the code for formatting and static analysis issues
 
-CC = clang++
+CC = g++
 INCLUDES = -Iinclude
-FLAGS += -Wall -Wextra -pedantic -std=c++17 -Werror -g -pipe \
+FLAGS += -Wall -Wextra -pedantic -std=c++17 -Werror -g -pipe -fPIE -pie \
 	-Wcast-qual -Wundef -Wduplicated-cond -Wduplicated-branches \
 	-mtune=native -Wswitch -Wshadow
 	# -Wconversion -Wfloat-equal
+	# -O3 -flto -march=nocona
 	# -D_FORTIFY_SOURCE=2 -fstack-protector-all -Og
 	# -fsanitize=address -fsanitize=undefined
 
 # macOS uses clang++, which does not support these flag:
 # -Wduplicated-cond -Wduplicated-branches
 ifeq ($(shell uname),Darwin)
-	FLAGS += -Wno-unknown-warning-option
-else
-	ifeq ($(CC),clang++)
-		FLAGS += -Wno-unknown-warning-option
-	endif
+	FLAGS += -Wno-error=no-unknown-warning-option -Wno-error=no-unused-command-line-argument
+else ifeq ($(CC),clang++)
+	FLAGS += -Wno-error=no-unknown-warning-option -Wno-error=no-unused-command-line-argument
 endif
 # eric15342335 will use the static flag on Windows.
 ifeq ("$(OS)","Windows_NT")
