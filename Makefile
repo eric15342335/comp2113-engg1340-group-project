@@ -95,7 +95,7 @@ goto: stocksim
 	echo -e "1\nsave\nT\n0\nX\nY\n" | ./stocksim
 
 clean:
-	rm *.o stocksim -r saves/ html/ latex/ *.obj *.pdb *.ilk *.dSYM/ 2>/dev/null || true
+	rm *.o stocksim?* -r saves/ html/ latex/ *.obj *.pdb *.ilk *.dSYM/ 2>/dev/null || true
 
 # Generate documentation using `Doxygen`.
 docs: Doxyfile src/*.cpp include/*.h
