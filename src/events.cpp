@@ -1206,4 +1206,5 @@ Stock_event STOCK_SPLIT_EVENT = {
         {mean, 0},
         {lower_limit, 0},
         {upper_limit, 0},
-    }};
+    },
+};
