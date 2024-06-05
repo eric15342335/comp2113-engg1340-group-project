@@ -279,8 +279,8 @@ void Stock::next_round(void) {
         quantity *= 2;
         split_count++;
         add_event(Stock_event{// Stock split event
-            /// @todo Do not hardcode this "stock split" event here.
-            /// Put it in a constant somewhere in events.cpp
+                              /// @todo Do not hardcode this "stock split" event here.
+                              /// Put it in a constant somewhere in events.cpp
             /** event_id */ 65535,
             /** mutually_exclusive_events */ {},
             /** text */
