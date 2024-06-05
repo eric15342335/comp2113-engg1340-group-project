@@ -20,23 +20,31 @@ check the code for formatting and static analysis issues
 
 CC = g++
 INCLUDES = -Iinclude
-FLAGS += -Wall -Wextra -pedantic -std=c++17 -Werror -g \
+FLAGS += -Wall -Wextra -pedantic -std=c++17 -Werror -g -pipe -fPIE -pie \
 	-Wcast-qual -Wundef -Wduplicated-cond -Wduplicated-branches \
-	-mtune=native -Wswitch -Wshadow
+	-mtune=generic -Wswitch -Wshadow
 	# -Wconversion -Wfloat-equal
+	# -O3 -flto -march=nocona
 	# -D_FORTIFY_SOURCE=2 -fstack-protector-all -Og
 	# -fsanitize=address -fsanitize=undefined
 
 # macOS uses clang++, which does not support these flag:
 # -Wduplicated-cond -Wduplicated-branches
 ifeq ($(shell uname),Darwin)
-FLAGS += -Wno-unknown-warning-option
+	FLAGS += -Wno-unknown-warning-option -Wno-unused-command-line-argument
+else ifeq ($(CC),clang++)
+	FLAGS += -Wno-unknown-warning-option -Wno-unused-command-line-argument
 endif
-
 # eric15342335 will use the static flag on Windows.
 ifeq ("$(OS)","Windows_NT")
-FLAGS += -static
+	FLAGS += -static
+	ifeq ($(CC),clang++)
+		FLAGS += -pthread
+	endif
 endif
+
+release: clean
+	FLAGS="-O3 -flto -D_FORTIFY_SOURCE=2 -fstack-protector-strong -march=nocona" "$(MAKE)" stocksim
 
 # The default target is to compile the program.
 default: stocksim
@@ -98,8 +106,8 @@ clean:
 	rm *.o stocksim?* -r saves/ html/ latex/ *.obj *.pdb *.ilk *.dSYM/ 2>/dev/null || true
 
 # Generate documentation using `Doxygen`.
-docs: Doxyfile src/*.cpp include/*.h
-	cp Doxyfile Doxyfile.temp
+docs: .github/Doxyfile src/*.cpp include/*.h
+	cp .github/Doxyfile Doxyfile.temp
 	echo PROJECT_NUMBER = $$(git branch --show-current) $$(git log -n1 --format="%h") >> Doxyfile.temp
 	doxygen Doxyfile.temp
 	rm Doxyfile.temp
@@ -122,4 +130,4 @@ check:
 	clang-tidy src/*.cpp --checks=performance-*,-performance-avoid-endl,readability-*,bugprone-*,portability-*,cert-* \
 		--fix-errors --fix-notes --format-style=file -- -Iinclude
 
-.PHONY: all clean docs fix goto msvc check
+.PHONY: all clean docs fix goto msvc check release
