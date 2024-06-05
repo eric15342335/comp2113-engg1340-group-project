@@ -15,8 +15,9 @@ program. If not, see <https://www.gnu.org/licenses/>.
 // This file should be saved in UTF-8 with BOM encoding
 // to display the unicode characters correctly.
 #include "graph.h"
-#include "format.h"
+
 #include "file_io.h"
+#include "format.h"
 
 #include <algorithm>
 #include <cassert>
