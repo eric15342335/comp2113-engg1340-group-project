@@ -47,7 +47,8 @@ program. If not, see <https://www.gnu.org/licenses/>.
  */
 const std::vector<Stock_event> all_stock_events = {
     // event_id 0 to 7 affect all stocks
-    {/** event_id */ 0,
+    {
+        /** event_id */ 0,
         /** mutually_exclusive_events */ {1},
         /** text */ "The FED has decreased the interest rate!",
         /** duration */ 5,
@@ -55,8 +56,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ all_stocks,
         /** category */ 0,
         /** modifiers*/
-        {{standard_deviation, 0.1}, {mean, 20}, {lower_limit, 0}, {upper_limit, 20}}},
-    {/** event_id */ 1,
+        {{standard_deviation, 0.1}, {mean, 20}, {lower_limit, 0}, {upper_limit, 20}},
+    },
+    {
+        /** event_id */ 1,
         /** mutually_exclusive_events */ {0, 3},
         /** text */ "The FED has increased the interest rate!",
         /** duration */ 5,
@@ -64,8 +67,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ all_stocks,
         /** category */ 0,
         /** modifiers*/
-        {{standard_deviation, 0.1}, {mean, -20}, {lower_limit, -20}, {upper_limit, 0}}},
-    {/** event_id */ 2,
+        {{standard_deviation, 0.1}, {mean, -20}, {lower_limit, -20}, {upper_limit, 0}},
+    },
+    {
+        /** event_id */ 2,
         /** mutually_exclusive_events */ {},
         /** text */ "Economic Recession: Market Downturn Signals Investor Concerns",
         /** duration */ 7,
@@ -73,8 +78,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ all_stocks,
         /** category */ 0,
         /** modifiers*/
-        {{standard_deviation, 0.2}, {mean, -50}, {lower_limit, -50}, {upper_limit, 0}}},
-    {/** event_id */ 3,
+        {{standard_deviation, 0.2}, {mean, -50}, {lower_limit, -50}, {upper_limit, 0}},
+    },
+    {
+        /** event_id */ 3,
         /** mutually_exclusive_events */ {1},
         /** text */
         "Central Bank Cuts Interest Rates: Market Stimulus Boosts Investor Sentiment",
@@ -83,8 +90,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ all_stocks,
         /** category */ 0,
         /** modifiers*/
-        {{standard_deviation, 0.05}, {mean, 10}, {lower_limit, 0}, {upper_limit, 10}}},
-    {/** event_id */ 4,
+        {{standard_deviation, 0.05}, {mean, 10}, {lower_limit, 0}, {upper_limit, 10}},
+    },
+    {
+        /** event_id */ 4,
         /** mutually_exclusive_events */ {},
         /** text */
         "Trade War Escalates: Global Market Volatility Amidst Rising Tensions",
@@ -93,9 +102,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ all_stocks,
         /** category */ 0,
         /** modifiers*/
-        {{standard_deviation, 0.15}, {mean, -30}, {lower_limit, -30},
-            {upper_limit, 0}}},
-    {/** event_id */ 5,
+        {{standard_deviation, 0.15}, {mean, -30}, {lower_limit, -30}, {upper_limit, 0}},
+    },
+    {
+        /** event_id */ 5,
         /** mutually_exclusive_events */ {},
         /** text */
         "Natural Disaster Strikes: Stock Market Reacts to Catastrophic Event",
@@ -104,8 +114,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ all_stocks,
         /** category */ 0,
         /** modifiers*/
-        {{standard_deviation, 0.1}, {mean, -20}, {lower_limit, -20}, {upper_limit, 0}}},
-    {/** event_id */ 6,
+        {{standard_deviation, 0.1}, {mean, -20}, {lower_limit, -20}, {upper_limit, 0}},
+    },
+    {
+        /** event_id */ 6,
         /** mutually_exclusive_events */ {},
         /** text */ "Government Policy Change: Market Impacted by New Regulations",
         /** duration */ 4,
@@ -113,9 +125,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ all_stocks,
         /** category */ 0,
         /** modifiers*/
-        {{standard_deviation, 0.08}, {mean, -10}, {lower_limit, -15},
-            {upper_limit, 5}}},
-    {/** event_id */ 7,
+        {{standard_deviation, 0.08}, {mean, -10}, {lower_limit, -15}, {upper_limit, 5}},
+    },
+    {
+        /** event_id */ 7,
         /** mutually_exclusive_events */ {},
         /** text */ "Inflation Surges: Market Concerns Rise as Prices Soar",
         /** duration */ 6,
@@ -123,9 +136,11 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ all_stocks,
         /** category */ 0,
         /** modifiers*/
-        {{standard_deviation, 0.12}, {mean, 0}, {lower_limit, -25}, {upper_limit, 0}}},
+        {{standard_deviation, 0.12}, {mean, 0}, {lower_limit, -25}, {upper_limit, 0}},
+    },
     // event_id 8 to 11 affect category "Adv&Market"
-    {/** event_id */ 8,
+    {
+        /** event_id */ 8,
         /** mutually_exclusive_events */ {},
         /** text */ "New Social Media Platform Disrupts Advertising Landscape",
         /** duration */ 4,
@@ -133,8 +148,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 0,
         /** modifiers */
-        {{standard_deviation, 0.08}, {mean, -3}, {lower_limit, -10}, {upper_limit, 0}}},
-    {/** event_id */ 9,
+        {{standard_deviation, 0.08}, {mean, -3}, {lower_limit, -10}, {upper_limit, 0}},
+    },
+    {
+        /** event_id */ 9,
         /** mutually_exclusive_events */ {},
         /** text */ "Digital Advertising Spend Reaches All-Time High",
         /** duration */ 6,
@@ -142,8 +159,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 0,
         /** modifiers */
-        {{standard_deviation, 0.10}, {mean, 5}, {lower_limit, 0}, {upper_limit, 30}}},
-    {/** event_id */ 10,
+        {{standard_deviation, 0.10}, {mean, 5}, {lower_limit, 0}, {upper_limit, 30}},
+    },
+    {
+        /** event_id */ 10,
         /** mutually_exclusive_events */ {},
         /** text */ "Marketing Automation Tools Gain Popularity Among Businesses",
         /** duration */ 5,
@@ -151,8 +170,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 0,
         /** modifiers */
-        {{standard_deviation, 0.12}, {mean, 2}, {lower_limit, 0}, {upper_limit, 15}}},
-    {/** event_id */ 11,
+        {{standard_deviation, 0.12}, {mean, 2}, {lower_limit, 0}, {upper_limit, 15}},
+    },
+    {
+        /** event_id */ 11,
         /** mutually_exclusive_events */ {},
         /** text */ "Artificial Intelligence Revolutionizes Targeted Advertising",
         /** duration */ 5,
@@ -160,9 +181,11 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 0,
         /** modifiers */
-        {{standard_deviation, 0.10}, {mean, 4}, {lower_limit, 0}, {upper_limit, 25}}},
+        {{standard_deviation, 0.10}, {mean, 4}, {lower_limit, 0}, {upper_limit, 25}},
+    },
     // event_id 12 to 16 affect category "Aero&Def"
-    {/** event_id */ 12,
+    {
+        /** event_id */ 12,
         /** mutually_exclusive_events */ {16},
         /** text */
         "Government Increases Defense Spending Amid Rising Geopolitical Tensions",
@@ -171,8 +194,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 1,
         /** modifiers */
-        {{standard_deviation, 0.10}, {mean, 5}, {lower_limit, 0}, {upper_limit, 30}}},
-    {/** event_id */ 13,
+        {{standard_deviation, 0.10}, {mean, 5}, {lower_limit, 0}, {upper_limit, 30}},
+    },
+    {
+        /** event_id */ 13,
         /** mutually_exclusive_events */ {15},
         /** text */ "Emerging Technologies Transform Aerospace Industry",
         /** duration */ 5,
@@ -180,8 +205,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 1,
         /** modifiers */
-        {{standard_deviation, 0.08}, {mean, 3}, {lower_limit, 0}, {upper_limit, 20}}},
-    {/** event_id */ 14,
+        {{standard_deviation, 0.08}, {mean, 3}, {lower_limit, 0}, {upper_limit, 20}},
+    },
+    {
+        /** event_id */ 14,
         /** mutually_exclusive_events */ {},
         /** text */ "Space Exploration Companies Achieve Major Milestones",
         /** duration */ 5,
@@ -189,8 +216,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 1,
         /** modifiers */
-        {{standard_deviation, 0.12}, {mean, 2}, {lower_limit, 0}, {upper_limit, 15}}},
-    {/** event_id */ 15,
+        {{standard_deviation, 0.12}, {mean, 2}, {lower_limit, 0}, {upper_limit, 15}},
+    },
+    {
+        /** event_id */ 15,
         /** mutually_exclusive_events */ {13},
         /** text */ "Supply Chain Disruptions Hinder Aerospace Manufacturing",
         /** duration */ 6,
@@ -198,8 +227,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 1,
         /** modifiers */
-        {{standard_deviation, 0.10}, {mean, -3}, {lower_limit, -10}, {upper_limit, 0}}},
-    {/** event_id */ 16,
+        {{standard_deviation, 0.10}, {mean, -3}, {lower_limit, -10}, {upper_limit, 0}},
+    },
+    {
+        /** event_id */ 16,
         /** mutually_exclusive_events */ {12},
         /** text */ "Budget Cuts Lead to Decreased Defense Contracts",
         /** duration */ 5,
@@ -207,9 +238,11 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 1,
         /** modifiers */
-        {{standard_deviation, 0.12}, {mean, -2}, {lower_limit, -15}, {upper_limit, 0}}},
+        {{standard_deviation, 0.12}, {mean, -2}, {lower_limit, -15}, {upper_limit, 0}},
+    },
     // event_id 17 to 22 affect category "Airlines"
-    {/** event_id */ 17,
+    {
+        /** event_id */ 17,
         /** mutually_exclusive_events */ {},
         /** text */ "Airline Industry Experiences Surge in Travel Demand",
         /** duration */ 7,
@@ -217,8 +250,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 2,
         /** modifiers */
-        {{standard_deviation, 0.10}, {mean, 5}, {lower_limit, 0}, {upper_limit, 30}}},
-    {/** event_id */ 18,
+        {{standard_deviation, 0.10}, {mean, 5}, {lower_limit, 0}, {upper_limit, 30}},
+    },
+    {
+        /** event_id */ 18,
         /** mutually_exclusive_events */ {},
         /** text */
         "Fuel Prices Skyrocket, Putting Pressure on Airlines' Profit Margins",
@@ -227,8 +262,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 2,
         /** modifiers */
-        {{standard_deviation, 0.08}, {mean, -3}, {lower_limit, -20}, {upper_limit, 0}}},
-    {/** event_id */ 19,
+        {{standard_deviation, 0.08}, {mean, -3}, {lower_limit, -20}, {upper_limit, 0}},
+    },
+    {
+        /** event_id */ 19,
         /** mutually_exclusive_events */ {},
         /** text */ "Airline Strikes Disrupt Travel Plans for Thousands of Passengers",
         /** duration */ 5,
@@ -236,8 +273,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 2,
         /** modifiers */
-        {{standard_deviation, 0.12}, {mean, -2}, {lower_limit, -15}, {upper_limit, 0}}},
-    {/** event_id */ 20,
+        {{standard_deviation, 0.12}, {mean, -2}, {lower_limit, -15}, {upper_limit, 0}},
+    },
+    {
+        /** event_id */ 20,
         /** mutually_exclusive_events */ {},
         /** text */ "New Low-Cost Airline Enters the Market, Intensifying Competition",
         /** duration */ 6,
@@ -245,8 +284,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 2,
         /** modifiers */
-        {{standard_deviation, 0.10}, {mean, 3}, {lower_limit, 0}, {upper_limit, 20}}},
-    {/** event_id */ 21,
+        {{standard_deviation, 0.10}, {mean, 3}, {lower_limit, 0}, {upper_limit, 20}},
+    },
+    {
+        /** event_id */ 21,
         /** mutually_exclusive_events */ {},
         /** text */
         "Natural Disasters Disrupt Airline Operations and Cause Flight Cancellations",
@@ -255,8 +296,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 2,
         /** modifiers */
-        {{standard_deviation, 0.12}, {mean, -2}, {lower_limit, -15}, {upper_limit, 0}}},
-    {/** event_id */ 22,
+        {{standard_deviation, 0.12}, {mean, -2}, {lower_limit, -15}, {upper_limit, 0}},
+    },
+    {
+        /** event_id */ 22,
         /** mutually_exclusive_events */ {},
         /** text */ "New Security Regulations Increase Operational Costs for Airlines",
         /** duration */ 6,
@@ -264,9 +307,11 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 2,
         /** modifiers */
-        {{standard_deviation, 0.08}, {mean, -1}, {lower_limit, -10}, {upper_limit, 0}}},
+        {{standard_deviation, 0.08}, {mean, -1}, {lower_limit, -10}, {upper_limit, 0}},
+    },
     // event_id 23 to 27 affect category "RenewEnergy"
-    {/** event_id */ 23,
+    {
+        /** event_id */ 23,
         /** mutually_exclusive_events */ {26},
         /** text */
         "Government Implements New Incentives to Promote Renewable Energy Adoption",
@@ -275,8 +320,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 3,
         /** modifiers */
-        {{standard_deviation, 0.10}, {mean, 3}, {lower_limit, 0}, {upper_limit, 20}}},
-    {/** event_id */ 24,
+        {{standard_deviation, 0.10}, {mean, 3}, {lower_limit, 0}, {upper_limit, 20}},
+    },
+    {
+        /** event_id */ 24,
         /** mutually_exclusive_events */ {},
         /** text */
         "Breakthrough in Solar Panel Technology Increases Efficiency by 20%",
@@ -285,8 +332,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 3,
         /** modifiers */
-        {{standard_deviation, 0.12}, {mean, 2}, {lower_limit, 0}, {upper_limit, 15}}},
-    {/** event_id */ 25,
+        {{standard_deviation, 0.12}, {mean, 2}, {lower_limit, 0}, {upper_limit, 15}},
+    },
+    {
+        /** event_id */ 25,
         /** mutually_exclusive_events */ {},
         /** text */ "Investment in Wind Farms Surges as Costs of Wind Energy Decrease",
         /** duration */ 7,
@@ -294,8 +343,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 3,
         /** modifiers */
-        {{standard_deviation, 0.10}, {mean, 5}, {lower_limit, 0}, {upper_limit, 30}}},
-    {/** event_id */ 26,
+        {{standard_deviation, 0.10}, {mean, 5}, {lower_limit, 0}, {upper_limit, 30}},
+    },
+    {
+        /** event_id */ 26,
         /** mutually_exclusive_events */ {23},
         /** text */
         "Government Cuts Subsidies for Renewable Energy Projects, Slowing Down "
@@ -305,8 +356,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 3,
         /** modifiers */
-        {{standard_deviation, 0.08}, {mean, -3}, {lower_limit, -20}, {upper_limit, 0}}},
-    {/** event_id */ 27,
+        {{standard_deviation, 0.08}, {mean, -3}, {lower_limit, -20}, {upper_limit, 0}},
+    },
+    {
+        /** event_id */ 27,
         /** mutually_exclusive_events */ {},
         /** text */ "Persistent Cloud Cover Reduces Solar Power Generation",
         /** duration */ 5,
@@ -314,9 +367,11 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 3,
         /** modifiers */
-        {{standard_deviation, 0.10}, {mean, -2}, {lower_limit, -15}, {upper_limit, 0}}},
+        {{standard_deviation, 0.10}, {mean, -2}, {lower_limit, -15}, {upper_limit, 0}},
+    },
     // event_id 28 to 31 affect category "Auto"
-    {/** event_id */ 28,
+    {
+        /** event_id */ 28,
         /** mutually_exclusive_events */ {},
         /** text */
         "Breakthrough in Electric Vehicle Battery Technology Extends Range and Reduces "
@@ -326,8 +381,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 4,
         /** modifiers */
-        {{standard_deviation, 0.08}, {mean, 3}, {lower_limit, 0}, {upper_limit, 20}}},
-    {/** event_id */ 29,
+        {{standard_deviation, 0.08}, {mean, 3}, {lower_limit, 0}, {upper_limit, 20}},
+    },
+    {
+        /** event_id */ 29,
         /** mutually_exclusive_events */ {},
         /** text */
         "Sudden Increase in Oil Prices Impacts Affordability and Demand for "
@@ -337,8 +394,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 4,
         /** modifiers */
-        {{standard_deviation, 0.08}, {mean, -5}, {lower_limit, -20}, {upper_limit, 0}}},
-    {/** event_id */ 30,
+        {{standard_deviation, 0.08}, {mean, -5}, {lower_limit, -20}, {upper_limit, 0}},
+    },
+    {
+        /** event_id */ 30,
         /** mutually_exclusive_events */ {31},
         /** text */
         "Introduction of Advanced Driver Assistance Systems Enhances Vehicle Safety",
@@ -347,8 +406,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 4,
         /** modifiers */
-        {{standard_deviation, 0.06}, {mean, 5}, {lower_limit, 0}, {upper_limit, 15}}},
-    {/** event_id */ 31,
+        {{standard_deviation, 0.06}, {mean, 5}, {lower_limit, 0}, {upper_limit, 15}},
+    },
+    {
+        /** event_id */ 31,
         /** mutually_exclusive_events */ {30},
         /** text */ "Frequent Accidents raise safety Concerns",
         /** duration */ 6,
@@ -356,9 +417,11 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 4,
         /** modifiers */
-        {{standard_deviation, 0.10}, {mean, -5}, {lower_limit, -30}, {upper_limit, 0}}},
+        {{standard_deviation, 0.10}, {mean, -5}, {lower_limit, -30}, {upper_limit, 0}},
+    },
     // event_id 32 to 34 affect category "Banks"
-    {/** event_id */ 32,
+    {
+        /** event_id */ 32,
         /** mutually_exclusive_events */ {},
         /** text */
         "Economic Recession Triggers Increase in Non-Performing Loans, Putting Banks "
@@ -368,8 +431,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 5,
         /** modifiers */
-        {{standard_deviation, 0.10}, {mean, -4}, {lower_limit, -25}, {upper_limit, 0}}},
-    {/** event_id */ 33,
+        {{standard_deviation, 0.10}, {mean, -4}, {lower_limit, -25}, {upper_limit, 0}},
+    },
+    {
+        /** event_id */ 33,
         /** mutually_exclusive_events */ {},
         /** text */
         "Government Introduces Stimulus Package to Boost Lending and Economic Growth",
@@ -378,8 +443,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 5,
         /** modifiers */
-        {{standard_deviation, 0.08}, {mean, 5}, {lower_limit, 0}, {upper_limit, 25}}},
-    {/** event_id */ 34,
+        {{standard_deviation, 0.08}, {mean, 5}, {lower_limit, 0}, {upper_limit, 25}},
+    },
+    {
+        /** event_id */ 34,
         /** mutually_exclusive_events */ {},
         /** text */
         "Government Implements Excessive Money Printing, Leading to Inflation and "
@@ -389,9 +456,11 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 5,
         /** modifiers */
-        {{standard_deviation, 0.12}, {mean, 0}, {lower_limit, -40}, {upper_limit, 0}}},
+        {{standard_deviation, 0.12}, {mean, 0}, {lower_limit, -40}, {upper_limit, 0}},
+    },
     // event_id 35 to 37 affect category "Biotech"
-    {/** event_id */ 35,
+    {
+        /** event_id */ 35,
         /** mutually_exclusive_events */ {},
         /** text */
         "Breakthrough in Gene Therapy Offers Potential Cure for Genetic Diseases",
@@ -400,8 +469,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 6,
         /** modifiers */
-        {{standard_deviation, 0.10}, {mean, 4}, {lower_limit, 0}, {upper_limit, 25}}},
-    {/** event_id */ 36,
+        {{standard_deviation, 0.10}, {mean, 4}, {lower_limit, 0}, {upper_limit, 25}},
+    },
+    {
+        /** event_id */ 36,
         /** mutually_exclusive_events */ {},
         /** text */
         "Clinical Trial Failure Delays Development of Promising Drug Candidate",
@@ -410,8 +481,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 6,
         /** modifiers */
-        {{standard_deviation, 0.08}, {mean, -3}, {lower_limit, -20}, {upper_limit, 0}}},
-    {/** event_id */ 37,
+        {{standard_deviation, 0.08}, {mean, -3}, {lower_limit, -20}, {upper_limit, 0}},
+    },
+    {
+        /** event_id */ 37,
         /** mutually_exclusive_events */ {},
         /** text */
         "Successful FDA Approval Expedites Commercialization of Innovative Biotech "
@@ -421,9 +494,11 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 6,
         /** modifiers */
-        {{standard_deviation, 0.09}, {mean, 3}, {lower_limit, 0}, {upper_limit, 20}}},
+        {{standard_deviation, 0.09}, {mean, 3}, {lower_limit, 0}, {upper_limit, 20}},
+    },
     // event_id 38 to 40 affect category "Broadcast"
-    {/** event_id */ 38,
+    {
+        /** event_id */ 38,
         /** mutually_exclusive_events */ {},
         /** text */
         "New Streaming Service Launches with Extensive Content Library and Innovative "
@@ -433,8 +508,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 7,
         /** modifiers */
-        {{standard_deviation, 0.08}, {mean, 3}, {lower_limit, 0}, {upper_limit, 20}}},
-    {/** event_id */ 39,
+        {{standard_deviation, 0.08}, {mean, 3}, {lower_limit, 0}, {upper_limit, 20}},
+    },
+    {
+        /** event_id */ 39,
         /** mutually_exclusive_events */ {},
         /** text */
         "Broadcast Network Faces Significant Revenue Losses Due to Declining "
@@ -444,8 +521,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 7,
         /** modifiers */
-        {{standard_deviation, 0.10}, {mean, -4}, {lower_limit, -25}, {upper_limit, 0}}},
-    {/** event_id */ 40,
+        {{standard_deviation, 0.10}, {mean, -4}, {lower_limit, -25}, {upper_limit, 0}},
+    },
+    {
+        /** event_id */ 40,
         /** mutually_exclusive_events */ {},
         /** text */
         "Broadcast Network Strikes Exclusive Deal for Live Coverage of Major Sporting "
@@ -455,9 +534,11 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 7,
         /** modifiers */
-        {{standard_deviation, 0.07}, {mean, 2}, {lower_limit, 0}, {upper_limit, 15}}},
+        {{standard_deviation, 0.07}, {mean, 2}, {lower_limit, 0}, {upper_limit, 15}},
+    },
     // event_id 41 to 46 affect category "Casinos&Gaming"
-    {/** event_id */ 41,
+    {
+        /** event_id */ 41,
         /** mutually_exclusive_events */ {},
         /** text */ "Stringent Gambling Regulations Restrict Casino Operations",
         /** duration */ 6,
@@ -465,8 +546,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 8,
         /** modifiers */
-        {{standard_deviation, 0.10}, {mean, -4}, {lower_limit, -25}, {upper_limit, 0}}},
-    {/** event_id */ 42,
+        {{standard_deviation, 0.10}, {mean, -4}, {lower_limit, -25}, {upper_limit, 0}},
+    },
+    {
+        /** event_id */ 42,
         /** mutually_exclusive_events */ {},
         /** text */
         "Innovative Strategies Help Casinos Navigate Stringent Regulations and "
@@ -476,8 +559,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 8,
         /** modifiers */
-        {{standard_deviation, 0.08}, {mean, 3}, {lower_limit, 0}, {upper_limit, 20}}},
-    {/** event_id */ 43,
+        {{standard_deviation, 0.08}, {mean, 3}, {lower_limit, 0}, {upper_limit, 20}},
+    },
+    {
+        /** event_id */ 43,
         /** mutually_exclusive_events */ {45},
         /** text */
         "Online Gaming Goes Viral, Attracting Millions of Players Worldwide",
@@ -486,8 +571,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 8,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, 5}, {lower_limit, 0}, {upper_limit, 30}}},
-    {/** event_id */ 44,
+        {{standard_deviation, 0.1}, {mean, 5}, {lower_limit, 0}, {upper_limit, 30}},
+    },
+    {
+        /** event_id */ 44,
         /** mutually_exclusive_events */ {},
         /** text */ "New Esports Tournament Breaks Viewership Records",
         /** duration */ 4,
@@ -495,8 +582,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 8,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, 7}, {lower_limit, 0}, {upper_limit, 25}}},
-    {/** event_id */ 45,
+        {{standard_deviation, 0.1}, {mean, 7}, {lower_limit, 0}, {upper_limit, 25}},
+    },
+    {
+        /** event_id */ 45,
         /** mutually_exclusive_events */ {43},
         /** text */
         "Major Data Breach Affects Gaming Platforms, Raising Concerns About Player "
@@ -506,8 +595,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 8,
         /** modifiers */
-        {{standard_deviation, 0.12}, {mean, -4}, {lower_limit, -20}, {upper_limit, 0}}},
-    {/** event_id */ 46,
+        {{standard_deviation, 0.12}, {mean, -4}, {lower_limit, -20}, {upper_limit, 0}},
+    },
+    {
+        /** event_id */ 46,
         /** mutually_exclusive_events */ {},
         /** text */
         "Introduction of Virtual Reality Gaming Enhances Player Immersion and "
@@ -517,9 +608,11 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 8,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, 6}, {lower_limit, 0}, {upper_limit, 20}}},
+        {{standard_deviation, 0.1}, {mean, 6}, {lower_limit, 0}, {upper_limit, 20}},
+    },
     // event_id 47 to 51 affect category "E-Commerce"
-    {/** event_id */ 47,
+    {
+        /** event_id */ 47,
         /** mutually_exclusive_events */ {},
         /** text */
         "E-commerce Sales Reach All-Time High, Exceeding Market Expectations",
@@ -528,8 +621,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 9,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, 6}, {lower_limit, 0}, {upper_limit, 20}}},
-    {/** event_id */ 48,
+        {{standard_deviation, 0.1}, {mean, 6}, {lower_limit, 0}, {upper_limit, 20}},
+    },
+    {
+        /** event_id */ 48,
         /** mutually_exclusive_events */ {},
         /** text */
         "Supply Chain Disruptions Cause Delivery Delays and Inventory Shortages in "
@@ -539,8 +634,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 9,
         /** modifiers */
-        {{standard_deviation, 0.12}, {mean, -4}, {lower_limit, -20}, {upper_limit, 0}}},
-    {/** event_id */ 49,
+        {{standard_deviation, 0.12}, {mean, -4}, {lower_limit, -20}, {upper_limit, 0}},
+    },
+    {
+        /** event_id */ 49,
         /** mutually_exclusive_events */ {},
         /** text */
         "Introduction of Innovative Payment Solutions Boosts E-commerce Conversion "
@@ -550,8 +647,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 9,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, 4}, {lower_limit, 0}, {upper_limit, 15}}},
-    {/** event_id */ 50,
+        {{standard_deviation, 0.1}, {mean, 4}, {lower_limit, 0}, {upper_limit, 15}},
+    },
+    {
+        /** event_id */ 50,
         /** mutually_exclusive_events */ {},
         /** text */
         "Cybersecurity Breach Raises Concerns About Online Shopping Privacy and Data "
@@ -561,8 +660,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 9,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, -7}, {lower_limit, -25}, {upper_limit, 0}}},
-    {/** event_id */ 51,
+        {{standard_deviation, 0.1}, {mean, -7}, {lower_limit, -25}, {upper_limit, 0}},
+    },
+    {
+        /** event_id */ 51,
         /** mutually_exclusive_events */ {},
         /** text */
         "Advancements in Artificial Intelligence Revolutionize Personalized Shopping "
@@ -572,9 +673,11 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 9,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, 5}, {lower_limit, 0}, {upper_limit, 20}}},
+        {{standard_deviation, 0.1}, {mean, 5}, {lower_limit, 0}, {upper_limit, 20}},
+    },
     // event_id 52 to 55 affect category "FinServices"
-    {/** event_id */ 52,
+    {
+        /** event_id */ 52,
         /** mutually_exclusive_events */ {53},
         /** text */
         "Fintech Startups Disrupt Traditional Banking, Providing Innovative Financial "
@@ -584,8 +687,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 10,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, 7}, {lower_limit, 0}, {upper_limit, 25}}},
-    {/** event_id */ 53,
+        {{standard_deviation, 0.1}, {mean, 7}, {lower_limit, 0}, {upper_limit, 25}},
+    },
+    {
+        /** event_id */ 53,
         /** mutually_exclusive_events */ {52, 54, 55},
         /** text */ "Stock Market Crash Leads to Financial Turmoil and Investor Losses",
         /** duration */ 7,
@@ -593,8 +698,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 10,
         /** modifiers */
-        {{standard_deviation, 0.12}, {mean, -4}, {lower_limit, -20}, {upper_limit, 0}}},
-    {/** event_id */ 54,
+        {{standard_deviation, 0.12}, {mean, -4}, {lower_limit, -20}, {upper_limit, 0}},
+    },
+    {
+        /** event_id */ 54,
         /** mutually_exclusive_events */ {53},
         /** text */
         "Introduction of Blockchain Technology Enhances Security and Efficiency in "
@@ -604,8 +711,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 10,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, 5}, {lower_limit, 0}, {upper_limit, 20}}},
-    {/** event_id */ 55,
+        {{standard_deviation, 0.1}, {mean, 5}, {lower_limit, 0}, {upper_limit, 20}},
+    },
+    {
+        /** event_id */ 55,
         /** mutually_exclusive_events */ {53},
         /** text */
         "Digital Wallets Gain Popularity, Simplifying Payment Processes and Increasing "
@@ -615,9 +724,11 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 10,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, 4}, {lower_limit, 0}, {upper_limit, 15}}},
+        {{standard_deviation, 0.1}, {mean, 4}, {lower_limit, 0}, {upper_limit, 15}},
+    },
     // event_id 56 to 61 affect category "Food&Beverage"
-    {/** event_id */ 56,
+    {
+        /** event_id */ 56,
         /** mutually_exclusive_events */ {},
         /** text */
         "Plant-Based Food Trend Continues to Grow, Offering Healthier and Sustainable "
@@ -627,8 +738,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 11,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, 5}, {lower_limit, 0}, {upper_limit, 20}}},
-    {/** event_id */ 57,
+        {{standard_deviation, 0.1}, {mean, 5}, {lower_limit, 0}, {upper_limit, 20}},
+    },
+    {
+        /** event_id */ 57,
         /** mutually_exclusive_events */ {},
         /** text */
         "Food Safety Scandal Raises Concerns About Contaminated Products and Consumer "
@@ -638,8 +751,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 11,
         /** modifiers */
-        {{standard_deviation, 0.12}, {mean, -4}, {lower_limit, -20}, {upper_limit, 0}}},
-    {/** event_id */ 58,
+        {{standard_deviation, 0.12}, {mean, -4}, {lower_limit, -20}, {upper_limit, 0}},
+    },
+    {
+        /** event_id */ 58,
         /** mutually_exclusive_events */ {},
         /** text */
         "Introduction of Innovative Cooking Techniques Enhances Culinary Experiences",
@@ -648,8 +763,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 11,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, 4}, {lower_limit, 0}, {upper_limit, 15}}},
-    {/** event_id */ 59,
+        {{standard_deviation, 0.1}, {mean, 4}, {lower_limit, 0}, {upper_limit, 15}},
+    },
+    {
+        /** event_id */ 59,
         /** mutually_exclusive_events */ {},
         /** text */
         "Global Food Shortage Crisis Impacts Prices and Availability of Essential "
@@ -659,8 +776,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 11,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, -7}, {lower_limit, -25}, {upper_limit, 0}}},
-    {/** event_id */ 60,
+        {{standard_deviation, 0.1}, {mean, -7}, {lower_limit, -25}, {upper_limit, 0}},
+    },
+    {
+        /** event_id */ 60,
         /** mutually_exclusive_events */ {},
         /** text */
         "Rise of Food Delivery Services Provides Convenient and Wide-ranging Dining "
@@ -670,8 +789,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 11,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, 4}, {lower_limit, 0}, {upper_limit, 15}}},
-    {/** event_id */ 61,
+        {{standard_deviation, 0.1}, {mean, 4}, {lower_limit, 0}, {upper_limit, 15}},
+    },
+    {
+        /** event_id */ 61,
         /** mutually_exclusive_events */ {},
         /** text */
         "Growing Demand for Organic and Locally Sourced Food Drives Sustainable "
@@ -681,9 +802,11 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 11,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, 5}, {lower_limit, 0}, {upper_limit, 20}}},
+        {{standard_deviation, 0.1}, {mean, 5}, {lower_limit, 0}, {upper_limit, 20}},
+    },
     // event_id 62 to 66 affect category "Healthcare"
-    {/** event_id */ 62,
+    {
+        /** event_id */ 62,
         /** mutually_exclusive_events */ {},
         /** text */
         "Advancements in Telemedicine Improve Access to Medical Care for Remote Areas",
@@ -692,8 +815,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 12,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, 6}, {lower_limit, 0}, {upper_limit, 20}}},
-    {/** event_id */ 63,
+        {{standard_deviation, 0.1}, {mean, 6}, {lower_limit, 0}, {upper_limit, 20}},
+    },
+    {
+        /** event_id */ 63,
         /** mutually_exclusive_events */ {},
         /** text */
         "Outbreak of Global Pandemic Leads to Overwhelmed Healthcare Systems and High "
@@ -703,8 +828,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 12,
         /** modifiers */
-        {{standard_deviation, 0.12}, {mean, 7}, {lower_limit, 0}, {upper_limit, 25}}},
-    {/** event_id */ 64,
+        {{standard_deviation, 0.12}, {mean, 7}, {lower_limit, 0}, {upper_limit, 25}},
+    },
+    {
+        /** event_id */ 64,
         /** mutually_exclusive_events */ {},
         /** text */
         "Development of Personalized Medicine Leads to More Effective Treatment and "
@@ -714,8 +841,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 12,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, 5}, {lower_limit, 0}, {upper_limit, 20}}},
-    {/** event_id */ 65,
+        {{standard_deviation, 0.1}, {mean, 5}, {lower_limit, 0}, {upper_limit, 20}},
+    },
+    {
+        /** event_id */ 65,
         /** mutually_exclusive_events */ {},
         /** text */
         "Shortage of Healthcare Professionals Causes Strain on Medical Services and "
@@ -725,8 +854,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 12,
         /** modifiers */
-        {{standard_deviation, 0.12}, {mean, -4}, {lower_limit, -20}, {upper_limit, 0}}},
-    {/** event_id */ 66,
+        {{standard_deviation, 0.12}, {mean, -4}, {lower_limit, -20}, {upper_limit, 0}},
+    },
+    {
+        /** event_id */ 66,
         /** mutually_exclusive_events */ {},
         /** text */
         "Advancements in Gene Editing Technology Open New Avenues for Precision "
@@ -736,9 +867,11 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 12,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, 6}, {lower_limit, 0}, {upper_limit, 20}}},
+        {{standard_deviation, 0.1}, {mean, 6}, {lower_limit, 0}, {upper_limit, 20}},
+    },
     // event_id 67 to 74 affect category "Tech"
-    {/** event_id */ 67,
+    {
+        /** event_id */ 67,
         /** mutually_exclusive_events */ {},
         /** text */
         "Breakthrough in Artificial Intelligence Leads to Significant Advancements in "
@@ -748,8 +881,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 13,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, 6}, {lower_limit, 0}, {upper_limit, 20}}},
-    {/** event_id */ 68,
+        {{standard_deviation, 0.1}, {mean, 6}, {lower_limit, 0}, {upper_limit, 20}},
+    },
+    {
+        /** event_id */ 68,
         /** mutually_exclusive_events */ {},
         /** text */
         "Cybersecurity Breach Exposes Sensitive Data and Raises Concerns Over Digital "
@@ -759,8 +894,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 13,
         /** modifiers */
-        {{standard_deviation, 0.3}, {mean, -5}, {lower_limit, -15}, {upper_limit, 0}}},
-    {/** event_id */ 69,
+        {{standard_deviation, 0.3}, {mean, -5}, {lower_limit, -15}, {upper_limit, 0}},
+    },
+    {
+        /** event_id */ 69,
         /** mutually_exclusive_events */ {},
         /** text */
         "Emergence of 5G Technology Revolutionizes Connectivity and Enables Faster "
@@ -770,8 +907,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 13,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, 5}, {lower_limit, 0}, {upper_limit, 15}}},
-    {/** event_id */ 70,
+        {{standard_deviation, 0.1}, {mean, 5}, {lower_limit, 0}, {upper_limit, 15}},
+    },
+    {
+        /** event_id */ 70,
         /** mutually_exclusive_events */ {},
         /** text */
         "Failure of Major Tech Infrastructure Disrupts Services and Causes Widespread "
@@ -781,8 +920,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 13,
         /** modifiers */
-        {{standard_deviation, 0.12}, {mean, -4}, {lower_limit, -20}, {upper_limit, 0}}},
-    {/** event_id */ 71,
+        {{standard_deviation, 0.12}, {mean, -4}, {lower_limit, -20}, {upper_limit, 0}},
+    },
+    {
+        /** event_id */ 71,
         /** mutually_exclusive_events */ {},
         /** text */
         "Advancements in Quantum Computing Unlock New Possibilities for Solving "
@@ -792,8 +933,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 13,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, 6}, {lower_limit, 0}, {upper_limit, 20}}},
-    {/** event_id */ 72,
+        {{standard_deviation, 0.1}, {mean, 6}, {lower_limit, 0}, {upper_limit, 20}},
+    },
+    {
+        /** event_id */ 72,
         /** mutually_exclusive_events */ {},
         /** text */
         "Rapid Advancements in Augmented Reality (AR) and Virtual Reality (VR) Enhance "
@@ -803,8 +946,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 13,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, 5}, {lower_limit, 0}, {upper_limit, 20}}},
-    {/** event_id */ 73,
+        {{standard_deviation, 0.1}, {mean, 5}, {lower_limit, 0}, {upper_limit, 20}},
+    },
+    {
+        /** event_id */ 73,
         /** mutually_exclusive_events */ {},
         /** text */
         "Advancements in Robotics and Automation Transform Manufacturing and Increase "
@@ -814,8 +959,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 13,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, 6}, {lower_limit, 0}, {upper_limit, 20}}},
-    {/** event_id */ 74,
+        {{standard_deviation, 0.1}, {mean, 6}, {lower_limit, 0}, {upper_limit, 20}},
+    },
+    {
+        /** event_id */ 74,
         /** mutually_exclusive_events */ {},
         /** text */
         "Emergence of Artificial General Intelligence (AGI) Raises Ethical and "
@@ -825,9 +972,11 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 13,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, -5}, {lower_limit, -15}, {upper_limit, 0}}},
+        {{standard_deviation, 0.1}, {mean, -5}, {lower_limit, -15}, {upper_limit, 0}},
+    },
     // event_id 75 to 79 affect category "RealEstate"
-    {/** event_id */ 75,
+    {
+        /** event_id */ 75,
         /** mutually_exclusive_events */ {76},
         /** text */
         "Strong Demand and Low Mortgage Rates Drive Real Estate Market Growth",
@@ -836,8 +985,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 14,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, 5}, {lower_limit, 0}, {upper_limit, 20}}},
-    {/** event_id */ 76,
+        {{standard_deviation, 0.1}, {mean, 5}, {lower_limit, 0}, {upper_limit, 20}},
+    },
+    {
+        /** event_id */ 76,
         /** mutually_exclusive_events */ {75},
         /** text */
         "Economic Downturn Leads to Decline in Real Estate Prices and Sales",
@@ -846,8 +997,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 14,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, -5}, {lower_limit, -15}, {upper_limit, 0}}},
-    {/** event_id */ 77,
+        {{standard_deviation, 0.1}, {mean, -5}, {lower_limit, -15}, {upper_limit, 0}},
+    },
+    {
+        /** event_id */ 77,
         /** mutually_exclusive_events */ {},
         /** text */
         "Rapid Urbanization and Infrastructure Development Boost Real Estate "
@@ -857,8 +1010,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 14,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, 6}, {lower_limit, 0}, {upper_limit, 20}}},
-    {/** event_id */ 78,
+        {{standard_deviation, 0.1}, {mean, 6}, {lower_limit, 0}, {upper_limit, 20}},
+    },
+    {
+        /** event_id */ 78,
         /** mutually_exclusive_events */ {},
         /** text */
         "Natural Disasters Cause Property Damage and Impact Real Estate Market",
@@ -867,8 +1022,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 14,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, -5}, {lower_limit, -15}, {upper_limit, 0}}},
-    {/** event_id */ 79,
+        {{standard_deviation, 0.1}, {mean, -5}, {lower_limit, -15}, {upper_limit, 0}},
+    },
+    {
+        /** event_id */ 79,
         /** mutually_exclusive_events */ {},
         /** text */
         "Investigation Reveals Widespread Cases of Substandard Construction Projects",
@@ -877,9 +1034,11 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 14,
         /** modifiers */
-        {{standard_deviation, 0.12}, {mean, -4}, {lower_limit, -20}, {upper_limit, 0}}},
+        {{standard_deviation, 0.12}, {mean, -4}, {lower_limit, -20}, {upper_limit, 0}},
+    },
     // event_id 80 to 85 affect category "RealEstate"
-    {/** event_id */ 80,
+    {
+        /** event_id */ 80,
         /** mutually_exclusive_events */ {},
         /** text */
         "Shift in Consumer Behavior Leads to Decline in Brick-and-Mortar Retail Stores",
@@ -888,8 +1047,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 15,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, -5}, {lower_limit, -15}, {upper_limit, 0}}},
-    {/** event_id */ 81,
+        {{standard_deviation, 0.1}, {mean, -5}, {lower_limit, -15}, {upper_limit, 0}},
+    },
+    {
+        /** event_id */ 81,
         /** mutually_exclusive_events */ {},
         /** text */
         "Adoption of Technology Enhances Customer Experience in Physical Retail Stores",
@@ -898,8 +1059,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 15,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, 6}, {lower_limit, 0}, {upper_limit, 20}}},
-    {/** event_id */ 82,
+        {{standard_deviation, 0.1}, {mean, 6}, {lower_limit, 0}, {upper_limit, 20}},
+    },
+    {
+        /** event_id */ 82,
         /** mutually_exclusive_events */ {},
         /** text */
         "Integration of Augmented Reality Enhances In-Store Shopping Experience",
@@ -908,8 +1071,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 15,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, 5}, {lower_limit, 0}, {upper_limit, 20}}},
-    {/** event_id */ 83,
+        {{standard_deviation, 0.1}, {mean, 5}, {lower_limit, 0}, {upper_limit, 20}},
+    },
+    {
+        /** event_id */ 83,
         /** mutually_exclusive_events */ {},
         /** text */
         "Increase in Online Counterfeit Products Impacts Consumer Trust in E-commerce",
@@ -918,8 +1083,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 15,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, -5}, {lower_limit, -15}, {upper_limit, 0}}},
-    {/** event_id */ 84,
+        {{standard_deviation, 0.1}, {mean, -5}, {lower_limit, -15}, {upper_limit, 0}},
+    },
+    {
+        /** event_id */ 84,
         /** mutually_exclusive_events */ {},
         /** text */
         "Retailers Embrace Sustainable Practices, Driving Eco-friendly Consumer "
@@ -929,8 +1096,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 15,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, 6}, {lower_limit, 0}, {upper_limit, 20}}},
-    {/** event_id */ 85,
+        {{standard_deviation, 0.1}, {mean, 6}, {lower_limit, 0}, {upper_limit, 20}},
+    },
+    {
+        /** event_id */ 85,
         /** mutually_exclusive_events */ {},
         /** text */ "Supply Chain Disruptions Impact Retail Inventory and Availability",
         /** duration */ 7,
@@ -938,9 +1107,11 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 15,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, -5}, {lower_limit, -15}, {upper_limit, 0}}},
+        {{standard_deviation, 0.1}, {mean, -5}, {lower_limit, -15}, {upper_limit, 0}},
+    },
     // event_id 86 to __ affect category "Telecom"
-    {/** event_id */ 86,
+    {
+        /** event_id */ 86,
         /** mutually_exclusive_events */ {},
         /** text */
         "Deployment of 5G Networks Enables Faster and More Reliable Connectivity",
@@ -949,8 +1120,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 16,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, 5}, {lower_limit, 0}, {upper_limit, 20}}},
-    {/** event_id */ 87,
+        {{standard_deviation, 0.1}, {mean, 5}, {lower_limit, 0}, {upper_limit, 20}},
+    },
+    {
+        /** event_id */ 87,
         /** mutually_exclusive_events */ {},
         /** text */
         "Cybersecurity Breach in Telecom Networks Raises Concerns over Data Privacy",
@@ -959,8 +1132,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 16,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, -5}, {lower_limit, -15}, {upper_limit, 0}}},
-    {/** event_id */ 88,
+        {{standard_deviation, 0.1}, {mean, -5}, {lower_limit, -15}, {upper_limit, 0}},
+    },
+    {
+        /** event_id */ 88,
         /** mutually_exclusive_events */ {},
         /** text */
         "Advancements in Voice Recognition Technology Enhance Telecommunication "
@@ -970,8 +1145,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 16,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, 6}, {lower_limit, 0}, {upper_limit, 20}}},
-    {/** event_id */ 89,
+        {{standard_deviation, 0.1}, {mean, 6}, {lower_limit, 0}, {upper_limit, 20}},
+    },
+    {
+        /** event_id */ 89,
         /** mutually_exclusive_events */ {},
         /** text */
         "Network Outage Disrupts Telecommunication Services in Several Regions",
@@ -980,8 +1157,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 16,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, -5}, {lower_limit, -15}, {upper_limit, 0}}},
-    {/** event_id */ 90,
+        {{standard_deviation, 0.1}, {mean, -5}, {lower_limit, -15}, {upper_limit, 0}},
+    },
+    {
+        /** event_id */ 90,
         /** mutually_exclusive_events */ {},
         /** text */
         "Telecom Service Outage Caused by Natural Disaster Disrupts Communication",
@@ -990,8 +1169,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 16,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, -5}, {lower_limit, -15}, {upper_limit, 0}}},
-    {/** event_id */ 91,
+        {{standard_deviation, 0.1}, {mean, -5}, {lower_limit, -15}, {upper_limit, 0}},
+    },
+    {
+        /** event_id */ 91,
         /** mutually_exclusive_events */ {},
         /** text */
         "Telecom Regulatory Changes Affect Pricing and Service Plans for Consumers",
@@ -1000,9 +1181,11 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ category,
         /** category */ 16,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, -5}, {lower_limit, -15}, {upper_limit, 0}}},
+        {{standard_deviation, 0.1}, {mean, -5}, {lower_limit, -15}, {upper_limit, 0}},
+    },
     // event_id 92 to 98 affect pick_random_stock
-    {/** event_id */ 92,
+    {
+        /** event_id */ 92,
         /** mutually_exclusive_events */ {},
         /** text */ "Leadership Change: CEO Resigns, New CEO Appointed",
         /** duration */ 3,
@@ -1010,8 +1193,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ pick_random_stock,
         /** category */ 0,
         /** modifiers */
-        {{standard_deviation, 0.2}, {mean, 0}, {lower_limit, -15}, {upper_limit, 15}}},
-    {/** event_id */ 93,
+        {{standard_deviation, 0.2}, {mean, 0}, {lower_limit, -15}, {upper_limit, 15}},
+    },
+    {
+        /** event_id */ 93,
         /** mutually_exclusive_events */ {},
         /** text */
         "Labor Strike: Employees Go on Strike Demanding Better Working Conditions",
@@ -1020,8 +1205,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ pick_random_stock,
         /** category */ 0,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, -6}, {lower_limit, -20}, {upper_limit, 0}}},
-    {/** event_id */ 94,
+        {{standard_deviation, 0.1}, {mean, -6}, {lower_limit, -20}, {upper_limit, 0}},
+    },
+    {
+        /** event_id */ 94,
         /** mutually_exclusive_events */ {97},
         /** text */ "Acquires a Competitor, Expands Market Presence",
         /** duration */ 4,
@@ -1029,8 +1216,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ pick_random_stock,
         /** category */ 0,
         /** modifiers */
-        {{standard_deviation, 0.2}, {mean, 5}, {lower_limit, 0}, {upper_limit, 15}}},
-    {/** event_id */ 95,
+        {{standard_deviation, 0.2}, {mean, 5}, {lower_limit, 0}, {upper_limit, 15}},
+    },
+    {
+        /** event_id */ 95,
         /** mutually_exclusive_events */ {98},
         /** text */ "Market Slump Leads to Business Contraction",
         /** duration */ 4,
@@ -1038,8 +1227,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ pick_random_stock,
         /** category */ 0,
         /** modifiers */
-        {{standard_deviation, 0.3}, {mean, -7}, {lower_limit, -20}, {upper_limit, 0}}},
-    {/** event_id */ 96,
+        {{standard_deviation, 0.3}, {mean, -7}, {lower_limit, -20}, {upper_limit, 0}},
+    },
+    {
+        /** event_id */ 96,
         /** mutually_exclusive_events */ {},
         /** text */ "Regulatory Non-Compliance: Fails to Meet Environmental Standards",
         /** duration */ 5,
@@ -1047,8 +1238,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ pick_random_stock,
         /** category */ 0,
         /** modifiers */
-        {{standard_deviation, 0.1}, {mean, -2}, {lower_limit, -10}, {upper_limit, 0}}},
-    {/** event_id */ 97,
+        {{standard_deviation, 0.1}, {mean, -2}, {lower_limit, -10}, {upper_limit, 0}},
+    },
+    {
+        /** event_id */ 97,
         /** mutually_exclusive_events */ {94, 98},
         /** text */ "Faces Bankruptcy, Forced to Cease Operations",
         /** duration */ 6,
@@ -1056,8 +1249,10 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ pick_random_stock,
         /** category */ 0,
         /** modifiers */
-        {{standard_deviation, 0.5}, {mean, -9}, {lower_limit, -30}, {upper_limit, 0}}},
-    {/** event_id */ 98,
+        {{standard_deviation, 0.5}, {mean, -9}, {lower_limit, -30}, {upper_limit, 0}},
+    },
+    {
+        /** event_id */ 98,
         /** mutually_exclusive_events */ {95, 97},
         /** text */ "Opens New Branches in Multiple Locations",
         /** duration */ 6,
@@ -1065,7 +1260,9 @@ const std::vector<Stock_event> all_stock_events = {
         /** type_of_event */ pick_random_stock,
         /** category */ 0,
         /** modifiers */
-        {{standard_deviation, 0.5}, {mean, 7}, {lower_limit, 0}, {upper_limit, 20}}}};
+        {{standard_deviation, 0.5}, {mean, 7}, {lower_limit, 0}, {upper_limit, 20}},
+    },
+};
 
 // print a map
 void print_map(const std::map<unsigned int, std::vector<unsigned int>> & map) {
