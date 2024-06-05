@@ -230,6 +230,8 @@ bool assertion_check_mutual_exclusivity(void);
  */
 void print_map(const std::map<unsigned int, std::vector<unsigned int>> & map);
 
+extern const Stock_event STOCK_SPLIT_EVENT;
+
 /// @todo Understand this constexpr lambda
 inline const unsigned int sumOfAllEventsProbability = []() {
     unsigned int sum = 0;

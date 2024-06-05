@@ -20,6 +20,7 @@ program. If not, see <https://www.gnu.org/licenses/>.
 #include "random_price.h"
 
 #include <algorithm>
+#include <cassert>
 #include <fstream>
 #include <iostream>
 
@@ -49,97 +50,92 @@ void Stock::save(const std::string & playerName, int i) {
     filesave = SAVE_FOLDER_PREFIX + playerName + "/" + std::to_string(i) + "" +
                SAVE_FILE_EXTENSION_TXT; // creating the file path
     fout.open(filesave.c_str());
-    fout << category << std::endl; // literally load everything into class into file
-    fout << name << std::endl;
-    for (unsigned int index = 0; index < history.size(); index++) {
-        fout << history[index] << " ";
-    }
-    fout << -1
-         << std::endl; // -1 is the stop code for vector<float> history in filesave
-    fout << quantity << std::endl;
-    fout << attributes[standard_deviation] << " ";
-    fout << attributes[mean] << " ";
-    fout << attributes[lower_limit] << " ";
-    fout << attributes[upper_limit] << std::endl;
-    fout << split_count << std::endl << std::endl;
-
-    // Save the ongoing events, separated by std::endl
-    std::list<Stock_event>::iterator event_itr = events.begin();
-    while (event_itr != events.end()) {
-        fout << *event_itr << std::endl;
-        event_itr++;
-    }
+    fout << *this; // use operator<< to save the Stock object
     fout.close();
 }
 
 void Stock::load(const std::string & playerName, int i) {
     std::string fileToBeLoaded;
-    float loadedPrice;
     std::ifstream fin;
     fileToBeLoaded = SAVE_FOLDER_PREFIX + playerName + "/" + std::to_string(i) + "" +
                      SAVE_FILE_EXTENSION_TXT;
     std::cout << "Loading " << fileToBeLoaded << " ... ";
     fin.open(fileToBeLoaded.c_str());
     // get the first line, which is category
-    fin >> category;
-    // boundary check for category
-    if (category >= category_list_size) {
-        std::cerr << "Error: Invalid category loaded" << std::endl;
-        exit(1);
+    fin >> *this; // use operator>> to load the Stock object
+    fin.close();
+    // @todo Do not hardcode this limit, use a constant
+    // STOCK_PRICE_LIMIT instead
+    assert(price <= 1000 && "Price exceed the limit");
+    std::cout << "done" << std::endl;
+}
+
+std::ostream & operator<<(std::ostream & fout, const Stock & stock) {
+    fout << stock.category
+         << std::endl; // literally load everything into class into file
+    fout << stock.name << std::endl;
+    for (unsigned int index = 0; index < stock.history.size(); index++) {
+        fout << stock.history[index] << " ";
     }
-    // the second line is entirely the stock name
-    std::getline(fin >> std::ws, name);
+    fout << -1 << std::endl; // -1 is the stop code for vector<float> history in
+                             // filesave
+    fout << stock.quantity << std::endl;
+    fout << stock.attributes.at(standard_deviation) << " ";
+    fout << stock.attributes.at(mean) << " ";
+    fout << stock.attributes.at(lower_limit) << " ";
+    fout << stock.attributes.at(upper_limit) << std::endl;
+    fout << stock.split_count << std::endl << std::endl;
+
+    // Save the ongoing events, separated by std::endl
+    for (Stock_event event : stock.events) {
+        fout << event << std::endl;
+    }
+    return fout;
+}
+
+std::istream & operator>>(std::istream & fin, Stock & stock) {
+    fin >> stock.category; // line 1
+    assert(stock.category < category_list_size && "Invalid category");
+    //  line 2 is entirely the stock name
+    std::getline(fin >> std::ws, stock.name);
+    float loadedPrice;
     fin >> loadedPrice;
-    // Erase the history vector, since we called the constructor already
-    history.clear();
+    // Erase the history vector and load the new history
+    stock.history.clear();
     while (loadedPrice != -1) {
-        history.emplace_back(loadedPrice);
-        fin >> loadedPrice;
+        stock.history.emplace_back(loadedPrice);
+        fin >> loadedPrice; // line 3
     }
     // Set the price
-    price = history[history.size() - 1];
-    fin >> quantity;
-    fin >> attributes[standard_deviation];
-    fin >> attributes[mean];
-    fin >> attributes[lower_limit];
-    fin >> attributes[upper_limit];
-    fin >> split_count;
-    // Manually reposition the file pointer to the sixth line
-    // by going to the beginning of the file and skipping the first five lines
-    fin.seekg(0, std::ios::beg);
-    for (int lineCount = 0; lineCount < 7; lineCount++) {
-        std::string line;
-        std::getline(fin, line);
-    }
-
-    // Load the ongoing events, separated by std::endl
+    stock.price = stock.history.back();
+    fin >> stock.quantity;                       // line 4
+    fin >> stock.attributes[standard_deviation]; // line 5
+    fin >> stock.attributes[mean];
+    fin >> stock.attributes[lower_limit];
+    fin >> stock.attributes[upper_limit];
+    fin >> stock.split_count; // line 6
+    // Clear the events list
+    stock.events.clear();
+    // Skip 2 empty lines
+    std::string emptyLine;
+    std::getline(fin >> std::ws, emptyLine);
+    std::getline(fin >> std::ws, emptyLine);
     std::string loadedEventString;
     while (std::getline(fin, loadedEventString)) {
         Stock_event loadedEvent;
         std::istringstream(loadedEventString) >> loadedEvent;
         // Check the loaded event is valid
-        // Ignore the special case of event_id >= 65535
-        if (loadedEvent.event_id >= 65535 &&
-            loadedEvent.event_id < all_stock_events.size()) {
-            add_event(loadedEvent);
+        if (loadedEvent.event_id == STOCK_SPLIT_EVENT.event_id) {
             continue;
         }
+        assert(
+            loadedEvent.event_id < all_stock_events.size() && "Invalid event loaded");
         Stock_event comparedEvent = all_stock_events[loadedEvent.event_id];
-        if (loadedEvent == comparedEvent) {
-            add_event(loadedEvent);
-        }
-        else {
-            std::cerr << "Error: Invalid event loaded" << std::endl;
-            // Output the difference between the loaded event and the compared event
-            std::cerr << "Loaded event: " << loadedEvent << std::endl;
-            std::cerr << "Compared event: " << comparedEvent << std::endl;
-            exit(1);
-        }
+        assert(loadedEvent == comparedEvent && "Invalid event loaded");
+        stock.add_event(loadedEvent);
     }
-    fin.close();
-    time::sleep(random_integer(sleepShort)); // optimize this
-    std::cout << "done" << std::endl;
-}
+    return fin;
+};
 
 float Stock::purchase(
     float & balance, unsigned int amount, float trading_fees_percent) {
@@ -271,6 +267,13 @@ float Stock::sum_attribute(stock_modifiers attribute) {
     return sum;
 }
 
+Stock_event Stock::setup_STOCK_SPLIT_EVENT(void) {
+    Stock_event event_copy = STOCK_SPLIT_EVENT;
+    event_copy.text = name + event_copy.text;
+    event_copy.category = category;
+    return event_copy;
+}
+
 void Stock::next_round(void) {
     /** Update the price of the stock.
      * If the price is less than 1000, the price will increase or decrease by a random
@@ -278,26 +281,6 @@ void Stock::next_round(void) {
      * quantity will be doubled.
      */
     float price_diff = percentage_change_price(*this) / 100;
-    if (!(price * (1 + price_diff) > 999.9)) {
-        price *= (1 + price_diff);
-    }
-    else {
-        price /= 2;
-        quantity *= 2;
-        split_count++;
-        add_event(Stock_event{// Stock split event
-            /** event_id */ 65535,
-            /** mutually_exclusive_events */ {},
-            /** text */
-            name +
-                " has rised too high and the company has decide a stock split on it.",
-            /** duration */ 1,
-            /** percentage_permille */ 0,
-            /** type_of_event */ pick_random_stock,
-            /** category */ category,
-            /** modifiers*/
-            {{standard_deviation, 0}, {mean, 0}, {lower_limit, 0}, {upper_limit, 0}}});
-    }
     // Reduce all events duration by one.
     std::list<Stock_event>::iterator event_itr = events.begin();
     while (event_itr != events.end()) {
@@ -308,6 +291,15 @@ void Stock::next_round(void) {
             event_itr->duration = 0;
         }
         event_itr++;
+    }
+    if (!(price * (1 + price_diff) >= STOCK_PRICE_LIMIT)) {
+        price *= (1 + price_diff);
+    }
+    else {
+        price /= 2;
+        quantity *= 2;
+        split_count++;
+        add_event(setup_STOCK_SPLIT_EVENT());
     }
     remove_obselete_event();
     update_history();

@@ -97,5 +97,6 @@ std::vector<std::string> get_saves(void);
 /**
  * @brief Print the vector of saves aka player folders.
  */
-void printvector(std::vector<std::string> avector);
+void printvector(const std::vector<std::string> & avector);
+
 #endif

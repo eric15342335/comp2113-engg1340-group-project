@@ -307,7 +307,6 @@ int main(void) {
     drawLogo(row, col);
     time::sleep(sleepMedium);
     std::vector<float> hsi_history;
-    get_hsi(stocks_list, hsi_history);
 
     {
         std::string loadsave;
@@ -320,6 +319,7 @@ int main(void) {
         if (loadsave.compare(USER_SAVE_OPTION::NEW_GAME) == 0) {
             createplayer(playerName);
             savestatus(rounds_played, stocks_list, balance, playerName);
+            get_hsi(stocks_list, hsi_history);
         }
         if (loadsave.compare(USER_SAVE_OPTION::LOAD_GAME) == 0) {
             loadstatus(rounds_played, stocks_list, balance, playerName, hsi_history);

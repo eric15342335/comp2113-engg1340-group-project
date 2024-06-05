@@ -1384,3 +1384,16 @@ std::vector<Stock_event> pick_events(
     }
     return picked_events;
 }
+
+const Stock_event STOCK_SPLIT_EVENT = {
+    /* event_id */ 65535,
+    /* mutually_exclusive_events */ {},
+    /* text */
+    " has rised too high and the company has decide a stock split on it.",
+    /* duration */ 1,
+    /* percentage_permille */ 0,
+    /* type_of_event */ pick_random_stock,
+    /* category. Assign this to zero first. */ 0,
+    /* modifiers*/
+    {{standard_deviation, 0}, {mean, 0}, {lower_limit, 0}, {upper_limit, 0}},
+};
