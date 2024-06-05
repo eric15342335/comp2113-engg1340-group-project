@@ -44,7 +44,7 @@ ifeq ("$(OS)","Windows_NT")
 endif
 
 release: clean
-	FLAGS="-O3 -flto -D_FORTIFY_SOURCE=2 -fstack-protector-all -march=nocona" "$(MAKE)" stocksim
+	FLAGS="-O3 -flto -D_FORTIFY_SOURCE=2 -fstack-protector-strong -march=nocona" "$(MAKE)" stocksim
 
 # The default target is to compile the program.
 default: stocksim
