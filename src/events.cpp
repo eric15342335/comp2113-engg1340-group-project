@@ -1201,4 +1201,9 @@ Stock_event STOCK_SPLIT_EVENT = {
     /* type_of_event */ pick_random_stock,
     /* category. Assign this to zero first. */ 0,
     /* modifiers*/
-    {{standard_deviation, 0}, {mean, 0}, {lower_limit, 0}, {upper_limit, 0}}};
+    {
+        {standard_deviation, 0},
+        {mean, 0},
+        {lower_limit, 0},
+        {upper_limit, 0},
+    }};
