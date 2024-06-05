@@ -227,10 +227,11 @@ vector<string> get_saves(void) {
     return saves;
 }
 
-void printvector(vector<string> avector) {
+void printvector(const vector<string> & avector) {
     cout << avector[0];
-    for (const auto & item : avector) {
-        cout << ", " << item;
+    // note: start from 1 to avoid printing the first element twice
+    for (unsigned long i = 1; i < avector.size(); i++) {
+        cout << ", " << avector[i];
     }
     cout << endl;
 }
