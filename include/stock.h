@@ -16,7 +16,9 @@ program. If not, see <https://www.gnu.org/licenses/>.
 #define STOCK_H
 
 #include "events.h"
+#include "names.h"
 
+#include <istream>
 #include <list>
 #include <map>
 #include <string>
@@ -245,6 +247,10 @@ class Stock {
          * @return The amount of money player lost due to trading fees.
          */
         float calculateTradingFeesLost(const float & trading_fees_percent) const;
+
+        friend std::ostream & operator<<(std::ostream & fout, const Stock & stock);
+
+        friend std::istream & operator>>(std::istream & fin, Stock & stock);
 
     private:
         /** @brief Name of the stock that we assigned to it. */
