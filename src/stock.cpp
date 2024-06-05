@@ -64,9 +64,7 @@ void Stock::load(const std::string & playerName, int i) {
     // get the first line, which is category
     fin >> *this; // use operator>> to load the Stock object
     fin.close();
-    // @todo Do not hardcode this limit, use a constant
-    // STOCK_PRICE_LIMIT instead
-    assert(price <= 1000 && "Price exceed the limit");
+    assert(price <= STOCK_PRICE_LIMIT && "Price exceed the limit");
     std::cout << "done" << std::endl;
 }
 
