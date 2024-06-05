@@ -22,7 +22,7 @@ CC = g++
 INCLUDES = -Iinclude
 FLAGS += -Wall -Wextra -pedantic -std=c++17 -Werror -g -pipe -fPIE -pie \
 	-Wcast-qual -Wundef -Wduplicated-cond -Wduplicated-branches \
-	-mtune=native -Wswitch -Wshadow
+	-mtune=generic -Wswitch -Wshadow
 	# -Wconversion -Wfloat-equal
 	# -O3 -flto -march=nocona
 	# -D_FORTIFY_SOURCE=2 -fstack-protector-all -Og
@@ -42,6 +42,9 @@ ifeq ("$(OS)","Windows_NT")
 		FLAGS += -pthread
 	endif
 endif
+
+release: clean
+	FLAGS="-O3 -flto -D_FORTIFY_SOURCE=2 -fstack-protector-all -march=nocona" "$(MAKE)" stocksim
 
 # The default target is to compile the program.
 default: stocksim
@@ -127,4 +130,4 @@ check:
 	clang-tidy src/*.cpp --checks=performance-*,-performance-avoid-endl,readability-*,bugprone-*,portability-*,cert-* \
 		--fix-errors --fix-notes --format-style=file -- -Iinclude
 
-.PHONY: all clean docs fix goto msvc check
+.PHONY: all clean docs fix goto msvc check release
