@@ -254,6 +254,11 @@ class Stock {
          */
         float calculateTradingFeesLost(const float & trading_fees_percent) const;
 
+        /**
+         * @brief Set up a STOCK_SPLIT_EVENT with proper values.
+        */
+        Stock_event setup_STOCK_SPLIT_EVENT(void);
+
         friend std::ostream & operator<<(std::ostream & fout, const Stock & stock);
 
         friend std::istream & operator>>(std::istream & fin, Stock & stock);

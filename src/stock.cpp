@@ -125,6 +125,9 @@ std::istream & operator>>(std::istream & fin, Stock & stock) {
         Stock_event loadedEvent;
         std::istringstream(loadedEventString) >> loadedEvent;
         // Check the loaded event is valid
+        if (loadedEvent.event_id == STOCK_SPLIT_EVENT.event_id) {
+            continue;
+        }
         assert(
             loadedEvent.event_id < all_stock_events.size() && "Invalid event loaded");
         Stock_event comparedEvent = all_stock_events[loadedEvent.event_id];
@@ -264,6 +267,13 @@ float Stock::sum_attribute(stock_modifiers attribute) {
     return sum;
 }
 
+Stock_event Stock::setup_STOCK_SPLIT_EVENT(void) {
+    Stock_event event_copy = STOCK_SPLIT_EVENT;
+    event_copy.text = name + event_copy.text;
+    event_copy.category = category;
+    return event_copy;
+}
+
 void Stock::next_round(void) {
     /** Update the price of the stock.
      * If the price is less than 1000, the price will increase or decrease by a random
@@ -271,28 +281,6 @@ void Stock::next_round(void) {
      * quantity will be doubled.
      */
     float price_diff = percentage_change_price(*this) / 100;
-    if (!(price * (1 + price_diff) >= STOCK_PRICE_LIMIT)) {
-        price *= (1 + price_diff);
-    }
-    else {
-        price /= 2;
-        quantity *= 2;
-        split_count++;
-        add_event(Stock_event{// Stock split event
-                              /// @todo Do not hardcode this "stock split" event here.
-                              /// Put it in a constant somewhere in events.cpp
-            /** event_id */ 65535,
-            /** mutually_exclusive_events */ {},
-            /** text */
-            name +
-                " has rised too high and the company has decide a stock split on it.",
-            /** duration */ 1,
-            /** percentage_permille */ 0,
-            /** type_of_event */ pick_random_stock,
-            /** category */ category,
-            /** modifiers*/
-            {{standard_deviation, 0}, {mean, 0}, {lower_limit, 0}, {upper_limit, 0}}});
-    }
     // Reduce all events duration by one.
     std::list<Stock_event>::iterator event_itr = events.begin();
     while (event_itr != events.end()) {
@@ -303,6 +291,15 @@ void Stock::next_round(void) {
             event_itr->duration = 0;
         }
         event_itr++;
+    }
+    if (!(price * (1 + price_diff) >= STOCK_PRICE_LIMIT)) {
+        price *= (1 + price_diff);
+    }
+    else {
+        price /= 2;
+        quantity *= 2;
+        split_count++;
+        add_event(setup_STOCK_SPLIT_EVENT());
     }
     remove_obselete_event();
     update_history();
