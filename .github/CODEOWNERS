@@ -1,0 +1,5 @@
+# Auto request review from eric if pull requests changed these files
+# Responsible for maintaining these
+.github/ @eric15342335
+Doxyfile @eric15342335
+.clang-format @eric15342335
