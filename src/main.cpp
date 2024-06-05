@@ -299,56 +299,41 @@ int main(void) {
 
     sortStocksList(stocks_list, by_category, ascending);
 
-    {
-        // Assert that the every key has no value.
-        std::map<unsigned int, std::vector<unsigned int>> checkEventResult =
-            check_mutual_exclusivity(all_stock_events);
-        for (auto & [key, value] : checkEventResult) {
-            // If the assertion is raised, print the checkEventResult and exit the
-            // program.
-            if (!value.empty()) {
-                std::cout << "Error: detected mutual exclusivity violation! Details:"
-                          << std::endl;
-                print_map(checkEventResult);
-                return 1;
-            }
-        }
+    // Check if the events are mutually exclusive
+    if (assertion_check_mutual_exclusivity()) {
+        exit(1);
     }
+
     drawLogo(row, col);
     time::sleep(sleepMedium);
     std::vector<float> hsi_history;
     get_hsi(stocks_list, hsi_history);
+
     {
         std::string loadsave;
-        std::cout << "Please enter.\n0 for new save,\n1 for loading old save(s),\n2 "
-                     "for deleting save,\n3 to quit: ";
+        std::cout << USER_SAVE_OPTION_PROMPT;
         std::cin >> loadsave;
-        while (
-            loadsave != "0" && loadsave != "1" && loadsave != "2" && loadsave != "3") {
-            std::cout
-                << "Invalid input.\nPlease enter.\n0 for new save,\n1 for loading "
-                   "old save(s),\n2 for deleting save,\n3 to quit:"
-                << std::endl;
+        while (!checkValidInput(loadsave)) {
+            std::cout << "Invalid input.\n" << USER_SAVE_OPTION_PROMPT;
             std::cin >> loadsave; // choose new file or load previous file
         }
-        if (loadsave == "1") {
-            loadstatus(rounds_played, stocks_list, balance, playerName, hsi_history);
-        }
-        if (loadsave == "2") {
-            delsave(loadsave); // delete existing file
-        }
-        if (loadsave == "3") {
-            std::cout << "Goodbye! Hope you had a good luck in the stock market!"
-                      << std::endl;
-            return 0;
-        }
-        if (loadsave == "0") {
+        if (loadsave.compare(USER_SAVE_OPTION::NEW_GAME) == 0) {
             createplayer(playerName);
             savestatus(rounds_played, stocks_list, balance, playerName);
         }
-        // Done loading/creating a new file.
+        if (loadsave.compare(USER_SAVE_OPTION::LOAD_GAME) == 0) {
+            loadstatus(rounds_played, stocks_list, balance, playerName, hsi_history);
+        }
+        if (loadsave.compare(USER_SAVE_OPTION::DELETE_GAME) == 0) {
+            delsave(loadsave); // delete existing file
+        }
+        if (loadsave.compare(USER_SAVE_OPTION::EXIT_GAME) == 0) {
+            std::cout << "Goodbye! Hope you had a good luck in the stock market!"
+                      << std::endl;
+            return EXIT_SUCCESS;
+        }
     }
-
+    // Done loading/creating a new file.
     std::cout << "Current trading fees are charged at " << trading_fees_percent * 100
               << " %" << std::endl;
     time::sleep(sleepMedium * 2);

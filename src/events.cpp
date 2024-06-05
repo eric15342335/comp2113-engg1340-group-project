@@ -1098,7 +1098,7 @@ int main() {
 */
 
 std::map<unsigned int, std::vector<unsigned int>> check_mutual_exclusivity(
-    std::vector<Stock_event> all_events) {
+    const std::vector<Stock_event> & all_events) {
     std::map<unsigned int, std::vector<unsigned int>> mut_excl_map;
     // Build the map
     for (unsigned int i = 0; i < all_events.size(); i++) {
@@ -1126,6 +1126,22 @@ std::map<unsigned int, std::vector<unsigned int>> check_mutual_exclusivity(
         }
     }
     return mut_excl_map;
+}
+
+bool assertion_check_mutual_exclusivity(void) {
+    // Assert that the every key has no value.
+    auto checkEventResult = check_mutual_exclusivity(all_stock_events);
+    for (const auto & [key, value] : checkEventResult) {
+        // If the assertion is raised, print the checkEventResult and exit the
+        // program.
+        if (!value.empty()) {
+            std::cout << "Error: detected mutual exclusivity violation! Details:"
+                      << std::endl;
+            print_map(checkEventResult);
+            return true;
+        }
+    }
+    return false;
 }
 
 std::vector<Stock_event> pick_events(
