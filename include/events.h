@@ -197,7 +197,7 @@ struct Stock_event {
 };
 
 /** @brief The list of all events that will be applied to the stocks. */
-extern std::vector<Stock_event> all_stock_events;
+extern const std::vector<Stock_event> all_stock_events;
 
 /**
  * @brief Pick a random event from the list of events
@@ -217,7 +217,13 @@ std::vector<Stock_event> pick_events(
  * exist but should.
  */
 std::map<unsigned int, std::vector<unsigned int>> check_mutual_exclusivity(
-    std::vector<Stock_event> all_events);
+    const std::vector<Stock_event> & all_events);
+
+/**
+ * @brief Check if there are mutual exclusivity violations in all_stock_events.
+ * @return True if the events are mutually exclusive with each other.
+ */
+bool assertion_check_mutual_exclusivity(void);
 
 /** @brief Print a map to std::cout.
  * @param map The std::map object you want to print.
