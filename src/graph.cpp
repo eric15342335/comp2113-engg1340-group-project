@@ -15,8 +15,8 @@ program. If not, see <https://www.gnu.org/licenses/>.
 // This file should be saved in UTF-8 with BOM encoding
 // to display the unicode characters correctly.
 #include "graph.h"
-
 #include "format.h"
+#include "file_io.h"
 
 #include <algorithm>
 #include <cassert>
@@ -98,10 +98,11 @@ vector<float> graphinput(
     const string & player, int stocknum, string & stockname, unsigned int width) {
     string filename;
     if (stocknum != -1) {
-        filename = "saves/" + player + "/" + to_string(stocknum) + ".save";
+        filename = SAVE_FOLDER_PREFIX + player + "/" + to_string(stocknum) + "" +
+                   SAVE_FILE_EXTENSION_TXT;
     }
     else {
-        filename = "saves/" + player + "/hsi.save";
+        filename = SAVE_FOLDER_PREFIX + player + "/hsi" + SAVE_FILE_EXTENSION_TXT;
     }
     ifstream fin;
     float x;
