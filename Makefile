@@ -18,9 +18,9 @@ compile the program using the Microsoft Visual C++ compiler
 # make check \
 check the code for formatting and static analysis issues
 
-CC = g++
+CC = clang++
 INCLUDES = -Iinclude
-FLAGS += -Wall -Wextra -pedantic -std=c++17 -Werror -g \
+FLAGS += -Wall -Wextra -pedantic -std=c++17 -Werror -g -pipe \
 	-Wcast-qual -Wundef -Wduplicated-cond -Wduplicated-branches \
 	-mtune=native -Wswitch -Wshadow
 	# -Wconversion -Wfloat-equal
@@ -30,12 +30,18 @@ FLAGS += -Wall -Wextra -pedantic -std=c++17 -Werror -g \
 # macOS uses clang++, which does not support these flag:
 # -Wduplicated-cond -Wduplicated-branches
 ifeq ($(shell uname),Darwin)
-FLAGS += -Wno-unknown-warning-option
+	FLAGS += -Wno-unknown-warning-option
+else
+	ifeq ($(CC),clang++)
+		FLAGS += -Wno-unknown-warning-option
+	endif
 endif
-
 # eric15342335 will use the static flag on Windows.
 ifeq ("$(OS)","Windows_NT")
-FLAGS += -static
+	FLAGS += -static
+	ifeq ($(CC),clang++)
+		FLAGS += -pthread
+	endif
 endif
 
 # The default target is to compile the program.
@@ -98,8 +104,8 @@ clean:
 	rm *.o stocksim?* -r saves/ html/ latex/ *.obj *.pdb *.ilk *.dSYM/ 2>/dev/null || true
 
 # Generate documentation using `Doxygen`.
-docs: Doxyfile src/*.cpp include/*.h
-	cp Doxyfile Doxyfile.temp
+docs: .github/Doxyfile src/*.cpp include/*.h
+	cp .github/Doxyfile Doxyfile.temp
 	echo PROJECT_NUMBER = $$(git branch --show-current) $$(git log -n1 --format="%h") >> Doxyfile.temp
 	doxygen Doxyfile.temp
 	rm Doxyfile.temp
