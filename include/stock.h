@@ -28,6 +28,12 @@ program. If not, see <https://www.gnu.org/licenses/>.
 const int initial_stock_count = 20;
 
 /**
+ * The upper limit of the stock price.
+ * @see Stock::next_round for the "stock split" event.
+ */
+const float STOCK_PRICE_LIMIT = 1000.0f;
+
+/**
  * @class Stock stock.h "stock.h"
  * @brief A class that represents a stock object in the game.
  * The stock has a name, price, quantity, category, money spent, events, attributes, and

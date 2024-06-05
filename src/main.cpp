@@ -323,7 +323,6 @@ int main(void) {
         }
         if (loadsave.compare(USER_SAVE_OPTION::LOAD_GAME) == 0) {
             loadstatus(rounds_played, stocks_list, balance, playerName, hsi_history);
-            get_hsi(stocks_list, hsi_history);
         }
         if (loadsave.compare(USER_SAVE_OPTION::DELETE_GAME) == 0) {
             delsave(loadsave); // delete existing file

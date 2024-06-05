@@ -64,7 +64,9 @@ void Stock::load(const std::string & playerName, int i) {
     // get the first line, which is category
     fin >> *this; // use operator>> to load the Stock object
     fin.close();
-    time::sleep(random_integer(sleepShort)); // optimize this
+    // @todo Do not hardcode this limit, use a constant
+    // STOCK_PRICE_LIMIT instead
+    assert(price <= 1000 && "Price exceed the limit");
     std::cout << "done" << std::endl;
 }
 
@@ -105,7 +107,7 @@ std::istream & operator>>(std::istream & fin, Stock & stock) {
         fin >> loadedPrice; // line 3
     }
     // Set the price
-    stock.price = stock.get_price();
+    stock.price = stock.history.back();
     fin >> stock.quantity;                       // line 4
     fin >> stock.attributes[standard_deviation]; // line 5
     fin >> stock.attributes[mean];
@@ -269,7 +271,7 @@ void Stock::next_round(void) {
      * quantity will be doubled.
      */
     float price_diff = percentage_change_price(*this) / 100;
-    if (!(price * (1 + price_diff) > 999.9)) {
+    if (!(price * (1 + price_diff) >= STOCK_PRICE_LIMIT)) {
         price *= (1 + price_diff);
     }
     else {
@@ -277,6 +279,8 @@ void Stock::next_round(void) {
         quantity *= 2;
         split_count++;
         add_event(Stock_event{// Stock split event
+            /// @todo Do not hardcode this "stock split" event here.
+            /// Put it in a constant somewhere in events.cpp
             /** event_id */ 65535,
             /** mutually_exclusive_events */ {},
             /** text */

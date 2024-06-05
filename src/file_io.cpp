@@ -89,7 +89,7 @@ void createplayer(string & playerName) {
     filesystem::create_directory(foldername); // create a empty folder for new save
 }
 
-void load_hsi(std::vector<float> hsi_history, const string & playerName) {
+void load_hsi(std::vector<float> & hsi_history, const string & playerName) {
     std::string filesave =
         SAVE_FOLDER_PREFIX + playerName + "/hsi" + SAVE_FILE_EXTENSION_TXT;
     std::ifstream fin;
