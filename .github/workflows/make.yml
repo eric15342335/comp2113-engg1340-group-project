@@ -50,6 +50,12 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+    - name: Setup LLVM
+      # https://github.com/actions/runner-images/issues/10001
+      if: matrix.config.CXX == 'clang++'
+      run: |
+        choco install llvm -y
+        echo "LLVM_PATH=C:\Program Files\LLVM\bin" >> $GITHUB_ENV
     - name: Make all
       if: matrix.config.CXX != 'cmake' && matrix.config.CXX != 'cl' && matrix.config.build_type == 'all'
       shell: bash
