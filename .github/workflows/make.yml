@@ -28,24 +28,24 @@ jobs:
             - {os: ubuntu-latest, CXX: g++, build_type: release}
             - {os: ubuntu-latest, CXX: clang++, build_type: all}
             - {os: ubuntu-latest, CXX: clang++, build_type: release}
-            - {os: ubuntu-latest, CXX: cmake, build_type: none}
-            - {os: windows-latest, CXX: cl, build_type: none}
+            - {os: ubuntu-latest, CXX: cmake, build_type: DEBUG}
+            - {os: windows-latest, CXX: cl, build_type: DEBUG}
             - {os: windows-latest, CXX: g++, build_type: all}
             - {os: windows-latest, CXX: g++, build_type: release}
             - {os: windows-latest, CXX: clang++, build_type: all}
             - {os: windows-latest, CXX: clang++, build_type: release}
-            - {os: windows-latest, CXX: cmake, build_type: none}
+            - {os: windows-latest, CXX: cmake, build_type: DEBUG}
             # macos-13 is for x64, while macos-14 is for arm64 (M1)
             - {os: macos-13, CXX: g++, build_type: all}
             - {os: macos-13, CXX: g++, build_type: release}
             - {os: macos-13, CXX: clang++, build_type: all}
             - {os: macos-13, CXX: clang++, build_type: release}
-            - {os: macos-13, CXX: cmake, build_type: none}
+            - {os: macos-13, CXX: cmake, build_type: DEBUG}
             - {os: macos-latest, CXX: g++, build_type: all}
             - {os: macos-latest, CXX: g++, build_type: release}
             - {os: macos-latest, CXX: clang++, build_type: all}
             - {os: macos-latest, CXX: clang++, build_type: release}
-            - {os: macos-latest, CXX: cmake, build_type: none}
+            - {os: macos-latest, CXX: cmake, build_type: DEBUG}
     name: "${{ matrix.config.os }} ${{ matrix.config.CXX }} ${{ matrix.config.build_type }}"
     steps:
     - name: Checkout repository
@@ -72,7 +72,7 @@ jobs:
       if: matrix.config.CXX == 'cmake'
       shell: bash
       run: |
-        cmake -B build -S . -DOUTPUT_NAME=stocksim-cmake
+        cmake -B build -S . -DOUTPUT_NAME=stocksim-cmake -DCMAKE_BUILD_TYPE=${{ matrix.config.build_type }}
         cmake --build build --parallel 2
         cmake --install build --prefix .
     - name: Set up Microsoft Dev Cmd
