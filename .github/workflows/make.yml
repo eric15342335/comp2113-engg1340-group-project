@@ -1,4 +1,4 @@
-name: Make
+name: CI
 
 on:
     [push, workflow_dispatch]
@@ -8,9 +8,17 @@ on:
 #    cancel-in-progress: false
 
 jobs:
-  make:
+  clang-format:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    - name: Make check
+      run: |
+        make check
+  build-and-test:
     # runs-on: self-hosted
-    timeout-minutes: 10
+    timeout-minutes: 5
     runs-on: ${{ matrix.config.os }}
     strategy:
       fail-fast: false
@@ -37,6 +45,7 @@ jobs:
             - {os: macos-latest, CXX: clang++, build_type: all}
             - {os: macos-latest, CXX: clang++, build_type: release}
             - {os: macos-latest, CXX: cmake, build_type: none}
+    name: "${{ matrix.config.CXX }} on ${{ matrix.config.os }} (${{ matrix.config.build_type }})"
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
