@@ -1,4 +1,4 @@
-name: Make
+name: CI
 
 on:
     [push, workflow_dispatch]
@@ -8,58 +8,105 @@ on:
 #    cancel-in-progress: false
 
 jobs:
-  Make:
-    #runs-on: self-hosted
-    timeout-minutes: 10
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-13, macos-latest]
+  clang-format:
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-    - name: Make
+    - name: Make check
+      run: |
+        make check
+  build-and-test:
+    # runs-on: self-hosted
+    timeout-minutes: 5
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+            - {os: ubuntu-latest, CXX: g++, build_type: all}
+            - {os: ubuntu-latest, CXX: g++, build_type: release}
+            - {os: ubuntu-latest, CXX: clang++, build_type: all}
+            - {os: ubuntu-latest, CXX: clang++, build_type: release}
+            - {os: ubuntu-latest, CXX: cmake, build_type: Debug}
+            - {os: windows-latest, CXX: cl, build_type: Debug}
+            - {os: windows-latest, CXX: g++, build_type: all}
+            - {os: windows-latest, CXX: g++, build_type: release}
+            - {os: windows-latest, CXX: clang++, build_type: all}
+            - {os: windows-latest, CXX: clang++, build_type: release}
+            - {os: windows-latest, CXX: cmake, build_type: Debug}
+            # macos-13 is for x64, while macos-14 is for arm64 (M1)
+            - {os: macos-13, CXX: g++, build_type: all}
+            - {os: macos-13, CXX: g++, build_type: release}
+            - {os: macos-13, CXX: clang++, build_type: all}
+            - {os: macos-13, CXX: clang++, build_type: release}
+            - {os: macos-13, CXX: cmake, build_type: Debug}
+            - {os: macos-latest, CXX: g++, build_type: all}
+            - {os: macos-latest, CXX: g++, build_type: release}
+            - {os: macos-latest, CXX: clang++, build_type: all}
+            - {os: macos-latest, CXX: clang++, build_type: release}
+            - {os: macos-latest, CXX: cmake, build_type: Debug}
+    name: "${{ matrix.config.os }} ${{ matrix.config.CXX }} ${{ matrix.config.build_type }}"
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    - name: Setup LLVM on Windows
+      # https://github.com/actions/runner-images/issues/10001
+      if: matrix.config.CXX == 'clang++' && matrix.config.os == 'windows-latest'
+      run: |
+        choco upgrade llvm -y
+        echo "LLVM_PATH=C:\Program Files\LLVM\bin" >> $GITHUB_ENV
+    - name: Output compiler version
+      if : ${{ matrix.config.CXX == 'g++' || matrix.config.CXX == 'clang++' }}
+      run: ${{ matrix.config.CXX }} --version
+    - name: Make all
+      if: matrix.config.CXX != 'cmake' && matrix.config.CXX != 'cl' && matrix.config.build_type == 'all'
       shell: bash
       run: |
         # Enabling optimization checks -Wmaybe-uninitialized from -Wall
-        echo -e "3" | FLAGS=-O2 make all
-    - name: CMake
+        # output 3 to stdin (to close the game) as 'make all' will start the game
+        echo -e "3" | CXXFLAGS=-O2 CXX=${{ matrix.config.CXX }} make all -j2
+    - name: Make release
+      if: matrix.config.CXX != 'cmake' && matrix.config.CXX != 'cl' && matrix.config.build_type == 'release'
       shell: bash
       run: |
-        cmake -B build -S .
-        cmake --build build
+        CXX=${{ matrix.config.CXX }} make release -j 2
+    - name: CMake
+      if: matrix.config.CXX == 'cmake'
+      shell: bash
+      run: |
+        cmake -B build -S . -DOUTPUT_NAME=stocksim-cmake -Werror=dev -Werror=deprecated --fresh
+        cmake --build build --parallel 2 --config ${{ matrix.config.build_type }} --clean-first
+        cmake --install build --prefix . --config ${{ matrix.config.build_type }}
     - name: Set up Microsoft Dev Cmd
-      if: matrix.os == 'windows-latest'
+      if: matrix.config.os == 'windows-latest' && matrix.config.CXX == 'cl'
       uses: ilammy/msvc-dev-cmd@v1.13.0
       with:
         arch: amd64
     - name: Compile with cl
-      if: matrix.os == 'windows-latest'
+      if: matrix.config.os == 'windows-latest' && matrix.config.CXX == 'cl'
       shell: cmd
       run: |
         make msvc
-    - name: Make test
+    - name: Run test cases
       shell: bash
       run: |
-        # test for creating saves
-        echo -e "0\n saves\nsaves\nB\n1\n1\nN\nY\nN\nY\nN\nY\nT\n0\nT\n1\nT\n2\nE\nT\nX\nY\n" | ./stocksim
-        # test for loading saves
-        echo -e "1\nsaves\nN\nY\nN\nY\nN\nY\nN\nY\nT\n0\nT\nT\n3\nT\n4\nT\nS\n1\n1\nX\nY\n" | ./stocksim
-        # test for deleting saves
-        echo -e "2\nsaves\nY\n3\n" | ./stocksim
-        if [ -e stocksim-msvc.exe ]; then
-          echo -e "0\n saves\nsaves\nB\n1\n1\nN\nY\nN\nY\nN\nY\nT\n0\nT\n1\nT\n2\nE\nT\nX\nY\n" | ./stocksim-msvc.exe
-          echo -e "1\nsaves\nN\nY\nN\nY\nN\nY\nN\nY\nT\n0\nT\nT\n3\nT\n4\nT\nS\n1\n1\nX\nY\n" | ./stocksim-msvc.exe
-          echo -e "2\nsaves\nY\n3\n" | ./stocksim-msvc.exe
-        fi
+        # Test cases for every executable produced
+        for executable in $(find -maxdepth 1 -name stocksim*)
+        do
+            echo -e "0\n saves\nsaves\nB\n1\n1\nN\nY\nN\nY\nN\nY\nT\n0\nT\n1\nT\n2\nE\nT\nX\nY\n" | ./$executable
+            # test for loading saves
+            echo -e "1\nsaves\nN\nY\nN\nY\nN\nY\nN\nY\nT\n0\nT\nT\n3\nT\n4\nT\nS\n1\n1\nX\nY\n" | ./$executable
+            # test for deleting saves
+            echo -e "2\nsaves\nY\n3\n" | ./$executable
+        done
     - name: Upload executable
       uses: actions/upload-artifact@v4
       with:
         # suppose we compiled our game and named it 'stocksim'
         # use wildcard to match the executable for all platforms
         # name: stocksim
-        name: stocksim-${{ matrix.os }}
+        name: stocksim-${{ matrix.config.os }}-${{ matrix.config.CXX }}-${{ matrix.config.build_type }}
         path: stocksim*
         compression-level: 9
         if-no-files-found: error
