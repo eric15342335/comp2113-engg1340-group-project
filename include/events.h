@@ -232,7 +232,7 @@ void print_map(const std::map<unsigned int, std::vector<unsigned int>> & map);
 
 extern const Stock_event STOCK_SPLIT_EVENT;
 
-inline const unsigned int sumOfAllEventsProbability = []() {
+const unsigned int sumOfAllEventsProbability = []() {
     unsigned int sum = 0;
     for (const auto & event : all_stock_events) {
         sum += event.probability_permille;

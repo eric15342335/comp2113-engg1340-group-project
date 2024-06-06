@@ -146,10 +146,18 @@ check:
 	clang-tidy src/*.cpp --checks=performance-*,-performance-avoid-endl,readability-*,bugprone-*,portability-*,cert-* \
 		--fix-errors --fix-notes --format-style=file -- -Iinclude
 
+ifeq ($(MAKECMDGOALS),release)
+ifneq ($(CXX),clang++)
+CXXFLAGS += -flto
+else ifneq ($(OS),Windows_NT)
+CXXFLAGS += -flto
+endif
+endif
+
 release: clean
 	# this should put after default target
 	"$(MAKE)" stocksim \
-	CXXFLAGS="$(CXXFLAGS) -O3 -flto -D_FORTIFY_SOURCE=2 -fstack-protector-strong" \
+	CXXFLAGS="$(CXXFLAGS) -O3 -D_FORTIFY_SOURCE=2 -fstack-protector-strong" \
 	OUTPUT="stocksim-release" \
 	CXX="$(CXX)"
 
