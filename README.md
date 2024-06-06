@@ -4,7 +4,7 @@
 ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
 
 [![clang-format](https://github.com/eric15342335/comp2113-engg1340-group-project/actions/workflows/clang-format.yml/badge.svg?branch=main)](https://github.com/eric15342335/comp2113-engg1340-group-project/actions/workflows/clang-format.yml)
-[![CI](https://github.com/eric15342335/comp2113-engg1340-group-project/actions/workflows/ci.yml/badge.svg)](https://github.com/eric15342335/comp2113-engg1340-group-project/actions/workflows/ci.yml)
+[![Make](https://github.com/eric15342335/comp2113-engg1340-group-project/actions/workflows/Make.yml/badge.svg)](https://github.com/eric15342335/comp2113-engg1340-group-project/actions/workflows/Make.yml)
 [![Pages (doxygen)](https://github.com/eric15342335/comp2113-engg1340-group-project/actions/workflows/static.yml/badge.svg)](https://github.com/eric15342335/comp2113-engg1340-group-project/actions/workflows/static.yml)
 [![CodeFactor](https://www.codefactor.io/repository/github/eric15342335/comp2113-engg1340-group-project/badge/main)](https://www.codefactor.io/repository/github/eric15342335/comp2113-engg1340-group-project/overview/main)
 
