@@ -50,9 +50,9 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-    - name: Setup LLVM
+    - name: Setup LLVM on Windows
       # https://github.com/actions/runner-images/issues/10001
-      if: matrix.config.CXX == 'clang++'
+      if: matrix.config.CXX == 'clang++' && matrix.config.os == 'windows-latest'
       run: |
         choco install llvm -y
         echo "LLVM_PATH=C:\Program Files\LLVM\bin" >> $GITHUB_ENV
