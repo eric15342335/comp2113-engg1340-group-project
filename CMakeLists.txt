@@ -32,4 +32,4 @@ add_executable(${OUTPUT_NAME}
 
 target_include_directories(${OUTPUT_NAME} PRIVATE include)
 
-install(TARGETS ${OUTPUT_NAME} DESTINATION .)
+install(TARGETS ${CMAKE_CURRENT_BINARY_DIR}/${OUTPUT_NAME} DESTINATION .)
