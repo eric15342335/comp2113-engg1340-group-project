@@ -126,7 +126,7 @@ msvc: src/*.cpp include/*.h
 	# Launch the Visual Studio Developer Command Prompt
 	# and run the following command:
 	#
-	cl -std:c++17 -EHsc -utf-8 src/*.cpp -Iinclude -Fe:stocksim-msvc.exe
+	cl -std:c++17 -EHsc -utf-8 src/*.cpp -Iinclude -W1 -WX -Fe:stocksim-msvc.exe
 
 check:
 	clang-format --dry-run --Werror src/*.cpp include/*.h
