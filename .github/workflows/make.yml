@@ -1,0 +1,80 @@
+name: Make
+
+on:
+    [push, workflow_dispatch]
+
+#concurrency:
+#    group: "make"
+#    cancel-in-progress: false
+
+jobs:
+  Make:
+    # runs-on: self-hosted
+    timeout-minutes: 10
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-13, macos-latest]
+        CXX: [g++, clang++, cl, cmake]
+        include: [
+          {CXX: g++, build_type: all},
+          {CXX: g++, build_type: release},
+          {CXX: clang++, build_type: all},
+          {CXX: clang++, build_type: release},
+          {CXX: cl, build_type: none},
+          {CXX: cmake, build_type: none}
+        ]
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    - name: Make all
+      if: matrix.CXX != 'cmake' && matrix.CXX != 'cl' && matrix.build_type == 'all'
+      shell: bash
+      run: |
+        # Enabling optimization checks -Wmaybe-uninitialized from -Wall
+        # output 3 to stdin (to close the game) as 'make all' will start the game
+        echo -e "3" | CXXFLAGS=-O2 CXX=${{ matrix.CXX }} make all -j2
+    - name: Make release
+      if: matrix.CXX != 'cmake' && matrix.CXX != 'cl' && matrix.build_type == 'release'
+      shell: bash
+      run: |
+        make release -j 2
+    - name: CMake
+      if: matrix.CXX == 'cmake'
+      shell: bash
+      run: |
+        cmake -B build -S . -DOUTPUT_NAME=stocksim-cmake 
+        cmake --build build --parallel 2
+    - name: Set up Microsoft Dev Cmd
+      if: matrix.os == 'windows-latest' && matrix.CXX == 'cl'
+      uses: ilammy/msvc-dev-cmd@v1.13.0
+      with:
+        arch: amd64
+    - name: Compile with cl
+      if: matrix.os == 'windows-latest' && matrix.CXX == 'cl'
+      shell: cmd
+      run: |
+        make msvc
+    - name: Run test cases
+      shell: bash
+      run: |
+        # Test cases for every executable produced
+        for executable in stocksim*
+        do
+            echo -e "0\n saves\nsaves\nB\n1\n1\nN\nY\nN\nY\nN\nY\nT\n0\nT\n1\nT\n2\nE\nT\nX\nY\n" | ./$executable
+            # test for loading saves
+            echo -e "1\nsaves\nN\nY\nN\nY\nN\nY\nN\nY\nT\n0\nT\nT\n3\nT\n4\nT\nS\n1\n1\nX\nY\n" | ./$executable
+            # test for deleting saves
+            echo -e "2\nsaves\nY\n3\n" | ./$executable
+        done
+    - name: Upload executable
+      uses: actions/upload-artifact@v4
+      with:
+        # suppose we compiled our game and named it 'stocksim'
+        # use wildcard to match the executable for all platforms
+        # name: stocksim
+        name: stocksim-${{ matrix.os }}-${{ matrix.CXX }}-${{ matrix.build_type }}
+        path: stocksim*
+        compression-level: 9
+        if-no-files-found: error
