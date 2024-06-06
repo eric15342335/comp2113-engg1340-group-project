@@ -121,7 +121,6 @@ Maximize your terminal window to its fullest extent.
 
 On Windows, you can achieve this by pressing the `Alt+Enter` key combination, which will toggle the terminal to fullscreen mode.
 
-
 ### Font Size Adjustment
 
 Reduce your terminal's font size initially.
@@ -181,28 +180,28 @@ Generation of stock prices:
 
 - We used normal distribution to generate the percentage change in the stock price for each new round.
 
-https://github.com/eric15342335/comp2113-engg1340-group-project/blob/1cd66bfd883a18577a4b8d5d246b4aff21e000f6/src/random_price.cpp#L114-L128
+<https://github.com/eric15342335/comp2113-engg1340-group-project/blob/1cd66bfd883a18577a4b8d5d246b4aff21e000f6/src/random_price.cpp#L114-L128>
 
 Generation of in-game events:
 
 - In our game, we also included [**99**](https://github.com/eric15342335/comp2113-engg1340-group-project/blob/1cd66bfd883a18577a4b8d5d246b4aff21e000f6/src/events.cpp#L1255-L1263) events that will each have a possibility to happen in your gameplay.
   - The (relative) probability of each event is determined by the `Stock_event.probability_permille` member variable.
 
-https://github.com/eric15342335/comp2113-engg1340-group-project/blob/1cd66bfd883a18577a4b8d5d246b4aff21e000f6/src/events.cpp#L48-L60
+<https://github.com/eric15342335/comp2113-engg1340-group-project/blob/1cd66bfd883a18577a4b8d5d246b4aff21e000f6/src/events.cpp#L48-L60>
 
 ## Data structures for storing game status (e.g., arrays, STL containers)
 
 In [stock.h](./stock.h), we declared class [Stock](https://eric15342335.github.io/comp2113-engg1340-group-project/classStock.html) which utilizes STL `vector`, `list` and `map` to store various game data.
 
-https://github.com/eric15342335/comp2113-engg1340-group-project/blob/1cd66bfd883a18577a4b8d5d246b4aff21e000f6/include/stock.h#L266-L295
+<https://github.com/eric15342335/comp2113-engg1340-group-project/blob/1cd66bfd883a18577a4b8d5d246b4aff21e000f6/include/stock.h#L266-L295>
 
 The class `Stock` itself represents an Stock object, which you can purchase, sell, generate a new price for it, etc.
 
-https://github.com/eric15342335/comp2113-engg1340-group-project/blob/1cd66bfd883a18577a4b8d5d246b4aff21e000f6/include/stock.h#L36-L58
+<https://github.com/eric15342335/comp2113-engg1340-group-project/blob/1cd66bfd883a18577a4b8d5d246b4aff21e000f6/include/stock.h#L36-L58>
 
 Other than `class Stock`, we have struct [Stock_event](https://eric15342335.github.io/comp2113-engg1340-group-project/structStock__event.html) that represents an in-game event.
 
-https://github.com/eric15342335/comp2113-engg1340-group-project/blob/1cd66bfd883a18577a4b8d5d246b4aff21e000f6/include/events.h#L104-L176
+<https://github.com/eric15342335/comp2113-engg1340-group-project/blob/1cd66bfd883a18577a4b8d5d246b4aff21e000f6/include/events.h#L104-L176>
 
 ## Dynamic memory management (e.g., dynamic arrays, linked lists, [STL containers](https://en.cppreference.com/w/cpp/container))
 
@@ -210,7 +209,7 @@ https://github.com/eric15342335/comp2113-engg1340-group-project/blob/1cd66bfd883
 - [Stock.events](https://eric15342335.github.io/comp2113-engg1340-group-project/class_stock.html#ab7a85d9f901420579b21cc4e78ea6827) is an `std::list<Stock_event>` that stores on-going [events](https://eric15342335.github.io/comp2113-engg1340-group-project/struct_stock__event.html) that applies to the stock itself.
 - [Stock.attributes](https://eric15342335.github.io/comp2113-engg1340-group-project/class_stock.html#a5f6748d37037cc65608d15cc83b09bf2) is an `std::map<stock_modifiers, float>` that stores the [properties](https://eric15342335.github.io/comp2113-engg1340-group-project/events_8h.html#a185fb61c0dff5e2a9b6c147a261736ee) related to stock price generation.
 
-https://github.com/eric15342335/comp2113-engg1340-group-project/blob/1cd66bfd883a18577a4b8d5d246b4aff21e000f6/include/stock.h#L282-L291
+<https://github.com/eric15342335/comp2113-engg1340-group-project/blob/1cd66bfd883a18577a4b8d5d246b4aff21e000f6/include/stock.h#L282-L291>
 
 ## [File input/output](./src/file_io.cpp) (e.g., for loading/saving game status)
 
@@ -228,6 +227,7 @@ The save files are distinguished by the `std::string playerName` variable.
 To prevent loss of progress and prevent rollbacks, the game automatically saves the current state at the end of every round.
 
 ### File Management
+
 The game heavily relies on the `<filesystem>` library introduced in `C++17` to maintain file organization. This library enables the game to:
 
 - Obtain a list of available save files.
