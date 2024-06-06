@@ -54,8 +54,11 @@ jobs:
       # https://github.com/actions/runner-images/issues/10001
       if: matrix.config.CXX == 'clang++' && matrix.config.os == 'windows-latest'
       run: |
-        choco install llvm -y
+        choco upgrade llvm -y
         echo "LLVM_PATH=C:\Program Files\LLVM\bin" >> $GITHUB_ENV
+    - name: Output compiler version
+      if : ${{ matrix.config.CXX == 'g++' || matrix.config.CXX == 'clang++' }}
+      run: ${{ matrix.config.CXX }} --version
     - name: Make all
       if: matrix.config.CXX != 'cmake' && matrix.config.CXX != 'cl' && matrix.config.build_type == 'all'
       shell: bash
