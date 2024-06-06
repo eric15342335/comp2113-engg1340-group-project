@@ -35,7 +35,7 @@ CXXFLAGS += -Wall -Wextra -pedantic -std=c++17 -Werror -g -pipe \
 # macOS uses clang++, which does not support these flag:
 # -Wduplicated-cond -Wduplicated-branches
 ifeq ($(CXX),g++)
-ifneq ($(OS),macOS)
+ifneq ($(OS),Darwin)
 CXXFLAGS += -Wduplicated-cond -Wduplicated-branches
 endif
 endif
