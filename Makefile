@@ -43,7 +43,7 @@ endif
 ifeq ($(OS),Windows_NT)
 # -pthread only needed for clang++ on Windows but anyway
 CXXFLAGS += -static -pthread
-else ifeq ($(CXX),g++)
+else ifeq ($(CXX),clang++)
 CXXFLAGS += -static-pie -fPIE
 endif
 # Security flags for Linux
