@@ -18,6 +18,7 @@ compile the program using the Microsoft Visual C++ compiler
 # make check \
 check the code for formatting and static analysis issues
 
+# Edit C++ compiler name you want to use.
 ifeq ($(CXX),clang++)
 CXX = clang++
 else
@@ -27,25 +28,22 @@ endif
 INCLUDES = -Iinclude
 OUTPUT = stocksim
 CXXFLAGS += -Wall -Wextra -pedantic -std=c++17 -Werror -g -pipe \
-	-Wcast-qual -Wundef -Wduplicated-cond -Wduplicated-branches \
-	-mtune=generic -Wswitch -Wshadow
+	-Wcast-qual -Wundef -mtune=generic -Wswitch -Wshadow -Wformat=2
 	# -Wconversion -Wfloat-equal
 	# -fsanitize=address -fsanitize=undefined
 
 # macOS uses clang++, which does not support these flag:
 # -Wduplicated-cond -Wduplicated-branches
-ifeq ($(shell uname),Darwin)
-CXXFLAGS += -Wno-error=unknown-warning-option -Wno-error=unused-command-line-argument
-endif
-ifeq ($(CXX),clang++)
-CXXFLAGS += -Wno-error=unknown-warning-option -Wno-error=unused-command-line-argument
+ifneq ($(CXX),g++)
+else ifneq ($(OS),Darwin)
+CXXFLAGS += -Wduplicated-cond -Wduplicated-branches
 endif
 
 # eric15342335 will use the static flag on Windows.
 ifeq ($(OS),Windows_NT)
 # -pthread only needed for clang++ on Windows but anyway
 CXXFLAGS += -static -pthread
-else ifeq ($(CXX),clang++)
+else ifeq ($(CXX),g++)
 CXXFLAGS += -static-pie -fPIE
 endif
 # Security flags for Linux
