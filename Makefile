@@ -43,7 +43,10 @@ endif
 # eric15342335 will use the static flag on Windows.
 ifeq ($(OS),Windows_NT)
 # -pthread only needed for clang++ on Windows but anyway
-CXXFLAGS += -static -pthread
+ifeq ($(CXX),clang++)
+CXXFLAGS += -pthread
+endif
+CXXFLAGS += -static
 else ifeq ($(CXX),g++) 
 ifeq ($(OS),linux)
 CXXFLAGS += -static-pie -fPIE
