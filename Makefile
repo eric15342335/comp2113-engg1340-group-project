@@ -35,9 +35,8 @@ CXXFLAGS += -Wall -Wextra -pedantic -std=c++17 -Werror -g -pipe \
 # macOS uses clang++, which does not support these flag:
 # -Wduplicated-cond -Wduplicated-branches
 ifeq ($(CXX),g++)
-ifneq ($(OS),Darwin)
-# fixme: ifneq ($(OS),Darwin) is not excluding macOS, so specify -Wno-error=
-CXXFLAGS += -Wduplicated-cond -Wduplicated-branches -Wno-error=unknown-warning-option
+ifneq ($(shell uname),Darwin)
+CXXFLAGS += -Wduplicated-cond -Wduplicated-branches
 endif
 endif
 
