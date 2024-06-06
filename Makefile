@@ -43,8 +43,9 @@ endif
 # eric15342335 will use the static flag on Windows.
 ifeq ($(OS),Windows_NT)
 # -pthread only needed for clang++ on Windows but anyway
+# note: needed for MinGW clang++ to link pthread, but not for MSVC clang++?
 ifeq ($(CXX),clang++)
-CXXFLAGS += -pthread
+CXXFLAGS += -pthread -Wno-error=unused-command-line-argument
 endif
 CXXFLAGS += -static
 else ifeq ($(CXX),g++) 
