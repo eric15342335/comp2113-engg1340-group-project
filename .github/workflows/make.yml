@@ -35,6 +35,7 @@ jobs:
             - {os: windows-latest, CXX: clang++, build_type: all}
             - {os: windows-latest, CXX: clang++, build_type: release}
             - {os: windows-latest, CXX: cmake, build_type: none}
+            # macos-13 is for x64, while macos-14 is for arm64 (M1)
             - {os: macos-13, CXX: g++, build_type: all}
             - {os: macos-13, CXX: g++, build_type: release}
             - {os: macos-13, CXX: clang++, build_type: all}
@@ -45,7 +46,7 @@ jobs:
             - {os: macos-latest, CXX: clang++, build_type: all}
             - {os: macos-latest, CXX: clang++, build_type: release}
             - {os: macos-latest, CXX: cmake, build_type: none}
-    name: "${{ matrix.config.CXX }} on ${{ matrix.config.os }} (${{ matrix.config.build_type }})"
+    name: "${{ matrix.config.os }} ${{ matrix.config.CXX }} ${{ matrix.config.build_type }}"
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
