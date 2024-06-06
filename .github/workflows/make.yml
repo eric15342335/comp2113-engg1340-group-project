@@ -77,7 +77,7 @@ jobs:
       run: |
         cmake -B build -S . -DOUTPUT_NAME=stocksim-cmake -Werror=dev -Werror=deprecated --fresh
         cmake --build build --parallel 2 --config ${{ matrix.config.build_type }} --clean-first
-        cmake --install build --prefix .
+        cmake --install build --prefix . --config ${{ matrix.config.build_type }}
     - name: Set up Microsoft Dev Cmd
       if: matrix.config.os == 'windows-latest' && matrix.config.CXX == 'cl'
       uses: ilammy/msvc-dev-cmd@v1.13.0
