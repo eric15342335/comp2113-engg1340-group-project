@@ -3,8 +3,7 @@
 ![C++](https://img.shields.io/badge/c++-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=white)
 ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
 
-[![clang-format](https://github.com/eric15342335/comp2113-engg1340-group-project/actions/workflows/clang-format.yml/badge.svg?branch=main)](https://github.com/eric15342335/comp2113-engg1340-group-project/actions/workflows/clang-format.yml)
-[![Make](https://github.com/eric15342335/comp2113-engg1340-group-project/actions/workflows/Make.yml/badge.svg)](https://github.com/eric15342335/comp2113-engg1340-group-project/actions/workflows/Make.yml)
+[![CI](https://github.com/eric15342335/comp2113-engg1340-group-project/actions/workflows/make.yml/badge.svg)](https://github.com/eric15342335/comp2113-engg1340-group-project/actions/workflows/make.yml)
 [![Pages (doxygen)](https://github.com/eric15342335/comp2113-engg1340-group-project/actions/workflows/static.yml/badge.svg)](https://github.com/eric15342335/comp2113-engg1340-group-project/actions/workflows/static.yml)
 [![CodeFactor](https://www.codefactor.io/repository/github/eric15342335/comp2113-engg1340-group-project/badge/main)](https://www.codefactor.io/repository/github/eric15342335/comp2113-engg1340-group-project/overview/main)
 
