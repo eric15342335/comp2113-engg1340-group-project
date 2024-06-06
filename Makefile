@@ -94,7 +94,11 @@ controls.o: src/controls.cpp \
 		include/controls.h include/draw.h include/format.h include/stock.h
 	$(CXX) $(INCLUDES) $(CXXFLAGS) -c $< -o $@
 
-stocksim: src/main.cpp stock.o random_price.o events.o names.o \
+main.o: src/main.cpp \
+		include/*.h include/nonstdlibs/*.h
+	$(CXX) $(INCLUDES) $(CXXFLAGS) -c $< -o $@
+
+stocksim: main.o stock.o random_price.o events.o names.o \
 		graph.o format.o draw.o file_io.o controls.o
 	$(CXX) $(INCLUDES) $(CXXFLAGS) $^ -o $(OUTPUT)
 
