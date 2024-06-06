@@ -32,12 +32,6 @@ add_executable(${OUTPUT_NAME}
     src/controls.cpp
 )
 
-# https://cmake.org/cmake/help/latest/manual/cmake-buildsystem.7.html#build-configurations
-# Works correctly for both single and multi-config generators
-target_compile_definitions(${OUTPUT_NAME} PRIVATE
-  $<$<CONFIG:Debug>:DEBUG_BUILD>
-)
-
 target_include_directories(${OUTPUT_NAME} PRIVATE include)
 
 install(TARGETS ${OUTPUT_NAME} DESTINATION .)

@@ -106,8 +106,10 @@ make all
 <!--
 If you use CMake:
 ```bash
-cmake -B build -S . 
-cmake --build build
+cmake -B build -S . --fresh
+cmake --build build --clean-first
+cmake --install build --prefix .
+./stocksim
 ```
 -->
 
