@@ -36,7 +36,8 @@ CXXFLAGS += -Wall -Wextra -pedantic -std=c++17 -Werror -g -pipe \
 # -Wduplicated-cond -Wduplicated-branches
 ifeq ($(CXX),g++)
 ifneq ($(OS),Darwin)
-CXXFLAGS += -Wduplicated-cond -Wduplicated-branches
+# fixme: ifneq ($(OS),Darwin) is not excluding macOS, so specify -Wno-error=
+CXXFLAGS += -Wduplicated-cond -Wduplicated-branches -Wno-error=unknown-warning-option
 endif
 endif
 
