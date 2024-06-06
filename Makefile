@@ -45,8 +45,12 @@ endif
 ifeq ($(OS),Windows_NT)
 # -pthread only needed for clang++ on Windows but anyway
 CXXFLAGS += -static -pthread
-else
-CXXFLAGS += -static-pie -fPIE -z noexecstack -z relro -z now
+else ifeq ($(CXX),clang++)
+CXXFLAGS += -static-pie -fPIE
+endif
+# Security flags for Linux
+ifeq ($(OS),linux)
+CXXFLAGS += -z noexecstack -z relro -z now
 endif
 
 # The default target is to compile the program.
