@@ -8,6 +8,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+# Usage: -DOUTPUT_NAME=stocksim-cmake
 # Check if the OUTPUT_NAME flag is provided
 if(DEFINED OUTPUT_NAME)
     # Set the output name to the provided value
@@ -32,4 +33,4 @@ add_executable(${OUTPUT_NAME}
 
 target_include_directories(${OUTPUT_NAME} PRIVATE include)
 
-install(TARGETS ${CMAKE_CURRENT_BINARY_DIR}/${OUTPUT_NAME} DESTINATION .)
+install(TARGETS ${OUTPUT_NAME} DESTINATION .)

@@ -136,7 +136,7 @@ check:
 release: clean
 	# this should put after default target
 	"$(MAKE)" stocksim \
-	CXXFLAGS="$(CXXFLAGS) -O3 -flto -D_FORTIFY_SOURCE=2 -fstack-protector-strong -march=nocona" \
+	CXXFLAGS="$(CXXFLAGS) -O3 -flto -D_FORTIFY_SOURCE=2 -fstack-protector-strong" \
 	OUTPUT="stocksim-release" \
 	CXX="$(CXX)"
 
