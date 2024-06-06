@@ -72,7 +72,7 @@ jobs:
       if: matrix.config.CXX == 'cmake'
       shell: bash
       run: |
-        cmake -B build -S . -DOUTPUT_NAME=stocksim-cmake 
+        cmake -B build -S . -DOUTPUT_NAME=stocksim-cmake
         cmake --build build --parallel 2
         cmake --install build --prefix .
     - name: Set up Microsoft Dev Cmd
