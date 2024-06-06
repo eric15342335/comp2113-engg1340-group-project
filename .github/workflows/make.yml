@@ -67,7 +67,7 @@ jobs:
       if: matrix.config.CXX != 'cmake' && matrix.config.CXX != 'cl' && matrix.config.build_type == 'release'
       shell: bash
       run: |
-        make release -j 2
+        CXX=${{ matrix.config.CXX }} make release -j 2
     - name: CMake
       if: matrix.config.CXX == 'cmake'
       shell: bash
