@@ -65,7 +65,7 @@ jobs:
       shell: bash
       run: |
         if [[ "${{ matrix.config.CXX }}" == "cl" ]]; then
-            cl --version
+            cl
         else \
             ${{ matrix.config.CXX }} --version
         fi
