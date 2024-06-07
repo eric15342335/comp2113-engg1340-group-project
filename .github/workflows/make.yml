@@ -56,15 +56,14 @@ jobs:
       run: |
         choco upgrade llvm -y
         echo "LLVM_PATH=C:\Program Files\LLVM\bin" >> $GITHUB_ENV
-    - name: Install findutils on macOS
-      if: matrix.config.os == 'macos-12' || matrix.config.os == 'macos-latest'
-      run: |
-        brew install findutils
-        echo 'export PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH"' >> ~/.zshrc
-        echo 'export MANPATH="/usr/local/opt/findutils/libexec/gnuman:$MANPATH"' >> ~/.zshrc
     - name: Output compiler version
-      if : ${{ matrix.config.CXX == 'g++' || matrix.config.CXX == 'clang++' }}
-      run: ${{ matrix.config.CXX }} --version
+      shell: bash
+      run:
+        if [[ "${{ matrix.config.CXX }}" == "cl" ]]; then
+            cl --version
+        else
+            ${{ matrix.config.CXX }} --version
+        fi
     - name: Make all
       if: matrix.config.CXX != 'cmake' && matrix.config.CXX != 'cl' && matrix.config.build_type == 'all'
       shell: bash
