@@ -57,7 +57,7 @@ jobs:
         choco upgrade llvm -y
         echo "LLVM_PATH=C:\Program Files\LLVM\bin" >> $GITHUB_ENV
     - name: Install findutils on macOS
-      if: matrix.config.os == 'macos-*'
+      if: matrix.config.os == 'macos-12' || matrix.config.os == 'macos-latest'
       run: |
         brew install findutils
         echo 'export PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH"' >> ~/.zshrc
