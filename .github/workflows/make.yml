@@ -98,7 +98,7 @@ jobs:
       shell: bash
       run: |
         # Test cases for every executable produced
-        for executable in $(find . -maxdepth 1 -name "stocksim*" -type f -executable)
+        for executable in $(find . -type f -name "stocksim*")
         do
             echo -e "0\n saves\nsaves\nB\n1\n1\nN\nY\nN\nY\nN\nY\nT\n0\nT\n1\nT\n2\nE\nT\nX\nY\n" | ./$executable
             # test for loading saves
