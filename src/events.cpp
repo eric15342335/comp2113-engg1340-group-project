@@ -1339,21 +1339,27 @@ bool assertion_check_mutual_exclusivity(void) {
 std::vector<Stock_event> pick_events(
     const std::vector<Stock_event> & all_events, unsigned int num_events) {
     std::vector<Stock_event> picked_events;
+    unsigned int total_permille = 0;
+    /// @todo Optimize this loop so that we don't have to calculate the total_permille
+    /// every time we pick an event.
+    for (const Stock_event & event : all_events) {
+        total_permille += event.probability_permille;
+    }
     // Pick num_events random events
     for (unsigned int i = 0; i < num_events; i++) {
-        // When picking the event, consider event.probability_permille.
-        unsigned int total_permille = sumOfAllEventsProbability;
-        /** E.g. if there are 3 events with probability_permille 10, 20, 30.
+        unsigned int _total_permille = total_permille;
+        /** When picking the event, consider event.probability_permille.
+         * E.g. if there are 3 events with probability_permille 10, 20, 30.
          * total_permille = 60;
          * random_permille = 0 to 59;
          * If random_permille is 0 to 9, pick the first event;
          * If random_permille is 10 to 29, pick the second event;
          * If random_permille is 30 to 59, pick the third event.
          */
-        unsigned int random_permille = random_integer(total_permille);
+        unsigned int random_permille = random_integer(_total_permille);
         for (const Stock_event & event : all_events) {
-            total_permille -= event.probability_permille;
-            if (total_permille <= random_permille) {
+            _total_permille -= event.probability_permille;
+            if (_total_permille <= random_permille) {
                 picked_events.emplace_back(event);
                 break;
             }
@@ -1385,15 +1391,17 @@ std::vector<Stock_event> pick_events(
     return picked_events;
 }
 
-const Stock_event STOCK_SPLIT_EVENT = {
-    /* event_id */ 65535,
-    /* mutually_exclusive_events */ {},
-    /* text */
-    " has rised too high and the company has decide a stock split on it.",
-    /* duration */ 1,
-    /* percentage_permille */ 0,
-    /* type_of_event */ pick_random_stock,
-    /* category. Assign this to zero first. */ 0,
-    /* modifiers*/
-    {{standard_deviation, 0}, {mean, 0}, {lower_limit, 0}, {upper_limit, 0}},
-};
+Stock_event getStockSplitEvent(void) {
+    return Stock_event{
+        /* event_id */ 65535,
+        /* mutually_exclusive_events */ {},
+        /* text */
+        " has rised too high and the company has decide a stock split on it.",
+        /* duration */ 1,
+        /* percentage_permille */ 0,
+        /* type_of_event */ pick_random_stock,
+        /* category. Assign this to zero first. */ 0,
+        /* modifiers*/
+        {{standard_deviation, 0}, {mean, 0}, {lower_limit, 0}, {upper_limit, 0}},
+    };
+}

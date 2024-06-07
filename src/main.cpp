@@ -59,7 +59,7 @@ void enableWindowsVTProcessing(void) {
 const float trading_fees_percent = 0.1 / 100;
 
 /** Player's balance */
-float balance = 1000;
+float balance = 1000.0f;
 /** Number of rounds played */
 unsigned int rounds_played = 1;
 
@@ -102,7 +102,7 @@ enum mode { normal, dev };
  * @param _playerBal How much money the player has.
  * @param m mode to hide mean/sd/uplim/lowlim/event_id columns in the table
  */
-void print_table(std::vector<Stock> stocks_list, float _playerBal, mode m = normal) {
+void print_table(std::vector<Stock> stocks_list, float _playerBal, mode m = dev) {
     std::vector<std::string> defaultColumns = {
         "#", "Category", "Name", "$Price", "Change", R"(%Change)", "#Has", "#Max"};
     VariadicTable<unsigned int, std::string, std::string, float, float, float,
@@ -220,13 +220,16 @@ std::vector<Stock_event> get_ongoing_events(std::vector<Stock> stocks_list) {
  * @param stocks_list A vector of stocks. Pass by reference to modify the stocks.
  */
 void new_events_next_round(std::vector<Stock> & stocks_list) {
-    /** @note numEvents is the sum of these two values:
-     * - A random integer between 0 and 2
-     * - 1/5 of numOfRounds, or 2. Whichever is smaller
+    /** @note numEvents is the sum of these three values:
+     * - 1
+     * - A random integer between 0 and 1 (uniform distribution)
+     * - 1 if more than 10 rounds have been played
+     * If there was already more than 5 events, we will not generate more events.
      */
-    unsigned int numEvents =
-        random_integer(2) +
-        std::min(static_cast<int>(stocks_list[0].get_history_size() / 5), 2);
+    unsigned int numEvents = 1 + random_integer(1) + (rounds_played / 5 > 2) * 1;
+    if (get_ongoing_events(stocks_list).size() > 5) {
+        return;
+    }
     std::vector<Stock_event> picked_events = pick_events(all_stock_events, numEvents);
     for (const Stock_event & event : picked_events) {
         switch (event.type_of_event) {

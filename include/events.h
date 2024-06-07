@@ -55,10 +55,10 @@ const float meanMultiplier = 0.3;
 const float sdMultiplier = 15.0;
 
 /// @brief Lower limit multiplier
-const float lowerLimitMultiplier = 0.5;
+const float lowerLimitMultiplier = 0.2;
 
 /// @brief Upper limit multiplier
-const float upperLimitMultiplier = 1;
+const float upperLimitMultiplier = 0.2;
 
 /// @brief Default lower limit
 const float defaultLowerLimit = -5;
@@ -230,14 +230,6 @@ bool assertion_check_mutual_exclusivity(void);
  */
 void print_map(const std::map<unsigned int, std::vector<unsigned int>> & map);
 
-extern const Stock_event STOCK_SPLIT_EVENT;
-
-const unsigned int sumOfAllEventsProbability = []() {
-    unsigned int sum = 0;
-    for (const auto & event : all_stock_events) {
-        sum += event.probability_permille;
-    }
-    return sum;
-}();
+Stock_event getStockSplitEvent(void);
 
 #endif
