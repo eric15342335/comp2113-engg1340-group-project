@@ -59,10 +59,10 @@ jobs:
     - name: Output compiler version
       shell: bash
       run:
-        if [[ "${{ matrix.config.CXX }}" == "cl" ]]; then
-        cl --version
-        else
-        ${{ matrix.config.CXX }} --version
+        if [[ "${{ matrix.config.CXX }}" == "cl" ]]; then \
+            cl --version; \
+        else \
+            ${{ matrix.config.CXX }} --version; \
         fi
     - name: Make all
       if: matrix.config.CXX != 'cmake' && matrix.config.CXX != 'cl' && matrix.config.build_type == 'all'
