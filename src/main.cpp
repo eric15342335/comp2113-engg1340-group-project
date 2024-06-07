@@ -226,9 +226,7 @@ void new_events_next_round(std::vector<Stock> & stocks_list) {
      * - 1 if more than 10 rounds have been played
      * If there was already more than 5 events, we will not generate more events.
      */
-    unsigned int numEvents =
-        1 + random_integer(1) +
-        (rounds_played / 5 > 2)*1;
+    unsigned int numEvents = 1 + random_integer(1) + (rounds_played / 5 > 2) * 1;
     if (get_ongoing_events(stocks_list).size() > 5) {
         return;
     }
