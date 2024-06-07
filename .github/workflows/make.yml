@@ -97,11 +97,12 @@ jobs:
     - name: Run test cases
       shell: bash
       run: |
-        executable="stocksim"
         if [[ "${{ matrix.config.CXX }}" == "cmake" ]]; then
             executable="stocksim-cmake"
         elif [[ "${{ matrix.config.CXX }}" == "cl" ]]; then
             executable="stocksim-msvc"
+        elif [[ "${{ matrix.config.build_type }}" == "release" ]]; then
+            executable="stocksim-release"
         else
             executable="stocksim"
         fi
