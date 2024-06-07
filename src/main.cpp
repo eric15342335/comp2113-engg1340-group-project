@@ -59,7 +59,7 @@ void enableWindowsVTProcessing(void) {
 const float trading_fees_percent = 0.1 / 100;
 
 /** Player's balance */
-float balance = 1000;
+float balance = 1000.0f;
 /** Number of rounds played */
 unsigned int rounds_played = 1;
 
