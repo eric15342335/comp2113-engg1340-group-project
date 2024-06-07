@@ -56,15 +56,19 @@ jobs:
       run: |
         choco upgrade llvm -y
         echo "LLVM_PATH=C:\Program Files\LLVM\bin" >> $GITHUB_ENV
-    - name: Install findutils on macOS
-      if: matrix.config.os == 'macos-12' || matrix.config.os == 'macos-latest'
-      run: |
-        brew install findutils
-        echo 'export PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH"' >> ~/.zshrc
-        echo 'export MANPATH="/usr/local/opt/findutils/libexec/gnuman:$MANPATH"' >> ~/.zshrc
+    - name: Set up Microsoft Dev Cmd
+      if: matrix.config.os == 'windows-latest' && matrix.config.CXX == 'cl'
+      uses: ilammy/msvc-dev-cmd@v1.13.0
+      with:
+        arch: amd64
     - name: Output compiler version
-      if : ${{ matrix.config.CXX == 'g++' || matrix.config.CXX == 'clang++' }}
-      run: ${{ matrix.config.CXX }} --version
+      shell: bash
+      run: |
+        if [[ "${{ matrix.config.CXX }}" == "cl" ]]; then
+            cl
+        else \
+            ${{ matrix.config.CXX }} --version
+        fi
     - name: Make all
       if: matrix.config.CXX != 'cmake' && matrix.config.CXX != 'cl' && matrix.config.build_type == 'all'
       shell: bash
@@ -84,11 +88,6 @@ jobs:
         cmake -B build -S . -DOUTPUT_NAME=stocksim-cmake -Werror=dev -Werror=deprecated --fresh
         cmake --build build --parallel 2 --config ${{ matrix.config.build_type }} --clean-first
         cmake --install build --prefix . --config ${{ matrix.config.build_type }}
-    - name: Set up Microsoft Dev Cmd
-      if: matrix.config.os == 'windows-latest' && matrix.config.CXX == 'cl'
-      uses: ilammy/msvc-dev-cmd@v1.13.0
-      with:
-        arch: amd64
     - name: Compile with cl
       if: matrix.config.os == 'windows-latest' && matrix.config.CXX == 'cl'
       shell: cmd
@@ -97,15 +96,20 @@ jobs:
     - name: Run test cases
       shell: bash
       run: |
-        # Test cases for every executable produced
-        for executable in $(find . -maxdepth 1 -name "stocksim*" -type f -executable)
-        do
-            echo -e "0\n saves\nsaves\nB\n1\n1\nN\nY\nN\nY\nN\nY\nT\n0\nT\n1\nT\n2\nE\nT\nX\nY\n" | ./$executable
-            # test for loading saves
-            echo -e "1\nsaves\nN\nY\nN\nY\nN\nY\nN\nY\nT\n0\nT\nT\n3\nT\n4\nT\nS\n1\n1\nX\nY\n" | ./$executable
-            # test for deleting saves
-            echo -e "2\nsaves\nY\n3\n" | ./$executable
-        done
+        if [[ "${{ matrix.config.CXX }}" == "cmake" ]]; then
+            executable="stocksim-cmake"
+        elif [[ "${{ matrix.config.CXX }}" == "cl" ]]; then
+            executable="stocksim-msvc"
+        elif [[ "${{ matrix.config.build_type }}" == "release" ]]; then
+            executable="stocksim-release"
+        else
+            executable="stocksim"
+        fi
+        echo -e "0\n saves\nsaves\nB\n1\n1\nN\nY\nN\nY\nN\nY\nT\n0\nT\n1\nT\n2\nE\nT\nX\nY\n" | ./$executable
+        # test for loading saves
+        echo -e "1\nsaves\nN\nY\nN\nY\nN\nY\nN\nY\nT\n0\nT\nT\n3\nT\n4\nT\nS\n1\n1\nX\nY\n" | ./$executable
+        # test for deleting saves
+        echo -e "2\nsaves\nY\n3\n" | ./$executable
     - name: Upload executable
       uses: actions/upload-artifact@v4
       with:
