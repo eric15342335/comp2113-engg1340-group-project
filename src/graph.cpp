@@ -201,13 +201,13 @@ void graph_plotting(const string & player, int stocknum, int width, int height) 
             for (int j = end; j <= start; j++) {
                 graph[i + 9][j] = "■";
             }
-            color[i] = textRed;
+            color[i] = textGreen;
         }
         else if (start < end) {
             for (int j = start; j <= end; j++) {
                 graph[i + 9][j] = "■";
             }
-            color[i] = textGreen;
+            color[i] = textRed;
         }
         // idk why the colour is inverted using the normal setup method but i dont care
         // anyway it is running in normal HK stock colour indentations
