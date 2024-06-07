@@ -100,9 +100,9 @@ jobs:
         # Test cases for every executable produced
         for executable in $(find . -maxdepth 1 -name "stocksim*" -type f -executable)
         do
-            echo -e "0\n saves\nsaves\nB\n1\n1\nN\nY\nN\nY\nN\nY\nT\n0\nT\n1\nT\n2\nE\nE\nT\nX\nY\n" | ./$executable
+            echo -e "0\n saves\nsaves\nB\n1\n1\nN\nY\nN\nY\nN\nY\nT\n0\nT\n1\nT\n2\nE\nT\nX\nY\n" | ./$executable
             # test for loading saves
-            echo -e "1\nsaves\nN\nY\nN\nY\nN\nY\nN\nY\nT\n0\nT\nT\n3\nT\n4\nT\nS\n1\n1\nE\nE\nX\nY\n" | ./$executable
+            echo -e "1\nsaves\nN\nY\nN\nY\nN\nY\nN\nY\nT\n0\nT\nT\n3\nT\n4\nT\nS\n1\n1\nX\nY\n" | ./$executable
             # test for deleting saves
             echo -e "2\nsaves\nY\n3\n" | ./$executable
         done
