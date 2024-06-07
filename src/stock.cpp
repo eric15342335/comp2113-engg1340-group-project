@@ -123,7 +123,7 @@ std::istream & operator>>(std::istream & fin, Stock & stock) {
         Stock_event loadedEvent;
         std::istringstream(loadedEventString) >> loadedEvent;
         // Check the loaded event is valid
-        if (loadedEvent.event_id == STOCK_SPLIT_EVENT.event_id) {
+        if (loadedEvent.event_id == getStockSplitEvent().event_id) {
             continue;
         }
         assert(
@@ -266,7 +266,7 @@ float Stock::sum_attribute(stock_modifiers attribute) {
 }
 
 Stock_event Stock::setup_STOCK_SPLIT_EVENT(void) {
-    Stock_event event_copy = STOCK_SPLIT_EVENT;
+    Stock_event event_copy = getStockSplitEvent();
     event_copy.text = name + event_copy.text;
     event_copy.category = category;
     return event_copy;

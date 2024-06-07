@@ -255,7 +255,7 @@ class Stock {
         float calculateTradingFeesLost(const float & trading_fees_percent) const;
 
         /**
-         * @brief Set up a STOCK_SPLIT_EVENT with proper values.
+         * @brief Set up a getStockSplitEvent() with proper values.
          */
         Stock_event setup_STOCK_SPLIT_EVENT(void);
 
