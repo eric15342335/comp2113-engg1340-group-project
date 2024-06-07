@@ -124,6 +124,7 @@ std::istream & operator>>(std::istream & fin, Stock & stock) {
         std::istringstream(loadedEventString) >> loadedEvent;
         // Check the loaded event is valid
         if (loadedEvent.event_id == getStockSplitEvent().event_id) {
+            stock.add_event(loadedEvent);
             continue;
         }
         assert(
