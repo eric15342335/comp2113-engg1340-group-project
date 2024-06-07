@@ -1339,7 +1339,7 @@ bool assertion_check_mutual_exclusivity(void) {
 std::vector<Stock_event> pick_events(
     const std::vector<Stock_event> & all_events, unsigned int num_events) {
     std::vector<Stock_event> picked_events;
-    unsigned int total_permille;
+    unsigned int total_permille = 0;
     /// @todo Optimize this loop so that we don't have to calculate the total_permille
     /// every time we pick an event.
     for (const Stock_event & event : all_events) {
