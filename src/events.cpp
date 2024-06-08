@@ -74,11 +74,11 @@ const std::vector<Stock_event> all_stock_events = {
         /** mutually_exclusive_events */ {},
         /** text */ "Economic Recession: Market Downturn Signals Investor Concerns",
         /** duration */ 7,
-        /** percentage_permille */ 4,
+        /** percentage_permille */ 2,
         /** type_of_event */ all_stocks,
         /** category */ 0,
         /** modifiers*/
-        {{standard_deviation, 0.2}, {mean, -50}, {lower_limit, -50}, {upper_limit, 0}},
+        {{standard_deviation, 0.2}, {mean, -30}, {lower_limit, -30}, {upper_limit, 0}},
     },
     {
         /** event_id */ 3,
