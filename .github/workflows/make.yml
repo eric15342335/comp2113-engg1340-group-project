@@ -203,7 +203,6 @@ jobs:
   clang-format:
     runs-on: ubuntu-latest
     needs: build-and-test
-    name: lint
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
