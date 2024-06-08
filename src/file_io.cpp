@@ -200,7 +200,9 @@ void delsave(string & mode) {
     cin >> confirm;
     if (confirm == "Y" || confirm == "y") {
         stockdel = SAVE_FOLDER_PREFIX + inputname;
-        std::filesystem::remove_all(stockdel);
+        for (const auto & path : std::filesystem::directory_iterator(stockdel)) {
+            std::filesystem::remove(path);
+        }
         cout << "Player save " << inputname << " has been deleted." << endl;
     }
     else {
