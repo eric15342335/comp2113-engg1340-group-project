@@ -54,7 +54,9 @@ endif
 
 # Security flags for Linux
 ifeq ($(shell uname),Linux)
+ifneq ($(CXX),cosmoc++)
 CXXFLAGS += -z noexecstack -z relro -z now
+endif
 endif
 
 # Shhh clang++
@@ -151,17 +153,20 @@ check:
 		--fix-errors --fix-notes --format-style=file -- -Iinclude
 
 ifeq ($(MAKECMDGOALS),release)
+ifneq ($(CXX),cosmoc++)
+CXXFLAGS += -fstack-protector-strong
 ifneq ($(CXX),clang++)
 CXXFLAGS += -flto
 else ifneq ($(OS),Windows_NT)
 CXXFLAGS += -flto
 endif
 endif
+endif
 
 release: clean
 	# this should put after default target
 	"$(MAKE)" stocksim \
-	CXXFLAGS="$(CXXFLAGS) -O3 -D_FORTIFY_SOURCE=2 -fstack-protector-strong" \
+	CXXFLAGS="$(CXXFLAGS) -O3 -D_FORTIFY_SOURCE=2" \
 	OUTPUT="stocksim-release" \
 	CXX="$(CXX)"
 
