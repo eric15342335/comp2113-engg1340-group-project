@@ -29,8 +29,6 @@ jobs:
             - {os: windows-latest, CXX: clang++, build_type: all}
             - {os: windows-latest, CXX: clang++, build_type: release}
             - {os: windows-latest, CXX: cmake, build_type: Debug}
-            - {os: windows-latest, CXX: cosmoc++, build_type: all}
-            - {os: windows-latest, CXX: cosmoc++, build_type: release}
             # macos-12 is for x64, while macos-14 is for arm64 (M1)
             - {os: macos-12, CXX: g++, build_type: all}
             - {os: macos-12, CXX: g++, build_type: release}
