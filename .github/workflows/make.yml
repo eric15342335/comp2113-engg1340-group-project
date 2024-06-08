@@ -105,6 +105,7 @@ jobs:
         else
             executable="stocksim"
         fi
+        echo -e "1\ntest\nX\nY\n" | ./$executable
         echo -e "0\n saves\nsaves\nB\n1\n1\nN\nY\nN\nY\nN\nY\nT\n0\nT\n1\nT\n2\nE\nT\nX\nY\n" | ./$executable
         # test for loading saves
         echo -e "1\nsaves\nN\nY\nN\nY\nN\nY\nN\nY\nT\n0\nT\nT\n3\nT\n4\nT\nS\n1\n1\nX\nY\n" | ./$executable

@@ -47,7 +47,7 @@ ifeq ($(OS),Windows_NT)
 # -pthread only needed for clang++ on Windows but anyway
 # note: needed for MinGW clang++ to link pthread, but not for MSVC clang++?
 ifeq ($(CXX),clang++)
-CXXFLAGS += -pthread -Wno-error=unused-command-line-argument
+CXXFLAGS += -pthread
 endif
 CXXFLAGS += -static
 else ifeq ($(CXX),g++)
@@ -58,7 +58,12 @@ endif
 
 # Security flags for Linux
 ifeq ($(shell uname),Linux)
-CXXFLAGS += -z noexecstack -z relro -z now
+CXXFLAGS += -z noexecstack -z relro -z now 
+endif
+
+# Shhh clang++
+ifeq ($(CXX),clang++)
+CXXFLAGS += -Wno-error=unused-command-line-argument
 endif
 
 # The default target is to compile the program.
