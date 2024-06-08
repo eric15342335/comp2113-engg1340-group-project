@@ -19,15 +19,11 @@ compile the program using the Microsoft Visual C++ compiler
 check the code for formatting and static analysis issues
 
 # Edit C++ compiler name you want to use.
-ifeq ($(CXX),clang++)
-CXX = clang++
-else
 CXX = g++
-endif
 
 INCLUDES = -Iinclude
 OUTPUT = stocksim
-CXXFLAGS += -Wall -Wextra -pedantic -std=c++17 -Werror -g -pipe \
+CXXFLAGS += -Wall -Wextra -pedantic -std=c++17 -Werror -g \
 	-Wcast-qual -Wundef -mtune=generic -Wswitch -Wshadow -Wformat=2
 	# -Wconversion -Wfloat-equal
 	# -fsanitize=address -fsanitize=undefined
@@ -47,18 +43,25 @@ ifeq ($(OS),Windows_NT)
 # -pthread only needed for clang++ on Windows but anyway
 # note: needed for MinGW clang++ to link pthread, but not for MSVC clang++?
 ifeq ($(CXX),clang++)
-CXXFLAGS += -pthread -Wno-error=unused-command-line-argument
+CXXFLAGS += -pthread
 endif
 CXXFLAGS += -static
-else ifeq ($(CXX),g++) 
-ifeq ($(OS),linux)
+else ifeq ($(CXX),g++)
+ifeq ($(shell uname),Linux)
 CXXFLAGS += -static-pie -fPIE
 endif
 endif
 
 # Security flags for Linux
-ifeq ($(OS),linux)
+ifeq ($(shell uname),Linux)
+ifneq ($(CXX),cosmoc++)
 CXXFLAGS += -z noexecstack -z relro -z now
+endif
+endif
+
+# Shhh clang++
+ifeq ($(CXX),clang++)
+CXXFLAGS += -Wno-error=unused-command-line-argument
 endif
 
 # The default target is to compile the program.
@@ -150,17 +153,20 @@ check:
 		--fix-errors --fix-notes --format-style=file -- -Iinclude
 
 ifeq ($(MAKECMDGOALS),release)
+ifneq ($(CXX),cosmoc++)
+CXXFLAGS += -fstack-protector-strong
 ifneq ($(CXX),clang++)
 CXXFLAGS += -flto
 else ifneq ($(OS),Windows_NT)
 CXXFLAGS += -flto
 endif
 endif
+endif
 
 release: clean
 	# this should put after default target
 	"$(MAKE)" stocksim \
-	CXXFLAGS="$(CXXFLAGS) -O3 -D_FORTIFY_SOURCE=2 -fstack-protector-strong" \
+	CXXFLAGS="$(CXXFLAGS) -O3 -D_FORTIFY_SOURCE=2" \
 	OUTPUT="stocksim-release" \
 	CXX="$(CXX)"
 

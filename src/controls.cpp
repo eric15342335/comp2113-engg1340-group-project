@@ -18,7 +18,7 @@ void optionsInput(int row, int col, float & balance, float tax,
     std::vector<Stock> & stocks, const std::vector<Stock_event> & events,
     bool & viewMode, bool & advance, bool & overlayEvent, bool & flush,
     bool & gameQuit) {
-    char input;
+    char input = '.'; // -Werror=maybe-uninitialized
     while (true) {
         std::cout << setCursorPosition(row, 3) << "\x1b[2K";
         std::cout << "Choose an option from the bar above: ";
@@ -152,7 +152,7 @@ void toggleView(bool & viewMode, bool & flush) {
 
 void advanceConfirmation(int row, int col, bool & advance, bool & flush) {
     std::ignore = col;
-    char input;
+    char input = 'x'; // -Werror=maybe-uninitialized
     std::cout << setCursorPosition(row, 3) << "\x1b[2K";
     std::cout << "Press [Y] to confirm: ";
     std::cin >> input;
@@ -164,7 +164,7 @@ void advanceConfirmation(int row, int col, bool & advance, bool & flush) {
 
 void quitConfirmation(int row, int col, bool & flush, bool & gameQuit) {
     std::ignore = col;
-    char input;
+    char input = 'x'; // -Werror=maybe-uninitialized
     std::cout << setCursorPosition(row, 0) << "\x1b[2K";
     std::cout << "Press [Y] to confirm: ";
     std::cin >> input;

@@ -324,7 +324,6 @@ int main(void) {
         if (loadsave.compare(USER_SAVE_OPTION::NEW_GAME) == 0) {
             createplayer(playerName);
             savestatus(rounds_played, stocks_list, balance, playerName);
-            get_hsi(stocks_list, hsi_history);
         }
         if (loadsave.compare(USER_SAVE_OPTION::LOAD_GAME) == 0) {
             loadstatus(rounds_played, stocks_list, balance, playerName, hsi_history);
@@ -338,6 +337,7 @@ int main(void) {
             return EXIT_SUCCESS;
         }
     }
+    get_hsi(stocks_list, hsi_history);
     // Done loading/creating a new file.
     std::cout << "Current trading fees are charged at " << trading_fees_percent * 100
               << " %" << std::endl;
