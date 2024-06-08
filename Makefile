@@ -27,7 +27,7 @@ endif
 
 INCLUDES = -Iinclude
 OUTPUT = stocksim
-CXXFLAGS += -Wall -Wextra -pedantic -std=c++17 -Werror -g -pipe \
+CXXFLAGS += -Wall -Wextra -pedantic -std=c++17 -Werror -g \
 	-Wcast-qual -Wundef -mtune=generic -Wswitch -Wshadow -Wformat=2
 	# -Wconversion -Wfloat-equal
 	# -fsanitize=address -fsanitize=undefined
@@ -50,14 +50,14 @@ ifeq ($(CXX),clang++)
 CXXFLAGS += -pthread -Wno-error=unused-command-line-argument
 endif
 CXXFLAGS += -static
-else ifeq ($(CXX),g++) 
-ifeq ($(OS),linux)
+else ifeq ($(CXX),g++)
+ifeq ($(shell uname),Linux)
 CXXFLAGS += -static-pie -fPIE
 endif
 endif
 
 # Security flags for Linux
-ifeq ($(OS),linux)
+ifeq ($(shell uname),Linux)
 CXXFLAGS += -z noexecstack -z relro -z now
 endif
 
