@@ -88,14 +88,13 @@ jobs:
       if: matrix.config.CXX != 'cmake' && matrix.config.CXX != 'cl' && matrix.config.build_type == 'all'
       shell: bash
       run: |
-        # Enabling optimization checks -Wmaybe-uninitialized from -Wall
         # output 3 to stdin (to close the game) as 'make all' will start the game
-        echo -e "3" | CXXFLAGS=-O2 make CXX=${{ matrix.config.CXX }} all -j2
+        echo -e "3" | make CXX=${{ matrix.config.CXX }} all -j2
     - name: Make release
       if: matrix.config.CXX != 'cmake' && matrix.config.CXX != 'cl' && matrix.config.build_type == 'release'
       shell: bash
       run: |
-        CXX=${{ matrix.config.CXX }} make release -j 2
+        make release CXX=${{ matrix.config.CXX }} -j 2
     - name: CMake
       if: matrix.config.CXX == 'cmake'
       shell: bash
