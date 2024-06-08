@@ -19,11 +19,7 @@ compile the program using the Microsoft Visual C++ compiler
 check the code for formatting and static analysis issues
 
 # Edit C++ compiler name you want to use.
-ifeq ($(CXX),clang++)
-CXX = clang++
-else
 CXX = g++
-endif
 
 INCLUDES = -Iinclude
 OUTPUT = stocksim

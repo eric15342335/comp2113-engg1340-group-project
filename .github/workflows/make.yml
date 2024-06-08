@@ -29,6 +29,8 @@ jobs:
             - {os: ubuntu-latest, CXX: clang++, build_type: all}
             - {os: ubuntu-latest, CXX: clang++, build_type: release}
             - {os: ubuntu-latest, CXX: cmake, build_type: Debug}
+            - {os: ubuntu-latest, CXX: cosmoc++, build_type: all}
+            - {os: ubuntu-latest, CXX: cosmoc++, build_type: release}
             - {os: windows-latest, CXX: cl, build_type: Debug}
             - {os: windows-latest, CXX: g++, build_type: all}
             - {os: windows-latest, CXX: g++, build_type: release}
@@ -61,6 +63,19 @@ jobs:
       uses: ilammy/msvc-dev-cmd@v1.13.0
       with:
         arch: amd64
+    - name: Setup cosmoc++ 
+      if: matrix.config.CXX == 'cosmoc++' && matrix.config.os == 'ubuntu-latest'
+      run: |
+          mkdir -p cosmocc
+          cd cosmocc
+          wget https://cosmo.zip/pub/cosmocc/cosmocc.zip -q
+          unzip -qq cosmocc.zip
+          git clone https://github.com/jart/cosmopolitan --depth=1
+          cd cosmopolitan
+          sudo ape/apeinstall.sh
+          cd ..
+          cd ..
+          echo "$(pwd)/cosmocc/bin" >> $GITHUB_PATH
     - name: Output compiler version
       shell: bash
       run: |
@@ -75,7 +90,7 @@ jobs:
       run: |
         # Enabling optimization checks -Wmaybe-uninitialized from -Wall
         # output 3 to stdin (to close the game) as 'make all' will start the game
-        echo -e "3" | CXXFLAGS=-O2 CXX=${{ matrix.config.CXX }} make all -j2
+        echo -e "3" | CXXFLAGS=-O2 make CXX=${{ matrix.config.CXX }} all -j2
     - name: Make release
       if: matrix.config.CXX != 'cmake' && matrix.config.CXX != 'cl' && matrix.config.build_type == 'release'
       shell: bash
