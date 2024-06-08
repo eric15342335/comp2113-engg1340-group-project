@@ -58,7 +58,7 @@ endif
 
 # Security flags for Linux
 ifeq ($(shell uname),Linux)
-CXXFLAGS += -z noexecstack -z relro -z now 
+CXXFLAGS += -z noexecstack -z relro -z now
 endif
 
 # Shhh clang++
