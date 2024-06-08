@@ -1,3 +1,5 @@
+SHELL := /usr/bin/bash
+
 MAKEFLAGS += --jobs=$(shell nproc)
 # make \
 compile program
