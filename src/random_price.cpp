@@ -52,8 +52,8 @@ unsigned int random_integer(unsigned int max_integer) {
 }
 
 std::map<stock_modifiers, float> getProcessedModifiers(Stock stock) {
-    float trueMean = meanMultiplier * (stock.getTotalAttribute(mean));
-    float trueSD = sdMultiplier * (stock.getTotalAttribute(standard_deviation));
+    float trueMean = meanMultiplier * (stock.get_total_attribute(mean));
+    float trueSD = sdMultiplier * (stock.get_total_attribute(standard_deviation));
     unsigned int rounds_passed = stock.get_history_size();
     if (stock.get_price() < stock.get_initial_price() / 10) {
         // Force the return of a significantly higher mean normal dist, by a bit over
@@ -74,11 +74,11 @@ std::map<stock_modifiers, float> getProcessedModifiers(Stock stock) {
     // of the stock.
     float temp = 100 * std::abs(stock.get_initial_price() - stock.get_price()) /
                  stock.get_price();
-    float upper_lim = stock.get_attribute(upper_limit) +
-                      stock.sum_attribute(upper_limit) * upperLimitMultiplier +
+    float upper_lim = stock.get_base_attribute(upper_limit) +
+                      stock.get_event_attribute(upper_limit) * upperLimitMultiplier +
                       std::min(static_cast<int>(rounds_passed / 3), 10) + temp;
-    float lower_lim = stock.get_attribute(lower_limit) +
-                      stock.sum_attribute(lower_limit) * lowerLimitMultiplier -
+    float lower_lim = stock.get_base_attribute(lower_limit) +
+                      stock.get_event_attribute(lower_limit) * lowerLimitMultiplier -
                       std::min(static_cast<int>(rounds_passed / 3), 10) - temp;
     // Standardize the upper and lower limit
     float zScoreUpLimit = (upper_limit - trueMean) / trueSD;

@@ -49,7 +49,7 @@ enum stock_modifiers {
 };
 
 /// @brief Multiplier for mean
-const float meanMultiplier = 0.3;
+constexpr float meanMultiplier = 0.3f;
 
 /// @brief Multiplier for standard deviation
 const float sdMultiplier = 15.0;
@@ -67,7 +67,7 @@ const float defaultLowerLimit = -5;
 const float defaultUpperLimit = 5;
 
 /// @brief Default mean
-const float defaultMean = 0.1;
+constexpr float defaultMean = 0.5f / meanMultiplier;
 
 /// @brief Rate of decrease of duration
 const unsigned int durationDecreaseMultiplier = 2;

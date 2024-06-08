@@ -49,7 +49,7 @@ const float STOCK_PRICE_LIMIT = 1000.0f;
  * // What is the name of the stock?
  * std::string name = stock.get_name();
  * // Get the upper limit of the percentage change of the stock price:
- * float upper_limit = stock.getTotalAttribute(stock_modifiers::upper_limit);
+ * float upper_limit = stock.get_total_attribute(stock_modifiers::upper_limit);
  * @endcode
  */
 class Stock {
@@ -123,13 +123,13 @@ class Stock {
         /**
          * @brief Get the total change of attribute of the stock due to events only.
          * Getter function. \n Example usage: @code {.cpp}
-         * stock.get_attribute(stock_modifiers::standard_deviation);
+         * stock.get_base_attribute(stock_modifiers::standard_deviation);
          * @endcode
          * @param attribute The attribute to get.
          * @return Total change of attribute due to Stock_event. Does not include the
          * base value.
          */
-        float sum_attribute(stock_modifiers attribute);
+        float get_event_attribute(stock_modifiers attribute);
 
         /**
          * @brief Call this when the game proceed to next round.
@@ -188,7 +188,9 @@ class Stock {
          * lower_limit, upper_limit
          * @return Base value of stock_attributes as float.
          */
-        float get_attribute(stock_modifiers attribute) { return attributes[attribute]; }
+        float get_base_attribute(stock_modifiers attribute) {
+            return attributes[attribute];
+        }
 
         /**
          * @brief Get size of the history.
@@ -233,11 +235,11 @@ class Stock {
         bool can_add_event(const Stock_event & event);
 
         /**
-         * @brief Sums up get_attribute() and sum_attribute().
+         * @brief Sums up get_base_attribute() and get_event_attribute().
          * @param attribute The attribute to get.
          * @return Total value of the attribute. `float` type.
          */
-        float getTotalAttribute(stock_modifiers attribute);
+        float get_total_attribute(stock_modifiers attribute);
 
         /**
          * @brief Calculate the total value of the stocks the player is holding.

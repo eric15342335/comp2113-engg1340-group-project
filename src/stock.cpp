@@ -256,7 +256,7 @@ void Stock::remove_obselete_event(void) {
     }
 }
 
-float Stock::sum_attribute(stock_modifiers attribute) {
+float Stock::get_event_attribute(stock_modifiers attribute) {
     float sum = 0;
     std::list<Stock_event>::iterator event_itr = events.begin();
     while (event_itr != events.end()) {
@@ -314,8 +314,8 @@ std::vector<unsigned int> Stock::get_event_ids(void) {
     return event_ids;
 }
 
-float Stock::getTotalAttribute(stock_modifiers attribute) {
-    return attributes[attribute] + sum_attribute(attribute);
+float Stock::get_total_attribute(stock_modifiers attribute) {
+    return attributes[attribute] + get_event_attribute(attribute);
 }
 
 void sortStocksList(std::vector<Stock> & stocks_list, SortingMethods sortMethod,
@@ -339,25 +339,25 @@ void sortStocksList(std::vector<Stock> & stocks_list, SortingMethods sortMethod,
             break;
         case by_sd:
             std::sort(stocks_list.begin(), stocks_list.end(), [](Stock a, Stock b) {
-                return a.getTotalAttribute(standard_deviation) <
-                       b.getTotalAttribute(standard_deviation);
+                return a.get_total_attribute(standard_deviation) <
+                       b.get_total_attribute(standard_deviation);
             });
             break;
         case by_mean:
             std::sort(stocks_list.begin(), stocks_list.end(), [](Stock a, Stock b) {
-                return a.getTotalAttribute(mean) < b.getTotalAttribute(mean);
+                return a.get_total_attribute(mean) < b.get_total_attribute(mean);
             });
             break;
         case by_lower_limit:
             std::sort(stocks_list.begin(), stocks_list.end(), [](Stock a, Stock b) {
-                return a.getTotalAttribute(lower_limit) <
-                       b.getTotalAttribute(lower_limit);
+                return a.get_total_attribute(lower_limit) <
+                       b.get_total_attribute(lower_limit);
             });
             break;
         case by_upper_limit:
             std::sort(stocks_list.begin(), stocks_list.end(), [](Stock a, Stock b) {
-                return a.getTotalAttribute(upper_limit) <
-                       b.getTotalAttribute(upper_limit);
+                return a.get_total_attribute(upper_limit) <
+                       b.get_total_attribute(upper_limit);
             });
             break;
         default:
