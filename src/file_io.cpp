@@ -209,17 +209,6 @@ void delsave(string & mode) {
     else {
         cout << "The deletion has been cancelled." << endl;
     }
-
-    // choosing mode again
-    std::cout << USER_SAVE_OPTION_PROMPT;
-    std::cin >> mode;
-    while (!checkValidInput(mode)) {
-        std::cout << "Invalid input. " + USER_SAVE_OPTION_PROMPT;
-        std::cin >> mode; // choose new file or load previous file
-    }
-    if (mode.compare(USER_SAVE_OPTION::DELETE_GAME) == 0) {
-        delsave(mode);
-    }
 }
 
 vector<string> get_saves(void) {

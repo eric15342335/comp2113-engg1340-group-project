@@ -281,7 +281,36 @@ void next_round_routine(unsigned int & _rounds, std::vector<Stock> & stocks_list
     }
 }
 
-/** Main function, the entry point of the program */
+void initializePlayerSaves(std::vector<Stock> & stocks_list,
+    std::vector<float> & hsi_history) {
+    std::string EMPTY_INPUT = "";
+    std::string loadsave = EMPTY_INPUT;
+    while (loadsave.compare(EMPTY_INPUT) == 0) {
+        std::cout << USER_SAVE_OPTION_PROMPT;
+        std::cin >> loadsave;
+        while (!checkValidInput(loadsave)) {
+            std::cout << "Invalid input.\n" << USER_SAVE_OPTION_PROMPT;
+            std::cin >> loadsave; // choose new file or load previous file
+        }
+        if (loadsave.compare(USER_SAVE_OPTION::NEW_GAME) == 0) {
+            createplayer(playerName);
+            savestatus(rounds_played, stocks_list, balance, playerName);
+        }
+        if (loadsave.compare(USER_SAVE_OPTION::LOAD_GAME) == 0) {
+            loadstatus(rounds_played, stocks_list, balance, playerName, hsi_history);
+        }
+        if (loadsave.compare(USER_SAVE_OPTION::DELETE_GAME) == 0) {
+            delsave(loadsave);
+            loadsave = EMPTY_INPUT;
+        }
+        if (loadsave.compare(USER_SAVE_OPTION::EXIT_GAME) == 0) {
+            std::cout << "Goodbye! Hope you had a good luck in the stock market!"
+                      << std::endl;
+            exit(EXIT_SUCCESS);
+        }
+    }
+}
+
 int main(void) {
     enableWindowsVTProcessing();
     std::cout << "The game was compiled on " << __DATE__ << " at " << __TIME__
@@ -299,7 +328,7 @@ int main(void) {
     std::vector<Stock> stocks_list;
     stocks_list.reserve(initial_stock_count);
     for (int i = 0; i < initial_stock_count; i++) {
-        stocks_list.emplace_back(); // Add the stock to the vector
+        stocks_list.emplace_back();
     }
 
     sortStocksList(stocks_list, by_category, ascending);
@@ -313,30 +342,8 @@ int main(void) {
     time::sleep(sleepMedium);
     std::vector<float> hsi_history;
 
-    {
-        std::string loadsave;
-        std::cout << USER_SAVE_OPTION_PROMPT;
-        std::cin >> loadsave;
-        while (!checkValidInput(loadsave)) {
-            std::cout << "Invalid input.\n" << USER_SAVE_OPTION_PROMPT;
-            std::cin >> loadsave; // choose new file or load previous file
-        }
-        if (loadsave.compare(USER_SAVE_OPTION::NEW_GAME) == 0) {
-            createplayer(playerName);
-            savestatus(rounds_played, stocks_list, balance, playerName);
-        }
-        if (loadsave.compare(USER_SAVE_OPTION::LOAD_GAME) == 0) {
-            loadstatus(rounds_played, stocks_list, balance, playerName, hsi_history);
-        }
-        if (loadsave.compare(USER_SAVE_OPTION::DELETE_GAME) == 0) {
-            delsave(loadsave); // delete existing file
-        }
-        if (loadsave.compare(USER_SAVE_OPTION::EXIT_GAME) == 0) {
-            std::cout << "Goodbye! Hope you had a good luck in the stock market!"
-                      << std::endl;
-            return EXIT_SUCCESS;
-        }
-    }
+    initializePlayerSaves(stocks_list, hsi_history);
+
     get_hsi(stocks_list, hsi_history);
     // Done loading/creating a new file.
     std::cout << "Current trading fees are charged at " << trading_fees_percent * 100
@@ -383,5 +390,5 @@ int main(void) {
             time::sleep(sleepLong);
         }
     }
-    return 0;
+    return EXIT_SUCCESS;
 }
