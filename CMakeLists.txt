@@ -10,12 +10,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 # Usage: -DOUTPUT_NAME=stocksim-cmake
-# Check if the OUTPUT_NAME flag is provided
 if(DEFINED OUTPUT_NAME)
-    # Set the output name to the provided value
     set(OUTPUT_NAME ${OUTPUT_NAME})
 else()
-    # Set the output name to "stocksim"
     set(OUTPUT_NAME "stocksim")
 endif()
 

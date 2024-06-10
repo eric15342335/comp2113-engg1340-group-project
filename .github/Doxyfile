@@ -1,4 +1,3 @@
-# Doxygen configuration file for Stock Market Simulator
 PROJECT_NAME           = "Stock Market Simulator"
 INPUT                  = . src/ include/
 BUILTIN_STL_SUPPORT    = YES
@@ -29,7 +28,6 @@ LATEX_BATCHMODE        = YES
 LOOKUP_CACHE_SIZE      = 9
 NUM_PROC_THREADS       = 16
 DOT_NUM_THREADS        = 16
-# GENERATE_HTMLHELP      = YES
 SITEMAP_URL            = https://eric15342335.github.io/comp2113-engg1340-group-project/
 DOT_MULTI_TARGETS      = YES
 PROJECT_BRIEF          = A game that provides a realistic stock buying experience with unpredictable trends to test investment strategies.
