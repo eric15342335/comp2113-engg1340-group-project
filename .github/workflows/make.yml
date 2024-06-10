@@ -1,7 +1,10 @@
 name: CI
 
 on:
-    [push, workflow_dispatch]
+  push:
+  workflow_dispatch:
+  schedule:
+      - cron: "43 17 1 * *"
 
 jobs:
   build-and-test:
