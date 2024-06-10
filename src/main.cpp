@@ -281,8 +281,8 @@ void next_round_routine(unsigned int & _rounds, std::vector<Stock> & stocks_list
     }
 }
 
-void initializePlayerSaves(std::vector<Stock> & stocks_list,
-    std::vector<float> & hsi_history) {
+void initializePlayerSaves(
+    std::vector<Stock> & stocks_list, std::vector<float> & hsi_history) {
     std::string EMPTY_INPUT = "";
     std::string loadsave = EMPTY_INPUT;
     while (loadsave.compare(EMPTY_INPUT) == 0) {
