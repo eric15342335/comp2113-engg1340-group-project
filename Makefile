@@ -18,30 +18,18 @@ compile the program using the Microsoft Visual C++ compiler
 # make check \
 check the code for formatting and static analysis issues
 
-# Edit C++ compiler name you want to use.
 CXX = g++
 
 INCLUDES = -Iinclude
 OUTPUT = stocksim
 CXXFLAGS += -Wall -Wextra -pedantic -std=c++17 -Werror -g \
-	-Wcast-qual -Wundef -mtune=generic -Wswitch -Wshadow -Wformat=2
+	-Wcast-qual -Wundef -Wswitch -Wshadow
 	# -Wconversion -Wfloat-equal
 	# -fsanitize=address -fsanitize=undefined
 
-# macOS uses clang++, which does not support these flag:
-# -Wduplicated-cond -Wduplicated-branches
-ifeq ($(CXX),g++)
-# do not change $(OS) to $(shell uname) because on Windows
-# it might be MinGW or MSYS2, not Windows_NT
-ifneq ($(shell uname),Darwin)
-CXXFLAGS += -Wduplicated-cond -Wduplicated-branches
-endif
-endif
-
-# eric15342335 will use the static flag on Windows.
+# MinGW does not support -static-pie
 ifeq ($(OS),Windows_NT)
-# -pthread only needed for clang++ on Windows but anyway
-# note: needed for MinGW clang++ to link pthread, but not for MSVC clang++?
+# -pthread needed for clang++ on Windows
 ifeq ($(CXX),clang++)
 CXXFLAGS += -pthread
 endif
@@ -59,12 +47,11 @@ CXXFLAGS += -z noexecstack -z relro -z now
 endif
 endif
 
-# Shhh clang++
+# Clang will warn about unused command line arguments.
 ifeq ($(CXX),clang++)
 CXXFLAGS += -Wno-error=unused-command-line-argument
 endif
 
-# The default target is to compile the program.
 default: stocksim
 
 random_price.o: src/random_price.cpp \
@@ -127,7 +114,7 @@ goto: stocksim
 clean:
 	rm *.o stocksim* -r saves/ html/ latex/ *.obj *.pdb *.ilk *.dSYM/ 2>/dev/null || true
 
-# Generate documentation using `Doxygen`.
+# Used for github pages doxygen
 docs: .github/Doxyfile src/*.cpp include/*.h
 	cp .github/Doxyfile Doxyfile.temp
 	echo PROJECT_NUMBER = $$(git branch --show-current) $$(git log -n1 --format="%h") >> Doxyfile.temp
@@ -140,18 +127,17 @@ fix:
 	git commit -a -m "Formatting: Run clang-format" -m "From Makefile: make fix"
 	git push
 
-msvc: src/*.cpp include/*.h
-	# To compile the program using the Microsoft Visual C++ compiler,
-	# Launch the Visual Studio Developer Command Prompt
-	# and run the following command:
-	#
-	cl -std:c++17 -EHsc -utf-8 src/*.cpp -Iinclude -W1 -WX -Fe:stocksim-msvc.exe
+msvc: src/*.cpp include/*.h clean
+	cl -std:c++17 -EHsc -utf-8 -Iinclude -W1 -WX -O1 -guard:cf -MP \
+		src/*.cpp -Fe:stocksim-msvc.exe
+	rm *.obj *.ilk || true
 
 check:
 	clang-format --dry-run --Werror src/*.cpp include/*.h
 	clang-tidy src/*.cpp --checks=performance-*,-performance-avoid-endl,readability-*,bugprone-*,portability-*,cert-* \
 		--fix-errors --fix-notes --format-style=file -- -Iinclude
 
+# cosmopolitan c++ compiler does not support -flto and stack protector
 ifeq ($(MAKECMDGOALS),release)
 ifneq ($(CXX),cosmoc++)
 CXXFLAGS += -fstack-protector-strong
