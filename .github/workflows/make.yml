@@ -3,14 +3,9 @@ name: CI
 on:
     [push, workflow_dispatch]
 
-#concurrency:
-#    group: "make"
-#    cancel-in-progress: false
-
 jobs:
   build-and-test:
-    # runs-on: self-hosted
-    timeout-minutes: 5
+    timeout-minutes: 10
     runs-on: ${{ matrix.config.os }}
     strategy:
       fail-fast: false
