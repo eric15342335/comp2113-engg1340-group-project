@@ -134,7 +134,7 @@ std::istream & operator>>(std::istream & fin, Stock & stock) {
         stock.add_event(loadedEvent);
     }
     return fin;
-};
+}
 
 float Stock::purchase(
     float & balance, unsigned int amount, float trading_fees_percent) {
