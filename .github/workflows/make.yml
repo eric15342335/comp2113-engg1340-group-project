@@ -16,6 +16,9 @@ jobs:
         config:
             - {os: ubuntu-latest, CXX: g++, build_type: all}
             - {os: ubuntu-latest, CXX: g++, build_type: release}
+            # -pedantic on older compilers like g++10
+            - {os: ubuntu-latest, CXX: g++10, build_type: all}
+            - {os: ubuntu-latest, CXX: g++10, build_type: release}
             - {os: ubuntu-latest, CXX: clang++, build_type: all}
             - {os: ubuntu-latest, CXX: clang++, build_type: release}
             - {os: ubuntu-latest, CXX: cmake, build_type: Debug}
