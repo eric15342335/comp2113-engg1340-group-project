@@ -93,7 +93,7 @@ void buyStocks(int row, int col, float & balance, float tax,
     int amount;
 
     index = integerInput(row, col, "Enter the index of the stock as shown: ");
-    while (index < 1 || index > (int)stocks.size()) {
+    while (index < 1 || index > static_cast<int>(stocks.size())) {
         std::cout << setCursorPosition(row, 3) << "\x1b[2K";
         std::cout << "Index out of range!";
         time::sleep(sleepMedium);
@@ -106,7 +106,8 @@ void buyStocks(int row, int col, float & balance, float tax,
         time::sleep(sleepMedium);
         index = integerInput(row, col, "Enter the amount to buy (0 to skip): ");
     }
-    while (amount > (int)stocks[index - 1].num_stocks_affordable(balance, tax)) {
+    while (amount >
+           static_cast<int>(stocks[index - 1].num_stocks_affordable(balance, tax))) {
         std::cout << setCursorPosition(row, 3) << "\x1b[2K";
         std::cout << "Cannot afford!";
         time::sleep(sleepMedium);
@@ -122,7 +123,7 @@ void sellStocks(int row, int col, float & balance, float tax,
     int amount;
 
     index = integerInput(row, col, "Enter the index of the stock as shown: ");
-    while (index < 1 || index > (int)stocks.size()) {
+    while (index < 1 || index > static_cast<int>(stocks.size())) {
         std::cout << setCursorPosition(row, 3) << "\x1b[2K";
         std::cout << "Index out of range!";
         time::sleep(sleepMedium);
@@ -135,7 +136,7 @@ void sellStocks(int row, int col, float & balance, float tax,
         time::sleep(sleepMedium);
         index = integerInput(row, col, "Enter the amount to sell (0 to skip): ");
     }
-    while (amount > (int)stocks[index - 1].get_quantity()) {
+    while (amount > static_cast<int>(stocks[index - 1].get_quantity())) {
         std::cout << setCursorPosition(row, 3) << "\x1b[2K";
         std::cout << "You do not have this many stocks!";
         time::sleep(sleepMedium);
