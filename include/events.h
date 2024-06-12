@@ -199,6 +199,10 @@ struct Stock_event {
 /** @brief The list of all events that will be applied to the stocks. */
 extern const std::vector<Stock_event> all_stock_events;
 
+typedef std::map<decltype(Stock_event::event_id),
+    std::vector<decltype(Stock_event::event_id)>>
+    mutuallyExclusiveMap;
+
 /**
  * @brief Pick a random event from the list of events
  * @param all_events The list of all events
@@ -208,6 +212,9 @@ extern const std::vector<Stock_event> all_stock_events;
 std::vector<Stock_event> pick_events(
     const std::vector<Stock_event> & all_events, unsigned int num_events);
 
+mutuallyExclusiveMap build_mutual_exclusivity_map(
+    const std::vector<Stock_event> & all_events);
+
 /**
  * @brief If A is mutually exclusive with B, then B is mutually exclusive with A.
  * Check if these two events specifies each other as mutually exclusive in
@@ -216,7 +223,7 @@ std::vector<Stock_event> pick_events(
  * @return A map of event_id to a vector of mutually exclusive event_ids that does not
  * exist but should.
  */
-std::map<unsigned int, std::vector<unsigned int>> check_mutual_exclusivity(
+mutuallyExclusiveMap check_mutual_exclusivity(
     const std::vector<Stock_event> & all_events);
 
 /**
@@ -236,9 +243,11 @@ Stock_event getStockSplitEvent(void);
  * @brief Filter out the events that are mutually exclusive with each other,
  * or events that are identical (except for event_type::pick_random_stock).
  * @param picked_events The list of events to filter.
+ * @param all_events The list of all events to consider.
  * @return A list of events that are mutually exclusive with each other.
  */
-std::vector<Stock_event> uniq_events(std::vector<Stock_event> picked_events);
+std::vector<Stock_event> uniq_events(std::vector<Stock_event> picked_events,
+    const std::vector<Stock_event> & all_events);
 
 void assertion_check_uniq_events(void);
 

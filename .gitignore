@@ -1,12 +1,26 @@
+# VSCode
 .vscode/
+
+# Blob files
 *.exe
 *.o
 *.out
-stocksim
+stocksim*
+
+# Doxygen documentation
 html/
 latex/
+
+# MacOS
 *.dSYM/*
+
+# Game saves
 saves/
+
+# MSVC
 *.obj
 *.pdb
 *.ilk
+
+# CMake
+build/
