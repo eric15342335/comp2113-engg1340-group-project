@@ -313,7 +313,7 @@ vector<string> generate_name(unsigned int category, unsigned int num) {
 
 void pickUniqueNames(const unsigned int & num, const vector<string> & words,
     const vector<string> & suffixes, vector<string> & companyNames) {
-    decltype(num) const pickedNamesAmount = num;
+    decltype(num) pickedNamesAmount = num;
     while (companyNames.size() < pickedNamesAmount) {
         string name = words[random_integer(words.size())] + " " +
                       suffixes[random_integer(suffixes.size())];
