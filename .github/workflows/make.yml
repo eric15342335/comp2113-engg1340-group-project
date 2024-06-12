@@ -186,8 +186,4 @@ jobs:
         run: |
           make clean
           CXXFLAGS=--coverage make goto
-          echo -e "1\ntest\nX\nY\n" | ./stocksim
-          echo -e "0\n saves\nsaves\nB\n1\n1\nN\nY\nN\nY\nN\nY\nT\n0\nT\n1\nT\n2\nE\nT\nX\nY\n" | ./stocksim
-          echo -e "1\nsaves\nN\nY\nN\nY\nN\nY\nN\nY\nT\n0\nT\nT\n3\nT\n4\nT\nS\n1\n1\nX\nY\n" | ./stocksim
-          echo -e "2\nsaves\nY\n3\n" | ./stocksim
           coveralls --repo-token ${{ secrets.COVERALLS_REPO_TOKEN }}

@@ -110,6 +110,7 @@ goto: stocksim
 			"\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY" \
 			"\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nX\nY" | ./stocksim
 	echo -e "1\nsave\nT\n0\nX\nY\n" | ./stocksim
+	echo -e "2\nsave\nY\n3" | ./stocksim
 
 clean:
 	rm *.o stocksim* -r saves/ html/ latex/ *.obj *.pdb *.ilk *.dSYM/ 2>/dev/null || true
