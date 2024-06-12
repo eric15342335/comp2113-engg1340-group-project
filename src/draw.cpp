@@ -60,7 +60,8 @@ void drawRoundInfo(
         std::cout << player.erase(12) << "...";
     }
     else {
-        std::cout << setCursorPosition(4, (int)((15 - player.size()) / 2 + 1));
+        std::cout << setCursorPosition(
+            4, static_cast<int>((15 - player.size()) / 2 + 1));
         std::cout << player;
     }
     std::cout << setCursorPosition(2, col - 10);
@@ -90,9 +91,9 @@ void listEvents(int row, int col, std::vector<Stock_event> events) {
     int height;
     int width = col - 20;
 
-    if ((int)events.size() < row - 10) {
-        if ((int)events.size() != 0) {
-            height = (int)events.size() + 2;
+    if (static_cast<int>(events.size()) < row - 10) {
+        if (static_cast<int>(events.size()) != 0) {
+            height = static_cast<int>(events.size()) + 2;
         }
         else {
             height = 3;
@@ -123,7 +124,7 @@ void listEvents(int row, int col, std::vector<Stock_event> events) {
     for (int i = 0; i < width - 1; i++) {
         std::cout << " ";
     }
-    if ((int)events.size() == 0) {
+    if (static_cast<int>(events.size()) == 0) {
         std::cout << setCursorPosition(8, 11);
         std::cout << "There are currently no events!";
         for (int i = 0; i < width - 31; i++) {
@@ -135,16 +136,17 @@ void listEvents(int row, int col, std::vector<Stock_event> events) {
         }
     }
     else {
-        for (int i = 1; i < (int)events.size() + 1; i++) {
+        for (int i = 1; i < static_cast<int>(events.size()) + 1; i++) {
             std::cout << setCursorPosition(i + 7, 11);
             std::cout << i << ". " << events[i - 1].text;
             int digits = (((i) / 10) + 1);
-            for (int j = 0; j < width - (int)events[i - 1].text.size() - 3 - digits;
+            for (int j = 0;
+                 j < width - static_cast<int>(events[i - 1].text.size()) - 3 - digits;
                  j++) {
                 std::cout << " ";
             }
         }
-        std::cout << setCursorPosition((int)events.size() + 8, 11);
+        std::cout << setCursorPosition(static_cast<int>(events.size()) + 8, 11);
         for (int i = 0; i < width - 1; i++) {
             std::cout << " ";
         }
@@ -165,12 +167,12 @@ void drawButton(int row, int col) {
     for (int i = 0; i < buttons; i++) {
         i % 2 == 0 ? std::cout << bgWhite << textBlack
                    : std::cout << bgBlack << textWhite;
-        for (int j = 0; j < (int)((width - options[i].length()) / 2); j++) {
+        for (int j = 0; j < static_cast<int>((width - options[i].length()) / 2); j++) {
             std::cout << " ";
         }
         std::cout << textBold << options[i] << "\x1b[22m";
-        for (int j = 0;
-             j < (int)(width - options[i].length() - (width - options[i].length()) / 2);
+        for (int j = 0; j < static_cast<int>((width - options[i].length() -
+                                              (width - options[i].length()) / 2));
              j++) {
             std::cout << " ";
         }
