@@ -19,9 +19,13 @@ program. If not, see <https://www.gnu.org/licenses/>.
 #include "file_io.h"
 #include "format.h"
 #include "graph.h"
-#include "nonstdlibs/VariadicTable.h"
 #include "random_price.h"
 #include "stock.h"
+
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wold-style-cast"
+#include "nonstdlibs/VariadicTable.h"
+#pragma GCC diagnostic pop
 
 #include <cmath>
 #include <fstream>

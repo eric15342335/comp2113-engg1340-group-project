@@ -23,7 +23,7 @@ CXX = g++
 INCLUDES = -Iinclude
 OUTPUT = stocksim
 CXXFLAGS += -Wall -Wextra -pedantic -std=c++17 -Werror -g \
-	-Wcast-qual -Wundef -Wswitch -Wshadow
+	-Wcast-qual -Wundef -Wswitch -Wshadow -Wold-style-cast
 	# -Wconversion -Wfloat-equal
 	# -fsanitize=address -fsanitize=undefined
 
