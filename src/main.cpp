@@ -333,7 +333,7 @@ int main(void) {
 
     sortStocksList(stocks_list, by_category, ascending);
 
-    // Check if the events are mutually exclusive
+    assertion_check_uniq_events();
     if (assertion_check_mutual_exclusivity()) {
         exit(1);
     }

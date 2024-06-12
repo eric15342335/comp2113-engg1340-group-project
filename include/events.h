@@ -232,4 +232,14 @@ void print_map(const std::map<unsigned int, std::vector<unsigned int>> & map);
 
 Stock_event getStockSplitEvent(void);
 
+/**
+ * @brief Filter out the events that are mutually exclusive with each other,
+ * or events that are identical (except for event_type::pick_random_stock).
+ * @param picked_events The list of events to filter.
+ * @return A list of events that are mutually exclusive with each other.
+ */
+std::vector<Stock_event> uniq_events(std::vector<Stock_event> picked_events);
+
+void assertion_check_uniq_events(void);
+
 #endif

@@ -313,15 +313,14 @@ vector<string> generate_name(unsigned int category, unsigned int num) {
 
 void pickUniqueNames(const unsigned int & num, const vector<string> & words,
     const vector<string> & suffixes, vector<string> & companyNames) {
-    for (unsigned int i = 0; i < num; i++) {
+    decltype(num) const pickedNamesAmount = num;
+    while (companyNames.size() < pickedNamesAmount) {
         string name = words[random_integer(words.size())] + " " +
                       suffixes[random_integer(suffixes.size())];
-        if (find(companyNames.begin(), companyNames.end(), name) ==
-            companyNames.end()) {
+        const bool companyNameAlreadyPresent =
+            find(companyNames.begin(), companyNames.end(), name) == companyNames.end();
+        if (companyNameAlreadyPresent) {
             companyNames.emplace_back(name);
-        }
-        else {
-            i--;
         }
     }
 }
