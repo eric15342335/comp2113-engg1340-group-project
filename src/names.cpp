@@ -313,6 +313,8 @@ vector<string> generate_name(unsigned int category, unsigned int num) {
 
 void pickUniqueNames(const unsigned int & num, const vector<string> & words,
     const vector<string> & suffixes, vector<string> & companyNames) {
+    /// @todo: add a test case or assertion
+    /// @todo: use unordered_set instead of vector since we are checking for uniqueness
     decltype(num) pickedNamesAmount = num;
     while (companyNames.size() < pickedNamesAmount) {
         string name = words[random_integer(words.size())] + " " +

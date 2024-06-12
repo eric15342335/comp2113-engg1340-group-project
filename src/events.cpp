@@ -1322,6 +1322,7 @@ std::map<unsigned int, std::vector<unsigned int>> check_mutual_exclusivity(
 }
 
 bool assertion_check_mutual_exclusivity(void) {
+    /// @todo: put assertion_check_uniq_events into a separate file, e.g. tests.cpp
     // Assert that the every key has no value.
     auto checkEventResult = check_mutual_exclusivity(all_stock_events);
     for (const auto & [key, value] : checkEventResult) {
@@ -1405,6 +1406,7 @@ std::vector<Stock_event> uniq_events(std::vector<Stock_event> picked_events) {
 }
 
 void assertion_check_uniq_events(void) {
+    /// @todo: put assertion_check_uniq_events into a separate file, e.g. tests.cpp
     Stock_event craftedEvent = Stock_event{
         /* event_id */ 0,
         /* mutually_exclusive_events */ {1},
