@@ -18,6 +18,7 @@ program. If not, see <https://www.gnu.org/licenses/>.
 #include "random_price.h"
 
 #include <algorithm>
+#include <cassert>
 #include <iostream>
 
 /** @brief The list of all events that can be applied to the stocks.
@@ -1289,9 +1290,9 @@ int main() {
 }
 */
 
-std::map<unsigned int, std::vector<unsigned int>> check_mutual_exclusivity(
+mutuallyExclusiveMap build_mutual_exclusivity_map(
     const std::vector<Stock_event> & all_events) {
-    std::map<unsigned int, std::vector<unsigned int>> mut_excl_map;
+    mutuallyExclusiveMap mut_excl_map;
     // Build the map
     for (unsigned int i = 0; i < all_events.size(); i++) {
         for (unsigned int j = 0; j < all_events[i].mutually_exclusive_events.size();
@@ -1300,6 +1301,13 @@ std::map<unsigned int, std::vector<unsigned int>> check_mutual_exclusivity(
                 all_events[i].mutually_exclusive_events[j]);
         }
     }
+    return mut_excl_map;
+}
+
+mutuallyExclusiveMap check_mutual_exclusivity(
+    const std::vector<Stock_event> & all_events) {
+    mutuallyExclusiveMap mut_excl_map = build_mutual_exclusivity_map(all_events);
+
     // If two events are mutually exclusive, they should be in each other's list.
     // Remove such two events from the map.
     // E.g. {0: [1,2], 1: [0], 2:[]} -> {0: [2]}
@@ -1321,6 +1329,7 @@ std::map<unsigned int, std::vector<unsigned int>> check_mutual_exclusivity(
 }
 
 bool assertion_check_mutual_exclusivity(void) {
+    /// @todo: put assertion_check_uniq_events into a separate file, e.g. tests.cpp
     // Assert that the every key has no value.
     auto checkEventResult = check_mutual_exclusivity(all_stock_events);
     for (const auto & [key, value] : checkEventResult) {
@@ -1365,30 +1374,80 @@ std::vector<Stock_event> pick_events(
             }
         }
     }
-    // Check event duplication and mutual exclusivity
-    std::map<unsigned int, std::vector<unsigned int>> mut_excl_map =
-        check_mutual_exclusivity(all_events);
-    for (unsigned int i = 0; i < picked_events.size(); i++) {
-        for (unsigned int j = i + 1; j < picked_events.size(); j++) {
-            // If two events are the same, remove one of them
-            // Note that we don't remove the duplicate events with type_of_event ==
-            // pick_random_stock
-            if (picked_events[i].event_id == picked_events[j].event_id &&
-                picked_events[i].type_of_event != pick_random_stock) {
-                picked_events.erase(picked_events.begin() + j);
-                j--;
+    return uniq_events(picked_events, all_stock_events);
+}
+
+std::vector<Stock_event> uniq_events(std::vector<Stock_event> picked_events,
+    const std::vector<Stock_event> & all_events) {
+    mutuallyExclusiveMap mut_excl_map = build_mutual_exclusivity_map(all_events);
+
+    unsigned int first = 0;
+    while (first < picked_events.size()) {
+        unsigned int second = first + 1;
+        while (second < picked_events.size()) {
+            const bool isRandomStockEvents =
+                picked_events[first].type_of_event == pick_random_stock;
+            const bool isIdenticalEvents =
+                picked_events[first] == picked_events[second];
+
+            if (!isRandomStockEvents && isIdenticalEvents) {
+                picked_events.erase(picked_events.begin() + second);
+                continue;
             }
-            // If two events are mutually exclusive, remove one of them
-            else if (std::find(mut_excl_map[picked_events[i].event_id].begin(),
-                         mut_excl_map[picked_events[i].event_id].end(),
-                         picked_events[j].event_id) !=
-                     mut_excl_map[picked_events[i].event_id].end()) {
-                picked_events.erase(picked_events.begin() + j);
-                j--;
+
+            const bool areMutuallyExclusiveEvents =
+                std::find(mut_excl_map[picked_events[first].event_id].begin(),
+                    mut_excl_map[picked_events[first].event_id].end(),
+                    picked_events[second].event_id) !=
+                mut_excl_map[picked_events[first].event_id].end();
+
+            if (areMutuallyExclusiveEvents) {
+                picked_events.erase(picked_events.begin() + second);
+                continue;
             }
+
+            second++;
         }
+        first++;
     }
     return picked_events;
+}
+
+void assertion_check_uniq_events(void) {
+    /// @todo: put assertion_check_uniq_events into a separate file, e.g. tests.cpp
+    Stock_event craftedEvent = Stock_event{
+        /* event_id */ 0,
+        /* mutually_exclusive_events */ {1},
+        /* text */ "Crafted Event",
+        /* duration */ 1,
+        /* percentage_permille */ 0,
+        /* type_of_event */ pick_random_stock,
+        /* category. Assign this to zero first. */ 0,
+        /* modifiers */
+        {{standard_deviation, 0}, {mean, 0}, {lower_limit, 0}, {upper_limit, 0}},
+    };
+    Stock_event craftedEvent_2 = craftedEvent;
+    Stock_event craftedEvent_3 = Stock_event{
+        /* event_id */ 1,
+        /* mutually_exclusive_events */ {0},
+        /* text */ "Crafted Event",
+        /* duration */ 1,
+        /* percentage_permille */ 0,
+        /* type_of_event */ all_stocks,
+        /* category. Assign this to zero first. */ 0,
+        /* modifiers */
+        {{standard_deviation, 0}, {mean, 0}, {lower_limit, 0}, {upper_limit, 0}},
+    };
+    std::vector<Stock_event> picked_events = {
+        craftedEvent, craftedEvent_2, craftedEvent_3};
+    std::vector<Stock_event> uniqEvents = uniq_events(picked_events, picked_events);
+
+    std::cout << uniqEvents.size() << std::endl;
+    if (!(uniqEvents.size() == 2)) {
+        std::cout << uniqEvents.size() << std::endl;
+        assert(false &&
+               "Detected duplicate/mutually-exclusive events after uniq_events()");
+    }
 }
 
 Stock_event getStockSplitEvent(void) {
