@@ -15,8 +15,11 @@ formats the code using clang-format, commits, and pushes the changes
 proceed several rounds automatically and print the price history graph
 # make msvc \
 compile the program using the Microsoft Visual C++ compiler
-# make check \
+# make format-check \
 check the code for formatting and static analysis issues
+# make input-check \
+Run the program with various inputs to check for errors
+
 
 CXX = g++
 
@@ -101,16 +104,16 @@ stocksim: main.o stock.o random_price.o events.o names.o \
 
 all: clean
 	$(MAKE) stocksim
-	./stocksim
+	./$(OUTPUT)
 
 goto: stocksim
 	rm -r saves/ 2>/dev/null || true
 	echo -e "0\nsave\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY" \
 			"\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY" \
 			"\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY" \
-			"\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nX\nY" | ./stocksim
-	echo -e "1\nsave\nT\n0\nX\nY\n" | ./stocksim
-	echo -e "2\nsave\nY\n3" | ./stocksim
+			"\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nN\nY\nX\nY" | ./$(OUTPUT)
+	echo -e "1\nsave\nT\n0\nX\nY\n" | ./$(OUTPUT)
+	echo -e "2\nsave\nY\n3" | ./$(OUTPUT)
 
 clean:
 	rm *.o stocksim* -r saves/ html/ latex/ *.obj *.pdb *.ilk *.dSYM/ 2>/dev/null || true
@@ -133,10 +136,16 @@ msvc: src/*.cpp include/*.h clean
 		src/*.cpp -Fe:stocksim-msvc.exe
 	rm *.obj *.ilk || true
 
-check:
+format-check:
 	clang-format --dry-run --Werror src/*.cpp include/*.h
 	clang-tidy src/*.cpp --checks=performance-*,-performance-avoid-endl,readability-*,bugprone-*,portability-*,cert-* \
 		--fix-errors --fix-notes --format-style=file -- -Iinclude
+
+input-check:
+	echo -e "1\ntest\nX\nY\n" | ./$(OUTPUT)
+	echo -e "0\n saves\nsaves\nB\n1\n1\nN\nY\nN\nY\nN\nY\nT\n0\nT\n1\nT\n2\nE\nT\nX\nY\n" | ./$(OUTPUT)
+	echo -e "1\nsaves\nN\nY\nN\nY\nN\nY\nN\nY\nT\n0\nT\nT\n3\nT\n4\nT\nS\n1\n1\nX\nY\n" | ./$(OUTPUT)
+	echo -e "2\nsaves\nY\n3\n" | ./$(OUTPUT)
 
 # cosmopolitan c++ compiler does not support -flto and stack protector
 ifeq ($(MAKECMDGOALS),release)
@@ -157,4 +166,4 @@ release: clean
 	OUTPUT="stocksim-release" \
 	CXX="$(CXX)"
 
-.PHONY: all clean docs fix goto msvc check release
+.PHONY: all clean docs fix goto msvc format-check release input-check
