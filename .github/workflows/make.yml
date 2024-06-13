@@ -7,74 +7,34 @@ on:
       - cron: "43 17 1 * *"
 
 jobs:
-  build-and-test:
+  build-windows:
     timeout-minutes: 10
-    runs-on: ${{ matrix.config.os }}
+    runs-on: windows-latest
     strategy:
       fail-fast: false
       matrix:
         config:
-            - {os: ubuntu-latest, CXX: g++, build_type: all}
-            - {os: ubuntu-latest, CXX: g++, build_type: release}
-            # -pedantic on older compilers like g++10
-            - {os: ubuntu-latest, CXX: g++-10, build_type: all}
-            - {os: ubuntu-latest, CXX: g++-10, build_type: release}
-            - {os: ubuntu-latest, CXX: clang++, build_type: all}
-            - {os: ubuntu-latest, CXX: clang++, build_type: release}
-            - {os: ubuntu-latest, CXX: cmake, build_type: Debug}
-            - {os: ubuntu-latest, CXX: cosmoc++, build_type: all}
-            - {os: ubuntu-latest, CXX: cosmoc++, build_type: release}
-            - {os: windows-latest, CXX: cl, build_type: Debug}
-            - {os: windows-latest, CXX: g++, build_type: all}
-            - {os: windows-latest, CXX: g++, build_type: release}
-            - {os: windows-latest, CXX: clang++, build_type: all}
-            - {os: windows-latest, CXX: clang++, build_type: release}
-            - {os: windows-latest, CXX: cmake, build_type: Debug}
-            # macos-12 is for x64, while macos-14 is for arm64 (M1)
-            - {os: macos-12, CXX: g++, build_type: all}
-            - {os: macos-12, CXX: g++, build_type: release}
-            - {os: macos-12, CXX: clang++, build_type: all}
-            - {os: macos-12, CXX: clang++, build_type: release}
-            - {os: macos-12, CXX: cmake, build_type: Debug}
-            - {os: macos-latest, CXX: g++, build_type: all}
-            - {os: macos-latest, CXX: g++, build_type: release}
-            - {os: macos-latest, CXX: clang++, build_type: all}
-            - {os: macos-latest, CXX: clang++, build_type: release}
-            - {os: macos-latest, CXX: cmake, build_type: Debug}
-    name: "${{ matrix.config.os }} ${{ matrix.config.CXX }} ${{ matrix.config.build_type }}"
+            - {CXX: cl, build_type: Debug}
+            - {CXX: g++, build_type: all}
+            - {CXX: g++, build_type: release}
+            - {CXX: clang++, build_type: all}
+            - {CXX: clang++, build_type: release}
+            - {CXX: cmake, build_type: Debug}
+    name: "windows-latest ${{ matrix.config.CXX }} ${{ matrix.config.build_type }}"
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-    - name: Setup LLVM on Windows
+    - name: Setup LLVM
       # https://github.com/actions/runner-images/issues/10001
-      if: matrix.config.CXX == 'clang++' && matrix.config.os == 'windows-latest'
+      if: matrix.config.CXX == 'clang++' 
       run: |
         choco upgrade llvm -y
         echo "LLVM_PATH=C:\Program Files\LLVM\bin" >> $GITHUB_ENV
     - name: Set up Microsoft Dev Cmd
-      if: matrix.config.os == 'windows-latest' && matrix.config.CXX == 'cl'
+      if: matrix.config.CXX == 'cl'
       uses: ilammy/msvc-dev-cmd@v1.13.0
       with:
         arch: amd64
-    - name: Setup cosmoc++ 
-      if: matrix.config.CXX == 'cosmoc++'
-      shell: bash
-      run: |
-          if [[ "${{ matrix.config.os }}" == "windows-latest" ]]; then
-              choco install unzip wget -y --no-progress
-          fi
-          mkdir -p cosmocc
-          cd cosmocc
-          wget https://cosmo.zip/pub/cosmocc/cosmocc.zip -q
-          unzip -qq cosmocc.zip
-          git clone https://github.com/jart/cosmopolitan --depth=1
-          cd cosmopolitan
-          if [[ "${{ matrix.config.os }}" != "windows-latest" ]]; then
-              sudo ape/apeinstall.sh
-          fi
-          cd ..
-          cd ..
-          echo "$(pwd)/cosmocc/bin" >> $GITHUB_PATH
     - name: Output compiler version
       shell: bash
       run: |
@@ -102,7 +62,7 @@ jobs:
         cmake --build build --parallel 2 --config ${{ matrix.config.build_type }} --clean-first
         cmake --install build --prefix . --config ${{ matrix.config.build_type }}
     - name: Compile with cl
-      if: matrix.config.os == 'windows-latest' && matrix.config.CXX == 'cl'
+      if: matrix.config.CXX == 'cl'
       shell: cmd
       run: |
         make msvc
@@ -118,22 +78,152 @@ jobs:
         else
             executable="stocksim"
         fi
-        echo -e "1\ntest\nX\nY\n" | ./$executable
-        echo -e "0\n saves\nsaves\nB\n1\n1\nN\nY\nN\nY\nN\nY\nT\n0\nT\n1\nT\n2\nE\nT\nX\nY\n" | ./$executable
-        echo -e "1\nsaves\nN\nY\nN\nY\nN\nY\nN\nY\nT\n0\nT\nT\n3\nT\n4\nT\nS\n1\n1\nX\nY\n" | ./$executable
-        echo -e "2\nsaves\nY\n3\n" | ./$executable
+        make input-check OUTPUT=$executable
     - name: Upload executable
       uses: actions/upload-artifact@v4
       with:
-        # suppose we compiled our game and named it 'stocksim'
-        # use wildcard to match the executable for all platforms
-        # name: stocksim
-        name: stocksim-${{ matrix.config.os }}-${{ matrix.config.CXX }}-${{ matrix.config.build_type }}
+        name: stocksim-windows-latest-${{ matrix.config.CXX }}-${{ matrix.config.build_type }}
+        path: stocksim*
+        compression-level: 9
+        if-no-files-found: error
+  build-ubuntu:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+            - {CXX: g++, build_type: all}
+            - {CXX: g++, build_type: release}
+            # -pedantic on older compilers like g++10
+            - {CXX: g++-10, build_type: all}
+            - {CXX: g++-10, build_type: release}
+            - {CXX: clang++, build_type: all}
+            - {CXX: clang++, build_type: release}
+            - {CXX: cmake, build_type: Debug}
+            - {CXX: cosmoc++, build_type: all}
+            - {CXX: cosmoc++, build_type: release}
+    name: "ubuntu-latest ${{ matrix.config.CXX }} ${{ matrix.config.build_type }}"
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    - name: Setup cosmoc++ 
+      if: matrix.config.CXX == 'cosmoc++'
+      shell: bash
+      run: |
+          mkdir -p cosmocc
+          cd cosmocc
+          wget https://cosmo.zip/pub/cosmocc/cosmocc.zip -q
+          unzip -qq cosmocc.zip
+          git clone https://github.com/jart/cosmopolitan --depth=1
+          cd cosmopolitan
+          sudo ape/apeinstall.sh
+          cd ..
+          cd ..
+          echo "$(pwd)/cosmocc/bin" >> $GITHUB_PATH
+    - name: Output compiler version
+      shell: bash
+      run: |
+        ${{ matrix.config.CXX }} --version
+    - name: Make all
+      if: matrix.config.CXX != 'cmake' && matrix.config.build_type == 'all'
+      shell: bash
+      run: |
+        # output 3 to stdin (to close the game) as 'make all' will start the game
+        echo -e "3" | make CXX=${{ matrix.config.CXX }} all -j2
+    - name: Make release
+      if: matrix.config.CXX != 'cmake' && matrix.config.build_type == 'release'
+      shell: bash
+      run: |
+        make release CXX=${{ matrix.config.CXX }} -j 2
+    - name: CMake
+      if: matrix.config.CXX == 'cmake'
+      shell: bash
+      run: |
+        cmake -B build -S . -DOUTPUT_NAME=stocksim-cmake -Werror=dev -Werror=deprecated --fresh
+        cmake --build build --parallel 2 --config ${{ matrix.config.build_type }} --clean-first
+        cmake --install build --prefix . --config ${{ matrix.config.build_type }}
+    - name: Run test cases
+      shell: bash
+      run: |
+        if [[ "${{ matrix.config.CXX }}" == "cmake" ]]; then
+            executable="stocksim-cmake"
+        elif [[ "${{ matrix.config.CXX }}" == "cl" ]]; then
+            executable="stocksim-msvc"
+        elif [[ "${{ matrix.config.build_type }}" == "release" ]]; then
+            executable="stocksim-release"
+        else
+            executable="stocksim"
+        fi
+        make input-check OUTPUT=$executable
+    - name: Upload executable
+      uses: actions/upload-artifact@v4
+      with:
+        name: stocksim-ubuntu-latest-${{ matrix.config.CXX }}-${{ matrix.config.build_type }}
+        path: stocksim*
+        compression-level: 9
+        if-no-files-found: error
+  build-macos:
+    timeout-minutes: 10
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        # macos-12 for x64, macos-14 for arm64
+        # xlarge image: "Spending limit exceeded."
+        os: [macos-12, macos-14]
+        config:
+            - {CXX: g++, build_type: all}
+            - {CXX: g++, build_type: release}
+            - {CXX: clang++, build_type: all}
+            - {CXX: clang++, build_type: release}
+            - {CXX: cmake, build_type: Debug}
+    name: "${{ matrix.os }} ${{ matrix.config.CXX }} ${{ matrix.config.build_type }}"
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    - name: Output compiler version
+      shell: bash
+      run: |
+        ${{ matrix.config.CXX }} --version
+    - name: Make all
+      if: matrix.config.CXX != 'cmake' && matrix.config.build_type == 'all'
+      shell: bash
+      run: |
+        # output 3 to stdin (to close the game) as 'make all' will start the game
+        echo -e "3" | make CXX=${{ matrix.config.CXX }} all -j2
+    - name: Make release
+      if: matrix.config.CXX != 'cmake' && matrix.config.build_type == 'release'
+      shell: bash
+      run: |
+        make release CXX=${{ matrix.config.CXX }} -j 2
+    - name: CMake
+      if: matrix.config.CXX == 'cmake'
+      shell: bash
+      run: |
+        cmake -B build -S . -DOUTPUT_NAME=stocksim-cmake -Werror=dev -Werror=deprecated --fresh
+        cmake --build build --parallel 2 --config ${{ matrix.config.build_type }} --clean-first
+        cmake --install build --prefix . --config ${{ matrix.config.build_type }}
+    - name: Run test cases
+      shell: bash
+      run: |
+        if [[ "${{ matrix.config.CXX }}" == "cmake" ]]; then
+            executable="stocksim-cmake"
+        elif [[ "${{ matrix.config.build_type }}" == "release" ]]; then
+            executable="stocksim-release"
+        else
+            executable="stocksim"
+        fi
+        make input-check OUTPUT=$executable
+    - name: Upload executable
+      uses: actions/upload-artifact@v4
+      with:
+        name: stocksim-${{ matrix.os }}-${{ matrix.config.CXX }}-${{ matrix.config.build_type }}
         path: stocksim*
         compression-level: 9
         if-no-files-found: error
   analyze:
-    needs: build-and-test
+    needs: [build-ubuntu]
     name: CodeQL Analysis (${{ matrix.language }})
     runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
     timeout-minutes: ${{ (matrix.language == 'swift' && 120) || 360 }}
@@ -165,16 +255,16 @@ jobs:
             category: "/language:${{matrix.language}}"
   clang-format:
     runs-on: ubuntu-latest
-    needs: build-and-test
+    needs: [build-ubuntu]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Make check
         run: |
-          make check
+          make format-check
   coveralls:
     runs-on: ubuntu-latest
-    needs: build-and-test
+    needs: [build-ubuntu]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -186,8 +276,51 @@ jobs:
         run: |
           make clean
           CXXFLAGS=--coverage make goto
-          echo -e "1\ntest\nX\nY\n" | ./stocksim
-          echo -e "0\n saves\nsaves\nB\n1\n1\nN\nY\nN\nY\nN\nY\nT\n0\nT\n1\nT\n2\nE\nT\nX\nY\n" | ./stocksim
-          echo -e "1\nsaves\nN\nY\nN\nY\nN\nY\nN\nY\nT\n0\nT\nT\n3\nT\n4\nT\nS\n1\n1\nX\nY\n" | ./stocksim
-          echo -e "2\nsaves\nY\n3\n" | ./stocksim
+          make input-check
           coveralls --repo-token ${{ secrets.COVERALLS_REPO_TOKEN }}
+  deploy:
+    needs: [analyze, clang-format, coveralls, build-windows, build-macos]
+    concurrency:
+      group: "pages"
+      cancel-in-progress: false
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+        # Because ubuntu doxygen is currently outdated (v1.9 instead of v1.10)
+      - name: Install doxygen and graphviz via Chocolatey
+        run: |
+            choco install doxygen.portable graphviz --yes -r --no-progress
+      - name: Build documentation for every branch
+        shell: bash
+        run: |
+            mkdir docs-output
+            branches="`git branch -lr | cut -c 10- | cut -d ' ' -f 1 | grep -v HEAD`"
+            for branch in $branches
+            do
+            echo $branch
+            git checkout $branch
+            make clean
+            make docs
+            mv html docs-output/$branch
+            done
+            mv docs-output/main html
+            mv docs-output html/other-branches
+      - name: Upload pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+            path: 'html/'
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
