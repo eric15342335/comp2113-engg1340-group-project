@@ -6,6 +6,7 @@
 [![CI](https://github.com/eric15342335/comp2113-engg1340-group-project/actions/workflows/make.yml/badge.svg)](https://github.com/eric15342335/comp2113-engg1340-group-project/actions/workflows/make.yml)
 [![Pages (doxygen)](https://github.com/eric15342335/comp2113-engg1340-group-project/actions/workflows/static.yml/badge.svg)](https://github.com/eric15342335/comp2113-engg1340-group-project/actions/workflows/static.yml)
 [![CodeFactor](https://www.codefactor.io/repository/github/eric15342335/comp2113-engg1340-group-project/badge/main)](https://www.codefactor.io/repository/github/eric15342335/comp2113-engg1340-group-project/overview/main)
+[![Coverage Status](https://coveralls.io/repos/github/eric15342335/comp2113-engg1340-group-project/badge.svg?branch=main)](https://coveralls.io/github/eric15342335/comp2113-engg1340-group-project?branch=main)
 
 ## Menu
 
