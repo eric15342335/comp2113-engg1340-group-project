@@ -218,10 +218,7 @@ jobs:
     - name: Upload executable
       uses: actions/upload-artifact@v4
       with:
-        # suppose we compiled our game and named it 'stocksim'
-        # use wildcard to match the executable for all platforms
-        # name: stocksim
-        name: stocksim-${{ matrix.config.os }}-${{ matrix.config.CXX }}-${{ matrix.config.build_type }}
+        name: stocksim-${{ matrix.os }}-${{ matrix.config.CXX }}-${{ matrix.config.build_type }}
         path: stocksim*
         compression-level: 9
         if-no-files-found: error
