@@ -191,3 +191,49 @@ jobs:
           echo -e "1\nsaves\nN\nY\nN\nY\nN\nY\nN\nY\nT\n0\nT\nT\n3\nT\n4\nT\nS\n1\n1\nX\nY\n" | ./stocksim
           echo -e "2\nsaves\nY\n3\n" | ./stocksim
           coveralls --repo-token ${{ secrets.COVERALLS_REPO_TOKEN }}
+  deploy:
+    needs: [build-and-test, analyze, clang-format, coveralls]
+    concurrency:
+      group: "pages"
+      cancel-in-progress: false
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+        # Because ubuntu doxygen is currently outdated (v1.9 instead of v1.10)
+      - name: Install doxygen and graphviz via Chocolatey
+        run: |
+            choco install doxygen.portable graphviz --yes -r --no-progress
+      - name: Build documentation for every branch
+        shell: bash
+        run: |
+            mkdir docs-output
+            branches="`git branch -lr | cut -c 10- | cut -d ' ' -f 1 | grep -v HEAD`"
+            for branch in $branches
+            do
+            echo $branch
+            git checkout $branch
+            make clean
+            make docs
+            mv html docs-output/$branch
+            done
+            mv docs-output/main html
+            mv docs-output html/other-branches
+      - name: Upload pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+            path: 'html/'
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
