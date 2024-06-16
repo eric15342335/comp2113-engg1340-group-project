@@ -352,7 +352,10 @@ int main(void) {
 
     initializePlayerSaves(stocks_list, hsi_history);
 
-    get_hsi(stocks_list, hsi_history);
+    if (hsi_history.empty()) {
+        get_hsi(stocks_list, hsi_history);
+    }
+
     // Done loading/creating a new file.
     std::cout << "Current trading fees are charged at " << trading_fees_percent * 100
               << " %" << std::endl;
