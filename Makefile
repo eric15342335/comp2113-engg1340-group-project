@@ -103,7 +103,7 @@ stocksim: main.o stock.o random_price.o events.o names.o \
 	$(CXX) $(INCLUDES) $(CXXFLAGS) $^ -o $(OUTPUT)
 
 all: clean
-	$(MAKE) stocksim
+	$(MAKE) stocksim OUTPUT=$(OUTPUT)
 	./$(OUTPUT)
 
 goto: stocksim
@@ -131,10 +131,16 @@ fix:
 	git commit -a -m "Formatting: Run clang-format" -m "From Makefile: make fix"
 	git push
 
+ifeq ($(MAKECMDGOALS),msvc)
+ifeq ($(OUTPUT),stocksim)
+OUTPUT = stocksim-msvc.exe
+endif
+endif
+
 msvc: src/*.cpp include/*.h clean
 	cl -std:c++17 -EHsc -utf-8 -Iinclude -W1 -WX -O1 -guard:cf -MP \
-		src/*.cpp -Fe:stocksim-msvc.exe
-	rm *.obj *.ilk || true
+		src/*.cpp -Fe:$(OUTPUT)
+	rm *.obj || true
 
 format-check:
 	clang-format --dry-run --Werror src/*.cpp include/*.h
