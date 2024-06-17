@@ -137,6 +137,7 @@ OUTPUT = stocksim-msvc.exe
 endif
 endif
 
+# -GL can further reduce size, but more likely to flag as malicious
 msvc: src/*.cpp include/*.h clean
 	cl -std:c++17 -EHsc -utf-8 -Iinclude -W1 -WX -O1 -guard:cf -MP \
 		src/*.cpp -Fe:$(OUTPUT)

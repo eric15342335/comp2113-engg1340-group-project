@@ -16,6 +16,8 @@ else()
     set(OUTPUT_NAME "stocksim")
 endif()
 
+add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:-utf-8>")
+
 add_executable(${OUTPUT_NAME}
     src/main.cpp
     src/random_price.cpp
