@@ -52,12 +52,22 @@ void enableWindowsVTProcessing(void) {
     // Enable virtual terminal processing
     consoleMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
     SetConsoleMode(GetStdHandle(STD_OUTPUT_HANDLE), consoleMode);
-    std::cout << "Experimental Windows VT processing enabled." << std::endl;
-    // Enable Data Execution Prevention (DEP) for the process
-    SetProcessDEPPolicy(PROCESS_DEP_ENABLE);
+    std::cout << "Experimental Windows VT processing enabled.\n";
+}
+void maximizeTerminalScreen_win10(void) {
+    /** @note Windows 11 needs to set the default terminal application to Conhost
+     * to maximize the terminal screen.
+     * Terminal -> Settings -> Default Terminal Application -> Conhost
+     */
+    ShowWindow(GetConsoleWindow(), SW_MAXIMIZE);
+    std::cout << "Terminal screen maximized.\n";
+}
+void windowsRoutines(void) {
+    enableWindowsVTProcessing();
+    maximizeTerminalScreen_win10();
 }
 #else
-#define enableWindowsVTProcessing() // Do nothing
+#define windowsRoutines() // Do nothing
 #endif
 
 /**
@@ -320,7 +330,7 @@ void initializePlayerSaves(
 }
 
 int main(void) {
-    enableWindowsVTProcessing();
+    windowsRoutines();
     std::cout << "The game was compiled on " << __DATE__ << " at " << __TIME__
               << std::endl;
 
