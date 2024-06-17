@@ -53,8 +53,6 @@ void enableWindowsVTProcessing(void) {
     consoleMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
     SetConsoleMode(GetStdHandle(STD_OUTPUT_HANDLE), consoleMode);
     std::cout << "Experimental Windows VT processing enabled." << std::endl;
-    // Enable Data Execution Prevention (DEP) for the process
-    SetProcessDEPPolicy(PROCESS_DEP_ENABLE);
 }
 #else
 #define enableWindowsVTProcessing() // Do nothing
