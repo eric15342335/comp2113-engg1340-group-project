@@ -55,9 +55,9 @@ void enableWindowsVTProcessing(void) {
     std::cout << "Experimental Windows VT processing enabled.\n";
 }
 void maximizeTerminalScreen_win10(void) {
-    #ifdef _MSC_VER
-    #pragma comment(lib, "user32.lib")
-    #endif
+#ifdef _MSC_VER
+#pragma comment(lib, "user32.lib")
+#endif
     /** @note Windows 11 needs to set the default terminal application to Conhost
      * to maximize the terminal screen.
      * Terminal -> Settings -> Default Terminal Application -> Conhost
