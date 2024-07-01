@@ -25,8 +25,8 @@ CXX = g++
 
 INCLUDES = -Iinclude
 OUTPUT = stocksim
-CXXFLAGS += -Wall -Wextra -pedantic -std=c++17 -Werror -g \
-	-Wcast-qual -Wundef -Wswitch -Wshadow -Wold-style-cast
+CXXFLAGS += -Wall -Wextra -pedantic -std=c++17 -Werror -s \
+	-Wcast-qual -Wundef -Wswitch -Wshadow -Wold-style-cast -static -Os -flto
 	# -Wconversion -Wfloat-equal
 	# -fsanitize=address -fsanitize=undefined
 
@@ -162,6 +162,12 @@ CXXFLAGS += -flto
 else ifneq ($(OS),Windows_NT)
 CXXFLAGS += -flto
 endif
+endif
+endif
+
+ifeq ($(MAKECMDGOALS),release)
+ifeq ($(OUTPUT),stocksim)
+OUTPUT = stocksim-release.exe
 endif
 endif
 
